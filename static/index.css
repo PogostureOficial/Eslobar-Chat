@@ -325,3 +325,59 @@ body.modo-celular {
   padding-left: 20px;
 }
 
+/* ==== MENÚ ESLOBAR ==== */
+.menu-container {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.menu-header:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.menu-dropdown {
+  display: none;
+  background: rgba(255, 255, 255, 0.9);
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 250px;
+}
+
+.menu-item {
+  margin-bottom: 12px;
+}
+
+.menu-item strong {
+  font-size: 1rem;
+}
+
+.menu-description {
+  font-size: 0.9rem;
+  color: #333;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+
