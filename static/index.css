@@ -327,54 +327,80 @@ body.modo-celular {
 
 /* ==== MENÚ ESLOBAR ==== */
 .menu-container {
-  position: absolute;
-  top: 15px;
-  left: 20px;
-  z-index: 1000;
-  font-family: Arial, sans-serif;
+  position: relative;
+  margin: 16px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
 }
 
 .menu-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1.1rem;
-  background-color: #1d1d1d;
-  padding: 6px 10px;
+  font-size: 15px;
+  padding: 8px 12px;
   border-radius: 8px;
-  transition: background 0.2s ease;
+  background-color: transparent;
 }
 
+.menu-title {
+  font-weight: 500;
+}
 
 .arrow {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s;
 }
 
 .menu-dropdown {
   display: none;
-  background: #313131;
-  margin-top: 8px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  width: 250px;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  background-color: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 12px;
+  width: 300px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  z-index: 100;
 }
 
 .menu-item {
-  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  padding: 8px 0;
 }
 
-.menu-item strong {
-  font-size: 1rem;
+.menu-item + .menu-item {
+  border-top: 1px solid #2a2a2a;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.menu-icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  margin-top: 2px;
+}
+
+.menu-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-title-version {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #fff;
 }
 
 .menu-description {
-  font-size: 0.9rem;
-  color: #ffffff;
-  margin-top: 4px;
+  font-size: 13px;
   line-height: 1.4;
+  color: #b0b0b0;
 }
 
 
