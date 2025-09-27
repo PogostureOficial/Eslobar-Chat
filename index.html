@@ -7,6 +7,28 @@
   <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
+
+  <div class="menu-container">
+  <div class="menu-header" onclick="toggleMenu()">
+    <span class="menu-title">Eslobar</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="menu-dropdown" id="dropdownMenu">
+    <div class="menu-item">
+      <strong>Eslobar</strong>
+      <p class="menu-description">Versión básica. Ideal para estudiar y aprender con ayuda motivadora, pero con limite de preguntas al dia y con poca variedad de materias.</p>
+    </div>
+    <div class="menu-item">
+      <strong>Eslobar Plus ✨ (La mas comprada)</strong>
+      <p class="menu-description">Versión avanzada con explicaciones más detalladas y ejemplos, contiene mas variedad de materias y sin limite de preguntas.  </p>
+    </div>
+    <div class="menu-item">
+      <strong>Eslobar Pro 🚀</strong>
+      <p class="menu-description">Versión profesional con herramientas de estudio y evaluaciones inteligentes, acceso a todas las 11 materias del colegio.</p>
+    </div>
+  </div>
+</div>
+
   <!-- Título inicial -->
   <div id="titulo">¿En qué puedo ayudarte hoy?</div>
 
@@ -27,11 +49,6 @@
       <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
     </div>
   </div>
-
-  <!-- Botón para alternar vista PC/Móvil -->
-  <button id="toggleViewBtn" style="position:fixed;top:10px;right:10px;z-index:999;">
-    Alternar vista
-  </button>
 
   <!-- Archivo de configuración: cambiar URL backend según entorno -->
   <script src="/static/config.js"></script>
@@ -220,6 +237,26 @@
         document.body.classList.toggle("modo-celular");
       });
     }
-  </script>
+</script>
+  
+    <script>
+  function toggleMenu() {
+    const menu = document.getElementById('dropdownMenu');
+    const arrow = document.querySelector('.arrow');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    arrow.style.transform = menu.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+
+  // Cerrar si se hace clic fuera
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('dropdownMenu');
+    const header = document.querySelector('.menu-header');
+    if (!header.contains(e.target)) {
+      menu.style.display = 'none';
+      document.querySelector('.arrow').style.transform = 'rotate(0deg)';
+    }
+  });
+</script>
 </body>
 </html>
+
