@@ -4,6 +4,9 @@ import openai
 import traceback
 import os
 
+# ELIMINAR DESPUES 🔥🔥🔥🔥🔥🔥🔥
+token_usage = {}
+
 app = Flask(__name__)
 
 CORS(app)
@@ -33,6 +36,16 @@ def ask():
         if not user_message.strip():
             return jsonify({"error": "El mensaje no puede estar vacío"}), 400
 
+        # ELIMINAR ESTO 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        ip = request.remote_addr
+        # Cuenta aproximada de tokens usando cantidad de palabras
+        user_tokens = len(user_message.split())
+        if token_usage.get(ip, 0) + user_tokens > 2500:
+            return jsonify({"error": "Has superado el límite de 2500 tokens por IP"}), 429
+        # Sumar tokens usados
+        token_usage[ip] = token_usage.get(ip, 0) + user_tokens
+
+
         # 🔥 Llamada a la API de OpenAI
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -61,7 +74,8 @@ def ask():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
-app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port)
+
 
 
 
