@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 🔑 Cargar la API key desde una variable de entorno
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # 🏠 Ruta principal: sirve el index.html
 @app.route('/')
@@ -34,7 +34,7 @@ def ask():
             return jsonify({"error": "El mensaje no puede estar vacío"}), 400
 
         # 🔥 Llamada a la API de OpenAI
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "Eres Eslobar, un asistente de inteligencia artificial desarrollado para ayudar a que los alumnos estudien mejor, y puedan entender los temas con facilidad"
@@ -62,6 +62,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
 app.run(host='0.0.0.0', port=port)
+
 
 
 
