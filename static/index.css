@@ -1,0 +1,327 @@
+/* ===== Estilos generales ===== */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1d1d1d; /* gris oscuro */
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* por defecto centrado */
+  transition: justify-content 0.3s ease;
+}
+
+/* Texto inicial */
+#titulo {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+/* Caja de mensajes (chat centrado con borde fino) */
+.chat-box {
+  flex: none;
+  width: 100%;
+  max-width: 700px;
+  height: 2vh;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  background: #2b2b2b;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.02);
+  transition: all 0.3s ease;
+}
+
+/* ==== Expansión del chat al aparecer el primer mensaje ==== */
+body:has(.chat-box .message) .chat-box {
+  height: 90vh; /* ← Cambia 60vh al tamaño que quieras */
+}
+
+
+body:has(.chat-box .message) #titulo {
+  opacity: 0; /* desaparece cuando hay mensajes */
+}
+
+/* Mensajes */
+.message {
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-radius: 16px;
+  max-width: 110%;
+  word-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.4;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.user {
+  background: #313131;
+  color: #fff;
+  align-self: flex-end;
+  margin-left: 150px;
+}
+
+.bot {
+  background: #1d1d1d;
+  color: #ddd;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  margin-right: 150px;
+}
+
+.loading {
+  font-style: italic;
+  color: #aaa;
+  margin: 8px 0;
+}
+
+/* Contenedor de input */
+.input-container {
+  width: 150%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: #242424;
+  border: 1px solid rgba(255, 255, 255, 0.136);
+  border-radius: 30px;
+  padding: 7px 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+  position: relative; /* necesario para los imgs absolutos dentro */
+  font-style: italic;
+}
+
+/* Brillo sutil al escribir */
+.input-container:focus-within {
+  box-shadow: 0 0 6px rgba(41, 41, 41, 0.2);
+}
+
+input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+input::placeholder {
+  color: #666;
+}
+
+/* Botón con imágenes + animaciones */
+.voice-btn {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 15px; /* ajusta la distancia al borde derecho */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden; /* evita que la imagen sobresalga del círculo */
+  display: block; /* no necesitamos flex aquí porque las imgs serán absolutas */
+  transition: box-shadow 0.3s ease;
+}
+
+.voice-btn:hover {
+  box-shadow: 0 0 4px rgba(255,255,255,0.12);
+}
+
+.voice-btn img {
+  position: absolute;   /* <-- clave: solapan exactamente */
+  inset: 0;             /* top:0; right:0; bottom:0; left:0; */
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;  /* centra y mantiene aspecto; usa 'cover' si prefieres recortar */
+  transform-origin: center center; /* ya lo estabas forzando en JS, pero por si acaso */
+}
+
+/* Hacer que el segundo botón siempre esté al lado del primero */
+.input-container > .voice-btn + * {
+  margin-left: 8px; /* ajusta la distancia entre botones */
+}
+
+
+/* ==== Eliminar el recuadro de fondo ==== */
+.chat-box {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ==== Ocultar scrollbar del chat sin quitar el scroll ==== */
+.chat-box {
+  scrollbar-width: none;       /* Firefox */
+}
+.chat-box::-webkit-scrollbar { /* Chrome, Edge, Safari */
+  display: none;
+}
+
+.message.bot.loading {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre texto y video */
+  color: #666; /* gris clarito como ChatGPT */
+  font-style: italic;
+}
+.message.bot.loading video {
+  height: 20px; /* ajustá el tamaño a tu gusto */
+}
+
+#mensaje {
+  background: transparent;   /* mismo fondo que antes */
+  border: none;              /* quitar el borde blanco */
+  outline: none;             /* quitar borde azul al hacer foco */
+  color: white;              /* texto en blanco */
+  font-size: 16px;           /* mismo tamaño que el input anterior */
+  width: 100%;               /* ocupar todo el espacio disponible */
+  resize: none;              /* evitar que el usuario lo estire manualmente */
+  overflow-y: auto;          /* scroll solo si pasa el límite */
+  max-height: 7.5em;         /* máx 5 líneas (si tu line-height es 1.5) */
+  line-height: 1.5em;
+  padding: 10px;             /* igual que antes para que quede centrado */
+  box-sizing: border-box; 
+  font-family: Arial, sans-serif;   /* asegurar que respete el ancho */
+}
+
+#mensaje::placeholder {
+  font-family: Arial, sans-serif;   /* hereda la misma fuente que el contenedor */
+  color: #717171;            /* mismo gris que usabas antes */
+  font-size: 16px;        /* asegura que coincida con el texto normal */
+}
+
+/* NEW!!!!! Caja del chat: estado inicial centrado */
+.chat-box {
+  flex: none;
+  width: 100%;
+  max-width: 700px;
+  height: 2vh; /* inicial: chiquito en el centro */
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Al haber mensajes → se expande */
+body:has(.chat-box .message) .chat-box {
+  height: 60vh; /* en PC */
+}
+
+body:has(.chat-box .message) #titulo {
+  opacity: 0; /* título desaparece */
+}
+
+/* ===== Ajustes móviles ===== */
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Input adaptado */
+.input-container {
+  width: 100%;  /* antes 150%, ahora siempre ancho pantalla */
+  box-sizing: border-box;
+}
+
+/* En móviles, limitar altura del chat */
+@media (max-width: 767px) {
+  body:has(.chat-box .message) .chat-box {
+    height: 50vh; /* en móviles no tan alto, se adapta mejor */
+  }
+}
+
+/* ==== Contenedor de input móvil / celular ==== */
+:root {
+  --input-bg-color: #242424;       /* color de fondo del input */
+  --input-text-color: #fff;        /* color del placeholder y texto */
+  --input-font-size: 16px;         /* tamaño de fuente */
+  --input-width: 90%;              /* ancho del contenedor */
+  --input-max-height: 5em;         /* altura máxima */
+}
+
+.input-container {
+  width: var(--input-width);
+  background: var(--input-bg-color);
+}
+
+#mensaje {
+  color: var(--input-text-color);
+  font-size: var(--input-font-size);
+  max-height: var(--input-max-height);
+}
+
+/* Ajustes específicos para móviles (smartphones) */
+@media screen and (max-width: 768px) {
+  .input-container {
+    width: 95%;      /* más ancho en móvil */
+    padding: 5px 12px; 
+    border-radius: 25px;
+  }
+
+  #mensaje {
+    font-size: 14px; /* tamaño más pequeño */
+  }
+}
+
+
+/* ==== Simulación móvil en PC ==== */
+body.modo-celular {
+  width: 375px;        /* ancho típico móvil */
+  height: 667px;       /* altura típica móvil */
+  margin: 0 auto;
+  border: 1px solid #444;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* empezamos con el chat arriba */
+}
+
+.message.bot h1 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: #ffffff;
+}
+
+.message.bot h2 {
+  font-size: 1.3em;
+  margin: 8px 0;
+  color: #ffffff;
+}
+
+.message.bot h3 {
+  font-size: 1.1em;
+  margin: 6px 0;
+  color: #ffffff;
+}
+
+.message.bot p {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.message.bot ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
