@@ -341,15 +341,12 @@ body.modo-celular {
   cursor: pointer;
   font-weight: bold;
   font-size: 1.1rem;
-  background: rgba(255, 255, 255, 0.2);
+  background-color: #1d1d1d;
   padding: 6px 10px;
   border-radius: 8px;
   transition: background 0.2s ease;
 }
 
-.menu-header:hover {
-  background: rgba(255, 255, 255, 0.35);
-}
 
 .arrow {
   transition: transform 0.3s ease;
@@ -379,5 +376,6 @@ body.modo-celular {
   margin-top: 4px;
   line-height: 1.4;
 }
+
 
 
