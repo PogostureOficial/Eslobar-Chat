@@ -354,7 +354,7 @@ body.modo-celular {
 
 .menu-dropdown {
   display: none;
-  background: rgba(255, 255, 255, 0.9);
+  background: #313131;
   margin-top: 8px;
   padding: 10px 14px;
   border-radius: 10px;
@@ -372,10 +372,11 @@ body.modo-celular {
 
 .menu-description {
   font-size: 0.9rem;
-  color: #333;
+  color: #ffffff;
   margin-top: 4px;
   line-height: 1.4;
 }
+
 
 
 
