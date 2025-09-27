@@ -14,7 +14,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # 🏠 Ruta principal: sirve el index.html
 @app.route('/')
 def serve_index():
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory('.', 'index.html')
 
 
 # 📁 Servir archivos estáticos (CSS, JS, imágenes)
@@ -62,5 +62,6 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
 app.run(host='0.0.0.0', port=port)
+
 
 
