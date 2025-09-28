@@ -392,30 +392,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 </script>
-
-  <script>
-(()=> {
-  const c=document.getElementById('chat'),
-        w=document.getElementById('inputWrapper'),
-        i=document.getElementById('mensaje');
-  if(!c||!w||!i) return;
-  const TH=120;
-  const upd=()=>{
-    const vv=window.visualViewport, vh=vv?vv.height:innerHeight;
-    const kb = vv ? (innerHeight - vh > TH) : false;
-    if(kb){ const bh=(w.offsetHeight||64)+12; w.style.bottom=bh+'px'; c.style.height=Math.max(120, vh-bh-12)+'px'; }
-    else { w.style.bottom=''; c.style.height=''; }
-    c.scrollTop=c.scrollHeight;
-  };
-  if(window.visualViewport){ window.visualViewport.addEventListener('resize',upd,{passive:true}); window.visualViewport.addEventListener('scroll',upd,{passive:true}); }
-  else { i.addEventListener('focus',()=>{ c.style.height='calc(100vh - 260px)'; setTimeout(()=>c.scrollTop=c.scrollHeight,50); }); i.addEventListener('blur',()=>c.style.height=''); }
-  setTimeout(upd,200);
-})();
-</script>
-
-
 </body>
 </html>
+
 
 
 
