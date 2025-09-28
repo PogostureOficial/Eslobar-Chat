@@ -286,7 +286,7 @@ body {
     border-radius: 0;
     background: #000000;      /* Fondo distinto en móvil */
     display: flex;
-    flex-direction: column-reverse; /* mensajes arriba, input abajo */
+    flex-direction: column; 
     padding: 10px;
   }
 
@@ -299,12 +299,22 @@ body {
     width: 95%;      
     padding: 3px 10px; 
     border-radius: 30px;
-    background: #414141;      /* Input del mismo tono que el fondo */
+    background: #414141;  
+    border: 2px solid #414141;  /* cambia el color del borde, ej. verde *//* Input del mismo tono que el fondo */
   }
 
   #mensaje {
     font-size: 14px;
     color: #fff;
+  }
+
+  #mensaje::placeholder {
+    color: #afafaf;   /* cambia el color del placeholder */
+  }
+
+  .bot-message {
+    background: #000000;  /* azul oscuro */
+    color: #ffffff;       /* texto blanco */
   }
 }
 
@@ -450,6 +460,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
