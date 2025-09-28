@@ -482,6 +482,12 @@ body.modo-celular {
   vertical-align: middle;
 }
 
+/* Cuando el teclado está abierto en móvil */
+body.keyboard-open .chat-box {
+  transform: translateY(-150px); /* ajustá según tu teclado (120-200px aprox) */
+  transition: transform 0.25s ease;
+}
+
 
 
 
