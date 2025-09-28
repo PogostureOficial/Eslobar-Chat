@@ -275,7 +275,7 @@ body {
   /* Fondo y texto distintos en móvil */
   body {
     background-color: #000000; /* Fondo oscuro */
-    color: #f0f0f0;           /* Texto claro */
+    color: #afafaf;           /* Texto claro */
   }
 
   /* Chat box adaptada */
@@ -298,8 +298,8 @@ body {
   .input-container {
     width: 95%;      
     padding: 5px 12px; 
-    border-radius: 25px;
-    background: #c4c4c4;      /* Input del mismo tono que el fondo */
+    border-radius: 0px;
+    background: #414141;      /* Input del mismo tono que el fondo */
   }
 
   #mensaje {
@@ -450,6 +450,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
