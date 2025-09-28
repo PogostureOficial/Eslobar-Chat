@@ -272,34 +272,39 @@ body {
 
 /* ==== Estilos solo para móviles ==== */
 @media screen and (max-width: 768px) {
-  body {
-    background-color: #000; /* Fondo oscuro para móvil */
+  html, body {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;   /* ocupa toda la pantalla */
-    overflow: hidden; /* evita scroll raro */
+    background-color: #000; /* Fondo oscuro */
+    height: 100%;
+    overflow: hidden; /* evita scroll global */
   }
 
-  /* Contenedor del chat */
+  /* Contenedor principal del chat */
   .chat-box {
-    flex: 1;                 /* ocupa el espacio disponible */
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* mensajes desde arriba hacia abajo */
-    overflow-y: auto;        /* scroll interno si hay muchos mensajes */
+    height: 100dvh;        /* se ajusta dinámicamente a la altura visible */
+    overflow: hidden;      /* sin scroll raro */
+  }
+
+  /* Zona de mensajes */
+  .messages {
+    flex: 1;               /* ocupa todo el espacio disponible */
+    overflow-y: auto;      /* scroll solo en mensajes */
     padding: 10px;
   }
 
-  /* Input siempre abajo */
+  /* Input fijo abajo */
   .input-container {
+    position: sticky;
+    bottom: 0;
     width: 95%;
     margin: 10px auto;
     padding: 10px 15px;
-    border: 2px solid #5a5a5a;    /* Borde más claro SOLO móvil */
+    border: 2px solid #5a5a5a;
     border-radius: 25px;
-    background: #1a1a1a;          /* Fondo input */
+    background: #1a1a1a;
     display: flex;
     align-items: center;
   }
@@ -314,18 +319,18 @@ body {
     background: transparent;
   }
 
-  /* Placeholder en gris */
   #mensaje::placeholder {
     color: #aaa;
   }
 
   /* Mensajes del bot */
   .bot {
-    background: #000;   /* gris oscuro */
-    color: #fff;     /* turquesa solo móvil */
+    background: #000;
+    color: #fff;
     align-self: flex-start;
   }
 }
+
 
 /* ==== Simulación móvil en PC ==== */
 body.modo-celular {
@@ -469,6 +474,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
