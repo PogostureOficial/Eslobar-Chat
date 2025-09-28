@@ -394,49 +394,29 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
   <script>
-(function() {
-  const chat = document.getElementById('chat');
-  const input = document.getElementById('mensaje');
-  if (!chat || !input) {
-    console.warn('keyboard-toggle: falta #chat o #mensaje');
-    return;
-  }
-
-  const THRESHOLD = 120; // px
-
-  function setKeyboard(open) {
-    document.body.classList.toggle('keyboard-open', !!open);
-    // No cambiamos document.body.style.overflow aquí (evita comportamiento errático)
-    if (open) {
-      setTimeout(()=> chat.scrollTop = chat.scrollHeight, 120);
-    }
-  }
-
-  function onViewportChange() {
-    const vv = window.visualViewport;
-    const visibleH = vv ? vv.height : window.innerHeight;
-    const diff = window.innerHeight - visibleH;
-    const keyboardOpen = diff > THRESHOLD;
-    setKeyboard(keyboardOpen);
-  }
-
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', onViewportChange, {passive:true});
-    window.visualViewport.addEventListener('scroll', onViewportChange, {passive:true});
-  } else {
-    input.addEventListener('focus', ()=> setKeyboard(true));
-    input.addEventListener('blur',  ()=> setKeyboard(false));
-    window.addEventListener('resize', onViewportChange, {passive:true});
-  }
-
-  input.addEventListener('focus', ()=> setTimeout(onViewportChange, 100));
-  input.addEventListener('blur',  ()=> setTimeout(onViewportChange, 120));
-  setTimeout(onViewportChange, 200);
+(()=> {
+  const c=document.getElementById('chat'),
+        w=document.getElementById('inputWrapper'),
+        i=document.getElementById('mensaje');
+  if(!c||!w||!i) return;
+  const TH=120;
+  const upd=()=>{
+    const vv=window.visualViewport, vh=vv?vv.height:innerHeight;
+    const kb = vv ? (innerHeight - vh > TH) : false;
+    if(kb){ const bh=(w.offsetHeight||64)+12; w.style.bottom=bh+'px'; c.style.height=Math.max(120, vh-bh-12)+'px'; }
+    else { w.style.bottom=''; c.style.height=''; }
+    c.scrollTop=c.scrollHeight;
+  };
+  if(window.visualViewport){ window.visualViewport.addEventListener('resize',upd,{passive:true}); window.visualViewport.addEventListener('scroll',upd,{passive:true}); }
+  else { i.addEventListener('focus',()=>{ c.style.height='calc(100vh - 260px)'; setTimeout(()=>c.scrollTop=c.scrollHeight,50); }); i.addEventListener('blur',()=>c.style.height=''); }
+  setTimeout(upd,200);
 })();
 </script>
 
+
 </body>
 </html>
+
 
 
 
