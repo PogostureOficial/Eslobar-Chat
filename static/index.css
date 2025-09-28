@@ -284,7 +284,7 @@ body {
     height: 60vh;             /* Que ocupe casi toda la pantalla */
     margin: 0;
     border-radius: 0;
-    background: #2a2a40;      /* Fondo distinto en móvil */
+    background: #000000;      /* Fondo distinto en móvil */
     display: flex;
     flex-direction: column-reverse; /* mensajes arriba, input abajo */
     padding: 10px;
@@ -299,7 +299,7 @@ body {
     width: 95%;      
     padding: 5px 12px; 
     border-radius: 25px;
-    background: #242424;      /* Input del mismo tono que el fondo */
+    background: #c4c4c4;      /* Input del mismo tono que el fondo */
   }
 
   #mensaje {
@@ -450,6 +450,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
