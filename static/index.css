@@ -7,10 +7,10 @@ body {
   background-color: #1d1d1d; /* gris oscuro */
   color: #fff;
   height: 100vh;
-  display: block; /*antes era flex*/
+  display: flex; /*antes era flex*/
   flex-direction: column;
   align-items: center;
-  /*justify-content: center; /* por defecto centrado */
+  justify-content: center; /* por defecto centrado */
   transition: justify-content 0.3s ease;
 }
 
@@ -500,6 +500,7 @@ body.keyboard-open .chat-box {
 body.keyboard-open .input-container {
   z-index: 1300;
 }
+
 
 
 
