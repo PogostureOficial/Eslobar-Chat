@@ -250,12 +250,13 @@ body {
     margin: 0;
     padding: 0;
     background-color: #000; /* Fondo oscuro */
-    height: 100%;
+    /* Usar dVh si está disponible (dinámico), fallback a 100vh */
+    height: 100dvh;
     overflow: auto; /* permitir scroll cuando el teclado lo requiera */
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Contenedor principal del chat: usa altura flexible (JS puede mejorar con --vh) */
+  /* Contenedor principal del chat: usa altura flexible (JS mejora con visualViewport) */
   .chat-box {
     display: flex;
     flex-direction: column;
@@ -263,7 +264,7 @@ body {
     padding: 10px;
     margin-bottom: 0;
     /* fallback práctico: el chat ocupa casi toda la pantalla menos el espacio del input */
-    max-height: calc(100vh - 88px);
+    max-height: calc(100dvh - 88px);
     height: auto;
     overflow-y: auto;
     transition: max-height 0.18s ease, height 0.18s ease;
@@ -316,7 +317,26 @@ body {
     font-size: 1.15rem;
     margin: 10px 0;
     opacity: 1;
-    transition: opa
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 2100;
+  }
+
+  /* Mensajes del bot */
+  .bot {
+    background: #000;
+    color: #fff;
+    align-self: flex-start;
+  }
+
+  /* Evitar que el contenido quede bajo el input cuando no hay JS: pequeño padding inferior */
+  .chat-box::after {
+    content: "";
+    display: block;
+    height: 92px; /* espacio visual para que el último mensaje no quede oculto por el input */
+    width: 1px;
+  }
+}
+
 
 
 /* ==== Simulación móvil en PC ==== */
@@ -461,6 +481,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
