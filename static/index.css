@@ -367,10 +367,24 @@ body.modo-celular {
 }
 
 .menu-item {
-  display: flex;
-  align-items: flex-start;
-  padding: 8px 0;
+  position: relative;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.3s ease;
 }
+
+.menu-item.active {
+  background-color: rgba(0, 128, 255, 0.1); /* Fondo resaltado */
+  border: 1px solid rgba(0, 128, 255, 0.3);
+}
+
+.menu-item .checkmark {
+  display: none;
+  color: #0080ff;
+  font-weight: bold;
+  margin-left: auto;
+}
+
 
 .menu-item + .menu-item {
   border-top: 1px solid #2a2a2a;
@@ -412,6 +426,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
