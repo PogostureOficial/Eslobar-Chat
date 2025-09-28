@@ -75,35 +75,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-<!-- Seleccionar plan -->
-  <script>
-  let selectedPlan = localStorage.getItem('selectedPlan') || 'basic';
 
-  function selectVersion(plan) {
-    selectedPlan = plan;
-    localStorage.setItem('selectedPlan', plan);
-    updateSelectedPlanUI();
-
-    // Cerrar menú
-    document.getElementById('dropdownMenu').style.display = 'none';
-  }
-
-  function updateSelectedPlanUI() {
-    const items = document.querySelectorAll('.menu-item');
-    items.forEach(item => {
-      const checkmark = item.querySelector('.checkmark');
-      if (item.dataset.plan === selectedPlan) {
-        item.classList.add('active');
-        checkmark.style.display = 'inline';
-      } else {
-        item.classList.remove('active');
-        checkmark.style.display = 'none';
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
-</script>
 
 
 
@@ -122,6 +94,12 @@
     let previousHasText = false;
     const D = 250; // duración animaciones
     const easing = 'cubic-bezier(.22,1,.36,1)';
+
+    // BACKEND: usa CONFIG.BACKEND_URL si existe, si no -> '/ask'
+const BACKEND_URL = (typeof CONFIG !== 'undefined' && CONFIG.BACKEND_URL) ? CONFIG.BACKEND_URL : '/ask';
+
+    const menuArrow = document.querySelector('.menu-arrow');
+const dropdownMenu = document.getElementById('dropdownMenu');
 
     /* =========================================================
        UTILIDADES
@@ -279,16 +257,17 @@ document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
 
       // 🔹 Fetch al backend (URL configurable en config.js)
       try {
-        const response = await fetch(CONFIG.BACKEND_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-            message: userText,
-            plan: selectedPlan 
-          }// 🔹 Enviar versión al servidor
-        });
+        const resp = await fetch(BACKEND_URL, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    message: userText,
+    plan: selectedPlan
+  })
+});
 
-        const data = await response.json();
+
+        const data = await resp.json();
 
         if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
         const botMsg = addBotMessage();
@@ -320,25 +299,26 @@ document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
 </script>
   
     <script>
-  function toggleMenu() {
-    const menu = document.getElementById('dropdownMenu');
-    const arrow = document.querySelector('.menu-arrow');
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    arrow.style.transform = menu.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
-  }
+  // Toggle menu
+function toggleMenu() {
+  const showing = dropdownMenu.style.display === 'block';
+  dropdownMenu.style.display = showing ? 'none' : 'block';
+  if (menuArrow) menuArrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(180deg)';
+}
 
-  // Cerrar si se hace clic fuera
-  document.addEventListener('click', function(e) {
-    const menu = document.getElementById('dropdownMenu');
-    const header = document.querySelector('.menu-header');
-    if (!header.contains(e.target)) {
-      menu.style.display = 'none';
-      document.querySelector('.arrow').style.transform = 'rotate(0deg)';
-    }
-  });
+// Cerrar si se hace clic fuera del menú (pero no si se hace click dentro)
+document.addEventListener('click', function(e) {
+  const menuContainer = document.querySelector('.menu-container');
+  if (menuContainer && !menuContainer.contains(e.target)) {
+    dropdownMenu.style.display = 'none';
+    if (menuArrow) menuArrow.style.transform = 'rotate(0deg)';
+  }
+});
+
 </script>
 </body>
 </html>
+
 
 
 
