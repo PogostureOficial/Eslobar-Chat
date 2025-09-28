@@ -54,7 +54,7 @@
   <div id="chat" class="chat-box"></div>
 
   <!-- Entrada de texto y botón -->
-  <div class="input-container">
+  <div class="input-container" id="inputWrapper">
     <textarea 
       id="mensaje" 
       rows="1" 
@@ -223,11 +223,6 @@ document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
         .classList.toggle("expanded", input.scrollHeight > input.clientHeight);
     });
 
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', ajustarAlturaMovil);
-      window.visualViewport.addEventListener('scroll', ajustarAlturaMovil);
-    }
-
     btn2.addEventListener("click", enviarMensaje);
 
     /* =========================================================
@@ -283,18 +278,103 @@ document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
      /* =========================================================
      UTILIDADES MÓVILES: Ajustar altura dinámica
   ========================================================= */
-  function ajustarAltura() {
-    const chatContainer = document.getElementById(".chat-box"); // 👈 asegúrate de usar el id real
-    if (chatContainer && window.visualViewport) {
-      chatContainer.style.height = window.visualViewport.height + "px";
-    }
+    </script>
+<script>
+(function() {
+  // elementos (se buscan de nuevo para evitar dependencias de orden)
+  const chat = document.getElementById('chat');
+  const input = document.getElementById('mensaje');
+  const inputWrapper = document.getElementById('inputWrapper');
+  const titulo = document.getElementById('titulo');
+
+  if (!chat || !input || !inputWrapper || !titulo) {
+    // si falta algo, salimos sin romper la página
+    console.warn('chat/ui elements missing for mobile-helper');
+    return;
   }
 
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", ajustarAltura);
-    window.visualViewport.addEventListener("scroll", ajustarAltura);
-    ajustarAltura(); // ejecutar al cargar
+  // Calcula y aplica la altura disponible al chat para que quede visible junto al teclado
+  function ajustarAlturaMovil() {
+    const vv = window.visualViewport;
+    const viewportHeight = vv ? vv.height : window.innerHeight;
+    const fullWindowInner = window.innerHeight;
+    const inputH = inputWrapper.offsetHeight || 64;
+    // deja un pequeño margen para que no quede pegado (y espacio para safe-area)
+    const margin = 10;
+    const newMax = Math.max(120, Math.floor(viewportHeight - inputH - margin));
+
+    // Aplicamos la altura máxima que el chat puede tener (permitimos scroll interno)
+    chat.style.maxHeight = newMax + 'px';
+    chat.style.overflowY = 'auto';
+
+    // Determinar si consideramos "teclado abierto"
+    // (si viewportHeight es significativamente menor que innerHeight)
+    const keyboardProbablyOpen = vv ? (viewportHeight < fullWindowInner - 100) : false;
+
+    if (keyboardProbablyOpen) {
+      // bloquear scroll del body/página para que no te muevas con barras; solo el chat scrolla
+      document.body.style.overflow = 'hidden';
+      // algunos navegadores requieren fijar la altura para evitar saltos; establecemos una altura explícita
+      document.documentElement.style.height = (viewportHeight) + 'px';
+      document.body.style.height = (viewportHeight) + 'px';
+    } else {
+      // restaurar comportamiento normal
+      document.body.style.overflow = '';
+      document.documentElement.style.height = '';
+      document.body.style.height = '';
+      // fallback: si hay muchos mensajes, dejar que el chat tenga cierto max (desktop-like)
+      chat.style.maxHeight = '';
+    }
+
+    // si hay mensajes, ocultar título; si no, mostrar
+    const hasMessages = !!chat.querySelector('.message');
+    titulo.style.transition = 'opacity 0.18s ease';
+    titulo.style.opacity = hasMessages ? '0' : '1';
+
+    // asegurarnos de que el último mensaje sea visible
+    chat.scrollTop = chat.scrollHeight;
   }
+
+  // Llamadas a listeners: visualViewport (mejor) y fallback resize
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', ajustarAlturaMovil);
+    window.visualViewport.addEventListener('scroll', ajustarAlturaMovil);
+  }
+  window.addEventListener('resize', ajustarAlturaMovil);
+
+  // Auto-grow del textarea (ya tienes algo parecido; esto refuerza)
+  function autoGrow() {
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+    ajustarAlturaMovil();
+  }
+  input.addEventListener('input', autoGrow);
+
+  // Al hacer focus en el input: forzamos recalculo y scroll para que no quede tapado
+  input.addEventListener('focus', () => {
+    setTimeout(() => {
+      ajustarAlturaMovil();
+      input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }, 80);
+  });
+
+  // Al hacer blur (se cierra teclado): restaurar
+  input.addEventListener('blur', () => {
+    setTimeout(ajustarAlturaMovil, 80);
+  });
+
+  // Inicialización
+  window.addEventListener('load', () => {
+    autoGrow();
+    ajustarAlturaMovil();
+  });
+
+  // Exponer helper para tu flujo: si insertas mensajes manualmente, llama esto
+  window.__mobileChatHelpers = {
+    recalc: ajustarAlturaMovil,
+    scrollToBottom: () => { chat.scrollTop = chat.scrollHeight; }
+  };
+})();
 </script>
   
     <script>
@@ -317,6 +397,7 @@ document.addEventListener('click', function(e) {
 </script>
 </body>
 </html>
+
 
 
 
