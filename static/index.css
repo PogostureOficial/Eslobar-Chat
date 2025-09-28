@@ -480,6 +480,9 @@ body.modo-celular {
   vertical-align: middle;
 }
 
+.input-container, .chat-box { transition: bottom .18s ease, height .18s ease; }
+
+
 
 
 
