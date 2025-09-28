@@ -6,7 +6,7 @@ body {
   font-family: Arial, sans-serif;
   background-color: #1d1d1d; /* gris oscuro */
   color: #fff;
-  height: 100vh;
+  min-height: 100vh; /* ANTES ERA height */
   display: flex; /*antes era flex*/
   flex-direction: column;
   align-items: center;
@@ -231,51 +231,55 @@ body:has(.chat-box .message) #titulo {
   opacity: 0; /* título desaparece */
 }
 
-/* ======================================================================================= Ajustes móviles (REEMPLAZAR) =========================================================================================================================== */
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+/* =========================================================
+   Ajustes móviles: más simples y robustos
+   (Reemplazar la sección móvil anterior)
+   ========================================================= */
 
-/* Input adaptado (general) */
-.input-container {
-  width: 100%;
+:root { --kb-offset: 180px; } /* ajusta 120-220 según pruebas reales */
+
+html, body {
+  -webkit-text-size-adjust: 100%; /* evita re-escalado de texto en iOS */
   box-sizing: border-box;
 }
 
-/* ===== MÓVIL: estilos seguros y mejor comportamiento con teclado ===== */
+/* asegurar que el layout empiece arriba en móvil (no centrado) */
 @media screen and (max-width: 768px) {
-  /* No forzamos overflow:hidden en body: eso impide que el teclado empuje la vista */
   html, body {
     margin: 0;
     padding: 0;
-    background-color: #000; /* Fondo oscuro */
-    /* Usar dVh si está disponible (dinámico), fallback a 100vh */
-    height: 100dvh;
-    overflow: auto; /* permitir scroll cuando el teclado lo requiera */
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* IMPORTANT: que no centre verticalmente */
+    align-items: center;
   }
 
-  /* CHAT FIJO - no mueve el resto */
-.chat-box {
-  position: fixed;          /* ✅ saca el chat del flujo */
-  bottom: 80px;             /* deja lugar para el input */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 700px;
-  height: calc(100vh - 160px); /* espacio útil visible */
-  padding: 20px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
-  transition: transform 0.25s ease; /* para el efecto */
-  box-sizing: border-box;
-}
+  /* Chat: fijo y con altura calculada por JS/visualViewport */
+  .chat-box {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 110px; /* espacio por defecto arriba del input; JS ajustará si hace falta */
+    width: calc(100% - 24px);
+    max-width: 700px;
+    height: calc(100vh - 160px); /* fallback; JS ajustará con visualViewport */
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    box-sizing: border-box;
+    transition: transform 0.18s ease, height 0.18s ease;
+    z-index: 1000;
+  }
 
-
-  /* Input fijo abajo: centrado horizontalmente y con safe-area */
+  /* Input fijo abajo y encima del chat */
   .input-container {
     position: fixed;
     left: 50%;
@@ -285,59 +289,49 @@ body {
     max-width: 700px;
     margin: 0;
     padding: 10px 14px;
-    border: 2px solid #5a5a5a;
     border-radius: 25px;
     background: #1a1a1a;
     display: flex;
     align-items: center;
-    z-index: 2200;
+    z-index: 2200; /* siempre encima */
     box-sizing: border-box;
+    border: 2px solid #5a5a5a;
   }
 
-  /* Texto del input */
   #mensaje {
-    color: #fff;
-    font-size: 15px;
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
+    font-size: 16px; /* evitar auto-zoom en iOS */
     min-height: 1.6em;
     max-height: 7.5em;
     overflow-y: auto;
     line-height: 1.4;
     resize: none;
+    background: transparent;
+    border: none;
+    outline: none;
   }
 
-  #mensaje::placeholder {
-    color: #aaa;
-  }
-
-  /* Título: visible en móvil hasta que JS lo oculte (no forzamos !important) */
   #titulo {
     position: relative;
     top: 8px;
     text-align: center;
     font-size: 1.15rem;
-    margin: 10px 0;
+    margin: 10px 0 12px 0;
     opacity: 1;
+    z-index: 2100; /* sobre el chat si hiciera falta */
     transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 2100;
   }
 
-  /* Mensajes del bot */
-  .bot {
-    background: #000;
-    color: #fff;
-    align-self: flex-start;
-  }
-
-  /* Evitar que el contenido quede bajo el input cuando no hay JS: pequeño padding inferior */
+  /* pequeño padding al final del chat para que no quede oculto por el input */
   .chat-box::after {
     content: "";
     display: block;
-    height: 92px; /* espacio visual para que el último mensaje no quede oculto por el input */
+    height: 120px;
     width: 1px;
+  }
+
+  /* cuando el teclado está abierto, mover el chat arriba con una clase */
+  body.keyboard-open .chat-box {
+    transform: translate(-50%, -10%); /* sube un poco; JS puede variar */
   }
 }
 
@@ -486,20 +480,7 @@ body.modo-celular {
   vertical-align: middle;
 }
 
-/* ---- Simple: cuando el teclado está abierto, sube el chat ---- */
-:root { --kb-offset: 180px; } /* ajustá 120-200px según tu teléfono */
-.chat-box { will-change: transform; transition: transform 0.22s ease; position: relative; }
 
-/* Clase que aplicaremos desde JS */
-body.keyboard-open .chat-box {
-  transform: translateY(calc(-1 * var(--kb-offset)));
-  z-index: 1200;
-}
-
-/* Asegúrate que el input quede encima */
-body.keyboard-open .input-container {
-  z-index: 1300;
-}
 
 
 
