@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 🔑 Cargar la API key desde una variable de entorno
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # 🏠 Ruta principal: sirve el index.html
 @app.route('/')
@@ -71,6 +71,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
