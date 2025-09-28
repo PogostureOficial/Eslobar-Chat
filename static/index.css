@@ -276,8 +276,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: #000; /* Fondo oscuro */
-    height: 100%;
-    overflow: hidden; /* evita scroll global */
+    height: 100dvh;            /* fuerza al alto visible */
+    overflow: hidden !important; /* elimina cualquier scroll */
   }
 
   /* Contenedor principal del chat */
@@ -289,15 +289,19 @@ body {
   }
 
   /* Zona de mensajes */
-  .messages {
-    flex: 1;               /* ocupa todo el espacio disponible */
-    overflow-y: auto;      /* scroll solo en mensajes */
+  .chat-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;       /* scroll solo en los mensajes */
     padding: 10px;
+    height: calc(100dvh - 70px); /* resto del espacio menos input */
   }
 
   /* Input fijo abajo */
   .input-container {
-    position: sticky;
+    position: fixed;
     bottom: 0;
     width: 95%;
     margin: 10px auto;
@@ -321,6 +325,14 @@ body {
 
   #mensaje::placeholder {
     color: #aaa;
+  }
+
+  #titulo {
+    position: relative;
+    top: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    opacity: 1 !important;  /* evita que desaparezca en móviles */
   }
 
   /* Mensajes del bot */
@@ -474,6 +486,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
