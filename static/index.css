@@ -239,24 +239,24 @@ body {
 
 /* Input adaptado */
 .input-container {
-  width: 100%;  /* antes 150%, ahora siempre ancho pantalla */
+  width: 100%;  
   box-sizing: border-box;
 }
 
 /* En móviles, limitar altura del chat */
 @media (max-width: 767px) {
   body:has(.chat-box .message) .chat-box {
-    height: 50vh; /* en móviles no tan alto, se adapta mejor */
+    height: 50vh; 
   }
 }
 
-/* ==== Contenedor de input móvil / celular ==== */
+/* ==== Variables globales para input ==== */
 :root {
-  --input-bg-color: #242424;       /* color de fondo del input */
-  --input-text-color: #fff;        /* color del placeholder y texto */
-  --input-font-size: 16px;         /* tamaño de fuente */
-  --input-width: 90%;              /* ancho del contenedor */
-  --input-max-height: 5em;         /* altura máxima */
+  --input-bg-color: #000000;       
+  --input-text-color: #fff;        
+  --input-font-size: 16px;         
+  --input-width: 90%;              
+  --input-max-height: 5em;         
 }
 
 .input-container {
@@ -270,19 +270,43 @@ body {
   max-height: var(--input-max-height);
 }
 
-/* Ajustes específicos para móviles (smartphones) */
+/* ===== Ajustes específicos para móviles ===== */
 @media screen and (max-width: 768px) {
+  /* Fondo y texto distintos en móvil */
+  body {
+    background-color: #1e1e2f; /* Fondo oscuro */
+    color: #f0f0f0;           /* Texto claro */
+  }
+
+  /* Chat box adaptada */
+  .chat-box {
+    width: 100%;
+    height: 80vh;             /* Que ocupe casi toda la pantalla */
+    margin: 0;
+    border-radius: 0;
+    background: #2a2a40;      /* Fondo distinto en móvil */
+    display: flex;
+    flex-direction: column-reverse; /* mensajes arriba, input abajo */
+    padding: 10px;
+  }
+
+  .chat-box .message {
+    font-size: 14px;          /* Texto más compacto */
+    line-height: 1.3;
+  }
+
   .input-container {
-    width: 95%;      /* más ancho en móvil */
+    width: 95%;      
     padding: 5px 12px; 
     border-radius: 25px;
+    background: #1e1e2f;      /* Input del mismo tono que el fondo */
   }
 
   #mensaje {
-    font-size: 14px; /* tamaño más pequeño */
+    font-size: 14px;
+    color: #fff;
   }
 }
-
 
 /* ==== Simulación móvil en PC ==== */
 body.modo-celular {
@@ -426,6 +450,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
