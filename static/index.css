@@ -231,111 +231,6 @@ body:has(.chat-box .message) #titulo {
   opacity: 0; /* título desaparece */
 }
 
-/* =========================================================
-   Ajustes móviles: más simples y robustos
-   (Reemplazar la sección móvil anterior)
-   ========================================================= */
-
-:root { --kb-offset: 180px; } /* ajusta 120-220 según pruebas reales */
-
-html, body {
-  -webkit-text-size-adjust: 100%; /* evita re-escalado de texto en iOS */
-  box-sizing: border-box;
-}
-
-/* asegurar que el layout empiece arriba en móvil (no centrado) */
-@media screen and (max-width: 768px) {
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    background-color: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* IMPORTANT: que no centre verticalmente */
-    align-items: center;
-  }
-
-  /* Chat: fijo y con altura calculada por JS/visualViewport */
-  .chat-box {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 110px; /* espacio por defecto arriba del input; JS ajustará si hace falta */
-    width: calc(100% - 24px);
-    max-width: 700px;
-    height: calc(100vh - 160px); /* fallback; JS ajustará con visualViewport */
-    padding: 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    border-radius: 16px;
-    box-sizing: border-box;
-    transition: transform 0.18s ease, height 0.18s ease;
-    z-index: 1000;
-  }
-
-  /* Input fijo abajo y encima del chat */
-  .input-container {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: env(safe-area-inset-bottom, 12px);
-    width: calc(100% - 24px);
-    max-width: 700px;
-    margin: 0;
-    padding: 10px 14px;
-    border-radius: 25px;
-    background: #1a1a1a;
-    display: flex;
-    align-items: center;
-    z-index: 2200; /* siempre encima */
-    box-sizing: border-box;
-    border: 2px solid #5a5a5a;
-  }
-
-  #mensaje {
-    font-size: 16px; /* evitar auto-zoom en iOS */
-    min-height: 1.6em;
-    max-height: 7.5em;
-    overflow-y: auto;
-    line-height: 1.4;
-    resize: none;
-    background: transparent;
-    border: none;
-    outline: none;
-  }
-
-  #titulo {
-    position: relative;
-    top: 8px;
-    text-align: center;
-    font-size: 1.15rem;
-    margin: 10px 0 12px 0;
-    opacity: 1;
-    z-index: 2100; /* sobre el chat si hiciera falta */
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-
-  /* pequeño padding al final del chat para que no quede oculto por el input */
-  .chat-box::after {
-    content: "";
-    display: block;
-    height: 120px;
-    width: 1px;
-  }
-
-  /* cuando el teclado está abierto, mover el chat arriba con una clase */
-  body.keyboard-open .chat-box {
-    transform: translate(-50%, -10%); /* sube un poco; JS puede variar */
-  }
-}
-
-
 
 /* ==== Simulación móvil en PC ==== */
 body.modo-celular {
@@ -480,7 +375,8 @@ body.modo-celular {
   vertical-align: middle;
 }
 
-.input-container, .chat-box { transition: bottom .18s ease, height .18s ease; }
+
+
 
 
 
