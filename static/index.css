@@ -252,7 +252,7 @@ body {
 
 /* ==== Variables globales para input ==== */
 :root {
-  --input-bg-color: #000000;       
+  --input-bg-color: #242424;       
   --input-text-color: #fff;        
   --input-font-size: 16px;         
   --input-width: 90%;              
@@ -450,6 +450,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
