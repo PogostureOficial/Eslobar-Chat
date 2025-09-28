@@ -376,6 +376,18 @@ document.addEventListener('DOMContentLoaded', function() {
   // Exponer selectVersion para los onclick inline existentes
   window.selectVersion = selectVersion;
 });
+
+  
+</script>
+
+  <script>
+  const input = document.getElementById('mensaje');
+  input.addEventListener('focus', () => {
+    document.body.classList.add('keyboard-open');
+  });
+  input.addEventListener('blur', () => {
+    document.body.classList.remove('keyboard-open');
+  });
 </script>
 
 </body>
