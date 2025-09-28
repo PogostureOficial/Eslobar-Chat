@@ -15,7 +15,6 @@
     <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
   </div>
   <div class="menu-dropdown" id="dropdownMenu">
-    
     <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
       <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
       <div class="menu-text">
@@ -42,361 +41,346 @@
       </div>
       <span class="checkmark">✔</span>
     </div>
-
   </div>
 </div>
 
+<!-- Título inicial -->
+<div id="titulo">¿En qué puedo ayudarte hoy?</div>
 
-  <!-- Título inicial -->
-  <div id="titulo">¿En qué puedo ayudarte hoy?</div>
+<!-- Contenedor del chat -->
+<div id="chat" class="chat-box"></div>
 
-  <!-- Contenedor del chat -->
-  <div id="chat" class="chat-box"></div>
+<!-- Entrada de texto y botón -->
+<div class="input-container" id="inputWrapper">
+  <textarea 
+    id="mensaje" 
+    rows="1" 
+    placeholder="Pregunta lo que quieras..." 
+    onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();enviarMensaje()}"
+  ></textarea>
 
-  <!-- Entrada de texto y botón -->
-  <div class="input-container" id="inputWrapper">
-    <textarea 
-      id="mensaje" 
-      rows="1" 
-      placeholder="Pregunta lo que quieras..." 
-      onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();enviarMensaje()}"
-    ></textarea>
-
-    <div class="voice-btn" id="voiceBtn" aria-hidden="true">
-      <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
-      <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
-    </div>
+  <div class="voice-btn" id="voiceBtn" aria-hidden="true">
+    <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
+    <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
   </div>
+</div>
 
-  <!-- Archivo de configuración: cambiar URL backend según entorno -->
-  <script src="/static/config.js"></script>
+<!-- Archivo de configuración: cambiar URL backend según entorno -->
+<script src="/static/config.js"></script>
 
-  <link rel="icon" type="image/png" href="/static/icon.png">
+<link rel="icon" type="image/png" href="/static/icon.png">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-
-
-
-
-  <script>
-    
-    /* =========================================================
-       VARIABLES GLOBALES
-    ========================================================= */
-    const input = document.getElementById('mensaje');
-    const chat = document.getElementById("chat");
-    const titulo = document.getElementById("titulo");
-    const btn1 = document.getElementById('btn1'); // mic
-    const btn2 = document.getElementById('btn2'); // enviar
-
-    let animBtn1 = null, animBtn2 = null;
-    let previousHasText = false;
-    const D = 250; // duración animaciones
-    const easing = 'cubic-bezier(.22,1,.36,1)';
-
-    // BACKEND: usa CONFIG.BACKEND_URL si existe, si no -> '/ask'
-const BACKEND_URL = (typeof CONFIG !== 'undefined' && CONFIG.BACKEND_URL) ? CONFIG.BACKEND_URL : '/ask';
-
-    const menuArrow = document.querySelector('.menu-arrow');
-const dropdownMenu = document.getElementById('dropdownMenu');
-
-    /* =========================================================
-       UTILIDADES
-    ========================================================= */
-    function parseBold(text) {
-      return text.replace(/\*(.*?)\*/g, '<b>$1</b>');
-    }
-
-    function addBotMessage() {
-      const botMsg = document.createElement("div");
-      botMsg.className = "message bot";
-      chat.appendChild(botMsg);
-      return botMsg;
-    }
-
-    function typeWriterEffect(container, text = '', speed = 15) {
-      return new Promise((resolve) => {
-        if (!text) return resolve();
-        const parsed = marked.parse(text);
-        let i = 0;
-        const interval = setInterval(() => {
-          container.innerHTML = parsed.slice(0, i + 1);
-          if (container.parentElement) {
-            container.parentElement.scrollTop = container.parentElement.scrollHeight;
-          }
-          if (++i >= parsed.length) {
-            clearInterval(interval);
-            resolve();
-          }
-        }, speed);
-      });
-    }
-
-    let selectedPlan = localStorage.getItem('selectedPlan') || 'basic';
-
-function selectVersion(plan) {
-  selectedPlan = plan;
-  localStorage.setItem('selectedPlan', plan);
-  updateSelectedPlanUI();
-
-  // Cerrar menú al seleccionar
-  document.getElementById('dropdownMenu').style.display = 'none';
-}
-
-function updateSelectedPlanUI() {
-  const items = document.querySelectorAll('.menu-item');
-  items.forEach(item => {
-    if (item.dataset.plan === selectedPlan) {
-      item.classList.add('active');
-    } else {
-      item.classList.remove('active');
-    }
-  });
-}
-
-// 🔹 Llamar al cargar la página para restaurar selección
-document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
-
-
-    /* =========================================================
-       ANIMACIONES BOTONES
-    ========================================================= */
-    function cancelAnimsAndFreeze() {
-      [btn1, btn2].forEach((btn, idx) => {
-        let anim = idx === 0 ? animBtn1 : animBtn2;
-        if (anim) {
-          anim.cancel();
-          if (idx === 0) animBtn1 = null; else animBtn2 = null;
-          const cs = getComputedStyle(btn);
-          btn.style.transform = cs.transform === 'none' ? 'scale(1)' : cs.transform;
-          btn.style.opacity = cs.opacity;
-        }
-      });
-    }
-
-    function transitionToBtn2() {
-      cancelAnimsAndFreeze();
-      btn1.style.visibility = 'visible';
-      animBtn1 = btn1.animate(
-        [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
-        { duration: D, easing, fill: 'forwards' }
-      );
-      animBtn1.onfinish = () => {
-        btn1.style.visibility = 'hidden';
-        btn2.style.visibility = 'visible';
-        animBtn2 = btn2.animate(
-          [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
-          { duration: D, easing, fill: 'forwards' }
-        );
-      };
-    }
-
-    function transitionToBtn1() {
-      cancelAnimsAndFreeze();
-      btn2.style.visibility = 'visible';
-      animBtn2 = btn2.animate(
-        [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
-        { duration: D, easing, fill: 'forwards' }
-      );
-      animBtn2.onfinish = () => {
-        btn2.style.visibility = 'hidden';
-        btn1.style.visibility = 'visible';
-        animBtn1 = btn1.animate(
-          [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
-          { duration: D, easing, fill: 'forwards' }
-        );
-      };
-    }
-
-    /* =========================================================
-       EVENTOS
-    ========================================================= */
-    input.addEventListener('input', () => {
-      const hasText = input.value.trim() !== '';
-      if (hasText && !previousHasText) transitionToBtn2();
-      else if (!hasText && previousHasText) transitionToBtn1();
-      previousHasText = hasText;
-      input.style.height = "auto";
-      input.style.height = input.scrollHeight + "px";
-      document.querySelector(".input-container")
-        .classList.toggle("expanded", input.scrollHeight > input.clientHeight);
-    });
-
-    btn2.addEventListener("click", enviarMensaje);
-
-    /* =========================================================
-       MENSAJES
-    ========================================================= */
-    async function enviarMensaje() {
-      const userText = input.value.trim();
-      if (!userText) return;
-
-      titulo.style.opacity = 0;
-      const userMsg = document.createElement("div");
-      userMsg.className = "message user";
-      userMsg.innerHTML = parseBold(userText);
-      chat.appendChild(userMsg);
-
-      input.value = "";
-      input.style.height = "auto";
-      transitionToBtn1();
-      previousHasText = false;
-
-      const loadingMsg = document.createElement("div");
-      loadingMsg.className = "message bot loading";
-      loadingMsg.innerHTML = `<span></span>
-        <video src="/static/videos/anim1.mp4" autoplay loop muted playsinline width="40"></video>`;
-      chat.appendChild(loadingMsg);
-      chat.scrollTop = chat.scrollHeight;
-
-      // 🔹 Fetch al backend (URL configurable en config.js)
-      try {
-        const resp = await fetch(BACKEND_URL, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    message: userText,
-    plan: selectedPlan
-  })
-});
-
-
-        const data = await resp.json();
-
-        if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
-        const botMsg = addBotMessage();
-        await typeWriterEffect(botMsg, data.reply || "⚠️ Error: sin respuesta.", 15);
-
-      } catch (error) {
-        if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
-        const botMsg = addBotMessage();
-        await typeWriterEffect(botMsg, "⚠️ Error al conectar con el servidor.", 15);
-      }
-    }
-
-     /* =========================================================
-     UTILIDADES MÓVILES: Ajustar altura dinámica
-  ========================================================= */
-    </script>
+<!-- ÚNICO BLOQUE JS (unificado y seguro) -->
 <script>
-(function() {
-  // elementos (se buscan de nuevo para evitar dependencias de orden)
-  const chat = document.getElementById('chat');
+document.addEventListener('DOMContentLoaded', function() {
+  /* =========================================================
+     VARIABLES GLOBALES
+  ========================================================= */
   const input = document.getElementById('mensaje');
+  const chat = document.getElementById("chat");
+  const titulo = document.getElementById("titulo");
+  const btn1 = document.getElementById('btn1'); // mic
+  const btn2 = document.getElementById('btn2'); // enviar
   const inputWrapper = document.getElementById('inputWrapper');
-  const titulo = document.getElementById('titulo');
+  const menuArrow = document.querySelector('.menu-arrow');
+  const dropdownMenu = document.getElementById('dropdownMenu');
 
-  if (!chat || !input || !inputWrapper || !titulo) {
-    // si falta algo, salimos sin romper la página
-    console.warn('chat/ui elements missing for mobile-helper');
+  if (!input || !chat || !titulo || !inputWrapper) {
+    console.warn('elementos principales faltan en DOM');
     return;
   }
 
-  // Calcula y aplica la altura disponible al chat para que quede visible junto al teclado
-  function ajustarAlturaMovil() {
-    const vv = window.visualViewport;
-    const viewportHeight = vv ? vv.height : window.innerHeight;
-    const fullWindowInner = window.innerHeight;
-    const inputH = inputWrapper.offsetHeight || 64;
-    // deja un pequeño margen para que no quede pegado (y espacio para safe-area)
-    const margin = 10;
-    const newMax = Math.max(120, Math.floor(viewportHeight - inputH - margin));
+  let animBtn1 = null, animBtn2 = null;
+  let previousHasText = false;
+  const D = 250; // duración animaciones
+  const easing = 'cubic-bezier(.22,1,.36,1)';
 
-    // Aplicamos la altura máxima que el chat puede tener (permitimos scroll interno)
-    chat.style.maxHeight = newMax + 'px';
-    chat.style.overflowY = 'auto';
+  // BACKEND: usa CONFIG.BACKEND_URL si existe, si no -> '/ask'
+  const BACKEND_URL = (typeof CONFIG !== 'undefined' && CONFIG.BACKEND_URL) ? CONFIG.BACKEND_URL : '/ask';
 
-    // Determinar si consideramos "teclado abierto"
-    // (si viewportHeight es significativamente menor que innerHeight)
-    const keyboardProbablyOpen = vv ? (viewportHeight < fullWindowInner - 100) : false;
+  /* =========================================================
+     UTILIDADES
+  ========================================================= */
+  function parseBold(text) {
+    return text.replace(/\*(.*?)\*/g, '<b>$1</b>');
+  }
 
-    if (keyboardProbablyOpen) {
-      // bloquear scroll del body/página para que no te muevas con barras; solo el chat scrolla
-      document.body.style.overflow = 'hidden';
-      // algunos navegadores requieren fijar la altura para evitar saltos; establecemos una altura explícita
-      document.documentElement.style.height = (viewportHeight) + 'px';
-      document.body.style.height = (viewportHeight) + 'px';
-    } else {
-      // restaurar comportamiento normal
-      document.body.style.overflow = '';
-      document.documentElement.style.height = '';
-      document.body.style.height = '';
-      // fallback: si hay muchos mensajes, dejar que el chat tenga cierto max (desktop-like)
-      chat.style.maxHeight = '';
+  function addBotMessage() {
+    const botMsg = document.createElement("div");
+    botMsg.className = "message bot";
+    chat.appendChild(botMsg);
+    return botMsg;
+  }
+
+  function typeWriterEffect(container, text = '', speed = 15) {
+    return new Promise((resolve) => {
+      if (!text) return resolve();
+      const parsed = marked.parse(text);
+      let i = 0;
+      const interval = setInterval(() => {
+        container.innerHTML = parsed.slice(0, i + 1);
+        if (container.parentElement) {
+          container.parentElement.scrollTop = container.parentElement.scrollHeight;
+        }
+        if (++i >= parsed.length) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, speed);
+    });
+  }
+
+  /* =========================================================
+     PLAN SELECTION MENU
+  ========================================================= */
+  let selectedPlan = localStorage.getItem('selectedPlan') || 'basic';
+
+  function selectVersion(plan) {
+    selectedPlan = plan;
+    localStorage.setItem('selectedPlan', plan);
+    updateSelectedPlanUI();
+    // Cerrar menú al seleccionar
+    if (dropdownMenu) dropdownMenu.style.display = 'none';
+  }
+
+  function updateSelectedPlanUI() {
+    const items = document.querySelectorAll('.menu-item');
+    items.forEach(item => {
+      if (item.dataset.plan === selectedPlan) item.classList.add('active');
+      else item.classList.remove('active');
+    });
+  }
+  updateSelectedPlanUI();
+
+  /* =========================================================
+     ANIMACIONES BOTONES
+  ========================================================= */
+  function cancelAnimsAndFreeze() {
+    [btn1, btn2].forEach((btn, idx) => {
+      let anim = idx === 0 ? animBtn1 : animBtn2;
+      if (anim) {
+        anim.cancel();
+        if (idx === 0) animBtn1 = null; else animBtn2 = null;
+        const cs = getComputedStyle(btn);
+        btn.style.transform = cs.transform === 'none' ? 'scale(1)' : cs.transform;
+        btn.style.opacity = cs.opacity;
+      }
+    });
+  }
+
+  function transitionToBtn2() {
+    cancelAnimsAndFreeze();
+    btn1.style.visibility = 'visible';
+    animBtn1 = btn1.animate(
+      [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
+      { duration: D, easing, fill: 'forwards' }
+    );
+    animBtn1.onfinish = () => {
+      btn1.style.visibility = 'hidden';
+      btn2.style.visibility = 'visible';
+      animBtn2 = btn2.animate(
+        [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration: D, easing, fill: 'forwards' }
+      );
+    };
+  }
+
+  function transitionToBtn1() {
+    cancelAnimsAndFreeze();
+    btn2.style.visibility = 'visible';
+    animBtn2 = btn2.animate(
+      [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
+      { duration: D, easing, fill: 'forwards' }
+    );
+    animBtn2.onfinish = () => {
+      btn2.style.visibility = 'hidden';
+      btn1.style.visibility = 'visible';
+      animBtn1 = btn1.animate(
+        [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration: D, easing, fill: 'forwards' }
+      );
+    };
+  }
+
+  /* =========================================================
+     EVENTOS INPUT & BOTONES
+  ========================================================= */
+  input.addEventListener('input', () => {
+    const hasText = input.value.trim() !== '';
+    if (hasText && !previousHasText) transitionToBtn2();
+    else if (!hasText && previousHasText) transitionToBtn1();
+    previousHasText = hasText;
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+    document.querySelector(".input-container")
+      .classList.toggle("expanded", input.scrollHeight > input.clientHeight);
+  });
+
+  btn2.addEventListener("click", enviarMensaje);
+
+  /* =========================================================
+     MENSAJES (ENVIAR)
+  ========================================================= */
+  async function enviarMensaje() {
+    const userText = input.value.trim();
+    if (!userText) return;
+
+    // ocultar título si hay mensaje
+    titulo.style.opacity = 0;
+
+    // mensaje usuario
+    const userMsg = document.createElement("div");
+    userMsg.className = "message user";
+    userMsg.innerHTML = parseBold(userText);
+    chat.appendChild(userMsg);
+
+    // reset input
+    input.value = "";
+    input.style.height = "auto";
+    transitionToBtn1();
+    previousHasText = false;
+
+    // loading
+    const loadingMsg = document.createElement("div");
+    loadingMsg.className = "message bot loading";
+    loadingMsg.innerHTML = `<span></span>
+      <video src="/static/videos/anim1.mp4" autoplay loop muted playsinline width="40"></video>`;
+    chat.appendChild(loadingMsg);
+
+    // recalc móvil + scroll
+    if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) window.__mobileChatHelpers.recalc();
+    else chat.scrollTop = chat.scrollHeight;
+
+    // fetch al backend
+    try {
+      const resp = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userText,
+          plan: selectedPlan
+        })
+      });
+
+      const data = await resp.json();
+
+      if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) window.__mobileChatHelpers.recalc();
+
+      const botMsg = addBotMessage();
+      await typeWriterEffect(botMsg, data.reply || "⚠️ Error: sin respuesta.", 15);
+
+      // asegurar scroll y recalc
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
+
+    } catch (error) {
+      if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
+      const botMsg = addBotMessage();
+      await typeWriterEffect(botMsg, "⚠️ Error al conectar con el servidor.", 15);
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
     }
 
-    // si hay mensajes, ocultar título; si no, mostrar
-    const hasMessages = !!chat.querySelector('.message');
-    titulo.style.transition = 'opacity 0.18s ease';
-    titulo.style.opacity = hasMessages ? '0' : '1';
-
-    // asegurarnos de que el último mensaje sea visible
-    chat.scrollTop = chat.scrollHeight;
+    // devolver foco y recalcular (útil en móviles)
+    input.focus();
+    if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) {
+      setTimeout(() => window.__mobileChatHelpers.recalc(), 120);
+    }
   }
 
-  // Llamadas a listeners: visualViewport (mejor) y fallback resize
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', ajustarAlturaMovil);
-    window.visualViewport.addEventListener('scroll', ajustarAlturaMovil);
-  }
-  window.addEventListener('resize', ajustarAlturaMovil);
+  /* =========================================================
+     MOBILE HELPER: visualViewport + bloqueo scroll body
+  ========================================================= */
+  (function mobileHelper() {
+    function ajustarAlturaMovil() {
+      const vv = window.visualViewport;
+      const viewportHeight = vv ? vv.height : window.innerHeight;
+      const fullWindowInner = window.innerHeight;
+      const inputH = inputWrapper.offsetHeight || 64;
+      const margin = 10;
+      const newMax = Math.max(120, Math.floor(viewportHeight - inputH - margin));
 
-  // Auto-grow del textarea (ya tienes algo parecido; esto refuerza)
-  function autoGrow() {
-    input.style.height = 'auto';
-    input.style.height = input.scrollHeight + 'px';
-    ajustarAlturaMovil();
-  }
-  input.addEventListener('input', autoGrow);
+      chat.style.maxHeight = newMax + 'px';
+      chat.style.overflowY = 'auto';
 
-  // Al hacer focus en el input: forzamos recalculo y scroll para que no quede tapado
-  input.addEventListener('focus', () => {
-    setTimeout(() => {
+      const keyboardProbablyOpen = vv ? (viewportHeight < fullWindowInner - 100) : false;
+
+      if (keyboardProbablyOpen) {
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.height = (viewportHeight) + 'px';
+        document.body.style.height = (viewportHeight) + 'px';
+      } else {
+        document.body.style.overflow = '';
+        document.documentElement.style.height = '';
+        document.body.style.height = '';
+        chat.style.maxHeight = '';
+      }
+
+      const hasMessages = !!chat.querySelector('.message');
+      titulo.style.transition = 'opacity 0.18s ease';
+      titulo.style.opacity = hasMessages ? '0' : '1';
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', ajustarAlturaMovil);
+      window.visualViewport.addEventListener('scroll', ajustarAlturaMovil);
+    }
+    window.addEventListener('resize', ajustarAlturaMovil);
+
+    function autoGrow() {
+      input.style.height = 'auto';
+      input.style.height = input.scrollHeight + 'px';
       ajustarAlturaMovil();
-      input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    }, 80);
-  });
+    }
+    input.addEventListener('input', autoGrow);
 
-  // Al hacer blur (se cierra teclado): restaurar
-  input.addEventListener('blur', () => {
-    setTimeout(ajustarAlturaMovil, 80);
-  });
+    input.addEventListener('focus', () => {
+      setTimeout(() => {
+        ajustarAlturaMovil();
+        input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }, 80);
+    });
+    input.addEventListener('blur', () => {
+      setTimeout(ajustarAlturaMovil, 80);
+    });
 
-  // Inicialización
-  window.addEventListener('load', () => {
-    autoGrow();
-    ajustarAlturaMovil();
-  });
+    window.addEventListener('load', () => {
+      autoGrow();
+      ajustarAlturaMovil();
+    });
 
-  // Exponer helper para tu flujo: si insertas mensajes manualmente, llama esto
-  window.__mobileChatHelpers = {
-    recalc: ajustarAlturaMovil,
-    scrollToBottom: () => { chat.scrollTop = chat.scrollHeight; }
+    window.__mobileChatHelpers = {
+      recalc: ajustarAlturaMovil,
+      scrollToBottom: () => { chat.scrollTop = chat.scrollHeight; }
+    };
+  })();
+
+  /* =========================================================
+     MENU TOGGLE (mantengo tu API)
+  ========================================================= */
+  window.toggleMenu = function() {
+    const showing = dropdownMenu.style.display === 'block';
+    dropdownMenu.style.display = showing ? 'none' : 'block';
+    if (menuArrow) menuArrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(180deg)';
   };
-})();
-</script>
-  
-    <script>
-  // Toggle menu
-function toggleMenu() {
-  const showing = dropdownMenu.style.display === 'block';
-  dropdownMenu.style.display = showing ? 'none' : 'block';
-  if (menuArrow) menuArrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(180deg)';
-}
 
-// Cerrar si se hace clic fuera del menú (pero no si se hace click dentro)
-document.addEventListener('click', function(e) {
-  const menuContainer = document.querySelector('.menu-container');
-  if (menuContainer && !menuContainer.contains(e.target)) {
-    dropdownMenu.style.display = 'none';
-    if (menuArrow) menuArrow.style.transform = 'rotate(0deg)';
-  }
+  document.addEventListener('click', function(e) {
+    const menuContainer = document.querySelector('.menu-container');
+    if (menuContainer && !menuContainer.contains(e.target)) {
+      dropdownMenu.style.display = 'none';
+      if (menuArrow) menuArrow.style.transform = 'rotate(0deg)';
+    }
+  });
+
+  // Exponer selectVersion para los onclick inline existentes
+  window.selectVersion = selectVersion;
 });
-
 </script>
+
 </body>
 </html>
+
 
 
 
