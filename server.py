@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import openai
+from openai import OpenAI
 import traceback
 import os
 
@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 🔑 Cargar la API key desde una variable de entorno
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # 🏠 Ruta principal: sirve el index.html
 @app.route('/')
@@ -49,7 +49,7 @@ def ask():
 
     try:
         # 🔹 Llamada al modelo
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",   # o "gpt-4o-mini" si quieres ese
             messages=[
                 {"role": "system", "content": system_prompt},
@@ -57,7 +57,7 @@ def ask():
             ]
         )
 
-        reply = response.choices[0].message["content"]
+        reply = response.choices[0].message.content
         return jsonify({"reply": reply})
 
     except Exception as e:
@@ -71,6 +71,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
