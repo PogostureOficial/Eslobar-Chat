@@ -292,69 +292,82 @@ document.addEventListener('DOMContentLoaded', function() {
      MOBILE HELPER: visualViewport + bloqueo scroll body
   ========================================================= */
   (function mobileHelper() {
-    function ajustarAlturaMovil() {
-      const vv = window.visualViewport;
-      const viewportHeight = vv ? vv.height : window.innerHeight;
-      const fullWindowInner = window.innerHeight;
-      const inputH = inputWrapper.offsetHeight || 64;
-      const margin = 10;
-      const newMax = Math.max(120, Math.floor(viewportHeight - inputH - margin));
+  const vv = window.visualViewport;
+  const MIN_CHAT_HEIGHT = 120; // px
 
-      chat.style.maxHeight = newMax + 'px';
-      chat.style.overflowY = 'auto';
+  function ajustarAlturaMovil() {
+    const viewportHeight = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    const inputH = inputWrapper.offsetHeight || 64;
+    const margin = 8;
 
-      const keyboardProbablyOpen = vv ? (viewportHeight < fullWindowInner - 100) : false;
+    // Establecemos la altura útil del chat para que nunca quede debajo del input
+    const usable = Math.max(MIN_CHAT_HEIGHT, Math.floor(viewportHeight - inputH - margin));
+    chat.style.height = usable + 'px';
+    chat.style.maxHeight = usable + 'px';
+    chat.style.overflowY = 'auto';
 
-      if (keyboardProbablyOpen) {
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.height = (viewportHeight) + 'px';
-        document.body.style.height = (viewportHeight) + 'px';
-      } else {
-        document.body.style.overflow = '';
-        document.documentElement.style.height = '';
-        document.body.style.height = '';
-        chat.style.maxHeight = '';
-      }
-
-      const hasMessages = !!chat.querySelector('.message');
-      titulo.style.transition = 'opacity 0.18s ease';
-      titulo.style.opacity = hasMessages ? '0' : '1';
-      chat.scrollTop = chat.scrollHeight;
+    // Ajustar posición del chat respecto al input (en móviles)
+    // Ponemos bottom del chat en (input height + 18px) para mantener espacio
+    if (window.innerWidth <= 768) {
+      const bottomOffset = inputH + 18;
+      chat.style.bottom = bottomOffset + 'px';
+    } else {
+      chat.style.bottom = '';
     }
 
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', ajustarAlturaMovil);
-      window.visualViewport.addEventListener('scroll', ajustarAlturaMovil);
-    }
-    window.addEventListener('resize', ajustarAlturaMovil);
+    // detectar teclado por cambio de visualViewport (si existe)
+    const fullWindowInner = window.innerHeight;
+    const keyboardProbablyOpen = vv ? (viewportHeight < fullWindowInner - 100) : false;
 
-    function autoGrow() {
-      input.style.height = 'auto';
-      input.style.height = input.scrollHeight + 'px';
-      ajustarAlturaMovil();
-    }
-    input.addEventListener('input', autoGrow);
+    // sólo togglear la clase; NO forzar overflow:hidden en body (evita bugs con el teclado)
+    document.body.classList.toggle('keyboard-open', !!keyboardProbablyOpen);
 
-    input.addEventListener('focus', () => {
-      setTimeout(() => {
-        ajustarAlturaMovil();
-        input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-      }, 80);
-    });
-    input.addEventListener('blur', () => {
-      setTimeout(ajustarAlturaMovil, 80);
-    });
+    // titulo visible solo si no hay mensajes
+    const hasMessages = !!chat.querySelector('.message');
+    titulo.style.opacity = hasMessages ? '0' : '1';
 
-    window.addEventListener('load', () => {
+    // mantener scroll abajo
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  // listeners
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', ajustarAlturaMovil, { passive: true });
+    window.visualViewport.addEventListener('scroll', ajustarAlturaMovil, { passive: true });
+  }
+  window.addEventListener('resize', ajustarAlturaMovil);
+
+  // auto-grow textarea
+  function autoGrow() {
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+    ajustarAlturaMovil();
+  }
+  input.addEventListener('input', autoGrow);
+
+  input.addEventListener('focus', () => {
+    // recalcula rápido al enfocar para dejar espacio al teclado
+    setTimeout(() => {
       autoGrow();
       ajustarAlturaMovil();
-    });
+      input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }, 80);
+  });
+  input.addEventListener('blur', () => {
+    setTimeout(ajustarAlturaMovil, 80);
+  });
 
-    window.__mobileChatHelpers = {
-      recalc: ajustarAlturaMovil,
-      scrollToBottom: () => { chat.scrollTop = chat.scrollHeight; }
-    };
-  })();
+  window.addEventListener('load', () => {
+    autoGrow();
+    ajustarAlturaMovil();
+  });
+
+  // helpers expuestos (mantener compatibilidad)
+  window.__mobileChatHelpers = {
+    recalc: ajustarAlturaMovil,
+    scrollToBottom: () => { chat.scrollTop = chat.scrollHeight; }
+  };
+})();
 
   /* =========================================================
      MENU TOGGLE (mantengo tu API)
@@ -381,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
   <script>
-(function(){
+(function() {
   const chat = document.getElementById('chat');
   const input = document.getElementById('mensaje');
   if (!chat || !input) {
@@ -389,16 +402,13 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  const THRESHOLD = 120; // px: cuánto debe reducirse la viewport para considerar "teclado abierto"
+  const THRESHOLD = 120; // px
 
   function setKeyboard(open) {
     document.body.classList.toggle('keyboard-open', !!open);
+    // No cambiamos document.body.style.overflow aquí (evita comportamiento errático)
     if (open) {
-      // opcional: evitar que la página se mueva
-      document.body.style.overflow = 'hidden';
       setTimeout(()=> chat.scrollTop = chat.scrollHeight, 120);
-    } else {
-      document.body.style.overflow = '';
     }
   }
 
@@ -408,31 +418,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const diff = window.innerHeight - visibleH;
     const keyboardOpen = diff > THRESHOLD;
     setKeyboard(keyboardOpen);
-    // DEBUG (descomentar si necesitás ver en consola)
-    // console.log('kbd?', keyboardOpen, 'innerH', window.innerHeight, 'vv.h', visibleH, 'diff', diff);
   }
 
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', onViewportChange, {passive:true});
     window.visualViewport.addEventListener('scroll', onViewportChange, {passive:true});
   } else {
-    // Fallback simple: focus/blur
     input.addEventListener('focus', ()=> setKeyboard(true));
     input.addEventListener('blur',  ()=> setKeyboard(false));
     window.addEventListener('resize', onViewportChange, {passive:true});
   }
 
-  // fuerza recalculo corto cuando el input recibe focus
   input.addEventListener('focus', ()=> setTimeout(onViewportChange, 100));
   input.addEventListener('blur',  ()=> setTimeout(onViewportChange, 120));
-
-  // inicial
   setTimeout(onViewportChange, 200);
 })();
 </script>
 
 </body>
 </html>
+
 
 
 
