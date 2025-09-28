@@ -218,10 +218,7 @@ input::placeholder {
   transition: all 0.3s ease;
 }
 
-/* Al haber mensajes → se expande */
-body:has(.chat-box .message) .chat-box {
-  height: 60vh; /* en PC */
-}
+
 
 body:has(.chat-box .message) #titulo {
   opacity: 0; /* título desaparece */
@@ -370,6 +367,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
