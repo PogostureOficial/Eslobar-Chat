@@ -482,11 +482,22 @@ body.modo-celular {
   vertical-align: middle;
 }
 
-/* Cuando el teclado está abierto en móvil */
+/* ---- Simple: cuando el teclado está abierto, sube el chat ---- */
+:root { --kb-offset: 180px; } /* ajustá 120-200px según tu teléfono */
+.chat-box { will-change: transform; transition: transform 0.22s ease; position: relative; }
+
+/* Clase que aplicaremos desde JS */
 body.keyboard-open .chat-box {
-  transform: translateY(850px); /* ajustá según tu teclado (120-200px aprox) */
-  transition: transform 0.25s ease;
+  transform: translateY(calc(-1 * var(--kb-offset)));
+  z-index: 1200;
 }
+
+/* Asegúrate que el input quede encima */
+body.keyboard-open .input-container {
+  z-index: 1300;
+}
+
+
 
 
 
