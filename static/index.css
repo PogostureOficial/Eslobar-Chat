@@ -43,10 +43,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* ==== Expansión del chat al aparecer el primer mensaje ==== */
-body:has(.chat-box .message) .chat-box {
-  height: 90vh; /* ← Cambia 60vh al tamaño que quieras */
-}
 
 
 body:has(.chat-box .message) #titulo {
@@ -374,6 +370,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
