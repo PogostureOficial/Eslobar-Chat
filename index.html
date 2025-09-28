@@ -280,22 +280,21 @@ document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
       }
     }
 
-    /* =========================================================
-       UTILIDADES MÓVILES
-    ========================================================= */
-    function ajustarAlturaMovil() {
-      if (window.visualViewport) {
-        const vh = window.visualViewport.height;
-        document.body.style.height = vh + 'px';
-      }
+     /* =========================================================
+     UTILIDADES MÓVILES: Ajustar altura dinámica
+  ========================================================= */
+  function ajustarAltura() {
+    const chatContainer = document.getElementById("chat-container"); // 👈 asegúrate de usar el id real
+    if (chatContainer && window.visualViewport) {
+      chatContainer.style.height = window.visualViewport.height + "px";
     }
+  }
 
-    const toggleBtn = document.getElementById("toggleViewBtn");
-    if (toggleBtn) {
-      toggleBtn.addEventListener("click", () => {
-        document.body.classList.toggle("modo-celular");
-      });
-    }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", ajustarAltura);
+    window.visualViewport.addEventListener("scroll", ajustarAltura);
+    ajustarAltura(); // ejecutar al cargar
+  }
 </script>
   
     <script>
@@ -318,6 +317,7 @@ document.addEventListener('click', function(e) {
 </script>
 </body>
 </html>
+
 
 
 
