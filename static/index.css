@@ -256,20 +256,24 @@ body {
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Contenedor principal del chat: usa altura flexible (JS mejora con visualViewport) */
-  .chat-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 10px;
-    margin-bottom: 0;
-    /* fallback práctico: el chat ocupa casi toda la pantalla menos el espacio del input */
-    max-height: calc(100dvh - 88px);
-    height: auto;
-    overflow-y: auto;
-    transition: max-height 0.18s ease, height 0.18s ease;
-    box-sizing: border-box;
-  }
+  /* CHAT FIJO - no mueve el resto */
+.chat-box {
+  position: fixed;          /* ✅ saca el chat del flujo */
+  bottom: 80px;             /* deja lugar para el input */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 700px;
+  height: calc(100vh - 160px); /* espacio útil visible */
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  transition: transform 0.25s ease; /* para el efecto */
+  box-sizing: border-box;
+}
+
 
   /* Input fijo abajo: centrado horizontalmente y con safe-area */
   .input-container {
@@ -496,6 +500,7 @@ body.keyboard-open .chat-box {
 body.keyboard-open .input-container {
   z-index: 1300;
 }
+
 
 
 
