@@ -381,17 +381,59 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
   <script>
+(function(){
+  const chat = document.getElementById('chat');
   const input = document.getElementById('mensaje');
-  input.addEventListener('focus', () => {
-    document.body.classList.add('keyboard-open');
-  });
-  input.addEventListener('blur', () => {
-    document.body.classList.remove('keyboard-open');
-  });
+  if (!chat || !input) {
+    console.warn('keyboard-toggle: falta #chat o #mensaje');
+    return;
+  }
+
+  const THRESHOLD = 120; // px: cuánto debe reducirse la viewport para considerar "teclado abierto"
+
+  function setKeyboard(open) {
+    document.body.classList.toggle('keyboard-open', !!open);
+    if (open) {
+      // opcional: evitar que la página se mueva
+      document.body.style.overflow = 'hidden';
+      setTimeout(()=> chat.scrollTop = chat.scrollHeight, 120);
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function onViewportChange() {
+    const vv = window.visualViewport;
+    const visibleH = vv ? vv.height : window.innerHeight;
+    const diff = window.innerHeight - visibleH;
+    const keyboardOpen = diff > THRESHOLD;
+    setKeyboard(keyboardOpen);
+    // DEBUG (descomentar si necesitás ver en consola)
+    // console.log('kbd?', keyboardOpen, 'innerH', window.innerHeight, 'vv.h', visibleH, 'diff', diff);
+  }
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', onViewportChange, {passive:true});
+    window.visualViewport.addEventListener('scroll', onViewportChange, {passive:true});
+  } else {
+    // Fallback simple: focus/blur
+    input.addEventListener('focus', ()=> setKeyboard(true));
+    input.addEventListener('blur',  ()=> setKeyboard(false));
+    window.addEventListener('resize', onViewportChange, {passive:true});
+  }
+
+  // fuerza recalculo corto cuando el input recibe focus
+  input.addEventListener('focus', ()=> setTimeout(onViewportChange, 100));
+  input.addEventListener('blur',  ()=> setTimeout(onViewportChange, 120));
+
+  // inicial
+  setTimeout(onViewportChange, 200);
+})();
 </script>
 
 </body>
 </html>
+
 
 
 
