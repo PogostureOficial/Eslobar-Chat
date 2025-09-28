@@ -303,6 +303,11 @@ body {
     border: 2px solid #414141;  /* cambia el color del borde, ej. verde *//* Input del mismo tono que el fondo */
   }
 
+  .bot {
+    background: #000000;  /* azul oscuro */
+    color: #ffffff;       /* texto blanco */
+  }
+
   #mensaje {
     font-size: 14px;
     color: #fff;
@@ -310,11 +315,6 @@ body {
 
   #mensaje::placeholder {
     color: #afafaf;   /* cambia el color del placeholder */
-  }
-
-  .bot-message {
-    background: #000000;  /* azul oscuro */
-    color: #ffffff;       /* texto blanco */
   }
 }
 
@@ -460,6 +460,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
