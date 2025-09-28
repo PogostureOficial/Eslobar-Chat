@@ -484,9 +484,10 @@ body.modo-celular {
 
 /* Cuando el teclado está abierto en móvil */
 body.keyboard-open .chat-box {
-  transform: translateY(-150px); /* ajustá según tu teclado (120-200px aprox) */
+  transform: translateY(850px); /* ajustá según tu teclado (120-200px aprox) */
   transition: transform 0.25s ease;
 }
+
 
 
 
