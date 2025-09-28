@@ -15,27 +15,34 @@
     <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
   </div>
   <div class="menu-dropdown" id="dropdownMenu">
-    <div class="menu-item">
+    
+    <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
       <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
       <div class="menu-text">
         <div class="menu-title-version">Eslobar</div>
         <div class="menu-description">Versión básica. Con límite de preguntas y pocas materias.</div>
       </div>
+      <span class="checkmark">✔</span>
     </div>
-    <div class="menu-item">
+
+    <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
       <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
       <div class="menu-text">
         <div class="menu-title-version">Eslobar Plus (La más comprada)</div>
-        <div class="menu-description">Version mas avanzada. Explicaciones más detalladas, acceso a más materias y sin límite de preguntas. La version ideal para estudiar con ayuda motivadora.</div>
+        <div class="menu-description">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
       </div>
+      <span class="checkmark">✔</span>
     </div>
-    <div class="menu-item">
+
+    <div class="menu-item" data-plan="pro" onclick="selectVersion('pro')">
       <img src="/static/images/pro.png" alt="Eslobar Pro" class="menu-icon">
       <div class="menu-text">
-        <div class="menu-title-version">Eslobar Pro </div>
-        <div class="menu-description">Nuestra version mas inteligente. Herramientas de estudio profecionales y acceso a todas las materias.</div>
+        <div class="menu-title-version">Eslobar Pro</div>
+        <div class="menu-description">Herramientas profesionales y acceso a todas las materias.</div>
       </div>
+      <span class="checkmark">✔</span>
     </div>
+
   </div>
 </div>
 
@@ -68,7 +75,40 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
+<!-- Seleccionar plan -->
   <script>
+  let selectedPlan = localStorage.getItem('selectedPlan') || 'basic';
+
+  function selectVersion(plan) {
+    selectedPlan = plan;
+    localStorage.setItem('selectedPlan', plan);
+    updateSelectedPlanUI();
+
+    // Cerrar menú
+    document.getElementById('dropdownMenu').style.display = 'none';
+  }
+
+  function updateSelectedPlanUI() {
+    const items = document.querySelectorAll('.menu-item');
+    items.forEach(item => {
+      const checkmark = item.querySelector('.checkmark');
+      if (item.dataset.plan === selectedPlan) {
+        item.classList.add('active');
+        checkmark.style.display = 'inline';
+      } else {
+        item.classList.remove('active');
+        checkmark.style.display = 'none';
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
+</script>
+
+
+
+  <script>
+    
     /* =========================================================
        VARIABLES GLOBALES
     ========================================================= */
@@ -114,6 +154,32 @@
         }, speed);
       });
     }
+
+    let selectedPlan = localStorage.getItem('selectedPlan') || 'basic';
+
+function selectVersion(plan) {
+  selectedPlan = plan;
+  localStorage.setItem('selectedPlan', plan);
+  updateSelectedPlanUI();
+
+  // Cerrar menú al seleccionar
+  document.getElementById('dropdownMenu').style.display = 'none';
+}
+
+function updateSelectedPlanUI() {
+  const items = document.querySelectorAll('.menu-item');
+  items.forEach(item => {
+    if (item.dataset.plan === selectedPlan) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+}
+
+// 🔹 Llamar al cargar la página para restaurar selección
+document.addEventListener('DOMContentLoaded', updateSelectedPlanUI);
+
 
     /* =========================================================
        ANIMACIONES BOTONES
@@ -216,7 +282,10 @@
         const response = await fetch(CONFIG.BACKEND_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: userText }),
+          body: JSON.stringify({ 
+            message: userText,
+            plan: selectedPlan 
+          }// 🔹 Enviar versión al servidor
         });
 
         const data = await response.json();
@@ -253,7 +322,7 @@
     <script>
   function toggleMenu() {
     const menu = document.getElementById('dropdownMenu');
-    const arrow = document.querySelector('.arrow');
+    const arrow = document.querySelector('.menu-arrow');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     arrow.style.transform = menu.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
   }
@@ -270,6 +339,7 @@
 </script>
 </body>
 </html>
+
 
 
 
