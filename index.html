@@ -249,10 +249,11 @@ document.addEventListener('DOMContentLoaded', function() {
      MENSAJES (ENVIAR)
   ========================================================= */
   async function enviarMensaje() {
-   const mensaje = document.getElementById("mensaje").value.trim();
-  if (!mensaje) return;
+    const userText = input.value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+    if (!userText) return;
 
-  const chatContainer = document.querySelector(".chat-container");
+    const chatContainer = document.querySelector(".chat-container");
 
   // Cuando se manda el primer mensaje
   if (!chatContainer.classList.contains("active")) {
@@ -427,6 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
 
 
