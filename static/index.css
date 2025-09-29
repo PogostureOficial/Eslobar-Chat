@@ -6,7 +6,7 @@ body {
   font-family: Arial, sans-serif;
   background-color: #1d1d1d; /* gris oscuro */
   color: #fff;
-  height: 100dvh; /* ANTES ERA height */
+  height: 100vh; /* ANTES ERA height */
   display: flex; /*antes era flex*/
   flex-direction: column;
   align-items: center;
@@ -367,6 +367,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
