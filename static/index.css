@@ -27,7 +27,7 @@ body {
 
 /* Caja de mensajes (chat centrado con borde fino) */
 .chat-box {
-  flex: none;
+  flex: 1;
   width: 100%;
   max-width: 700px;
   height: 2vh;
@@ -367,6 +367,7 @@ body.modo-celular {
   transition: transform 0.3s ease;
   vertical-align: middle;
 }
+
 
 
 
