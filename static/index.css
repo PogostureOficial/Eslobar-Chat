@@ -310,13 +310,13 @@ body.modo-celular {
 }
 
 .menu-item.active {
-  background-color: rgba(0, 128, 255, 0.1); /* Fondo resaltado */
-  border: 1px solid rgba(0, 128, 255, 0.3);
+  background-color: hsla(0, 0%, 76%, 0.102); /* Fondo resaltado */
+  border: 1px solid rgba(211, 211, 211, 0.3);
 }
 
 .menu-item .checkmark {
   display: none;
-  color: #0080ff;
+  color: #848484;
   font-weight: bold;
   margin-left: auto;
 }
@@ -434,17 +434,17 @@ body {
 .upgrade-btn {
   display: flex;
   align-items: center;
-  background-color: #2e2e2e;
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 8px;
+  background-color: #302e4f;
+  color: #c2c2c8;
+  padding: 6px 18px;
+  border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
   transition: background 0.3s ease;
 }
 .upgrade-btn:hover {
-  background-color: #3a3a3a;
+  background-color: #4a477a;
 }
 .upgrade-icon {
   width: 16px;
