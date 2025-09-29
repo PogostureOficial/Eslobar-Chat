@@ -1,0 +1,231 @@
+/* index_mobile.css
+   Estilos exclusivos para pantallas <= 768px
+   Mantiene la misma paleta y look & feel que el CSS de PC,
+   pero reorganiza y añade la barra lateral deslizante y el
+   botón "hamburger" de 2 barras.
+*/
+
+/* Reset/box */
+* { box-sizing: border-box; }
+
+/* Solo se aplica en móviles: ancho máximo 768px */
+@media (max-width: 768px) {
+
+  /* -------------------------------------------------------
+     Layout: cuerpo y ocultación elementos de PC
+     ------------------------------------------------------- */
+  body {
+    height: 100vh;
+    margin: 0;
+    background-color: #1e1e1e; /* misma paleta */
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Ocultar el menú desplegable/btn Eslobar de PC */
+  .menu-container { display: none !important; }
+
+  /* Top bar: reducir padding y mostrar espacio para el hamburger */
+  .top-bar {
+    padding: 10px 12px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Botón Mejorar a Plus: centrado en top (mantener visible) */
+  .upgrade-btn {
+    margin-right: 0;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  /* -----------------------------
+     Botón hamburger (dos barras blancas)
+     ----------------------------- */
+  .mobile-hamburger {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    margin-right: 4px;
+    padding: 6px;
+  }
+  .mobile-hamburger:focus { outline: 2px solid rgba(255,255,255,0.06); border-radius: 6px; }
+
+  .mobile-hamburger .bar {
+    display: block;
+    width: 20px;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transform-origin: center;
+    transition: transform 300ms cubic-bezier(.22,1,.36,1), opacity 200ms;
+  }
+  /* Dos barras: primero arriba, segundo abajo */
+  .mobile-hamburger .bar:nth-child(1) { transform: translateY(-4px); }
+  .mobile-hamburger .bar:nth-child(2) { transform: translateY(4px); }
+
+  /* Estado activo (cuando se abre el sidebar) animamos las barras */
+  .mobile-hamburger.open .bar:nth-child(1) { transform: translateY(0) rotate(45deg); }
+  .mobile-hamburger.open .bar:nth-child(2) { transform: translateY(0) rotate(-45deg); }
+
+  /* -----------------------------
+     Sidebar mobile (oculta por defecto, slide-in)
+     ----------------------------- */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 78%;             /* ocupa la mayor parte en móvil */
+    max-width: 320px;
+    background-color: #121212; /* un pelín más oscuro */
+    padding: 18px 12px;
+    transform: translateX(-110%);
+    transition: transform 360ms cubic-bezier(.22,1,.36,1);
+    z-index: 1200;
+    box-shadow: 8px 0 30px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border-right: 1px solid rgba(255,255,255,0.02);
+  }
+
+  .sidebar.open { transform: translateX(0); }
+
+  /* Sidebar logo y header */
+  .sidebar-logo img { width: 44px; height: 44px; display:block; margin-bottom: 8px; }
+
+  .sidebar .sidebar-section {
+    color: #bdbdbd;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  /* Contenido principal empujado visualmente por overlay */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.48);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 260ms ease, visibility 260ms;
+    z-index: 1100;
+  }
+  .mobile-overlay.visible { opacity: 1; visibility: visible; }
+
+  /* -----------------------------
+     Planes dentro de la sidebar (mismo look que en PC)
+     ----------------------------- */
+  .mobile-plans-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+
+  .mobile-plan-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 180ms ease, transform 160ms;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+  .mobile-plan-item + .mobile-plan-item { margin-top: 10px; }
+
+  .mobile-plan-item:hover { background: rgba(255,255,255,0.02); transform: translateY(-2px); }
+
+  .mobile-plan-icon {
+    width: 34px;
+    height: 34px;
+    filter: brightness(1);
+  }
+  .mobile-plan-text { display: flex; flex-direction: column; font-size: 14px; color: #e8e8e8; }
+
+  .mobile-plan-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #fff;
+  }
+  .mobile-plan-desc { color: #b7b7b7; font-size: 13px; line-height: 1.2; }
+
+  /* Indicador seleccionado */
+  .mobile-plan-item.active {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* -----------------------------
+     Chat / cuerpo en móvil
+     ----------------------------- */
+  .main-content {
+    padding: 12px;
+  }
+
+  .chat-container {
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 160px); /* deja espacio para topbar/input */
+    padding-top: 20px;
+  }
+
+  #titulo {
+    font-size: 28px;
+    text-align: center;
+    line-height: 1.02;
+    margin: 30px 8px;
+    font-weight: 700;
+  }
+
+  .chat-box {
+    width: 100%;
+    max-width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  /* Input: full width pegado al bottom con algo de margin */
+  .input-container {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 100;
+    max-width: none;
+    background: #242424;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+  }
+
+  .input-container textarea,
+  #mensaje {
+    font-size: 15px;
+    padding-right: 60px; /* espacio para el botón */
+  }
+
+  .voice-btn {
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .plan-info { display: none; } /* ya mostramos planes en sidebar */
+
+  /* Evitar scroll del body cuando sidebar abierto: se controla por JS (overflow hidden) */
+}
