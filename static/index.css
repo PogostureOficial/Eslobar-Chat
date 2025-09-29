@@ -66,7 +66,7 @@ body:has(.chat-box .message) #titulo {
 }
 
 .bot {
-  background: #1d1d1d;
+  background: #1e1e1e;
   color: #ddd;
   align-self: flex-start;
   border-bottom-left-radius: 4px;
@@ -440,6 +440,7 @@ body {
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
+  margin-right: 60px;
   text-decoration: none;
   transition: background 0.3s ease;
 }
@@ -455,18 +456,19 @@ body {
 /* Info del plan */
 .plan-info {
   font-size: 13px;
-  color: #aaa;
+  color: #313131;
   margin-top: 8px;
   text-align: center;
 }
 .plan-info .plan-link {
-  color: #4ea3ff;
+  color: #3b3b3b;
   text-decoration: none;
   margin-left: 4px;
 }
 .plan-info .plan-link:hover {
   text-decoration: underline;
 }
+
 
 
 
