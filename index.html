@@ -113,9 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const menuArrow = document.querySelector('.menu-arrow');
   const dropdownMenu = document.getElementById('dropdownMenu');
 
-  btn1.style.display = 'block';   // btn1 visible (apagado)
-  btn2.style.display = 'none';    // btn2 oculto
-
+  btn1.style.visibility = 'hidden';
+  btn2.style.visibility = 'visible';
 
   if (!input || !chat || !titulo || !inputWrapper) {
     console.warn('elementos principales faltan en DOM');
@@ -433,6 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
 
 
