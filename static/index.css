@@ -1,18 +1,19 @@
-/* ===== Estilos generales ===== */
+/* ===== Estilos generales ===== 
 * { box-sizing: border-box; }
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
   background-color: #1d1d1d; /* gris oscuro */
-  color: #fff;
+  /*color: #fff;
   height: 100vh; /* ANTES ERA height */
-  display: flex; /*antes era flex*/
-  flex-direction: column;
+  /*display: flex; /*antes era flex*/
+  /*flex-direction: column;
   align-items: center;
   justify-content: center; /* por defecto centrado */
-  transition: justify-content 0.3s ease;
+ /* transition: justify-content 0.3s ease; 
 }
+
 
 /* Texto inicial */
 #titulo {
@@ -156,7 +157,7 @@ input::placeholder {
 
 
 /* ==== Eliminar el recuadro de fondo ==== */
-.chat-box {
+/*.chat-box {
   background: transparent !important;
   box-shadow: none !important;
   border: none !important;
@@ -404,6 +405,15 @@ body {
   padding: 16px 32px;
 }
 
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centra vertical y horizontal */
+}
+
+
 /* Barra superior */
 .top-bar {
   width: 100%;
@@ -450,6 +460,7 @@ body {
 .plan-info .plan-link:hover {
   text-decoration: underline;
 }
+
 
 
 
