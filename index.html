@@ -7,61 +7,86 @@
   <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
-
-<!-- 🔹 MENÚ ESL0BAR -->
-<div class="menu-container">
-  <div class="menu-header" onclick="toggleMenu()">
-    <span class="menu-title">Eslobar</span>
-    <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
+  
+<!-- 🔹 Barra lateral izquierda -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <img src="/static/images/logo.png" alt="Logo" />
   </div>
-  <div class="menu-dropdown" id="dropdownMenu">
-    <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
-      <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
-      <div class="menu-text">
-        <div class="menu-title-version">Eslobar</div>
-        <div class="menu-description">Versión básica. Con límite de preguntas y pocas materias.</div>
-      </div>
-      <span class="checkmark">✔</span>
-    </div>
-
-    <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
-      <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
-      <div class="menu-text">
-        <div class="menu-title-version">Eslobar Plus (La más comprada)</div>
-        <div class="menu-description">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
-      </div>
-      <span class="checkmark">✔</span>
-    </div>
-
-    <div class="menu-item" data-plan="pro" onclick="selectVersion('pro')">
-      <img src="/static/images/pro.png" alt="Eslobar Pro" class="menu-icon">
-      <div class="menu-text">
-        <div class="menu-title-version">Eslobar Pro</div>
-        <div class="menu-description">Herramientas profesionales y acceso a todas las materias.</div>
-      </div>
-      <span class="checkmark">✔</span>
-    </div>
-  </div>
+  <div class="sidebar-section">Historial de chats</div>
 </div>
 
-<!-- Título inicial -->
-<div id="titulo">¿En qué puedo ayudarte hoy?</div>
+<!-- 🔹 Contenido principal -->
+<div class="main-content">
 
-<!-- Contenedor del chat -->
-<div id="chat" class="chat-box"></div>
+  <!-- Barra superior -->
+  <div class="top-bar">
+    <!-- Menú Eslobar -->
+    <div class="menu-container">
+      <div class="menu-header" onclick="toggleMenu()">
+        <span class="menu-title">Eslobar</span>
+        <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
+      </div>
+      <div class="menu-dropdown" id="dropdownMenu">
+        <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
+          <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar</div>
+            <div class="menu-description">Versión básica. Con límite de preguntas y pocas materias.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+        <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
+          <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar Plus (La más comprada)</div>
+            <div class="menu-description">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+        <div class="menu-item" data-plan="pro" onclick="selectVersion('pro')">
+          <img src="/static/images/pro.png" alt="Eslobar Pro" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar Pro</div>
+            <div class="menu-description">Herramientas profesionales y acceso a todas las materias.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+      </div>
+    </div>
 
-<!-- Entrada de texto y botón -->
-<div class="input-container" id="inputWrapper">
-  <textarea 
-    id="mensaje" 
-    rows="1" 
-    placeholder="Pregunta lo que quieras..." 
-    onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();enviarMensaje()}"
-  ></textarea>
+    <!-- Botón Mejorar a Plus -->
+    <a href="" class="upgrade-btn">
+      <img src="/static/images/plus1.png" alt="Plus" class="upgrade-icon"> 
+      Mejorar a Plus
+    </a>
+  </div>
 
-  <div class="voice-btn" id="voiceBtn" aria-hidden="true">
-    <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
-    <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
+  <!-- Título -->
+  <div id="titulo">¿En qué puedo ayudarte hoy?</div>
+
+  <!-- Contenedor del chat -->
+  <div id="chat" class="chat-box"></div>
+
+  <!-- Entrada de texto -->
+  <div class="input-container" id="inputWrapper">
+    <textarea 
+      id="mensaje" 
+      rows="1" 
+      placeholder="Pregunta lo que quieras..." 
+      onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();enviarMensaje()}">
+    </textarea>
+
+    <div class="voice-btn" id="voiceBtn" aria-hidden="true">
+      <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
+      <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
+    </div>
+  </div>
+
+  <!-- Info del plan -->
+  <div class="plan-info">
+    Actualmente estás utilizando el plan <strong>Básico</strong> de Eslobar. 
+    <a href="" class="plan-link">Obtener más información sobre los planes</a>
   </div>
 </div>
 
@@ -397,6 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
 
 
