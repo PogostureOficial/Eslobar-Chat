@@ -26,22 +26,16 @@ body {
   transition: opacity 0.3s ease;
 }
 
-/* Caja de mensajes (chat centrado con borde fino) */
+/* Caja del chat */
 .chat-box {
-  flex: 1;
-  width: 150%;
+  width: 100%;
   max-width: 700px;
-  height: 70vh;
-  padding: 20px;
+  flex: 0; /* al inicio no ocupa altura */
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px;
-  background: #2b2b2b;
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.02);
-  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  margin: 12px 0;
+  transition: flex 0.4s ease, max-height 0.4s ease;
 }
 
 
@@ -405,12 +399,25 @@ body {
   padding: 16px 32px;
 }
 
+/* Contenedor del chat */
 .chat-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* centra vertical y horizontal */
+  justify-content: center; /* SOLO antes del primer mensaje */
+  transition: all 0.3s ease;
+}
+
+/* Estado activo después del primer mensaje */
+.chat-container.active {
+  justify-content: flex-start; /* el chat se va arriba */
+  padding-top: 20px;
+}
+
+.chat-container.active .chat-box {
+  flex: 1; /* ahora ocupa todo el espacio vertical disponible */
+  max-height: calc(100vh - 200px); /* deja margen para input y plan-info */
 }
 
 
@@ -460,6 +467,7 @@ body {
 .plan-info .plan-link:hover {
   text-decoration: underline;
 }
+
 
 
 
