@@ -100,6 +100,7 @@
 <!-- ÚNICO BLOQUE JS (unificado y seguro) -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  
   /* =========================================================
      VARIABLES GLOBALES
   ========================================================= */
@@ -111,6 +112,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const inputWrapper = document.getElementById('inputWrapper');
   const menuArrow = document.querySelector('.menu-arrow');
   const dropdownMenu = document.getElementById('dropdownMenu');
+
+  btn1.style.display = 'block';   // btn1 visible (apagado)
+  btn2.style.display = 'none';    // btn2 oculto
+
 
   if (!input || !chat || !titulo || !inputWrapper) {
     console.warn('elementos principales faltan en DOM');
@@ -428,6 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
 
 
