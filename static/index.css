@@ -469,6 +469,14 @@ body {
   text-decoration: underline;
 }
 
+/* ===== Ocultar los planes de la barra lateral solo en PC ===== */
+@media (min-width: 769px) {
+  .sidebar .mobile-plans {
+    display: none !important;
+  }
+}
+
+
 
 
 
