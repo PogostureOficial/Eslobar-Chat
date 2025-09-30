@@ -232,8 +232,26 @@
     transform: translateY(-50%);
   }
 
+   /* Botón Mejorar a Plus */
+  .upgrade-btn {
+    display: flex;
+    align-items: center;
+    background-color: #302e4f;
+    color: #c2c2c8;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 300px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
   .plan-info { display: none; } /* ya mostramos planes en sidebar */
 
   /* Evitar scroll del body cuando sidebar abierto: se controla por JS (overflow hidden) */
+
+   
 }
+
 
