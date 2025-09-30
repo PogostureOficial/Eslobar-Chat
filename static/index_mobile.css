@@ -68,8 +68,15 @@
     transition: transform 300ms cubic-bezier(.22,1,.36,1), opacity 200ms;
   }
   /* Dos barras: primero arriba, segundo abajo */
-  .mobile-hamburger .bar:nth-child(1) { transform: translateY(-4px); }
-  .mobile-hamburger .bar:nth-child(2) { transform: translateY(4px); }
+  .mobile-hamburger .bar:nth-child(1) { 
+     transform: translateY(-4px);
+     width: 20px;
+  }
+  .mobile-hamburger .bar:nth-child(2) {
+     transform: translateY(4px);
+     width: 12px;
+     align-self: flex-start;
+  }
 
   /* Estado activo (cuando se abre el sidebar) animamos las barras */
   .mobile-hamburger.open .bar:nth-child(1) { transform: translateY(0) rotate(45deg); }
@@ -229,3 +236,4 @@
 
   /* Evitar scroll del body cuando sidebar abierto: se controla por JS (overflow hidden) */
 }
+
