@@ -242,7 +242,7 @@
     border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
-    margin-right: 300px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    margin-right: 150px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
     text-decoration: none;
     transition: background 0.3s ease;
   }
@@ -253,5 +253,6 @@
 
    
 }
+
 
 
