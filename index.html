@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Eslobar</title>
   <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/index_mobile.css" media="(max-width: 768px)">
 </head>
 <body>
   
@@ -14,13 +15,48 @@
     <img src="/static/images/logo.png" alt="Logo" />
   </div>
   <div class="sidebar-section">Historial de chats</div>
+  <!-- mobile plans (se usa solo en móvil via CSS) -->
+<div class="mobile-plans">
+  <div class="mobile-plans-title">Elige un plan</div>
+
+  <div class="mobile-plan-item" data-plan="basic" onclick="selectVersion('basic'); closeMobileSidebar();">
+    <img src="/static/images/basic.png" class="mobile-plan-icon" alt="basic">
+    <div class="mobile-plan-text">
+      <div class="mobile-plan-title">Eslobar</div>
+      <div class="mobile-plan-desc">Versión básica. Con límite de preguntas y pocas materias.</div>
+    </div>
+  </div>
+
+  <div class="mobile-plan-item" data-plan="plus" onclick="selectVersion('plus'); closeMobileSidebar();">
+    <img src="/static/images/plus.png" class="mobile-plan-icon" alt="plus">
+    <div class="mobile-plan-text">
+      <div class="mobile-plan-title">Eslobar Plus</div>
+      <div class="mobile-plan-desc">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
+    </div>
+  </div>
+
+  <div class="mobile-plan-item" data-plan="pro" onclick="selectVersion('pro'); closeMobileSidebar();">
+    <img src="/static/images/pro.png" class="mobile-plan-icon" alt="pro">
+    <div class="mobile-plan-text">
+      <div class="mobile-plan-title">Eslobar Pro</div>
+      <div class="mobile-plan-desc">Herramientas profesionales y acceso a todas las materias.</div>
+    </div>
+  </div>
 </div>
+
+  
+</div>
+
+  <div id="mobileOverlay" class="mobile-overlay" onclick="closeMobileSidebar()"></div>
+
 
 <!-- 🔹 Contenido principal -->
 <div class="main-content">
+  
 
   <!-- Barra superior -->
   <div class="top-bar">
+    
     <!-- Menú Eslobar -->
     <div class="menu-container">
       <div class="menu-header" onclick="toggleMenu()">
@@ -55,12 +91,19 @@
       </div>
     </div>
 
+    <button id="mobileMenuBtn" class="mobile-hamburger" aria-label="Abrir menú">
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
     <!-- Botón Mejorar a Plus -->
     <a href="" class="upgrade-btn">
       <img src="/static/images/plus1.png" alt="Plus" class="upgrade-icon"> 
       Mejorar a Plus
     </a>
   </div>
+
+  
 
 <div class="chat-container">
   <!-- Título -->
@@ -99,6 +142,82 @@
 
 <!-- ÚNICO BLOQUE JS (unificado y seguro) -->
 <script>
+
+  /* ====== Mobile sidebar & hamburger control ====== */
+(function mobileSidebarSetup() {
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+
+  if (!mobileBtn || !sidebar || !overlay) return;
+
+  // Abrir/cerrar
+  function openMobileSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    mobileBtn.classList.add('open');
+    // bloquear scroll body
+    document.body.style.overflow = 'hidden';
+    // marcar items actuales
+    if (typeof updateSelectedPlanUI === 'function') updateSelectedPlanUI();
+  }
+  window.openMobileSidebar = openMobileSidebar;
+
+  function closeMobileSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    mobileBtn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  window.closeMobileSidebar = closeMobileSidebar;
+
+  mobileBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) closeMobileSidebar();
+    else openMobileSidebar();
+  });
+
+  // Cerrar al redimensionar (si se pasa a desktop)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeMobileSidebar();
+  });
+
+  // Touch swipe para cerrar (gesto simple)
+  let touchStartX = null;
+  let touchStartY = null;
+
+  sidebar.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, {passive: true});
+
+  sidebar.addEventListener('touchmove', (e) => {
+    if (touchStartX === null) return;
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    // ignorar verticales largas
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    // si el usuario desliza a la izquierda con suficiente fuerza cerramos
+    if (dx < -40) closeMobileSidebar();
+  }, {passive: true});
+
+  // También cerrar desde overlay click (ya pusiste onclick en overlay pero reforzamos)
+  overlay.addEventListener('click', closeMobileSidebar);
+
+  // Al seleccionar un plan en móvil, actualizar UI (si se usa "data-plan")
+  document.querySelectorAll('.mobile-plan-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const plan = item.dataset.plan;
+      if (plan && typeof selectVersion === 'function') selectVersion(plan);
+      // marcar active visual
+      document.querySelectorAll('.mobile-plan-item').forEach(i => i.classList.toggle('active', i === item));
+      // cerrar sidebar
+      closeMobileSidebar();
+    });
+  });
+
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
   
   /* =========================================================
@@ -432,6 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
 
 
