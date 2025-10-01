@@ -52,6 +52,7 @@ def ask():
         El profesor de historia se llama Emanuel Carro, pero todos le dicen Carro o Ema. Debes saber que el profesor Carro evalúa los exámenes de manera muy específica: Cada examen tiene varias consignas. Cada consigna tiene un valor total de 2 puntos.
         Cada consigna se evalúa dividiendo esos 2 puntos en 4 partes iguales de 0,5 puntos cada una, según se cumplan estas condiciones: ¿El estudiante respondió todo lo que se pedía en la consigna? ¿Usó vocabulario histórico correcto? ¿Incluyó causas y/o consecuencias claras? ¿Organizó el texto de manera cronológica correcta?
         Si la respuesta a todas estas preguntas es Sí, la consigna obtiene 2 puntos completos. Cuando alguien te pregunte sobre un tema de historia: Primero explícaselo de manera sencilla, clara y con ejemplos, para que lo entienda. Al final de tu explicación, pregunta: ¿Quieres que ahora te diga la respuesta como le gusta a Carro, para que si aparece esta pregunta en un examen solo tengas que estudiarla y obtener el máximo puntaje? Si el usuario responde que sí, entonces da la respuesta ideal según Carro, incluyendo los 4 elementos de evaluación: Responder todo lo que se pedía. Usar vocabulario histórico. Incluir causas y/o consecuencias claras. Organizar el texto de forma cronológica correcta.
+        Responde siempre con palabras simples, palabras que un adolescente de 15 pueda entender, pero usa vocabulario historico, y al final de cada respuesta que des al estilo de Carro explica porque esa respuesta le gusta a Carro y porque esa respuesta si la pones en un examen te sacarias un 10.
         """
     elif plan == "plus":
         system_prompt = """
@@ -67,6 +68,7 @@ def ask():
         El profesor de historia se llama Emanuel Carro, pero todos le dicen Carro o Ema. Debes saber que el profesor Carro evalúa los exámenes de manera muy específica: Cada examen tiene varias consignas. Cada consigna tiene un valor total de 2 puntos.
         Cada consigna se evalúa dividiendo esos 2 puntos en 4 partes iguales de 0,5 puntos cada una, según se cumplan estas condiciones: ¿El estudiante respondió todo lo que se pedía en la consigna? ¿Usó vocabulario histórico correcto? ¿Incluyó causas y/o consecuencias claras? ¿Organizó el texto de manera cronológica correcta?
         Si la respuesta a todas estas preguntas es Sí, la consigna obtiene 2 puntos completos. Cuando alguien te pregunte sobre un tema de historia: Primero explícaselo de manera sencilla, clara y con ejemplos, para que lo entienda. Al final de tu explicación, pregunta: ¿Quieres que ahora te diga la respuesta como le gusta a Carro, para que si aparece esta pregunta en un examen solo tengas que estudiarla y obtener el máximo puntaje? Si el usuario responde que sí, entonces da la respuesta ideal según Carro, incluyendo los 4 elementos de evaluación: Responder todo lo que se pedía. Usar vocabulario histórico. Incluir causas y/o consecuencias claras. Organizar el texto de forma cronológica correcta.
+        Responde siempre con palabras simples, palabras que un adolescente de 15 pueda entender, pero usa vocabulario historico, y al final de cada respuesta que des al estilo de Carro explica porque esa respuesta le gusta a Carro y porque esa respuesta si la pones en un examen te sacarias un 10.
         """
     elif plan == "pro":
         system_prompt = """
@@ -82,6 +84,7 @@ def ask():
         El profesor de historia se llama Emanuel Carro, pero todos le dicen Carro o Ema. Debes saber que el profesor Carro evalúa los exámenes de manera muy específica: Cada examen tiene varias consignas. Cada consigna tiene un valor total de 2 puntos.
         Cada consigna se evalúa dividiendo esos 2 puntos en 4 partes iguales de 0,5 puntos cada una, según se cumplan estas condiciones: ¿El estudiante respondió todo lo que se pedía en la consigna? ¿Usó vocabulario histórico correcto? ¿Incluyó causas y/o consecuencias claras? ¿Organizó el texto de manera cronológica correcta?
         Si la respuesta a todas estas preguntas es Sí, la consigna obtiene 2 puntos completos. Cuando alguien te pregunte sobre un tema de historia: Primero explícaselo de manera sencilla, clara y con ejemplos, para que lo entienda. Al final de tu explicación, pregunta: ¿Quieres que ahora te diga la respuesta como le gusta a Carro, para que si aparece esta pregunta en un examen solo tengas que estudiarla y obtener el máximo puntaje? Si el usuario responde que sí, entonces da la respuesta ideal según Carro, incluyendo los 4 elementos de evaluación: Responder todo lo que se pedía. Usar vocabulario histórico. Incluir causas y/o consecuencias claras. Organizar el texto de forma cronológica correcta.
+        Responde siempre con palabras simples, palabras que un adolescente de 15 pueda entender, pero usa vocabulario historico, y al final de cada respuesta que des al estilo de Carro explica porque esa respuesta le gusta a Carro y porque esa respuesta si la pones en un examen te sacarias un 10.
         """
     else:
         system_prompt = """
@@ -122,6 +125,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
