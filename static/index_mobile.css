@@ -43,39 +43,29 @@
   /* -----------------------------
      Botón hamburger (dos barras blancas)
      ----------------------------- */
-  .mobile-hamburger {
-    width: 36px;
-    height: 36px;
-    background: transparent;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    cursor: pointer;
-    margin-right: 4px;
-    padding: 6px;
-  }
-  .mobile-hamburger:focus { outline: 2px solid rgba(255,255,255,0.06); border-radius: 6px; }
+  /* Botón hamburger (3 barras) */
+.mobile-hamburger {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;                 /* espacio uniforme entre barras */
+  cursor: pointer;
+  padding: 6px;
+}
 
-  .mobile-hamburger .bar {
-    display: block;
-    width: 30px;
-    height: 2px;
-    background: #fff;
-    border-radius: 2px;
-    transform-origin: center;
-    transition: transform 300ms cubic-bezier(.22,1,.36,1), opacity 200ms;
-  }
-  /* Dos barras: primero arriba, segundo abajo */
-  .mobile-hamburger .bar:nth-child(1) { 
-     transform: translateY(-4px);
-     width: 30px;
-  }
-  .mobile-hamburger .bar:nth-child(2) {
-     transform: translateY(4px);
-     width: 20px;
-  }
+.mobile-hamburger .bar {
+  width: 26px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
 
   /* Estado activo (cuando se abre el sidebar) animamos las barras */
   .mobile-hamburger.open .bar:nth-child(1) { transform: translateY(0) rotate(45deg); }
@@ -252,6 +242,7 @@
 
    
 }
+
 
 
 
