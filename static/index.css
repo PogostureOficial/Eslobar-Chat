@@ -421,7 +421,7 @@ body {
 }
 
 
-/* Barra superior */
+/* Barra superior 
 .top-bar {
   width: 100%;
   padding: 12px 0;
@@ -429,6 +429,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+*/
 
 /* Botón Mejorar a Plus */
 .upgrade-btn {
@@ -475,6 +476,7 @@ body {
     display: none !important;
   }
 }
+
 
 
 
