@@ -1,0 +1,203 @@
+/* Fuente y reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1a1a1a;
+  color: #fff;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Encabezado */
+header {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+
+header h1 {
+  /*font-size: 2.5rem;*/
+  font-weight: 300;
+}
+
+header .highlight {
+  color: #ffffff;
+}
+
+.subtitle {
+  color: #ffffff;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Contenedor de precios */
+.pricing-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 370px); /* tarjetas fijas de 300px */
+  justify-content: center;
+  gap: 2rem;
+  padding: 4rem 5%;
+  flex-grow: 1; 
+}
+
+/* --- Badge "Popular" --- */
+.badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: #7982ff44;
+  color: #b4b9ff;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border-radius: 27rem;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(163, 156, 255, 0);
+}
+
+/* Tarjetas */
+.card {
+  position: relative; /* Necesario para ubicar la badge */
+  background: #1f1f1f;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.price {
+  font-size: 2.2rem;
+  font-weight: normal;
+  margin: 0.5rem 0;
+}
+
+.currency {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #bbb;
+}
+
+.description {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.features {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.features li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+/* Botones */
+.btn {
+  padding: 0.8rem 0.8rem;
+  border-radius: 20rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  font-size: 1rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Tipos de botones */
+.btn.primary {
+  background: #675cff;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.btn.primary:hover {
+  background: #5b4ce0;
+}
+
+.btn.outline {
+  background: #ffffff;
+  color: #000000;
+  font-size: 0.9rem;
+}
+
+.btn.outline:hover {
+  background: #ffffffde;
+  color: rgb(0, 0, 0);
+}
+
+.btn.disabled {
+  border: 2px solid #383838;
+  background: #252525;
+  color: #686868;
+  font-size: 0.9rem;
+  cursor: not-allowed;
+}
+
+/* Estilos especiales por plan */
+.premium {
+  border: 1px solid #9c9dff38;
+  background: #5f5cff2a;
+  box-shadow: 0 10px 25px rgba(69, 97, 255, 0.13);
+}
+
+.premium:hover {
+  box-shadow: 0 10px 25px rgba(72, 69, 255, 0.322);
+}
+
+/* Botón de cierre "X" */
+.close-btn {
+  position: fixed;          /* siempre visible en la esquina */
+  top: 1.5rem;               /* distancia desde arriba */
+  right: 1.5rem;             /* distancia desde la derecha */
+  font-size: 1.5rem;           /* tamaño de la X */
+  color: #fff;               /* color de la X */
+  text-decoration: none;     /* quitar subrayado */
+  font-weight: 600;          /* evita que se vea muy gruesa */
+  background: #1a1a1a; /* círculo sutil */
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255,255,255,0.2);
+  color: #ff5c5c;           /* se vuelve roja al pasar el mouse */
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
