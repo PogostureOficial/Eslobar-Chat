@@ -551,29 +551,40 @@ document.addEventListener('DOMContentLoaded', function() {
  
 </script>
 
- <script>
- function debounce(fn, wait) {
-   let t;
-   return function() {
-     clearTimeout(t);
-     t = setTimeout(fn, wait);
-   };
- }
+  <script>
+ // Selecciona el input y el contenedor del chat
+ const chatContainer = document.querySelector('.chat-container');
+ const chatInput = document.querySelector('.chat-input');
 
- const ajustarScroll = debounce(function() {
-   var chatContainer = document.querySelector('.chat-container');
-   if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
- }, 80);
-
- // Usa visualViewport cuando exista (mejor para móviles)
+ // Escuchamos los cambios en el viewport visual (cuando aparece/desaparece el teclado)
  if (window.visualViewport) {
-   window.visualViewport.addEventListener('resize', ajustarScroll);
- } else {
-   window.addEventListener('resize', ajustarScroll);
+   const ajustarLayout = () => {
+     // Altura visible actual (resta teclado)
+     const viewportHeight = window.visualViewport.height;
+     const totalHeight = window.innerHeight;
+
+     // Diferencia = cuánto ocupa el teclado
+     const tecladoHeight = totalHeight - viewportHeight;
+
+     // Movemos el input hacia arriba si el teclado está visible
+     if (tecladoHeight > 0) {
+       chatInput.style.transform = `translateY(-${tecladoHeight}px)`;
+     } else {
+       chatInput.style.transform = 'translateY(0)';
+     }
+
+     // Ajustamos el scroll del chat para que se vea lo último
+     if (chatContainer) {
+       chatContainer.scrollTop = chatContainer.scrollHeight;
+     }
+   };
+
+   window.visualViewport.addEventListener('resize', ajustarLayout);
  }
  </script>
 </body>
 </html>
+
 
 
 
