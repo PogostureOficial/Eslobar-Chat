@@ -548,10 +548,22 @@ document.addEventListener('DOMContentLoaded', function() {
   window.selectVersion = selectVersion;
 });
 
+  <script>
+window.addEventListener('resize', () => {
+  // En móviles, cuando se abre el teclado, el viewport cambia.
+  // Esta función mantiene visible el último mensaje.
+  const chatContainer = document.querySelector('.chat-container');
+  if (chatContainer) {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+});
+</script>
+
   
 </script>
 </body>
 </html>
+
 
 
 
