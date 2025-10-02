@@ -202,16 +202,24 @@
     max-width: none;
     background: #242424;
     padding: 8px 12px;
+    display: flex;
+    align-items: center;
     border-radius: 999px;
     border: 1px solid rgba(255,255,255,0.06);
     box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+    transition: transform 0.2s ease; /* suaviza el movimiento */
+    z-index: 100; /* asegúrate de que quede por encima del chat */
   }
 
-  .input-container textarea,
-  #mensaje {
-    font-size: 15px;
-    padding-right: 60px; /* espacio para el botón */
-  }
+  .input-container textarea {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #2a2a2a;
+  color: #fff;
+  resize: none;
+}
 
   .voice-btn {
     right: 12px;
@@ -219,6 +227,7 @@
     height: 44px;
     top: 50%;
     transform: translateY(-50%);
+   margin-left: 8px;
   }
 
    /* Botón Mejorar a Plus */
@@ -303,6 +312,7 @@
 
    
 }
+
 
 
 
