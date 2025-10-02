@@ -239,9 +239,73 @@
   .plan-info { display: none; } /* ya mostramos planes en sidebar */
 
   /* Evitar scroll del body cuando sidebar abierto: se controla por JS (overflow hidden) */
+  /* ===== Fix posición del chat en móviles ===== */
+  .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* el contenido empieza arriba */
+    padding: 16px;
+    margin: 0;
+    height: 100vh; /* ocupar toda la pantalla */
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  /* Asegurar que el body y main no agreguen huecos */
+  body, main {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  /* El input del chat fijo abajo */
+  .chat-input {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1a1a1a;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: #fff;
+  }
+
+  .chat-input button {
+    margin-left: 8px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
 
    
 }
+
+
+
 
 
 
