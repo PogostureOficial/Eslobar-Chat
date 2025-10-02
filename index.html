@@ -551,39 +551,39 @@ document.addEventListener('DOMContentLoaded', function() {
  
 </script>
 
-  <script>
- // Selecciona el input y el contenedor del chat
- const chatContainer = document.querySelector('.chat-container');
- const chatInput = document.querySelector('.chat-input');
+   <script>
+ document.addEventListener('DOMContentLoaded', () => {
+   const chatContainer = document.querySelector('.chat-container');
+   const inputContainer = document.querySelector('.input-container');
 
- // Escuchamos los cambios en el viewport visual (cuando aparece/desaparece el teclado)
- if (window.visualViewport) {
-   const ajustarLayout = () => {
-     // Altura visible actual (resta teclado)
-     const viewportHeight = window.visualViewport.height;
-     const totalHeight = window.innerHeight;
+   if (!chatContainer || !inputContainer) return;
 
-     // Diferencia = cuánto ocupa el teclado
-     const tecladoHeight = totalHeight - viewportHeight;
+   if (window.visualViewport) {
+     const ajustarLayout = () => {
+       const viewportHeight = window.visualViewport.height;
+       const totalHeight = window.innerHeight;
+       const tecladoHeight = totalHeight - viewportHeight;
 
-     // Movemos el input hacia arriba si el teclado está visible
-     if (tecladoHeight > 0) {
-       chatInput.style.transform = `translateY(-${tecladoHeight}px)`;
-     } else {
-       chatInput.style.transform = 'translateY(0)';
-     }
+       if (tecladoHeight > 0) {
+         // El teclado está visible → movemos el input hacia arriba
+         inputContainer.style.transform = `translateY(-${tecladoHeight}px)`;
+       } else {
+         // El teclado se cerró → volvemos al lugar original
+         inputContainer.style.transform = 'translateY(0)';
+       }
 
-     // Ajustamos el scroll del chat para que se vea lo último
-     if (chatContainer) {
+       // Mantenemos el scroll al fondo del chat
        chatContainer.scrollTop = chatContainer.scrollHeight;
-     }
-   };
+     };
 
-   window.visualViewport.addEventListener('resize', ajustarLayout);
- }
+     // Escuchamos el cambio del viewport visual (cuando aparece/desaparece teclado)
+     window.visualViewport.addEventListener('resize', ajustarLayout);
+   }
+ });
  </script>
 </body>
 </html>
+
 
 
 
