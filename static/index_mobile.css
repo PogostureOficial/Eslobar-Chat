@@ -68,8 +68,8 @@
 
 
   /* Estado activo (cuando se abre el sidebar) animamos las barras */
-  .mobile-hamburger.open .bar:nth-child(1) { transform: translateY(0) rotate(45deg); }
-  .mobile-hamburger.open .bar:nth-child(2) { transform: translateY(0) rotate(-45deg); }
+  .mobile-hamburger.open .bar:nth-child(1) { transform: translateY(0) rotate(0deg); }
+  .mobile-hamburger.open .bar:nth-child(2) { transform: translateY(0) rotate(0deg); }
 
   /* -----------------------------
      Sidebar mobile (oculta por defecto, slide-in)
@@ -177,11 +177,11 @@
   }
 
   #titulo {
-    font-size: 28px;
+    font-size: 14px;
     text-align: center;
     line-height: 1.52;
-    margin: 100px 10px;
-    font-weight: 700;
+    margin: 60px 10px;
+    font-weight: 900;
   }
 
   .chat-box {
@@ -312,6 +312,7 @@
 
    
 }
+
 
 
 
