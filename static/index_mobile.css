@@ -17,7 +17,7 @@
   body {
     height: 100vh;
     margin: 0;
-    background-color: #1e1e1e; /* misma paleta */
+    background-color: #0a0a0a; /* misma paleta */
     color: #fff;
     font-family: "Inter", sans-serif;
     overflow-x: hidden;
@@ -312,6 +312,7 @@
 
    
 }
+
 
 
 
