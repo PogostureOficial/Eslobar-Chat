@@ -323,14 +323,15 @@
  }
 
  .bot {
-  background: #1e1e1e;
-  color: #ddd;
+  background: #0a0a0a;
+  color: #fff;
   align-self: flex-start;
   border-bottom-left-radius: 4px;
-  margin-right: 40px;
+  margin-right: 10px;
  }
    
 }
+
 
 
 
