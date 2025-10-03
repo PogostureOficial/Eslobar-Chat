@@ -201,7 +201,7 @@
     z-index: 100;
     max-width: none;
     background: #242424;
-    padding: 4px 12px;
+    padding: 2px 10px;
     display: flex;
     align-items: center;
     border-radius: 999px;
@@ -312,6 +312,7 @@
 
    
 }
+
 
 
 
