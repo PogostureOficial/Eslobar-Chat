@@ -321,8 +321,17 @@
    line-height: 1.4;
    font-family: Arial, sans-serif;
  }
+
+ .bot {
+  background: #1e1e1e;
+  color: #ddd;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  margin-right: 40px;
+ }
    
 }
+
 
 
 
