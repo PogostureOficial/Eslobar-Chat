@@ -60,7 +60,7 @@
 
 .mobile-hamburger .bar {
   width: 26px;
-  height: 3px;
+  height: 1px;
   background: #fff;
   border-radius: 2px;
   transition: transform 0.3s ease;
@@ -312,6 +312,7 @@
 
    
 }
+
 
 
 
