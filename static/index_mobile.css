@@ -21,7 +21,7 @@
     color: #fff;
     font-family: "Inter", sans-serif;
     overflow-x: hidden;
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
   }
 
   /* Ocultar el menú desplegable/btn Eslobar de PC */
@@ -32,7 +32,6 @@
     padding: 10px 12px;
     align-items: center;
     gap: 8px;
-    overflow-y: auto;
   }
 
   /* Botón Mejorar a Plus: centrado en top (mantener visible) */
@@ -40,7 +39,6 @@
     margin-right: 0;
     padding: 8px 14px;
     font-size: 13px;
-    overflow-y: auto;
   }
 
   /* -----------------------------
@@ -59,7 +57,6 @@
   gap: 5px;                 /* espacio uniforme entre barras */
   cursor: pointer;
   padding: 6px;
-  overflow-y: auto;
 }
 
 .mobile-hamburger .bar {
@@ -95,7 +92,6 @@
     flex-direction: column;
     gap: 18px;
     border-right: 1px solid rgba(255,255,255,0.02);
-    overflow-y: auto;
   }
 
   .sidebar.open { transform: translateX(0); }
@@ -336,6 +332,7 @@
  }
    
 }
+
 
 
 
