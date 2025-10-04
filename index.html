@@ -581,8 +581,32 @@ document.addEventListener('DOMContentLoaded', function() {
    }
  });
  </script>
+
+   <script>
+   // Lista de títulos posibles
+   const titulos = [
+     "🚀 ¡Listo para aprender algo nuevo?",
+     "🤖 ¿Qué desafío resolvemos hoy?",
+     "📚 ¡Pregúntame lo que quieras!",
+     "💡 ¿Listo para una idea brillante?",
+     "🔥 ¡Empecemos algo increíble!"
+   ];
+
+   // Selecciona el elemento del título
+   const tituloElement = document.getElementById("titulo");
+
+   // Función para elegir un título aleatorio
+   function cambiarTitulo() {
+     const indiceAleatorio = Math.floor(Math.random() * titulos.length);
+     tituloElement.textContent = titulos[indiceAleatorio];
+   }
+
+   // Ejecutar cada vez que se carga la página
+   window.addEventListener("load", cambiarTitulo);
+ </script>
 </body>
 </html>
+
 
 
 
