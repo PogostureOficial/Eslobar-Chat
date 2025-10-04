@@ -396,8 +396,28 @@
   main {
     flex: 1;
   }
+
+
+ /*---------------------------------------NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWW!!!!!!!!!!!!!!!!!!!!!!!!!!------------------------------------------------*/
+
+   html, body {
+    height: 100%;
+    overflow: hidden; /* bloquea scroll global */
+  }
+
+  .chat-container {
+    overflow: hidden !important; /* ❌ sin scroll */
+    height: 100%; /* ocupa todo el viewport */
+  }
+
+  /* ✅ Permitir que textarea crezca sin provocar scroll */
+  .input-container textarea {
+    max-height: 120px;
+    overflow-y: auto;
+  }
    
 }
+
 
 
 
