@@ -15,7 +15,7 @@
      Layout: cuerpo y ocultación elementos de PC
      ------------------------------------------------------- */
   body {
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     background-color: #0a0a0a; /* misma paleta */
     color: #fff;
@@ -180,7 +180,7 @@
     font-size: 24px;
     text-align: center;
     line-height: 1.52;
-    margin: 0px 10px;
+    margin: 290px 10px;
     font-weight: 900;
   }
 
@@ -331,6 +331,7 @@
  }
    
 }
+
 
 
 
