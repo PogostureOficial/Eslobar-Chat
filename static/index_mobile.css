@@ -21,6 +21,7 @@
     color: #fff;
     font-family: "Inter", sans-serif;
     overflow-x: hidden;
+    overflow-y: hidden;
   }
 
   /* Ocultar el menú desplegable/btn Eslobar de PC */
@@ -331,6 +332,7 @@
  }
    
 }
+
 
 
 
