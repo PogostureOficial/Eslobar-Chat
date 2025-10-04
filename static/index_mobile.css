@@ -173,14 +173,14 @@
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 160px); /* deja espacio para topbar/input */
-    margin-top: 80px;
+    margin-top: 20px;
   }
 
   #titulo {
     font-size: 24px;
     text-align: center;
     line-height: 1.52;
-    margin: 90px 10px;
+    margin: 290px 10px;
     font-weight: 900;
   }
 
@@ -331,6 +331,7 @@
  }
    
 }
+
 
 
 
