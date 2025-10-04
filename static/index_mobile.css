@@ -173,7 +173,7 @@
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 160px); /* deja espacio para topbar/input */
-    padding-top: 20px;
+    margin-top: 20px;
   }
 
   #titulo {
@@ -331,6 +331,7 @@
  }
    
 }
+
 
 
 
