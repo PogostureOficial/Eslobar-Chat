@@ -180,7 +180,7 @@
     font-size: 24px;
     text-align: center;
     line-height: 1.52;
-    margin: 260px 10px;
+    margin: 290px 10px;
     font-weight: 900;
   }
 
@@ -255,7 +255,7 @@
     flex-direction: column;
     justify-content: flex-start; /* el contenido empieza arriba */
     padding: 16px;
-    margin-top: 30;
+    margin-top: -300px; /* usa valores negativos para subirlo */
     height: 100vh; /* ocupar toda la pantalla */
     box-sizing: border-box;
     overflow-y: auto;
@@ -331,6 +331,7 @@
  }
    
 }
+
 
 
 
