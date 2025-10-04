@@ -330,8 +330,76 @@
   border-bottom-left-radius: 4px;
   margin-right: 0px;
  }
+
+   /*------------------------------------------------NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWW!!!!!!!!!!!!!!!!!!!!!--------------------------------------*/
+
+     /* 🔧 Chat-container ocupa toda la pantalla sin tapar botones */
+  .chat-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centrado vertical */
+    align-items: center;      /* centrado horizontal */
+    padding: 16px;
+    margin: 0 !important;     /* elimina desplazamientos negativos */
+    height: 100vh;            /* ocupa toda la altura de la pantalla */
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 1;               /* por debajo de botones */
+  }
+
+  /* 🔧 Centrar el título en pantalla */
+  #titulo {
+    font-size: 26px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.5;
+    margin: 0;
+    padding: 20px;
+    color: #fff;
+  }
+
+  /* 🔧 Asegurar que los botones se puedan tocar */
+  .mobile-hamburger,
+  .upgrade-btn {
+    position: relative;
+    z-index: 9999; /* por encima del chat */
+    pointer-events: auto;
+  }
+
+  /* 🔧 Input fijo abajo, sin interferir con top */
+  .input-container,
+  .chat-input {
+    position: fixed;
+    bottom: 12px;
+    left: 6px;
+    right: 12px;
+    z-index: 100;
+  }
+
+  /* 🔧 Overlay solo bloquea cuando es visible */
+  .mobile-overlay {
+    pointer-events: none;
+  }
+  .mobile-overlay.visible {
+    pointer-events: auto;
+  }
+
+  /* 🔧 Body y main llenan pantalla */
+  body, main {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+  }
    
 }
+
 
 
 
