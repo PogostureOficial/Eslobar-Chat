@@ -345,7 +345,6 @@
     margin: 0 !important;     /* elimina desplazamientos negativos */
     height: 100vh;            /* ocupa toda la altura de la pantalla */
     box-sizing: border-box;
-    overflow-y: auto;
     z-index: 1;               /* por debajo de botones */
   }
 
@@ -399,6 +398,7 @@
   }
    
 }
+
 
 
 
