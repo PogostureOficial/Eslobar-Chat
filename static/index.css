@@ -22,6 +22,7 @@ body {
   color: #fff;
   text-align: center;
   margin-bottom: 0px;
+  margin-top: 40px;
   opacity: 0.9;
   transition: opacity 0.3s ease;
 }
@@ -440,7 +441,7 @@ body {
   border-radius: 20px;
   font-size: 13px;
   font-weight: 550;
-  margin-right: 750px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
+  margin-right: 730px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
   margin-top: -60px;
   text-decoration: none;
   transition: background 0.3s ease;
@@ -481,7 +482,7 @@ body {
   /* Subir el título SIN afectar al resto */
   #titulo {
     position: relative;
-    top: -5px; /* mueve el texto hacia arriba sin empujar el contenedor */
+    top: -50px; /* mueve el texto hacia arriba sin empujar el contenedor */
   }
 
   /* Subir la barra de entrada */
@@ -492,9 +493,10 @@ body {
   /* Chat comienza arriba */
   .chat-container {
     justify-content: flex-start;
-    padding-top: 40px;
+    padding-top: 20px;
   }
 }
+
 
 
 
