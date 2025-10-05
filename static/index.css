@@ -436,12 +436,12 @@ body {
   align-items: center;
   background-color: #373669;
   color: #dcdbf6;
-  padding: 10px 16px;
+  padding: 10px 14px;
   border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-right: 780px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
-  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 770px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
+  margin-top: 80px;
   text-decoration: none;
   transition: background 0.3s ease;
 }
@@ -495,6 +495,7 @@ body {
     padding-top: 40px;
   }
 }
+
 
 
 
