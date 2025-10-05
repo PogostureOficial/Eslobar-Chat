@@ -480,7 +480,7 @@ body {
 @media (min-width: 1024px) {
   /* Subir el título */
   #titulo {
-    margin-top: -80px;  /* mueve el texto 80px hacia arriba */
+    margin-top: -20px;  /* mueve el texto 80px hacia arriba */
   }
 
   /* Subir la barra de entrada */
@@ -494,6 +494,7 @@ body {
     padding-top: 40px;           /* un poco de espacio desde arriba */
   }
 }
+
 
 
 
