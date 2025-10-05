@@ -202,7 +202,7 @@ input::placeholder {
 .chat-box {
   flex: none;
   width: 100%;
-  max-width: 700px;
+  max-width: 900px;
   height: 2vh; /* inicial: chiquito en el centro */
   padding: 20px;
   overflow-y: auto;
@@ -475,6 +475,7 @@ body {
     display: none !important;
   }
 }
+
 
 
 
