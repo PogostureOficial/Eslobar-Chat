@@ -203,7 +203,7 @@ input::placeholder {
   flex: none;
   width: 100%;
   max-width: 900px;
-  height: 2vh; /* inicial: chiquito en el centro */
+  height: 1vh; /* inicial: chiquito en el centro */
   padding: 20px;
   overflow-y: auto;
   display: flex;
@@ -475,6 +475,7 @@ body {
     display: none !important;
   }
 }
+
 
 
 
