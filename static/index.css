@@ -87,10 +87,10 @@ body:has(.chat-box .message) #titulo {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background: #333333;
-  border: 1px solid #666666;
+  background: #303030;
+  border: 1px solid #3d3d3d;
   border-radius: 30px;
-  padding: 5px 14px;
+  padding: 7px 14px;
   box-shadow: 0 0 12px #171717;
   transition: box-shadow 0.3s ease;
   position: relative; /* necesario para los imgs absolutos dentro */
@@ -195,8 +195,9 @@ input::placeholder {
 
 #mensaje::placeholder {
   font-family: Arial, sans-serif;   /* hereda la misma fuente que el contenedor */
-  color: #666666;            /* mismo gris que usabas antes */
+  color: #afafaf;            /* mismo gris que usabas antes */
   font-size: 16px;        /* asegura que coincida con el texto normal */
+  padding-left: 10px; /* margen interno a la izquierda */
 }
 
 /* NEW!!!!! Caja del chat: estado inicial centrado */
@@ -500,6 +501,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
