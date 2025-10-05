@@ -267,6 +267,7 @@ body.modo-celular {
   position: relative;
   margin: 16px;
   color: #fff;
+  font-size: 19px;
   font-family: 'Inter', sans-serif;
 }
 
@@ -496,6 +497,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
