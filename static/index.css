@@ -67,7 +67,7 @@ body:has(.chat-box .message) #titulo {
 
 .bot {
   background: #1e1e1e;
-  color: #ddd;
+  color: #fff;
   align-self: flex-start;
   border-bottom-left-radius: 4px;
   margin-right: 150px;
@@ -89,7 +89,7 @@ body:has(.chat-box .message) #titulo {
   background: #242424;
   border: 1px solid rgba(255, 255, 255, 0.136);
   border-radius: 30px;
-  padding: 7px 16px;
+  padding: 5px 14px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease;
   position: relative; /* necesario para los imgs absolutos dentro */
@@ -475,6 +475,7 @@ body {
     display: none !important;
   }
 }
+
 
 
 
