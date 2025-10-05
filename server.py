@@ -4,6 +4,9 @@ from openai import OpenAI
 import traceback
 import os
 
+# 🔹 Historial de los últimos mensajes
+conversation_history = []   # Va a guardar [{"role": "user"/"assistant", "content": "..."}]
+
 # ELIMINAR DESPUES 🔥🔥🔥🔥🔥🔥🔥
 token_usage = {}
 
@@ -175,16 +178,29 @@ def ask():
         Si la respuesta a todas estas preguntas es Sí, la consigna obtiene 2 puntos completos. Cuando alguien te pregunte sobre un tema de historia: Primero explícaselo de manera sencilla, clara y con ejemplos, para que lo entienda. Al final de tu explicación, pregunta: ¿Quieres que ahora te diga la respuesta como le gusta a Carro, para que si aparece esta pregunta en un examen solo tengas que estudiarla y obtener el máximo puntaje? Si el usuario responde que sí, entonces da la respuesta ideal según Carro, incluyendo los 4 elementos de evaluación: Responder todo lo que se pedía. Usar vocabulario histórico. Incluir causas y/o consecuencias claras. Organizar el texto de forma cronológica correcta.
         """
     try:
+
+        # Guardar mensaje del usuario
+        conversation_history.append({"role": "user", "content": user_message})
+        
+        # Mantener solo los últimos 5 turnos (usuario + IA) -> 10 mensajes en total
+        if len(conversation_history) > 10:
+            conversation_history.pop(0)
+
         # 🔹 Llamada al modelo
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",   # o "gpt-4o-mini" si quieres ese
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_message}
-            ]
+            messages = [{"role": "system", "content": system_prompt}] + conversation_history
         )
 
         reply = response.choices[0].message.content
+
+        # Guardar la respuesta de la IA
+        conversation_history.append({"role": "assistant", "content": reply})
+
+        # Mantener solo los últimos 10 (5 turnos)
+        if len(conversation_history) > 10:
+            conversation_history.pop(0)
+        
         return jsonify({"reply": reply})
 
     except Exception as e:
@@ -198,6 +214,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
