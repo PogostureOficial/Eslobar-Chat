@@ -476,6 +476,26 @@ body {
   }
 }
 
+/* === Ajustes para subir el título e input solo en PC === */
+@media (min-width: 1024px) {
+  /* Subir el título */
+  #titulo {
+    margin-top: -80px;  /* mueve el texto 80px hacia arriba */
+  }
+
+  /* Subir la barra de entrada */
+  .input-container {
+    margin-bottom: 40px; /* reduce la distancia al borde inferior */
+  }
+
+  /* Opcional: si el chat debe iniciar más arriba aún */
+  .chat-container {
+    justify-content: flex-start; /* evita que quede tan centrado */
+    padding-top: 40px;           /* un poco de espacio desde arriba */
+  }
+}
+
+
 
 
 
