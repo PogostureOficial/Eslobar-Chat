@@ -434,13 +434,14 @@ body {
 .upgrade-btn {
   display: flex;
   align-items: center;
-  background-color: #514B82;
-  color: #B3B0D4;
+  background-color: #373669;
+  color: #dcdbf6;
   padding: 10px 16px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  margin-right: 760px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 780px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
+  margin-top: 8px;
   text-decoration: none;
   transition: background 0.3s ease;
 }
@@ -494,6 +495,7 @@ body {
     padding-top: 40px;
   }
 }
+
 
 
 
