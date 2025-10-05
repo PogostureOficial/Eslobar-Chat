@@ -33,13 +33,25 @@
     align-items: center;
     gap: 8px;
   }
-
-  /* Botón Mejorar a Plus: centrado en top (mantener visible) */
+ 
+   /* Botón Mejorar a Plus */
   .upgrade-btn {
-    margin-right: 0;
-    padding: 8px 14px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    background-color: #373669;
+    color: #dcdbf6;
+    padding: 10px 14px;
+    border-radius: 20px;
     font-size: 13px;
+    font-weight: 500;
+    margin-top: -60px;
+    text-decoration: none;
+    transition: background 0.3s ease;
   }
+  
 
   /* -----------------------------
      Botón hamburger (dos barras blancas)
@@ -417,6 +429,7 @@
   }
    
 }
+
 
 
 
