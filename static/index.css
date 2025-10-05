@@ -88,10 +88,10 @@ body:has(.chat-box .message) #titulo {
   align-items: center;
   justify-content: flex-end;
   background: #333333;
-  border: 1px solid ##474748;
+  border: 1px solid #666666;
   border-radius: 30px;
   padding: 5px 14px;
-  box-shadow: 0 0 12px #666666;
+  box-shadow: 0 0 12px #171717;
   transition: box-shadow 0.3s ease;
   position: relative; /* necesario para los imgs absolutos dentro */
   font-style: italic;
@@ -425,6 +425,7 @@ body {
 
 /* Barra superior */
 .top-bar {
+  position: relative; /* necesario para que los hijos absolutos se posicionen relativo a la barra */
   width: 100%;
   padding: 12px 0;
   display: flex;
@@ -434,6 +435,9 @@ body {
 
 /* Botón Mejorar a Plus */
 .upgrade-btn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   background-color: #373669;
@@ -442,7 +446,6 @@ body {
   border-radius: 20px;
   font-size: 13px;
   font-weight: 500;
-  margin-right: 745px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
   margin-top: -60px;
   text-decoration: none;
   transition: background 0.3s ease;
@@ -497,6 +500,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
