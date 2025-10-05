@@ -87,11 +87,11 @@ body:has(.chat-box .message) #titulo {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background: #242424;
-  border: 1px solid rgba(255, 255, 255, 0.136);
+  background: #333333;
+  border: 1px solid rgba(255, 255, 255, 0.336);
   border-radius: 30px;
   padding: 5px 14px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 12px #000;
   transition: box-shadow 0.3s ease;
   position: relative; /* necesario para los imgs absolutos dentro */
   font-style: italic;
@@ -496,4 +496,5 @@ body {
     padding-top: 200px;
   }
 }
+
 
