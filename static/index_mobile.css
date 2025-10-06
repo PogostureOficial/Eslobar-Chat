@@ -36,18 +36,15 @@
  
    /* Botón Mejorar a Plus */
   .upgrade-btn {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
-    background-color: #373669;
-    color: #dcdbf6;
-    padding: 10px 14px;
+    background-color: #302e4f;
+    color: #c2c2c8;
+    padding: 6px 18px;
     border-radius: 20px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
-    margin-top: -60px;
+    margin-right: 150px; /* CAMBIAR LA POSICION DEL BOTON DE MEJORAR PLAN AQUI --------------------------------------------------------------------------------------------------------------------------------------------------------*/
     text-decoration: none;
     transition: background 0.3s ease;
   }
@@ -429,6 +426,7 @@
   }
    
 }
+
 
 
 
