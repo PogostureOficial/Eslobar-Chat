@@ -283,7 +283,7 @@ body.modo-celular {
   background-color: transparent;
 }
 
-.menu-header:placeholder {
+.menu-header:hover {
   background-color: #313131;
 }
 
@@ -296,8 +296,8 @@ body.modo-celular {
 
 .arrow {
   transition: transform 0.3s;
-  margin-top: -60px;
-  margin-right: -60px;
+  margin-top: 0px;
+  margin-right: 0px;
 }
 
 .menu-dropdown {
@@ -519,6 +519,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
