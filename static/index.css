@@ -318,7 +318,16 @@ body.modo-celular {
   position: relative;
   padding: 10px;
   border-radius: 10px;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer; /* 🧠 Indica que se puede hacer click */
+  display: flex;   /* 🧱 Icono + texto lado a lado */
+  align-items: flex-start; /* Alineación vertical */
+  gap: 10px; /* espacio entre icono y texto */
+}
+
+.menu-item:hover {
+  background-color: #3a3a3a; /* 🖱️ Fondo más claro al pasar el cursor */
+  transform: scale(1.02);    /* efecto leve de agrandar */
 }
 
 .menu-item.active {
@@ -343,8 +352,8 @@ body.modo-celular {
 .menu-icon {
   width: 28px;
   height: 28px;
-  margin-right: 10px;
-  margin-top: 2px;
+  flex-shrink: 0; /* evita que se deforme */
+  margin: 4px 0 0 2px; /* ajuste fino opcional */
 }
 
 .menu-text {
@@ -510,6 +519,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
