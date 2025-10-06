@@ -285,6 +285,8 @@ body.modo-celular {
 
 .menu-title {
   font-weight: 500;
+  font-size: 20px;
+  margin-top: 8px;
 }
 
 .arrow {
@@ -501,6 +503,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
