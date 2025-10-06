@@ -283,15 +283,21 @@ body.modo-celular {
   background-color: transparent;
 }
 
+.menu-header:placeholder {
+  background-color: #313131;
+}
+
 .menu-title {
   font-weight: 300;
-  font-size: 20px;
-  margin-top: -30px;
-  margin-right: -30px;
+  font-size: 18px;
+  margin-top: -60px;
+  margin-right: -60px;
 }
 
 .arrow {
   transition: transform 0.3s;
+  margin-top: -60px;
+  margin-right: -60px;
 }
 
 .menu-dropdown {
@@ -504,6 +510,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
