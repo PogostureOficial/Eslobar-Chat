@@ -17,7 +17,7 @@ body {
 
 /* Texto inicial */
 #titulo {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 500;
   color: #fff;
   text-align: center;
@@ -90,7 +90,7 @@ body:has(.chat-box .message) #titulo {
   background: #303030;
   border: 1px solid #454545;
   border-radius: 30px;
-  padding: 7px 12px;
+  padding: 7px 11px;
   box-shadow: 0 0 12px #171717;
   transition: box-shadow 0.3s ease;
   position: relative; /* necesario para los imgs absolutos dentro */
@@ -196,7 +196,7 @@ input::placeholder {
 #mensaje::placeholder {
   font-family: Arial, sans-serif;   /* hereda la misma fuente que el contenedor */
   color: #afafaf;            /* mismo gris que usabas antes */
-  font-size: 16px;        /* asegura que coincida con el texto normal */
+  font-size: 20px;        /* asegura que coincida con el texto normal */
   padding-left: 10px; /* margen interno a la izquierda */
 }
 
@@ -501,6 +501,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
