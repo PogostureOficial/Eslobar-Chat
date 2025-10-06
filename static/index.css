@@ -17,7 +17,7 @@ body {
 
 /* Texto inicial */
 #titulo {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 500;
   color: #fff;
   text-align: center;
@@ -49,10 +49,10 @@ body:has(.chat-box .message) #titulo {
 .message {
   margin: 8px 0;
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: 60px;
   max-width: 110%;
   word-wrap: break-word;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.4;
   font-family: Arial, sans-serif;
 }
@@ -67,7 +67,7 @@ body:has(.chat-box .message) #titulo {
 }
 
 .bot {
-  background: #1e1e1e;
+  background: #212121;
   color: #fff;
   align-self: flex-start;
   border-bottom-left-radius: 4px;
@@ -196,7 +196,7 @@ input::placeholder {
 #mensaje::placeholder {
   font-family: Arial, sans-serif;   /* hereda la misma fuente que el contenedor */
   color: #afafaf;            /* mismo gris que usabas antes */
-  font-size: 20px;        /* asegura que coincida con el texto normal */
+  font-size: 18px;        /* asegura que coincida con el texto normal */
   padding-left: 10px; /* margen interno a la izquierda */
 }
 
@@ -501,6 +501,7 @@ body {
     padding-top: 300px;
   }
 }
+
 
 
 
