@@ -98,7 +98,15 @@
 
     <button id="enviarBtn" disabled onclick="verificarCodigo()">Enviar</button>
   </div>
+
+  
   <script>
+
+      // Si no hay código generado, volver al login
+  if (!localStorage.getItem("codigo_verificacion")) {
+    window.location.href = "index.html";
+  }
+
   const inputs = document.querySelectorAll('.codigo input');
   const boton = document.getElementById("enviarBtn");
 
@@ -157,6 +165,7 @@
  </script>
 </body>
 </html>
+
 
 
 
