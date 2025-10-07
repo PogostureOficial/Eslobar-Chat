@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificación</title>
+  <style>
+    /* Fondo general */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    /* Texto descriptivo */
+    .container p {
+      font-size: 16px;
+      margin-bottom: 30px;
+      line-height: 1.4;
+    }
+
+    /* Inputs del código */
+    .codigo {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .codigo input {
+      width: 45px;
+      height: 55px;
+      background-color: #1a1a1a;
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 22px;
+      text-align: center;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .codigo input:focus {
+      outline: none;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Botón */
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      background-color: #1a1a1a; /* Estado inactivo */
+      color: #555;
+      transition: all 0.3s ease-in-out;
+    }
+
+    button.activo {
+      background-color: #fff;
+      color: #000;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+    }
+  </style>
+  <link rel="shortcut icon" href="logo.png" type="image/png">
+</head>
+<body>
+  <div class="container">
+    <p>Se ha enviado un código de verificación de 6 dígitos a la dirección de correo electrónico proporcionada.<br>
+    Por favor recuerde revisar su carpeta de Spam</p>
+
+    <div class="codigo">
+      <input type="text" maxlength="1" oninput="moverFoco(this, 0)">
+      <input type="text" maxlength="1" oninput="moverFoco(this, 1)">
+      <input type="text" maxlength="1" oninput="moverFoco(this, 2)">
+      <input type="text" maxlength="1" oninput="moverFoco(this, 3)">
+      <input type="text" maxlength="1" oninput="moverFoco(this, 4)">
+      <input type="text" maxlength="1" oninput="moverFoco(this, 5)">
+    </div>
+
+    <button id="enviarBtn" disabled onclick="verificarCodigo()">Enviar</button>
+  </div>
+
+  
+  <script>
+
+      // Si no hay código generado, volver al login
+  if (!localStorage.getItem("codigo_verificacion")) {
+    window.location.href = "index.html";
+  }
+
+  const inputs = document.querySelectorAll('.codigo input');
+  const boton = document.getElementById("enviarBtn");
+
+  function moverFoco(input, index) {
+    if (input.value.length === 1 && index < inputs.length - 1) {
+      inputs[index + 1].focus();
+    }
+    let completo = true;
+    inputs.forEach(inp => { if (inp.value === "") completo = false; });
+    if (completo) { boton.classList.add("activo"); boton.disabled = false; }
+    else { boton.classList.remove("activo"); boton.disabled = true; }
+  }
+
+  function verificarCodigo() {
+  const codigoIngresado = Array.from(inputs).map(inp => inp.value).join("");
+  const codigoReal = localStorage.getItem("codigo_verificacion");
+  const correo = localStorage.getItem("correo_usuario");
+
+  if (!correo) {
+    alert("Error: No se encontró el correo del usuario. Vuelva a iniciar sesión.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  if (codigoIngresado === codigoReal) {
+    // Generamos avatar con inicial + color aleatorio
+    const inicial = correo.charAt(0).toUpperCase();
+    const colores = ["#FF5733","#33C1FF","#28A745","#FFC300","#9B59B6","#E67E22"];
+    const color = colores[Math.floor(Math.random() * colores.length)];
+
+    const avatarSVG = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+        <circle cx="50" cy="50" r="50" fill="${color}" />
+        <text x="50%" y="55%" font-size="50" text-anchor="middle" fill="white" font-family="Arial" dy=".3em">${inicial}</text>
+      </svg>`;
+    const avatarDataURL = "data:image/svg+xml;base64," + btoa(avatarSVG);
+
+    // Guardamos correo y avatar para asegurar consistencia
+    localStorage.setItem("correo_usuario", correo);
+    localStorage.setItem("foto_usuario", avatarDataURL);
+    localStorage.setItem("sesion_activa", "true");
+
+    window.location.href = "home.html";
+  } else {
+    alert("❌ Código incorrecto, intente de nuevo");
+  }
+}
+
+
+</script>
+
+  <script>
+  if (!localStorage.getItem("sesion_activa")) {
+    window.location.href = "index.html";
+  }
+ </script>
+</body>
+</html>
