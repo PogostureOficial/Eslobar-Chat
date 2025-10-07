@@ -1,477 +1,510 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Iniciar Sesión</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Iniciar Sesión</title>
 
-  <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+<link rel="shortcut icon" href="logo.png" type="image/png">
 
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function(){ emailjs.init("Ze_UcmuGqxNN8zCoU"); })(); /* tu public key */
-  </script>
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
-  <link rel="shortcut icon" href="logo.png" type="image/png">
+<style>
+  :root{
+    --bg: #1b1b1b;
+    --panel: #1f1f1f;
+    --muted: #6f6f6f;
+    --accent-border: #2f2f2f;
+    --btn-bg: #252525;
+    --white: #ffffff;
+    --radius: 999px;
+    --w: 360px;
+  }
 
-  <style>
-    :root{
-      --w: 360px;
-      --gap: 14px;
-      --radius: 12px;
-    }
-    body{
-      margin:0;
-      padding:0;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:#000;
-      color:#fff;
-      font-family: Arial, sans-serif;
-    }
-    .stack{
-      width: min(90vw, var(--w));
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap: var(--gap);
-    }
-    h1{
-      margin:0 0 calc(var(--gap) * 2);
-      font-size: clamp(2.2rem, 5vw, 3rem);
-      line-height:1;
-      text-align:center;
-    }
-    .input-box{
-      width: 100%;
-      padding: 14px;
-      background:#111;
-      border:1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius);
-      outline:none;
-      color:#fff;
-      font-size:1rem;
-      text-align:center;
-      box-shadow: 0 0 10px rgba(255,255,255,.05);
-      transition: box-shadow .25s ease, border-color .25s ease;
-    }
-    .input-box:focus{
-      border-color: rgba(255,255,255,.3);
-      box-shadow: 0 0 15px rgba(255,255,255,.15);
-    } 
-    
-.login-phone {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 15px;
-}
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: var(--bg);
+    color: var(--white);
+    font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+  }
 
-.login-phone select {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #444;
-  background: #000;
-  color: #fff;
-  font-size: 1rem;
-}
+  .logo {
+    position: absolute;
+    left: 28px;
+    top: 22px;
+    font-weight:700;
+    font-size:18px;
+    color: #fff;
+    letter-spacing: 0.2px;
+  }
 
-.login-phone input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #444;
-  background: #000;
-  color: #fff;
-  font-size: 1rem;
-}
+  .wrap {
+    width: min(92vw, var(--w));
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 18px;
+    padding: 6px 0 40px;
+  }
 
+  h1 {
+    margin: 0;
+    margin-top: -10px;
+    font-size: clamp(26px, 6vw, 48px);
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align:center;
+  }
 
-    #enviarBtn{
-      width: 100%;
-      height: 0;
-      padding: 0 20px;
-      margin: 0;
-      border: none;
-      border-radius: var(--radius);
-      font-weight: bold;
-      cursor: pointer;
-      background:#555;
-      color:#bbb;
-      opacity: 0;
-      pointer-events: none;
-      box-shadow: 0 0 0 rgba(255,255,255,0);
-      transition: height .35s ease, padding .35s ease, opacity .35s ease, box-shadow .35s ease, background .2s ease, color .2s ease;
-    }
-    #enviarBtn.visible{
-      height: 48px;
-      padding: 12px 20px;
-      margin-top: var(--gap);
-      opacity: 1;
-    }
-    #enviarBtn.activo{
-      background:#fff;
-      color:#000;
-      pointer-events:auto;
-      box-shadow: 0 0 12px rgba(255,255,255,.25);
-    }
+  .buttons {
+    width: 100%;
+    display:flex;
+    flex-direction:column;
+    gap: 14px;
+    margin-top: 6px;
+    align-items:center;
+  }
 
-    #country-code {
-  padding: 14px;
-  background: #111;
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 12px;
-  color: #fff;
-  font-size: 1rem;
-  outline: none;
-  box-shadow: 0 0 10px rgba(255,255,255,.1);
-  cursor: pointer;
-  
-  /* quita el estilo nativo */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  .btn {
+    width: 100%;
+    max-width: 360px;
+    background: var(--btn-bg);
+    border: 1px solid var(--accent-border);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.01) inset;
+    color: var(--white);
+    padding: 14px 18px;
+    border-radius: 999px;
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    justify-content:flex-start;
+    cursor:pointer;
+    transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    font-size: 15px;
+  }
 
-  /* flechita personalizada */
-  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 40px; /* deja espacio para la flecha */
-}
+  .btn:hover { transform: translateY(-3px); background: #2a2a2a; border-color: #3a3a3a; }
+  .btn:active { transform: translateY(0); }
 
-#country-code:focus {
-  border-color: #fff;
-  box-shadow: 0 0 15px rgba(255,255,255,.2);
-}
+  .btn .ico {
+    width: 36px;
+    height: 36px;
+    min-width:36px;
+    min-height:36px;
+    display:inline-flex;
+    border-radius: 999px;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
 
-    .google-wrap {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 14px;
-    }
+  .btn .ico img {
+    width: 22px;
+    height: 22px;
+    display:block;
+    object-fit:cover;
+  }
 
-    #googleBtn {
-      width: auto !important;
-      min-width: 220px;
-      max-width: 300px;
-      display: block;
-    }
+  .btn .txt { flex:1; text-align:center; margin-left: -36px; } /* center text visually */
 
-    @media (max-width:380px){
-      :root{ --w: 320px; }
-    }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: #292929;
+    margin: 8px 0 8px;
+  }
 
-    .phone-row{
-  width:109%;
-  display:flex;
-  align-items:center;
-}
+  footer {
+    position:absolute;
+    bottom:12px;
+    left:0;
+    right:0;
+    text-align:center;
+    color: #474747;
+    font-size: 13px;
+  }
 
-.phone-row .cc {
-  padding: 14px;
-  background: #111;
-  border: 1px solid rgba(255,255,255,.2);
-  border-radius: 12px 0 0 12px;
-  min-width: 90px;
-  max-width: 110px;
-  color: #fff;
-  font-size: 1rem;
-  outline: none;
-  box-shadow: 0 0 15px rgba(255,255,255,.1);
-  transition: all 0.3s ease; /* transiciones suaves */
-  -webkit-appearance: none; /* quita estilo nativo de select en Safari/Chrome */
-  -moz-appearance: none; /* quita estilo nativo en Firefox */
-  appearance: none;
-  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="white"><polygon points="0,0 12,0 6,6"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px 12px;
-  cursor: pointer;
-}
+  /* Modales */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+    backdrop-filter: blur(4px);
+  }
 
-.phone-row input{
-  flex: 1; /* este es el que ocupa todo el espacio */
-  padding:14px;
-  background:#111;
-  border:1px solid rgba(255,255,255,.1);
-  border-left:none; /* elimina doble borde entre select y input */
-  border-radius: 0 12px 12px 0; /* esquinas derechas */
-  color:#fff;
-  font-size:1rem;
-  outline:none;
-  box-shadow: 0 0 10px rgba(255,255,255,.05);
-  transition: box-shadow .25s ease, border-color .25s ease;
-}
+  .modal {
+    background: #141414;
+    border-radius: 14px;
+    padding: 22px 26px;
+    width: min(92vw, 440px);
+    max-width: 92%;
+    color: #fff;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    text-align:center;
+  }
 
-.phone-row input:focus,
-/* Animación al desplegar opciones */
-.phone-row .cc:focus {
-  border-color: #fff;
-  box-shadow: 0 0 20px rgba(255,255,255,.2);
-}
+  .modal h2 {
+    margin:0 0 8px;
+    font-size: 20px;
+    font-weight:600;
+  }
 
+  .modal p { margin:0 0 18px; color: var(--muted); font-size:14px; }
 
-  </style>
+  .modal .actions { display:flex; gap:10px; justify-content:center; }
+
+  .btn-white {
+    background:#fff;
+    color:#000;
+    border-radius:999px;
+    padding:10px 18px;
+    border:none;
+    font-weight:700;
+    cursor:pointer;
+  }
+
+  /* Email input inside modal */
+  .email-input {
+    width:100%;
+    display:flex;
+    gap:8px;
+    margin-bottom: 8px;
+    justify-content:center;
+  }
+
+  .email-input input[type="email"]{
+    flex:1;
+    background:#171717;
+    border:1px solid #2f2f2f;
+    padding:10px 12px;
+    border-radius: 10px;
+    color:#fff;
+    outline:none;
+  }
+
+  .send-code {
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
+    padding: 10px 14px;
+    border:none;
+    cursor:pointer;
+    font-weight:700;
+  }
+
+  /* Hidden GSI container (we render button but keep hidden) */
+  #gsi-hidden { display:none; }
+
+  @media (max-width:380px){
+    :root{ --w: 320px; }
+  }
+</style>
 </head>
 <body>
-  <div class="stack">
-    <h1>Iniciar sesión</h1>
 
-   <div class="phone-row">
-<select id="country-code">
-  <option value="+54" data-iso="AR">🇦🇷 +54</option>
-  <option value="+34" data-iso="ES">🇪🇸 +34</option>
-  <option value="+1"  data-iso="US">🇺🇸 +1</option>
-  <option value="+52" data-iso="MX">🇲🇽 +52</option>
-  <option value="+57" data-iso="CO">🇨🇴 +57</option>
-</select>
+  <div class="logo">Eslobar</div>
 
+  <div class="wrap">
+    <h1>INICIAR SESION</h1>
 
-  <input
-    type="tel"
-    id="telefono"
-    class="input-box"
-    placeholder="Introduce tu número de teléfono..."
-    inputmode="numeric"
-    pattern="[0-9]*"
-    maxlength="15"
-  />
-</div>
+    <div class="buttons">
+      <!-- Google custom-styled button -->
+      <button class="btn" id="googleCustom">
+        <span class="ico"><img src="google.png" alt="Google"></span>
+        <span class="txt">Continuar con Google</span>
+      </button>
 
+      <!-- Apple -->
+      <button class="btn" id="appleBtn">
+        <span class="ico"><img src="apple.png" alt="Apple"></span>
+        <span class="txt">Continuar con Apple</span>
+      </button>
 
-    <input type="email" id="correo" class="input-box" placeholder="Introduce tu correo electrónico...">
+      <!-- Microsoft -->
+      <button class="btn" id="microsoftBtn">
+        <span class="ico"><img src="microsoft.png" alt="Microsoft"></span>
+        <span class="txt">Continuar con Microsoft</span>
+      </button>
 
-        <!-- Botón normal -->
-    <button id="enviarBtn" onclick="enviarCodigo()">Enviar código</button>
+      <div class="divider" aria-hidden="true"></div>
 
-    <!-- Botón de Google -->
-    <div class="google-wrap">
-      <div id="googleBtn"></div>
+      <!-- Correo -->
+      <button class="btn" id="correoBtn">
+        <span class="ico"><img src="corre.png" alt="Correo"></span>
+        <span class="txt">Continuar con correo . . .</span>
+      </button>
     </div>
   </div>
 
-  <script>
-    // Redirección si ya hay sesión
-    if(localStorage.getItem("sesion_activa") === "true"){
-      window.location.href = "/home.html";
-    }
+  <footer>Al iniciar sesión en nuestra página, aceptas nuestros Términos y condiciones</footer>
 
-    const correoInput   = document.getElementById("correo");
-    const telefonoInput = document.getElementById("telefono");
-    const countryCode   = document.getElementById("country-code");
-    const enviarBtn     = document.getElementById("enviarBtn");
+  <!-- Hidden container to let GSI render internally if needed -->
+  <div id="gsi-hidden"></div>
 
-    // --- Mostrar / ocultar botón ---
-    telefonoInput.addEventListener("input", () => {
-  const digitsOnly = telefonoInput.value.replace(/\D/g, "");
-  if (digitsOnly.length >= 8) {
-    enviarBtn.classList.add("visible", "activo");
-  } else if (correoInput.value.trim().length === 0) {
-    enviarBtn.classList.remove("visible", "activo");
+  <!-- Modal: servicio no disponible -->
+  <div class="modal-backdrop" id="modalUnavailable">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="unavTitle">
+      <h2 id="unavTitle">Servicio no disponible actualmente</h2>
+      <p>Estamos trabajando para habilitar este método de inicio de sesión. Disculpá las molestias.</p>
+      <div class="actions">
+        <button class="btn-white" onclick="closeUnavailable()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: correo (ingresar email) -->
+  <div class="modal-backdrop" id="modalEmail">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="emailTitle">
+      <h2 id="emailTitle">Iniciar con correo</h2>
+      <p>Introduce tu correo y te enviaremos un código de verificación.</p>
+
+      <div class="email-input">
+        <input id="modalEmailInput" type="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" />
+        <button class="send-code" id="modalSendBtn">Enviar</button>
+      </div>
+
+      <div class="actions">
+        <button class="btn-white" onclick="closeModalEmail()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: mensaje de estado / error -->
+  <div class="modal-backdrop" id="modalStatus">
+    <div class="modal">
+      <h2 id="statusTitle">Listo</h2>
+      <p id="statusText">Se ha enviado el código.</p>
+      <div class="actions">
+        <button class="btn-white" onclick="closeStatus()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  /* --------- Configuración EmailJS (usa la clave que tenías) ---------- */
+  try {
+    emailjs.init("Ze_UcmuGqxNN8zCoU");
+  } catch(e){
+    console.warn("EmailJS init fallo", e);
   }
-});
 
+  /* ---------- Helpers modales ---------- */
+  function showModal(id){
+    const el = document.getElementById(id);
+    if(el) el.style.display = "flex";
+  }
+  function hideModal(id){
+    const el = document.getElementById(id);
+    if(el) el.style.display = "none";
+  }
+  function closeUnavailable(){ hideModal('modalUnavailable'); }
+  function closeModalEmail(){ hideModal('modalEmail'); }
+  function closeStatus(){ hideModal('modalStatus'); }
 
-    correoInput.addEventListener("input", () => {
-      const correo = correoInput.value.trim();
-      if (correo.length > 0) {
-        enviarBtn.classList.add("visible");
-      } else {
-        enviarBtn.classList.remove("visible","activo");
-      }
-      if (/^[\w.+-]+@gmail\.com$/.test(correo)) {
-        enviarBtn.classList.add("activo");
-      } else {
-        enviarBtn.classList.remove("activo");
-      }
-    });
+  /* ---------- Servicio no disponible (Apple / Microsoft) ---------- */
+  document.getElementById("appleBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    showModal('modalUnavailable');
+  });
+  document.getElementById("microsoftBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    showModal('modalUnavailable');
+  });
 
-    function enviarCodigo() {
-      const correo = correoInput.value.trim();
-      if (!correo) return;
-      const codigo = Math.floor(100000 + Math.random() * 900000);
-      localStorage.setItem("codigo_verificacion", codigo);
-      localStorage.setItem("correo_usuario", correo);
+  /* ---------- Inicio con correo: abrir modal ---------- */
+  document.getElementById("correoBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById('modalEmailInput').value = "";
+    showModal('modalEmail');
+    setTimeout(()=> document.getElementById('modalEmailInput').focus(), 120);
+  });
 
-      emailjs.send("service_nwp6u6j", "template_l73amke", {
-        email: correo,
-        codigo: codigo,
-        time: new Date(Date.now() + 15*60000).toLocaleTimeString()
-      }).then(() => {
-        window.location.href = "/verificacion.html";
-      }, (err) => {
-        alert("Error al enviar el correo: " + JSON.stringify(err));
-      });
+  /* ---------- Envío de código por correo (EmailJS) ---------- */
+  document.getElementById("modalSendBtn").addEventListener("click", async () => {
+    const input = document.getElementById('modalEmailInput');
+    const email = (input.value || "").trim();
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      showStatus("Error", "Por favor ingresá un correo válido.");
+      return;
     }
+    // Generar código de 6 dígitos
+    const codigo = Math.floor(100000 + Math.random() * 900000);
+    // Guardar en localStorage para la verificación
+    localStorage.setItem("codigo_verificacion", String(codigo));
+    localStorage.setItem("correo_usuario", email);
 
-    // --- Google Login ---
-    function handleCredentialResponse(response) {
-      const data = parseJwt(response.credential);
-      const correo = data.email;
-      const foto = data.picture;
+    // payload para EmailJS (ajustar keys si tu template usa otros nombres)
+    const payload = {
+      email: email,
+      codigo: String(codigo),
+      time: new Date(Date.now() + 15*60000).toLocaleTimeString()
+    };
+
+    // Mostrar loading mínimo (cambiamos texto del botón)
+    const sendBtn = document.getElementById('modalSendBtn');
+    const prev = sendBtn.innerText;
+    sendBtn.innerText = "Enviando...";
+    sendBtn.disabled = true;
+
+    try {
+      await emailjs.send("service_nwp6u6j", "template_l73amke", payload);
+      // cerrar modal y redirigir a verificación
+      hideModal('modalEmail');
+      // opcional: marcar sesión temporalmente? no, esperamos verificación
+      // Mostrar status rápido
+      showStatus("Código enviado", "Revisá tu bandeja de entrada. Serás redirigido a verificar.");
+      setTimeout(()=> window.location.href = "/verificacion.html", 1200);
+    } catch(err){
+      console.error("EmailJS error:", err);
+      showStatus("Error al enviar", "No pudimos enviar el correo. Intentá nuevamente más tarde.");
+    } finally {
+      sendBtn.innerText = prev;
+      sendBtn.disabled = false;
+    }
+  });
+
+  /* ---------- Status modal helper ---------- */
+  function showStatus(title, text){
+    const t = document.getElementById('statusTitle');
+    const st = document.getElementById('statusText');
+    t.innerText = title;
+    st.innerText = text;
+    showModal('modalStatus');
+  }
+
+  /* ---------------- Google Sign-In (GSI) ---------------- */
+  // Mantener el mismo cliente que ya tenías.
+  const GOOGLE_CLIENT_ID = "681954592440-8435k741g9o7tcfluuvqhkkdr6fulgnv.apps.googleusercontent.com";
+
+  function parseJwt(token){
+    try{
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g,'+').replace(/_/g,'/');
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c){
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }catch(e){
+      return {};
+    }
+  }
+
+  async function handleCredentialResponse(response) {
+    try {
+      if(!response || !response.credential) throw new Error("No credential");
+      const info = parseJwt(response.credential);
+      const correo = info.email || "";
+      const foto = info.picture || "";
+
+      // Guardar datos en localStorage (como tenías)
       localStorage.setItem("correo_usuario", correo);
       localStorage.setItem("foto_usuario", foto);
       localStorage.setItem("sesion_activa", "true");
 
+      // Generar código y guardar
       const codigo = Math.floor(100000 + Math.random() * 900000);
-      localStorage.setItem("codigo_verificacion", codigo);
+      localStorage.setItem("codigo_verificacion", String(codigo));
 
-      emailjs.send("service_nwp6u6j", "template_l73amke", {
+      // Enviar por EmailJS (para que el usuario reciba el código)
+      const payload = {
         email: correo,
-        codigo: codigo,
+        codigo: String(codigo),
         time: new Date(Date.now() + 15*60000).toLocaleTimeString()
-      }).then(() => {
-        window.location.href = "/verificacion.html";
-      }, (err) => {
-        alert("Error al enviar el correo: " + JSON.stringify(err));
-      });
+      };
+
+      await emailjs.send("service_nwp6u6j", "template_l73amke", payload);
+
+      // Redirigir a verificacion
+      window.location.href = "/verificacion.html";
+    } catch (err) {
+      console.error("Google sign-in error:", err);
+      showStatus("Error", "No se pudo completar la autenticación con Google.");
     }
-
-    function parseJwt(token){
-      var base64Url = token.split('.')[1];
-      var base64 = base64Url.replace(/-/g,'+').replace(/_/g,'/');
-      var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c){
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      return JSON.parse(jsonPayload);
-    }
-
-    window.onload = function () {
-      google.accounts.id.initialize({
-        client_id: "681954592440-8435k741g9o7tcfluuvqhkkdr6fulgnv.apps.googleusercontent.com",
-        callback: handleCredentialResponse
-      });
-      google.accounts.id.renderButton(
-        document.getElementById("googleBtn"),
-        {
-          theme: "outline",
-          size: "large",
-          text: "signin_with",
-          shape: "rectangular",
-          logo_alignment: "left",
-          width: "100%"
-        }
-      );
-      google.accounts.id.disableAutoSelect();
-    };
-
-    
-    
-  </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.10.27/bundle/libphonenumber-max.js"></script>
-
-
-    <!-- Reemplaza el bloque que tienes (el que contiene formatAsYouType) por ESTE -->
-<script type="module">
-/*
-  Bloque robusto para formatear el teléfono. Intenta:
-   - usar AsYouType global si existe,
-   - buscar AsYouType dentro de window.libphonenumber,
-   - importar libphonenumber-js desde skypack como fallback (ESM).
-*/
-import * as _maybe from 'https://cdn.skypack.dev/libphonenumber-js@1.10.27';
-
-document.addEventListener('DOMContentLoaded', async () => {
-  const phoneInput = document.getElementById('telefono');
-  const countrySelect = document.getElementById('country-code');
-  if (!phoneInput || !countrySelect) return;
-
-  // helper: obtener ISO desde el option seleccionado
-  function getSelectedISO() {
-    const opt = countrySelect.options[countrySelect.selectedIndex];
-    return opt && opt.dataset && opt.dataset.iso ? opt.dataset.iso : undefined;
   }
 
-  // Detecta AsYouType en varias posibilidades
-  let AYT = null;
-
-  if (typeof AsYouType !== 'undefined') AYT = AsYouType;
-  else if (window.libphonenumber && (window.libphonenumber.AsYouType || window.libphonenumber['AsYouType'])) {
-    AYT = window.libphonenumber.AsYouType || window.libphonenumber['AsYouType'];
-  } else if (_maybe && (_maybe.AsYouType || (_maybe.default && _maybe.default.AsYouType))) {
-    AYT = _maybe.AsYouType || (_maybe.default && _maybe.default.AsYouType);
-  }
-
-  console.log('AsYouType detected?', !!AYT, AYT ? AYT.name || 'class' : 'none');
-
-  // función de formateo
-  function formatAsYouType(value) {
-    const cleaned = value.replace(/[^\d\+]/g, ''); // solo dígitos y +
-    const iso = getSelectedISO();
-
-    if (AYT) {
-      try {
-        const formatter = iso ? new AYT(iso) : new AYT();
-        return formatter.input(cleaned);
-      } catch (err) {
-        console.warn('AsYouType fallo al formatear:', err);
+  // Inicializar GSI cuando esté disponible
+  function initGSI() {
+    try {
+      if(window.google && google.accounts && google.accounts.id){
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleCredentialResponse
+        });
+        // Render en un contenedor oculto para que la librería quede lista.
+        google.accounts.id.renderButton(
+          document.getElementById("gsi-hidden"),
+          { theme: "outline", size: "large", text: "signin_with", shape: "rectangular", logo_alignment: "left" }
+        );
+        google.accounts.id.disableAutoSelect();
+      } else {
+        console.warn("GSI no disponible (aún).");
       }
+    } catch(e){
+      console.warn("Inicialización GSI error:", e);
     }
-
-    // fallback razonable si no existe AsYouType
-    return cleaned.replace(/^(\+?)(\d{1})(\d{0,3})(\d{0,3})(\d{0,4}).*/, (_, plus, g1, g2, g3, g4) => {
-      let out = (plus ? '+' + g1 : g1 || '');
-      if (g2) out += ' ' + g2;
-      if (g3) out += ' ' + g3;
-      if (g4) out += '-' + g4;
-      return out;
-    });
   }
 
-  // caret al final
-  function setToEnd(el) {
-    try { el.setSelectionRange(el.value.length, el.value.length); }
-    catch (e) { /* ignore */ }
-  }
-
-  phoneInput.addEventListener('input', (e) => {
-    const before = phoneInput.value;
-    const formatted = formatAsYouType(before);
-    if (formatted !== before) phoneInput.value = formatted;
-    setToEnd(phoneInput);
+  // Esperar a que la librería GSI cargue (si no lo hizo en 'load')
+  window.addEventListener('load', () => {
+    // Si ya hay sesión activa, redirigir a home
+    if(localStorage.getItem("sesion_activa") === "true"){
+      window.location.href = "/home.html";
+      return;
+    }
+    // Intenta inicializar GSI. Si la librería se carga un poco después, reintenta brevemente.
+    initGSI();
+    // reintentos suaves por 2s
+    let tries = 0;
+    const tryInterval = setInterval(()=>{
+      tries++;
+      if(window.google && google.accounts && google.accounts.id){
+        initGSI();
+        clearInterval(tryInterval);
+      } else if(tries > 10){
+        clearInterval(tryInterval);
+      }
+    }, 200);
   });
 
-  countrySelect.addEventListener('change', () => {
-    phoneInput.dispatchEvent(new Event('input'));
+  // Al hacer click en nuestro botón estilizado de Google
+  document.getElementById("googleCustom").addEventListener("click", (e) => {
+    e.preventDefault();
+    // Intentar mostrar el prompt de GSI (One Tap / selector)
+    try {
+      if(window.google && google.accounts && google.accounts.id && typeof google.accounts.id.prompt === 'function'){
+        google.accounts.id.prompt(); // abrir selector/one-tap
+      } else {
+        // Si no está disponible, informar al usuario y abrir el botón renderizado oculto (fallback)
+        showStatus("Atención", "El servicio de Google tardó en cargarse. Intentá nuevamente en un momento.");
+      }
+    } catch(err){
+      console.error("GSI prompt error:", err);
+      showStatus("Error", "No se pudo iniciar sesión con Google en este momento.");
+    }
   });
-});
- </script>
+
+  // Cerrar modales con Esc
+  document.addEventListener('keydown', (e)=> {
+    if(e.key === "Escape"){
+      hideModal('modalEmail');
+      hideModal('modalUnavailable');
+      hideModal('modalStatus');
+    }
+  });
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
