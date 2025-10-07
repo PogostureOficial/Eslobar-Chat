@@ -162,7 +162,7 @@
   .main-content {
     padding: 12px;
   }
-
+/* --------+-contenedor del chat n1-----------;;;;;;;*/
   .chat-container {
     align-items: center;
     justify-content: center;
@@ -234,7 +234,7 @@
     flex-direction: column;
     justify-content: flex-start; /* el contenido empieza arriba */
     padding: 16px;
-    margin-top: -600px; /* usa valores negativos para subirlo */
+    margin-top: -800px; /* usa valores negativos para subirlo */
     height: 100vh; /* ocupar toda la pantalla */
     box-sizing: border-box;
     overflow-y: auto;
