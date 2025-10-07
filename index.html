@@ -261,7 +261,7 @@
   <script>
     // Redirección si ya hay sesión
     if(localStorage.getItem("sesion_activa") === "true"){
-      window.location.href = "/static/home.html";
+      window.location.href = "/home.html";
     }
 
     const correoInput   = document.getElementById("correo");
@@ -306,7 +306,7 @@
         codigo: codigo,
         time: new Date(Date.now() + 15*60000).toLocaleTimeString()
       }).then(() => {
-        window.location.href = "/static/verificacion.html";
+        window.location.href = "/verificacion.html";
       }, (err) => {
         alert("Error al enviar el correo: " + JSON.stringify(err));
       });
@@ -329,7 +329,7 @@
         codigo: codigo,
         time: new Date(Date.now() + 15*60000).toLocaleTimeString()
       }).then(() => {
-        window.location.href = "/static/verificacion.html";
+        window.location.href = "/verificacion.html";
       }, (err) => {
         alert("Error al enviar el correo: " + JSON.stringify(err));
       });
@@ -447,6 +447,7 @@ document.addEventListener('DOMContentLoaded', async () => {
  </script>
 </body>
 </html>
+
 
 
 
