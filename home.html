@@ -135,6 +135,24 @@
   </div>
 </div>
 
+  <script>
+  // Si no hay sesión, volver al login
+  if (localStorage.getItem("sesion_activa") !== "true") {
+    window.location.href = "index.html";
+  }
+
+  // Si hay sesión, mostrar los datos del usuario
+  document.addEventListener("DOMContentLoaded", () => {
+    const correo = localStorage.getItem("correo_usuario");
+    const foto = localStorage.getItem("foto_usuario");
+
+    // (Opcional) mostrar en algún lugar del home quién inició sesión
+    console.log("Usuario activo:", correo);
+    console.log("Avatar:", foto);
+  });
+</script>
+
+
 <!-- Archivo de configuración: cambiar URL backend según entorno -->
 <script src="/static/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -613,6 +631,7 @@ window.enviarMensaje = enviarMensaje;
  </script>
 </body>
 </html>
+
 
 
 
