@@ -388,7 +388,7 @@
   .chat-container {
     overflow-y: hidden !important; /* ❌ sin scroll */
     height: 100%; /* ocupa todo el viewport */
-    margin-top: 900px;
+    margin-top: 950px;
   }
 
   /* ✅ Permitir que textarea crezca sin provocar scroll */
