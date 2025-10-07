@@ -323,7 +323,7 @@
     margin: 0 !important;
     margin-top: -100px; 
     /* elimina desplazamientos negativos */
-    height: 100vh;            /* ocupa toda la altura de la pantalla */
+    height: 50vh;            /* ocupa toda la altura de la pantalla */
     box-sizing: border-box;
     z-index: 1;               /* por debajo de botones */
   }
