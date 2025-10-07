@@ -139,6 +139,12 @@
 <script src="/static/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
+  <script>
+  if (!localStorage.getItem("sesion_activa")) {
+    window.location.href = "index.html";
+  }
+</script>
+
 <!-- ÚNICO BLOQUE JS (unificado y seguro) -->
 <script>
 
@@ -607,6 +613,7 @@ window.enviarMensaje = enviarMensaje;
  </script>
 </body>
 </html>
+
 
 
 
