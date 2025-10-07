@@ -22,6 +22,14 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def serve_index():
     return send_from_directory('.', 'index.html')
 
+@app.route('/home.html')
+def serve_home():
+    return send_from_directory('.', 'home.html')
+
+@app.route('/verificacion.html')
+def serve_verificacion():
+    return send_from_directory('.', 'verificacion.html')
+
 
 # 📁 Servir archivos estáticos (CSS, JS, imágenes)
 @app.route('/<path:path>')
@@ -214,6 +222,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
