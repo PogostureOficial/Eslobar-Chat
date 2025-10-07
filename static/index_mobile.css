@@ -167,7 +167,7 @@
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - 160px); /* deja espacio para topbar/input */
-    margin-top: 20px;
+    margin-top: -220px;
   }
 
   #titulo {
@@ -320,7 +320,9 @@
     justify-content: center; /* centrado vertical */
     align-items: center;      /* centrado horizontal */
     padding: 16px;
-    margin: 0 !important;     /* elimina desplazamientos negativos */
+    margin: 0 !important;
+    margin-top: -100px; 
+    /* elimina desplazamientos negativos */
     height: 100vh;            /* ocupa toda la altura de la pantalla */
     box-sizing: border-box;
     z-index: 1;               /* por debajo de botones */
