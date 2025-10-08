@@ -398,15 +398,11 @@
   }
    
 .chat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
     padding: 12px;
+    padding-bottom: 90px;      /* 👈 deja espacio para el input fijo */
     margin: 0;
-    height: calc(100vh - 90px); /* deja espacio para el upgrade-btn arriba */
-    overflow-y: auto;
+    overflow-y: auto;          /* permite scroll si hay mucho texto */
+    height: calc(100vh - 70px); /* 70px es el alto aprox. del input */
     box-sizing: border-box;
   }
 }
