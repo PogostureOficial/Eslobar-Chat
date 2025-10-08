@@ -52,6 +52,17 @@
   </div>
 </div>
 
+    <!-- Modal de confirmación -->
+<div id="logoutModal" class="logout-modal">
+  <div class="logout-content">
+    <h2>¿Seguro que quieres cerrar sesión?</h2>
+    <div class="logout-buttons">
+      <button id="confirmLogout" class="logout-confirm">Sí</button>
+      <button id="cancelLogout" class="logout-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+
   
 </div>
 
@@ -637,27 +648,19 @@ window.enviarMensaje = enviarMensaje;
    window.addEventListener("load", cambiarTitulo);
  </script>
 
-  <!-- Modal de confirmación -->
-<div id="logoutModal" class="logout-modal">
-  <div class="logout-content">
-    <h2>¿Cerrar sesión?</h2>
-    <p>Tu sesión actual se cerrará y volverás al inicio.</p>
-    <div class="logout-buttons">
-      <button id="confirmLogout" class="logout-confirm">Sí, salir</button>
-      <button id="cancelLogout" class="logout-cancel">Cancelar</button>
-    </div>
-  </div>
-</div>
-
 <script>
   const logoutBtn = document.getElementById("logoutBtn");
   const logoutModal = document.getElementById("logoutModal");
   const confirmLogout = document.getElementById("confirmLogout");
   const cancelLogout = document.getElementById("cancelLogout");
 
+  // Mostrar modal
   logoutBtn.addEventListener("click", () => logoutModal.classList.add("show"));
+
+  // Cancelar
   cancelLogout.addEventListener("click", () => logoutModal.classList.remove("show"));
 
+  // Confirmar
   confirmLogout.addEventListener("click", () => {
     localStorage.removeItem("sesion_activa");
     localStorage.removeItem("correo_usuario");
@@ -665,12 +668,16 @@ window.enviarMensaje = enviarMensaje;
     window.location.href = "index.html";
   });
 
+  // Cerrar si se hace clic fuera del cuadro
   window.addEventListener("click", (e) => {
     if (e.target === logoutModal) logoutModal.classList.remove("show");
   });
 </script>
+
+ 
 </body>
 </html>
+
 
 
 
