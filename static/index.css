@@ -520,6 +520,133 @@ body {
   }
 }
 
+/* --- Contenedor del botón dentro del sidebar --- */
+.logout-container {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Botón de Cerrar Sesión --- */
+.logout-btn {
+  background: #2b2b2b;
+  color: #fff;
+  border: 1px solid #3c3c3c;
+  border-radius: 16px;
+  padding: 10px 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 80%;
+  justify-content: center;
+}
+
+.logout-btn:hover {
+  background: #3a3a3a;
+  transform: translateY(-1px);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
+}
+
+.logout-icon {
+  width: 18px;
+  height: 18px;
+  filter: invert(1);
+}
+
+/* --- Modal de confirmación --- */
+.logout-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.logout-modal.show {
+  display: flex;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.logout-content {
+  background: #262626;
+  color: #fff;
+  border-radius: 16px;
+  padding: 28px 30px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 0 18px rgba(0,0,0,0.4);
+  animation: popIn 0.25s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.logout-content h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.logout-content p {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.logout-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 12px;
+}
+
+.logout-confirm, .logout-cancel {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.logout-confirm {
+  background: #d63031;
+  color: #fff;
+}
+
+.logout-confirm:hover {
+  background: #e84141;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+}
+
+.logout-cancel {
+  background: #3a3a3a;
+  color: #fff;
+}
+
+.logout-cancel:hover {
+  background: #4a4a4a;
+}
+
+
 
 
 
