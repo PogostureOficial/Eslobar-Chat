@@ -16,6 +16,25 @@
     <img src="/static/images/logo.png" alt="Logo" />
   </div>
   <div class="sidebar-section">Historial de chats</div>
+
+  <!-- 🔹 Botón Cerrar Sesión abajo del sidebar (siempre visible) -->
+<div class="logout-container">
+  <button id="logoutBtn" class="logout-btn">
+    <img src="/static/images/logout.png" alt="Salir" class="logout-icon">
+    Cerrar sesión
+  </button>
+</div>
+
+<!-- 🔹 Modal de confirmación -->
+<div id="logoutModal" class="logout-modal">
+  <div class="logout-content">
+    <h2>¿Seguro que quieres cerrar sesión?</h2>
+    <div class="logout-buttons">
+      <button id="confirmLogout" class="logout-confirm">Sí</button>
+      <button id="cancelLogout" class="logout-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
   <!-- mobile plans (se usa solo en móvil via CSS) -->
 <div class="mobile-plans">
   <div class="mobile-plans-title">Elige un plan</div>
@@ -43,25 +62,6 @@
       <div class="mobile-plan-desc">Herramientas profesionales y acceso a todas las materias.</div>
     </div>
   </div>
-    <!-- Botón Cerrar Sesión -->
-  <div class="logout-container">
-    <button id="logoutBtn" class="logout-btn">
-      <img src="/static/images/logout.png" alt="Salir" class="logout-icon">
-      Cerrar sesión
-    </button>
-  </div>
-</div>
-
-    <!-- Modal de confirmación -->
-<div id="logoutModal" class="logout-modal">
-  <div class="logout-content">
-    <h2>¿Seguro que quieres cerrar sesión?</h2>
-    <div class="logout-buttons">
-      <button id="confirmLogout" class="logout-confirm">Sí</button>
-      <button id="cancelLogout" class="logout-cancel">Cancelar</button>
-    </div>
-  </div>
-</div>
 
   
 </div>
@@ -677,6 +677,7 @@ window.enviarMensaje = enviarMensaje;
  
 </body>
 </html>
+
 
 
 
