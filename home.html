@@ -43,6 +43,13 @@
       <div class="mobile-plan-desc">Herramientas profesionales y acceso a todas las materias.</div>
     </div>
   </div>
+    <!-- Botón Cerrar Sesión -->
+  <div class="logout-container">
+    <button id="logoutBtn" class="logout-btn">
+      <img src="/static/images/logout.png" alt="Salir" class="logout-icon">
+      Cerrar sesión
+    </button>
+  </div>
 </div>
 
   
@@ -629,8 +636,42 @@ window.enviarMensaje = enviarMensaje;
    // Ejecutar cada vez que se carga la página
    window.addEventListener("load", cambiarTitulo);
  </script>
+
+  <!-- Modal de confirmación -->
+<div id="logoutModal" class="logout-modal">
+  <div class="logout-content">
+    <h2>¿Cerrar sesión?</h2>
+    <p>Tu sesión actual se cerrará y volverás al inicio.</p>
+    <div class="logout-buttons">
+      <button id="confirmLogout" class="logout-confirm">Sí, salir</button>
+      <button id="cancelLogout" class="logout-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const logoutBtn = document.getElementById("logoutBtn");
+  const logoutModal = document.getElementById("logoutModal");
+  const confirmLogout = document.getElementById("confirmLogout");
+  const cancelLogout = document.getElementById("cancelLogout");
+
+  logoutBtn.addEventListener("click", () => logoutModal.classList.add("show"));
+  cancelLogout.addEventListener("click", () => logoutModal.classList.remove("show"));
+
+  confirmLogout.addEventListener("click", () => {
+    localStorage.removeItem("sesion_activa");
+    localStorage.removeItem("correo_usuario");
+    localStorage.removeItem("foto_usuario");
+    window.location.href = "index.html";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === logoutModal) logoutModal.classList.remove("show");
+  });
+</script>
 </body>
 </html>
+
 
 
 
