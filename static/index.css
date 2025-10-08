@@ -520,7 +520,7 @@ body {
   }
 }
 
-/* --- Contenedor del botón dentro del sidebar --- */
+/* === Botón de Cerrar Sesión === */
 .logout-container {
   position: absolute;
   bottom: 20px;
@@ -530,111 +530,85 @@ body {
   justify-content: center;
 }
 
-/* --- Botón de Cerrar Sesión --- */
 .logout-btn {
-  background: #2b2b2b;
+  background-color: #2b2b2b;
   color: #fff;
-  border: 1px solid #3c3c3c;
-  border-radius: 16px;
-  padding: 10px 16px;
-  font-size: 14px;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 8px;
+  font-size: 15px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 80%;
-  justify-content: center;
+  transition: background 0.25s ease, transform 0.1s ease;
 }
 
 .logout-btn:hover {
-  background: #3a3a3a;
+  background-color: #3a3a3a;
   transform: translateY(-1px);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.08);
 }
 
 .logout-icon {
   width: 18px;
   height: 18px;
-  filter: invert(1);
+  filter: brightness(0) invert(1);
 }
 
-/* --- Modal de confirmación --- */
+/* === Modal de confirmación === */
 .logout-modal {
+  display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  display: none;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
   justify-content: center;
   align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(4px);
+  z-index: 1000;
 }
 
 .logout-modal.show {
   display: flex;
-  animation: fadeIn 0.25s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 .logout-content {
-  background: #262626;
+  background: #1f1f1f;
   color: #fff;
   border-radius: 16px;
-  padding: 28px 30px;
-  width: 90%;
-  max-width: 360px;
+  padding: 30px;
   text-align: center;
-  box-shadow: 0 0 18px rgba(0,0,0,0.4);
-  animation: popIn 0.25s ease;
-}
-
-@keyframes popIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  width: 90%;
+  max-width: 350px;
+  animation: fadeIn 0.2s ease;
 }
 
 .logout-content h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-weight: 600;
-  font-size: 1.3rem;
-}
-
-.logout-content p {
-  font-size: 0.95rem;
-  color: #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .logout-buttons {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   gap: 12px;
+  margin-top: 25px;
 }
 
-.logout-confirm, .logout-cancel {
-  flex: 1;
-  padding: 10px 0;
+.logout-confirm,
+.logout-cancel {
+  padding: 10px 18px;
+  border-radius: 10px;
   border: none;
-  border-radius: 12px;
-  font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.25s ease;
+  font-size: 15px;
+  transition: background 0.25s ease, transform 0.1s ease;
 }
 
 .logout-confirm {
-  background: #d63031;
+  background: #e53935;
   color: #fff;
-}
-
-.logout-confirm:hover {
-  background: #e84141;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
 }
 
 .logout-cancel {
@@ -642,8 +616,19 @@ body {
   color: #fff;
 }
 
+.logout-confirm:hover {
+  background: #ff3b3b;
+  transform: translateY(-1px);
+}
+
 .logout-cancel:hover {
   background: #4a4a4a;
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 
