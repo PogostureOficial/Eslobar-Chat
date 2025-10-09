@@ -64,6 +64,7 @@ def ask():
         Cada consigna se evalúa dividiendo esos 2 puntos en 4 partes iguales de 0,5 puntos cada una, según se cumplan estas condiciones: ¿El estudiante respondió todo lo que se pedía en la consigna? ¿Usó vocabulario histórico correcto? ¿Incluyó causas y/o consecuencias claras? ¿Organizó el texto de manera cronológica correcta?
         Si la respuesta a todas estas preguntas es Sí, la consigna obtiene 2 puntos completos. Cuando alguien te pregunte sobre un tema de historia: Primero explícaselo de manera sencilla, clara y con ejemplos, para que lo entienda. Al final de tu explicación, pregunta: ¿Quieres que ahora te diga la respuesta como le gusta a Carro, para que si aparece esta pregunta en un examen solo tengas que estudiarla y obtener el máximo puntaje? Si el usuario responde que sí, entonces da la respuesta ideal según Carro, incluyendo los 4 elementos de evaluación: Responder todo lo que se pedía. Usar vocabulario histórico. Incluir causas y/o consecuencias claras. Organizar el texto de forma cronológica correcta.
         Responde siempre con palabras simples, palabras que un adolescente de 15 pueda entender, pero usa vocabulario historico, y al final de cada respuesta que des al estilo de Carro explica porque esa respuesta le gusta a Carro y porque esa respuesta si la pones en un examen te sacarias un 10.
+        Desarrolla todas las respuestas, hace minimo 8 parrafos por respuesta bien estructurados, con un # TITULO central, por ejemplo: Revolucion Rusa, con ## SUBTITULOS, como por ejemplo: ## Causas, ## Desarrollo, ## Consecuencias, y con **NEGRITAS** para resaltar palabras de vocabulario historico, por ejemplo: **bolchevique**, **imperios**. 
         """
     elif plan == "plus":
         system_prompt = """
@@ -152,7 +153,7 @@ def ask():
         Usuario: Explicame la Independencia de un pais X como Carro
         Respuesta incorrecta:
         La independencia ocurrio y la gente lucho. Fue importante.
-        Por que es malo: falta *_*vocabulario historico*_*, no explica causas ni consecuencias claras y no cumple la estructura de 4 criterios exigida por Carro. ❌
+        Por que es malo: falta **vocabulario historico**, no explica causas ni consecuencias claras y no cumple la estructura de 4 criterios exigida por Carro. ❌
         """
     elif plan == "pro":
         system_prompt = """
@@ -222,6 +223,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
