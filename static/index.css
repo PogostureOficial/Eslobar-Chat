@@ -185,19 +185,20 @@ input::placeholder {
   font-size: 16px;           /* mismo tamaño que el input anterior */
   width: 100%;               /* ocupar todo el espacio disponible */
   resize: none;              /* evitar que el usuario lo estire manualmente */
-  overflow-y: auto;          /* scroll solo si pasa el límite */
+  /*overflow-y: auto;          /* scroll solo si pasa el límite */
   max-height: 7.5em;         /* máx 5 líneas (si tu line-height es 1.5) */
   line-height: 1.5em;
   padding: 10px;             /* igual que antes para que quede centrado */
   box-sizing: border-box; 
   font-family: Arial, sans-serif;   /* asegurar que respete el ancho */
+  padding-left: 15px; /* margen interno a la izquierda */
 }
 
 #mensaje::placeholder {
   font-family: Arial, sans-serif;   /* hereda la misma fuente que el contenedor */
   color: #afafaf;            /* mismo gris que usabas antes */
   font-size: 15px;        /* asegura que coincida con el texto normal */
-  padding-left: 10px; /* margen interno a la izquierda */
+  padding-left: 15px; /* margen interno a la izquierda */
 }
 
 /* NEW!!!!! Caja del chat: estado inicial centrado */
@@ -636,7 +637,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  left: -98%;
+  left: -96%;
 }
 
 .plus-btn {
@@ -685,6 +686,7 @@ body {
 .plus-options button:hover {
   background: #2e2e2e;
 }
+
 
 
 
