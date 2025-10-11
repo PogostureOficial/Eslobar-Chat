@@ -237,7 +237,7 @@
     margin-top: -800px; /* usa valores negativos para subirlo */
     height: 100vh; /* ocupar toda la pantalla */
     box-sizing: border-box;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
   }
 
   /* Asegurar que el body y main no agreguen huecos */
@@ -437,6 +437,7 @@
     color: #fff;
   }
 }
+
 
 
 
