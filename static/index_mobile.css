@@ -411,7 +411,7 @@
    ================================ */
    .upgrade-btn {
       position: fixed;
-      top: 16px;                  /* distancia desde la parte superior */
+      top: 106px;                  /* distancia desde la parte superior */
       left: 50%;                  /* centrado horizontal */
       transform: translateX(-50%); /* corrige el centrado */
       z-index: 9999;
@@ -431,6 +431,7 @@
       color: #fff;
    }
 }
+
 
 
 
