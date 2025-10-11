@@ -411,11 +411,11 @@
    ================================ */
    .upgrade-btn {
       position: fixed;
-      top: 5%;                  /* distancia desde la parte superior */
+      top: 15%;                  /* distancia desde la parte superior */
       left: 50%;                  /* centrado horizontal */
       transform: translateX(-50%); /* corrige el centrado */
       z-index: 9999;
-      width: 48px;
+      width: 208px;
       height: 48px;
       border-radius: 50%;
       display: flex;
@@ -423,6 +423,7 @@
       justify-content: center;
       background-color: #2d2b55;  /* ajusta al color morado de tu diseño */
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      font-weight: 600;
    }
 
    .upgrade-btn svg {
@@ -431,6 +432,7 @@
       color: #fff;
    }
 }
+
 
 
 
