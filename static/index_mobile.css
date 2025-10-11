@@ -202,7 +202,6 @@
     box-shadow: 0 6px 20px #171717;
     transition: transform 0.2s ease; /* suaviza el movimiento */
     z-index: 100; /* asegúrate de que quede por encima del chat */
-    overflow-y: hidden !important; /* ❌ sin scroll */
   }
 
   .input-container textarea {
@@ -237,7 +236,6 @@
     margin-top: -800px; /* usa valores negativos para subirlo */
     height: 100vh; /* ocupar toda la pantalla */
     box-sizing: border-box;
-    /*overflow-y: auto;*/
   }
 
   /* Asegurar que el body y main no agreguen huecos */
@@ -394,14 +392,12 @@
   /* ✅ Permitir que textarea crezca sin provocar scroll */
   .input-container textarea {
     max-height: 120px;
-    /*overflow-y: auto;*/
   }
    
   .chat-container {
       padding: 12px;
       padding-bottom: 90px;      /* 👈 deja espacio para el input fijo */
       margin: 0;
-      /*overflow-y: auto;      */
       height: calc(100vh - 70px); /* 70px es el alto aprox. del input */
       box-sizing: border-box;
     }
@@ -437,6 +433,7 @@
     color: #fff;
   }
 }
+
 
 
 
