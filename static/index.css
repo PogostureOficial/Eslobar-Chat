@@ -198,7 +198,7 @@ input::placeholder {
   font-family: Arial, sans-serif;   /* hereda la misma fuente que el contenedor */
   color: #afafaf;            /* mismo gris que usabas antes */
   font-size: 15px;        /* asegura que coincida con el texto normal */
-  padding-left: 15px; /* margen interno a la izquierda */
+  padding-left: 0px; /* margen interno a la izquierda */
 }
 
 /* NEW!!!!! Caja del chat: estado inicial centrado */
@@ -643,6 +643,7 @@ body {
 .plus-btn {
   background: none;
   color: #fff;
+  border: 1px solid #303030;
   font-size: 30px;
   width: 32px;
   height: 32px;
@@ -685,6 +686,7 @@ body {
 .plus-options button:hover {
   background: #2e2e2e;
 }
+
 
 
 
