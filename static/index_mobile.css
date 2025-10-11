@@ -331,7 +331,7 @@
   /* 🔧 Centrar el título en pantalla */
   #titulo {
     font-size: 26px;
-    font-weight: 900;
+    font-weight: 500;
     text-align: center;
     line-height: 1.5;
     margin: 0;
@@ -437,6 +437,7 @@
     color: #fff;
   }
 }
+
 
 
 
