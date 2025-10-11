@@ -191,7 +191,7 @@ input::placeholder {
   padding: 10px;             /* igual que antes para que quede centrado */
   box-sizing: border-box; 
   font-family: Arial, sans-serif;   /* asegurar que respete el ancho */
-  padding-left: 15px; /* margen interno a la izquierda */
+  padding-left: 35px; /* margen interno a la izquierda */
 }
 
 #mensaje::placeholder {
@@ -642,9 +642,8 @@ body {
 
 .plus-btn {
   background: none;
-  border: 1px solid #444;
   color: #fff;
-  font-size: 22px;
+  font-size: 30px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -686,6 +685,7 @@ body {
 .plus-options button:hover {
   background: #2e2e2e;
 }
+
 
 
 
