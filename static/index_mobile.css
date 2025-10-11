@@ -194,7 +194,7 @@
     z-index: 100;
     max-width: none;
     background: #303030;
-    padding: 7px 11px;
+    padding: 7px 9px;
     display: flex;
     align-items: center;
     border-radius: 999px;
@@ -202,6 +202,7 @@
     box-shadow: 0 6px 20px #171717;
     transition: transform 0.2s ease; /* suaviza el movimiento */
     z-index: 100; /* asegúrate de que quede por encima del chat */
+    overflow-y: hidden !important; /* ❌ sin scroll */
   }
 
   .input-container textarea {
@@ -436,6 +437,7 @@
     color: #fff;
   }
 }
+
 
 
 
