@@ -409,29 +409,35 @@
 /* ================================
    🔧 Ajuste específico: botón "Mejorar a Plus" centrado en móviles
    ================================ */
-   .upgrade-btn {
-      position: fixed;
-      top: 15%;                  /* distancia desde la parte superior */
-      left: 50%;                  /* centrado horizontal */
-      transform: translateX(-50%); /* corrige el centrado */
-      z-index: 9999;
-      /*width: 208px;
-      height: 48px;*/
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #2d2b55;  /* ajusta al color morado de tu diseño */
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-      font-weight: 600;
-   }
+   /* ================================
+   🔧 Botón "Mejorar a Plus" centrado y con forma original
+   ================================ */
+  .upgrade-btn {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 10px 20px;
+    background-color: #2d2b55; /* mismo color del botón de PC */
+    color: #fff;
+    border: none;
+    border-radius: 25px; /* forma ovalada */
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
 
-   .upgrade-btn svg {
-      width: 22px;
-      height: 22px;
-      color: #fff;
-   }
+  .upgrade-btn svg {
+    width: 18px;
+    height: 18px;
+    color: #fff;
+  }
 }
+
 
 
 
