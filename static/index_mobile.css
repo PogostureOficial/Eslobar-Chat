@@ -397,40 +397,41 @@
     overflow-y: auto;
   }
    
-.chat-container {
-    padding: 12px;
-    padding-bottom: 90px;      /* 👈 deja espacio para el input fijo */
-    margin: 0;
-    overflow-y: auto;          /* permite scroll si hay mucho texto */
-    height: calc(100vh - 70px); /* 70px es el alto aprox. del input */
-    box-sizing: border-box;
-  }
-}
+  .chat-container {
+      padding: 12px;
+      padding-bottom: 90px;      /* 👈 deja espacio para el input fijo */
+      margin: 0;
+      overflow-y: auto;          /* permite scroll si hay mucho texto */
+      height: calc(100vh - 70px); /* 70px es el alto aprox. del input */
+      box-sizing: border-box;
+    }
 
 /* ================================
    🔧 Ajuste específico: botón "Mejorar a Plus" centrado en móviles
    ================================ */
-.upgrade-btn {
-   position: fixed;
-   top: 16px;                  /* distancia desde la parte superior */
-   left: 50%;                  /* centrado horizontal */
-   transform: translateX(-50%); /* corrige el centrado */
-   z-index: 9999;
-   width: 48px;
-   height: 48px;
-   border-radius: 50%;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   background-color: #2d2b55;  /* ajusta al color morado de tu diseño */
-   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+   .upgrade-btn {
+      position: fixed;
+      top: 16px;                  /* distancia desde la parte superior */
+      left: 50%;                  /* centrado horizontal */
+      transform: translateX(-50%); /* corrige el centrado */
+      z-index: 9999;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #2d2b55;  /* ajusta al color morado de tu diseño */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+   }
+
+   .upgrade-btn svg {
+      width: 22px;
+      height: 22px;
+      color: #fff;
+   }
 }
 
-.upgrade-btn svg {
-   width: 22px;
-   height: 22px;
-   color: #fff;
-}
 
 
 
