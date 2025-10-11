@@ -636,7 +636,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  left: -50%;
+  left: -100%;
 }
 
 .plus-btn {
@@ -685,6 +685,7 @@ body {
 .plus-options button:hover {
   background: #2e2e2e;
 }
+
 
 
 
