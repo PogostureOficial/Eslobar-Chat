@@ -146,6 +146,16 @@
       <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
       <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
     </div>
+
+         <!-- Botón + -->
+     <div class="plus-menu">
+       <button id="plusBtn" class="plus-btn">+</button>
+       <div id="plusOptions" class="plus-options">
+         <button id="predictBtn">🧠 Predecir exámenes</button>
+       </div>
+     </div>
+   </div> <!-- Cierre de input-container -->
+
   </div>
 
   <!-- Info del plan -->
@@ -676,9 +686,35 @@ window.enviarMensaje = enviarMensaje;
   });
 </script>
 
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const plusBtn = document.getElementById('plusBtn');
+  const plusOptions = document.getElementById('plusOptions');
+  const predictBtn = document.getElementById('predictBtn');
+
+  // Mostrar / ocultar menú
+  plusBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    plusOptions.style.display = plusOptions.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  // Cerrar al hacer clic fuera
+  document.addEventListener('click', () => plusOptions.style.display = 'none');
+
+  // Acción del botón "Predecir exámenes"
+  predictBtn.addEventListener('click', () => {
+    plusOptions.style.display = 'none';
+    alert('🔮 Función de predicción de exámenes próximamente disponible.');
+    // Aquí podrías llamar a tu función real, por ejemplo:
+    // predecirExamen();
+  });
+});
+</script>
+
  
 </body>
 </html>
+
 
 
 
