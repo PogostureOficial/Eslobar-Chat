@@ -79,7 +79,7 @@
     padding: 18px 12px;
     transform: translateX(-110%);
     transition: transform 360ms cubic-bezier(.22,1,.36,1);
-    z-index: 1500;
+    z-index: 9999;
     box-shadow: 8px 0 30px rgba(0,0,0,0.6);
     display: flex;
     flex-direction: column;
@@ -343,7 +343,7 @@
   .mobile-hamburger,
   .upgrade-btn {
     position: relative;
-    z-index: 9999; /* por encima del chat */
+    z-index: 1250; /* por encima del chat */
     pointer-events: auto;
   }
 
@@ -437,6 +437,7 @@
     color: #fff;
   }
 }
+
 
 
 
