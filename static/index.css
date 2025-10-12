@@ -650,6 +650,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
   transition: 0.2s ease;
+  font-weight: 200;
 }
 
 .plus-btn:hover {
@@ -686,6 +687,7 @@ body {
 .plus-options button:hover {
   background: #2e2e2e;
 }
+
 
 
 
