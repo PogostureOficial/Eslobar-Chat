@@ -453,26 +453,9 @@
     transition: 0.2s ease;
   }
 
-  html, body {
-    height: 100%;
-    overflow: hidden; /* elimina cualquier scroll */
-    overscroll-behavior: contain; /* evita rebotes */
-  }
 
-  .chat-container {
-    overflow: hidden !important;
-    height: calc(100% - 80px); /* deja espacio para el input */
-    margin: 0;
-    padding: 0 12px;
-    box-sizing: border-box;
-  }
-
-  .input-container textarea:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
-    background: #2c2c2c;
-  }
 }
+
 
 
 
