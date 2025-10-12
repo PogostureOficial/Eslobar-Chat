@@ -438,7 +438,7 @@
     display: flex;
     align-items: center;
     left: -93%;
-    top: -10%;
+    transform: translateY(-10%);
   }
 
   .plus-btn {
@@ -453,4 +453,5 @@
     transition: 0.2s ease;
   }
 }
+
 
