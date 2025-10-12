@@ -187,22 +187,22 @@
   }
 
   /* Input: full width pegado al bottom con algo de margin */
-  .input-container {
-    position: fixed;
-    left: 50%;
-    bottom: 12px;
-    z-index: 100;
-    max-width: none;
-    background: #303030;
-    padding: 7px 9px;
-    display: flex;
-    align-items: center;
-    border-radius: 999px;
-    border: 1px solid #454545;
-    box-shadow: 0 6px 20px #171717;
-    transition: transform 0.2s ease; /* suaviza el movimiento */
-    z-index: 100; /* asegúrate de que quede por encima del chat */
-  }
+ .input-container {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px); /* deja márgenes a los costados */
+  max-width: 600px; /* evita que sea demasiado ancho en pantallas grandes */
+  background: #303030;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #454545;
+  box-shadow: 0 6px 20px #171717;
+  z-index: 1200;
+}
 
   .input-container textarea {
   flex: 1;
@@ -453,5 +453,6 @@
     transition: 0.2s ease;
   }
 }
+
 
 
