@@ -734,9 +734,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyboardAbierto = vv.height < window.innerHeight - 100;
 
     // Corrige el desplazamiento horizontal causado por zoom o teclado
-    const offsetX = vv.offsetLeft;
-    inputWrapper.style.left = offsetX + "px";
-    inputWrapper.style.width = vv.width + "px";
+    function ajustarPosicion() {
+  const keyboardAbierto = vv.height < window.innerHeight - 100;
+
+  // Evitar corrimiento horizontal
+  inputWrapper.style.left = "0";
+  inputWrapper.style.width = "100vw";
+
+  if (keyboardAbierto) {
+    inputWrapper.style.position = "fixed";
+    const offset = window.innerHeight - vv.height - vv.offsetTop;
+    inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
+  } else {
+    inputWrapper.style.position = "fixed";
+    inputWrapper.style.bottom = "0";
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
 
     // Corrige posición vertical
     if (keyboardAbierto) {
