@@ -740,7 +740,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Corrige posición vertical
     if (keyboardAbierto) {
       inputWrapper.style.position = "fixed";
-      inputWrapper.style.bottom = (window.innerHeight - (vv.height + vv.offsetTop)) + "px";
+      const offset = window.innerHeight - vv.height - vv.offsetTop;
+inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
     } else {
       inputWrapper.style.position = "fixed";
       inputWrapper.style.bottom = "0";
