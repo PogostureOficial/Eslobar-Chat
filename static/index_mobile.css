@@ -279,7 +279,7 @@
 
   .input-container textarea {
     flex: 1;
-    padding: 7px; /*10*/
+    padding: 6px 8px; /*10*/
     border: none;
     border-radius: 8px;
     background: #2a2a2a;
@@ -311,7 +311,7 @@
   border-radius: 20px;
   font-size: 14px;
   font-weight: 700;
-  top: 10%;
+  top: -10%;
   text-decoration: none;
   transition: background 0.3s ease;
 }
