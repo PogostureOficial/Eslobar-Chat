@@ -670,31 +670,27 @@ window.enviarMensaje = enviarMensaje;
  </script>
 
 <script>
-  const logoutBtn = document.getElementById("logoutBtn");
-  const logoutModal = document.getElementById("logoutModal");
-  const confirmLogout = document.getElementById("confirmLogout");
-  const cancelLogout = document.getElementById("cancelLogout");
+  const logoutBtnSidebar = document.getElementById("logoutBtnSidebar");
+const logoutModal = document.getElementById("logoutModal");
+const confirmLogout = document.getElementById("confirmLogout");
+const cancelLogout = document.getElementById("cancelLogout");
 
-  // Mostrar modal
-  logoutBtn.addEventListener("click", () => logoutModal.classList.add("show"));
+if (logoutBtnSidebar) {
+  logoutBtnSidebar.addEventListener("click", () => logoutModal.classList.add("show"));
+}
 
-  // Cancelar
-  cancelLogout.addEventListener("click", () => logoutModal.classList.remove("show"));
+confirmLogout.addEventListener("click", () => {
+  localStorage.removeItem("sesion_activa");
+  localStorage.removeItem("correo_usuario");
+  localStorage.removeItem("foto_usuario");
+  window.location.href = "index.html";
+});
 
-  // Confirmar
-  confirmLogout.addEventListener("click", () => {
-    localStorage.removeItem("sesion_activa");
-    localStorage.removeItem("correo_usuario");
-    localStorage.removeItem("foto_usuario");
-    window.location.href = "index.html";
-  });
-
-  // Cerrar si se hace clic fuera del cuadro
-  window.addEventListener("click", (e) => {
-    if (e.target === logoutModal) logoutModal.classList.remove("show");
-  });
-</script>
-
+cancelLogout.addEventListener("click", () => logoutModal.classList.remove("show"));
+window.addEventListener("click", (e) => {
+  if (e.target === logoutModal) logoutModal.classList.remove("show");
+});
+  </script> <!-- ✅ acá cerrás el primer script -->
   <script>
 document.addEventListener('DOMContentLoaded', () => {
   const plusBtn = document.getElementById('plusBtn');
@@ -724,6 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
 </body>
 </html>
+
 
 
 
