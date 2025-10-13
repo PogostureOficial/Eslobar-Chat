@@ -115,6 +115,7 @@ input {
 input::placeholder {
   color: #9E9E9E;
   font-weight: 200;
+  font-size: 20px;
 }
 
 /* Botón con imágenes + animaciones */
@@ -805,6 +806,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
