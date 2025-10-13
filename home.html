@@ -12,14 +12,6 @@
 </head>
 <body>
 
-  <!-- 🔹 Botón Cerrar Sesión abajo del sidebar (siempre visible) -->
-<div class="logout-container">
-  <button id="logoutBtn" class="logout-btn">
-    <img src="/static/images/logout.png" alt="Salir" class="logout-icon">
-    Cerrar sesion
-  </button>
-</div>
-
 <!-- 🔹 Modal de confirmación -->
 <div id="logoutModal" class="logout-modal">
   <div class="logout-content">
@@ -34,8 +26,18 @@
 <!-- 🔹 Barra lateral izquierda -->
 <div class="sidebar">
   <div class="sidebar-logo">
-    <img src="/static/images/logo.png" alt="Logo" />
+  <img src="/static/images/logo.png" alt="Logo" />
+</div>
+
+<!-- 🔹 Perfil del usuario -->
+<div class="user-info">
+  <img id="userAvatar" src="/static/images/default-avatar.png" alt="Foto de perfil" class="user-avatar">
+  <div class="user-details">
+    <span id="userEmail" class="user-email">usuario@ejemplo.com</span>
+    <button id="logoutBtnSidebar" class="logout-btn-sidebar">Cerrar sesión</button>
   </div>
+</div>
+
   <div class="sidebar-section">Historial de chats</div>
   <!-- mobile plans (se usa solo en móvil via CSS) -->
 <div class="mobile-plans">
@@ -176,13 +178,17 @@
 
   // Si hay sesión, mostrar los datos del usuario
   document.addEventListener("DOMContentLoaded", () => {
-    const correo = localStorage.getItem("correo_usuario");
-    const foto = localStorage.getItem("foto_usuario");
+  const correo = localStorage.getItem("correo_usuario");
+  const foto = localStorage.getItem("foto_usuario");
 
-    // (Opcional) mostrar en algún lugar del home quién inició sesión
-    console.log("Usuario activo:", correo);
-    console.log("Avatar:", foto);
-  });
+  const userEmailEl = document.getElementById("userEmail");
+  const userAvatarEl = document.getElementById("userAvatar");
+
+  if (correo) userEmailEl.textContent = correo;
+  if (foto) userAvatarEl.src = foto;
+
+  console.log("Usuario activo:", correo);
+});
 </script>
 
 
@@ -718,6 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
 </body>
 </html>
+
 
 
 
