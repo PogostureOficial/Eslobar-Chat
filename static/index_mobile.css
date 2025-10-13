@@ -453,8 +453,14 @@
     transition: 0.2s ease;
   }
 
+   .input-container {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateX(-50%) translateZ(0); /* fuerza la posición correcta desde el inicio */
+  }
 
 }
+
 
 
 
