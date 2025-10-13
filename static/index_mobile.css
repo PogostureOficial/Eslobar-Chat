@@ -216,7 +216,7 @@
 
   #titulo {
     font-size: 26px;
-    font-weight: 300;
+    font-weight: 400;
     text-align: center;
     line-height: 1.5;
     margin: 0;
@@ -278,7 +278,7 @@
 
   .input-container textarea {
     flex: 1;
-    padding: 10px;
+    padding: 7px; /*10*/
     border: none;
     border-radius: 8px;
     background: #2a2a2a;
@@ -310,7 +310,7 @@
   border-radius: 20px;
   font-size: 14px;
   font-weight: 700;
-  margin-top: -60px;
+  margin-top: -100px;
   text-decoration: none;
   transition: background 0.3s ease;
 }
@@ -330,7 +330,7 @@
   }
 
   .plus-btn {
-    background: none;
+    background: #000;
     color: #fff;
     border: 1px solid #303030;
     font-size: 30px;
@@ -350,7 +350,7 @@
     left: 0;
     right: 0;
     background: #1a1a1a;
-    padding: 10px;
+    padding: 5px; /* 10 */
     display: flex;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -358,7 +358,7 @@
 
   .chat-input input {
     flex: 1;
-    padding: 10px;
+    padding: 5px; /* 10 */
     border: none;
     border-radius: 8px;
     background: #2a2a2a;
@@ -367,7 +367,7 @@
 
   .chat-input button {
     margin-left: 8px;
-    padding: 10px 12px;
+    padding: 10px 9px; /* 12 */
     border-radius: 8px;
     background: #fff;
     color: #000;
