@@ -474,8 +474,8 @@ body {
   background-color: #4a477a;
 }
 .upgrade-icon {
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   margin-right: 6px;
 }
 
@@ -737,6 +737,7 @@ body {
   background: #3a3a3a;
   color: #fff;
 }
+
 
 
 
