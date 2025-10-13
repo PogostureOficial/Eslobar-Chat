@@ -106,7 +106,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 260ms ease, visibility 260ms;
-    z-index: 1100;
+    z-index: 1 !important;
   }
   .mobile-overlay.visible { opacity: 1; visibility: visible; }
 
@@ -460,6 +460,7 @@
   }
 
 }
+
 
 
 
