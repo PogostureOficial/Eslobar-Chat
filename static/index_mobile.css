@@ -499,6 +499,68 @@ html, body {
   box-shadow: 0 6px 20px #171717;
   z-index: 1200;
 }
+
+
+
+
+
+
+
+
+
+/* 🎯 FIX FINAL — input centrado + sin scroll + sin desplazamiento */
+@media (max-width: 768px) {
+  html, body {
+    height: 100dvh;              /* altura dinámica para teclado */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;            /* sin scroll */
+    overscroll-behavior: none;
+    touch-action: none;
+    background-color: #212121;
+  }
+
+  .chat-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;     /* centra verticalmente el título inicial */
+    align-items: center;
+    height: calc(100dvh - 70px); /* deja espacio para el input fijo */
+    overflow: hidden !important;
+    padding: 16px;
+    margin: 0 !important;        /* elimina márgenes negativos previos */
+    box-sizing: border-box;
+  }
+
+  .input-container {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 600px;
+    background: #303030;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid #454545;
+    box-shadow: 0 6px 20px #171717;
+    z-index: 1200;
+  }
+
+  .input-container textarea {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: #fff;
+    resize: none;
+    max-height: 120px;
+  }
+}
 }
 
 
