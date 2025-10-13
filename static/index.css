@@ -90,7 +90,7 @@ body:has(.chat-box .message) #titulo {
   background: #303030;
   border: 1px solid #454545;
   border-radius: 30px;
-  padding: 7px 11px;
+  padding: 6px 10px;
   box-shadow: 0 0 12px #171717;
   transition: box-shadow 0.3s ease;
   position: relative; /* necesario para los imgs absolutos dentro */
@@ -99,7 +99,7 @@ body:has(.chat-box .message) #titulo {
 
 /* Brillo sutil al escribir */
 .input-container:focus-within {
-  box-shadow: 0 0 6px rgba(41, 41, 41, 0.2);
+ 
 }
 
 input {
@@ -114,6 +114,7 @@ input {
 
 input::placeholder {
   color: #666;
+  font-weight: 200;
 }
 
 /* Botón con imágenes + animaciones */
@@ -805,6 +806,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
