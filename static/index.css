@@ -651,7 +651,6 @@ body {
   border-radius: 50%;
   cursor: pointer;
   transition: 0.2s ease;
-  font-weight: 500;
 }
 
 .plus-btn:hover {
@@ -665,7 +664,7 @@ body {
   left: 0;
   background: #303030;
   border: 1px solid #454545;
-  border-radius: 999px;
+  border-radius: 30px;
   padding: 6px;
   display: none;
   flex-direction: column;
@@ -806,6 +805,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
