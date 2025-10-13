@@ -481,6 +481,24 @@ html, body {
   transform: translateX(-50%);
   z-index: 1200;
 }
+
+/* ✅ Ajuste final: input centrado y alineado con fix teclado */
+.input-container {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px); /* mantiene márgenes laterales */
+  max-width: 600px;
+  background: #303030;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #454545;
+  box-shadow: 0 6px 20px #171717;
+  z-index: 1200;
+}
 }
 
 
