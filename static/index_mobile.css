@@ -1,81 +1,96 @@
-/* index_mobile.css
+/* =======================================================
+   index_mobile.css
    Estilos exclusivos para pantallas <= 768px
-   Mantiene la misma paleta y look & feel que el CSS de PC,
-   pero reorganiza y añade la barra lateral deslizante y el
-   botón "hamburger" de 2 barras.
-*/
+   Mantiene misma paleta y comportamiento visual del CSS de PC
+======================================================= */
 
-/* Reset/box */
+/* -------------------------------------------------------
+   1. Reset y configuración base
+------------------------------------------------------- */
 * { box-sizing: border-box; }
 
-/* Solo se aplica en móviles: ancho máximo 768px */
 @media (max-width: 768px) {
 
-  /* -------------------------------------------------------
-     Layout: cuerpo y ocultación elementos de PC
-     ------------------------------------------------------- */
-  body {
-    min-height: 100vh;
+  html, body {
+    height: 100dvh;
     margin: 0;
-    background-color: #212121; /* misma paleta */
+    padding: 0;
+    background-color: #212121;
     color: #fff;
     font-family: "Inter", sans-serif;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
   }
 
-  /* Ocultar el menú desplegable/btn Eslobar de PC */
+  /* -------------------------------------------------------
+     2. Layout general (body, main, topbar)
+  ------------------------------------------------------- */
+  body, main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
   .menu-container { display: none !important; }
 
-  /* Top bar: reducir padding y mostrar espacio para el hamburger */
   .top-bar {
     padding: 10px 12px;
     align-items: center;
     gap: 8px;
   }
-  
-  /* -----------------------------
-     Botón hamburger (dos barras blancas)
-     ----------------------------- */
-  /* Botón hamburger (3 barras) */
-.mobile-hamburger {
-  width: 36px;
-  height: 36px;
-  background: transparent;
-  border: none;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;                 /* espacio uniforme entre barras */
-  cursor: pointer;
-  padding: 6px;
-}
 
-.mobile-hamburger .bar {
-  width: 19px;
-  height: 1px;
-  background: #fff;
-  border-radius: 2px;
-  transition: transform 0.3s ease;
-}
+  /* -------------------------------------------------------
+     3. Botón Hamburger
+  ------------------------------------------------------- */
+  .mobile-hamburger {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    position: relative;
+    z-index: 1250;
+    pointer-events: auto;
+  }
 
+  .mobile-hamburger .bar {
+    width: 19px;
+    height: 1px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+  }
 
-  /* Estado activo (cuando se abre el sidebar) animamos las barras */
-  .mobile-hamburger.open .bar:nth-child(1) { transform: translateY(0) rotate(0deg); }
-  .mobile-hamburger.open .bar:nth-child(2) { transform: translateY(0) rotate(0deg); }
+  .mobile-hamburger.open .bar:nth-child(1),
+  .mobile-hamburger.open .bar:nth-child(2) {
+    transform: translateY(0) rotate(0deg);
+  }
 
-  /* -----------------------------
-     Sidebar mobile (oculta por defecto, slide-in)
-     ----------------------------- */
+  /* -------------------------------------------------------
+     4. Sidebar móvil
+  ------------------------------------------------------- */
   .sidebar {
     position: fixed;
     left: 0;
     top: 0;
     height: 100vh;
-    width: 78%;             /* ocupa la mayor parte en móvil */
+    width: 78%;
     max-width: 320px;
-    background-color: #121212; /* un pelín más oscuro */
+    background-color: #121212;
     padding: 18px 12px;
     transform: translateX(-110%);
     transition: transform 360ms cubic-bezier(.22,1,.36,1);
@@ -89,8 +104,12 @@
 
   .sidebar.open { transform: translateX(0); }
 
-  /* Sidebar logo y header */
-  .sidebar-logo img { width: 44px; height: 44px; display:block; margin-bottom: 8px; }
+  .sidebar-logo img {
+    width: 44px;
+    height: 44px;
+    display: block;
+    margin-bottom: 8px;
+  }
 
   .sidebar .sidebar-section {
     color: #bdbdbd;
@@ -98,7 +117,6 @@
     margin-top: 8px;
   }
 
-  /* Contenido principal empujado visualmente por overlay */
   .mobile-overlay {
     position: fixed;
     inset: 0;
@@ -107,12 +125,18 @@
     visibility: hidden;
     transition: opacity 260ms ease, visibility 260ms;
     z-index: 1000;
+    pointer-events: none;
   }
-  .mobile-overlay.visible { opacity: 1; visibility: visible; }
 
-  /* -----------------------------
-     Planes dentro de la sidebar (mismo look que en PC)
-     ----------------------------- */
+  .mobile-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* -------------------------------------------------------
+     5. Planes dentro del sidebar
+  ------------------------------------------------------- */
   .mobile-plans-title {
     font-size: 22px;
     font-weight: 700;
@@ -132,201 +156,64 @@
     background: transparent;
     border: 1px solid rgba(255,255,255,0.02);
   }
+
   .mobile-plan-item + .mobile-plan-item { margin-top: 10px; }
 
-  .mobile-plan-item:hover { background: rgba(255,255,255,0.02); transform: translateY(-2px); }
+  .mobile-plan-item:hover {
+    background: rgba(255,255,255,0.02);
+    transform: translateY(-2px);
+  }
 
   .mobile-plan-icon {
     width: 34px;
     height: 34px;
     filter: brightness(1);
   }
-  .mobile-plan-text { display: flex; flex-direction: column; font-size: 14px; color: #e8e8e8; }
+
+  .mobile-plan-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #e8e8e8;
+  }
 
   .mobile-plan-title {
     font-weight: 600;
     margin-bottom: 4px;
     color: #fff;
   }
-  .mobile-plan-desc { color: #b7b7b7; font-size: 13px; line-height: 1.2; }
 
-  /* Indicador seleccionado */
+  .mobile-plan-desc {
+    color: #b7b7b7;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
   .mobile-plan-item.active {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.06);
   }
 
-  /* -----------------------------
-     Chat / cuerpo en móvil
-     ----------------------------- */
-  .main-content {
-    padding: 12px;
-  }
-/* --------+-contenedor del chat n1-----------;;;;;;;*/
-  .chat-container {
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 160px); /* deja espacio para topbar/input */
-    margin-top: -220px;
-  }
+  /* -------------------------------------------------------
+     6. Chat principal y título
+  ------------------------------------------------------- */
+  .main-content { padding: 12px; }
 
-  #titulo {
-    font-size: 24px;
-    text-align: center;
-    line-height: 1.52;
-    margin: 290px 10px;
-    font-weight: 500;
-  }
-
-  .chat-box {
-    width: 100%;
-    max-width: 100%;
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 12px;
-  }
-
-  /* Input: full width pegado al bottom con algo de margin */
- .input-container {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 32px); /* deja márgenes a los costados */
-  max-width: 600px; /* evita que sea demasiado ancho en pantallas grandes */
-  background: #303030;
-  padding: 7px 10px;
-  display: flex;
-  align-items: center;
-  border-radius: 999px;
-  border: 1px solid #454545;
-  box-shadow: 0 6px 20px #171717;
-  z-index: 1200;
-}
-
-  .input-container textarea {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #2a2a2a;
-  color: #fff;
-  resize: none;
-}
-
-  .voice-btn {
-    right: 12px;
-    width: 44px;
-    height: 44px;
-    top: 50%;
-    transform: translateY(-50%);
-   margin-left: 8px;
-  }
-
-  .plan-info { display: none; } /* ya mostramos planes en sidebar */
-
-  /* Evitar scroll del body cuando sidebar abierto: se controla por JS (overflow hidden) */
-  /* ===== Fix posición del chat en móviles ===== */
-  .chat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* el contenido empieza arriba */
-    padding: 16px;
-    margin-top: -800px; /* usa valores negativos para subirlo */
-    height: 100vh; /* ocupar toda la pantalla */
-    box-sizing: border-box;
-  }
-
-  /* Asegurar que el body y main no agreguen huecos */
-  body, main {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-
-  /* El input del chat fijo abajo */
-  .chat-input {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #1a1a1a;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .chat-input input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #2a2a2a;
-    color: #fff;
-  }
-
-  .chat-input button {
-    margin-left: 8px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: #fff;
-    color: #000;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-  }
-
-    /* Mensajes */
- .message {
-   margin: 8px 0;
-   padding: 10px 14px;
-   border-radius: 16px;
-   max-width: 100%;
-   word-wrap: break-word;
-   font-size: 15px;
-   line-height: 1.4;
-   font-family: Arial, sans-serif;
- }
-
- .bot {
-  background: #0a0a0a;
-  color: #fff;
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-  margin-right: 0px;
- }
-
-   /*------------------------------------------------NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWW!!!!!!!!!!!!!!!!!!!!!--------------------------------------*/
-
-     /* 🔧 Chat-container ocupa toda la pantalla sin tapar botones */
   .chat-container {
     position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* centrado vertical */
-    align-items: center;      /* centrado horizontal */
+    justify-content: center;
+    align-items: center;
+    height: calc(100dvh - 70px);
+    overflow: hidden !important;
     padding: 16px;
     margin: 0 !important;
-    margin-top: -100px; 
-    /* elimina desplazamientos negativos */
-    height: 50vh;            /* ocupa toda la altura de la pantalla */
     box-sizing: border-box;
-    z-index: 1;               /* por debajo de botones */
+    z-index: 1;
   }
 
-  /* 🔧 Centrar el título en pantalla */
   #titulo {
     font-size: 26px;
     font-weight: 500;
@@ -337,77 +224,77 @@
     color: #fff;
   }
 
-  /* 🔧 Asegurar que los botones se puedan tocar */
-  .mobile-hamburger,
-  .upgrade-btn {
-    position: relative;
-    z-index: 1250; /* por encima del chat */
-    pointer-events: auto;
+  .chat-box {
+    width: 100%;
+    max-width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 12px;
   }
 
-  /* 🔧 Input fijo abajo, sin interferir con top */
-  .input-container,
-  .chat-input {
+  .message {
+    margin: 8px 0;
+    padding: 10px 14px;
+    border-radius: 16px;
+    max-width: 100%;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.4;
+    font-family: Arial, sans-serif;
+  }
+
+  .bot {
+    background: #0a0a0a;
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+
+  .plan-info { display: none; }
+
+  /* -------------------------------------------------------
+     7. Input y control del teclado
+  ------------------------------------------------------- */
+  .input-container {
     position: fixed;
     bottom: 12px;
-    left: 6px;
-    right: 12px;
-    z-index: 100;
-  }
-
-  /* 🔧 Overlay solo bloquea cuando es visible */
-  .mobile-overlay {
-    pointer-events: none;
-  }
-  .mobile-overlay.visible {
-    pointer-events: auto;
-  }
-
-  /* 🔧 Body y main llenan pantalla */
-  body, main {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 600px;
+    background: #303030;
+    padding: 7px 10px;
     display: flex;
-    flex-direction: column;
-  }
-  main {
-    flex: 1;
-  }
-
-
- /*---------------------------------------NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWW!!!!!!!!!!!!!!!!!!!!!!!!!!------------------------------------------------*/
-
-   html, body {
-    height: 100%;
-    overflow-y: hidden; /* bloquea scroll global */
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid #454545;
+    box-shadow: 0 6px 20px #171717;
+    z-index: 1200;
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
-  .chat-container {
-    overflow-y: hidden !important; /* ❌ sin scroll */
-    height: 100%; /* ocupa todo el viewport */
-    margin-top: 950px;
-  }
-
-  /* ✅ Permitir que textarea crezca sin provocar scroll */
   .input-container textarea {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: #fff;
+    resize: none;
     max-height: 120px;
   }
-   
-  .chat-container {
-      padding: 12px;
-      padding-bottom: 90px;      /* 👈 deja espacio para el input fijo */
-      margin: 0;
-      height: calc(100vh - 70px); /* 70px es el alto aprox. del input */
-      box-sizing: border-box;
-    }
 
-/* ================================
-   🔧 Ajuste específico: botón "Mejorar a Plus" centrado en móviles
-   ================================ */
-   /* ================================
-   🔧 Botón "Mejorar a Plus" centrado y con forma original
-   ================================ */
+  .voice-btn {
+    width: 44px;
+    height: 44px;
+    margin-left: 8px;
+    transform: translateY(-50%);
+  }
+
+  /* -------------------------------------------------------
+     8. Botón "Mejorar a Plus"
+  ------------------------------------------------------- */
   .upgrade-btn {
     position: fixed;
     top: 10%;
@@ -415,10 +302,10 @@
     transform: translateX(-50%);
     z-index: 1250;
     padding: 10px 18px;
-    background-color: #4A488C; /* mismo color del botón de PC */
+    background-color: #4A488C;
     color: #dcdbf6;
     border: none;
-    border-radius: 25px; /* forma ovalada */
+    border-radius: 25px;
     font-size: 14px;
     font-weight: 600;
     display: flex;
@@ -453,120 +340,38 @@
     transition: 0.2s ease;
   }
 
-   .input-container {
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateX(-50%) translateZ(0); /* fuerza la posición correcta desde el inicio */
-  }
-
-  /* 🚫 Fix scroll fantasma al abrir teclado en móviles */
-html, body {
-  height: 100dvh;              /* altura dinámica que se adapta al teclado */
-  margin: 0;
-  padding: 0;
-  overflow: hidden;            /* elimina scroll vertical */
-  overscroll-behavior: none;   /* sin rebote */
-  touch-action: none;          /* evita scroll por gestos */
-}
-
-.chat-container {
-  height: calc(100dvh - 70px); /* deja espacio para el input */
-  overflow: hidden !important; /* bloquea scroll interno */
-}
-
-.input-container {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1200;
-}
-
-/* ✅ Ajuste final: input centrado y alineado con fix teclado */
-.input-container {
-  position: fixed;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 32px); /* mantiene márgenes laterales */
-  max-width: 600px;
-  background: #303030;
-  padding: 7px 10px;
-  display: flex;
-  align-items: center;
-  border-radius: 999px;
-  border: 1px solid #454545;
-  box-shadow: 0 6px 20px #171717;
-  z-index: 1200;
-}
-
-
-
-
-
-
-
-
-
-/* 🎯 FIX FINAL — input centrado + sin scroll + sin desplazamiento */
-@media (max-width: 768px) {
-  html, body {
-    height: 100dvh;              /* altura dinámica para teclado */
-    margin: 0;
-    padding: 0;
-    overflow: hidden;            /* sin scroll */
-    overscroll-behavior: none;
-    touch-action: none;
-    background-color: #212121;
-  }
-
-  .chat-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;     /* centra verticalmente el título inicial */
-    align-items: center;
-    height: calc(100dvh - 70px); /* deja espacio para el input fijo */
-    overflow: hidden !important;
-    padding: 16px;
-    margin: 0 !important;        /* elimina márgenes negativos previos */
-    box-sizing: border-box;
-  }
-
-  .input-container {
+  /* -------------------------------------------------------
+     9. Ajustes finales
+  ------------------------------------------------------- */
+  .chat-input {
     position: fixed;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
-    max-width: 600px;
-    background: #303030;
-    padding: 7px 10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1a1a1a;
+    padding: 10px;
     display: flex;
     align-items: center;
-    border-radius: 999px;
-    border: 1px solid #454545;
-    box-shadow: 0 6px 20px #171717;
-    z-index: 1200;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .input-container textarea {
+  .chat-input input {
     flex: 1;
     padding: 10px;
     border: none;
     border-radius: 8px;
     background: #2a2a2a;
     color: #fff;
-    resize: none;
-    max-height: 120px;
+  }
+
+  .chat-input button {
+    margin-left: 8px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
   }
 }
-}
-
-
-
-
-
-
-
-
