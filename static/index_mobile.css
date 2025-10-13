@@ -15,7 +15,7 @@
     height: 100dvh;
     margin: 0;
     padding: 0;
-    background-color: #212121;
+    background-color: #000; /* 212121*/
     color: #fff;
     font-family: "Inter", sans-serif;
     overflow: hidden;
@@ -264,7 +264,7 @@
   margin: 0 auto;
   width: 90%;
   background: #303030;
-  padding: 4px 6px;
+  padding: 2px 4px;
   display: flex;
   align-items: center;
   border-radius: 999px;
