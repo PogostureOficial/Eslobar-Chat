@@ -256,23 +256,25 @@
      7. Input y control del teclado
   ------------------------------------------------------- */
   .input-container {
-    position: fixed;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
-    max-width: 600px;
-    background: #303030;
-    padding: 7px 10px;
-    display: flex;
-    align-items: center;
-    border-radius: 999px;
-    border: 1px solid #454545;
-    box-shadow: 0 6px 20px #171717;
-    z-index: 1200;
-    will-change: transform;
-    backface-visibility: hidden;
-  }
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  background: #303030;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #454545;
+  box-shadow: 0 6px 20px #171717;
+  z-index: 1200;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateY(0);
+  transition: transform 120ms linear;
+}
 
   .input-container textarea {
     flex: 1;
