@@ -462,10 +462,10 @@ body {
   align-items: center;
   background-color: #373669;
   color: #dcdbf6;
-  padding: 10px 14px;
+  padding: 10px 13px;
   border-radius: 20px;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 700;
   margin-top: -60px;
   text-decoration: none;
   transition: background 0.3s ease;
@@ -474,8 +474,8 @@ body {
   background-color: #4a477a;
 }
 .upgrade-icon {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   margin-right: 6px;
 }
 
@@ -804,6 +804,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
