@@ -297,24 +297,23 @@
   /* -------------------------------------------------------
      8. Botón "Mejorar a Plus"
   ------------------------------------------------------- */
-  .upgrade-btn {
-    position: fixed;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1250;
-    padding: 10px 18px;
-    background-color: #4A488C;
-    color: #dcdbf6;
-    border: none;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  }
+  /* Botón Mejorar a Plus */
+.upgrade-btn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background-color: #373669;
+  color: #dcdbf6;
+  padding: 10px 13px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: -60px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
 
   .upgrade-btn svg {
     width: 18px;
