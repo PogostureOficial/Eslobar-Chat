@@ -459,6 +459,28 @@
     transform: translateX(-50%) translateZ(0); /* fuerza la posición correcta desde el inicio */
   }
 
+  /* 🚫 Fix scroll fantasma al abrir teclado en móviles */
+html, body {
+  height: 100dvh;              /* altura dinámica que se adapta al teclado */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;            /* elimina scroll vertical */
+  overscroll-behavior: none;   /* sin rebote */
+  touch-action: none;          /* evita scroll por gestos */
+}
+
+.chat-container {
+  height: calc(100dvh - 70px); /* deja espacio para el input */
+  overflow: hidden !important; /* bloquea scroll interno */
+}
+
+.input-container {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1200;
+}
 }
 
 
