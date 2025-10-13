@@ -716,6 +716,45 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script>
+/* =========================================================
+   🔧 FIX POSICIÓN INPUT EN MÓVIL (teclado abierto)
+   Mantiene el input-container fijo abajo sin moverse ni a la derecha
+========================================================= */
+(function fixMobileInputPosition() {
+  const inputWrapper = document.getElementById("inputWrapper");
+  const chat = document.getElementById("chat");
+  const vv = window.visualViewport;
+
+  if (!inputWrapper || !vv) return;
+
+  function ajustarPosicion() {
+    // Detecta si el teclado está abierto (viewport más chico que innerHeight)
+    const keyboardAbierto = vv.height < window.innerHeight - 100;
+
+    // Corrige el desplazamiento horizontal causado por zoom o teclado
+    const offsetX = vv.offsetLeft;
+    inputWrapper.style.left = offsetX + "px";
+    inputWrapper.style.width = vv.width + "px";
+
+    // Corrige posición vertical
+    if (keyboardAbierto) {
+      inputWrapper.style.position = "fixed";
+      inputWrapper.style.bottom = (window.innerHeight - (vv.height + vv.offsetTop)) + "px";
+    } else {
+      inputWrapper.style.position = "fixed";
+      inputWrapper.style.bottom = "0";
+    }
+
+    // Mantiene scroll del chat estable
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  vv.addEventListener("resize", ajustarPosicion);
+  vv.addEventListener("scroll", ajustarPosicion);
+})();
+</script>
+
 
   
 </body>
