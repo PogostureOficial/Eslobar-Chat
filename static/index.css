@@ -738,6 +738,73 @@ body {
   color: #fff;
 }
 
+/* ===== User block: pequeño y pegado al fondo del sidebar (ChatGPT-style) ===== */
+.sidebar { position: relative; }
+
+/* Ubicación fija en la parte inferior del sidebar */
+.user-info {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-top: 1px solid rgba(255,255,255,0.02); /* sutil separación */
+  background: transparent;
+}
+
+/* avatar más chico */
+.user-avatar {
+  width: 34px;   /* tamaño reducido como ChatGPT */
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(0,0,0,0.35);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+}
+
+/* detalles más discretos */
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0; /* evita overflow */
+}
+
+.user-email {
+  font-size: 13px;
+  color: #dcdcdc;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px; /* ajusta si quieres más/menos longitud visible */
+  opacity: 0.92;
+}
+
+/* boton estilo pequeño */
+.logout-btn-sidebar {
+  background: #232323;
+  color: #ddd;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 6px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  margin-top: 6px; /* separación sutil cuando el texto ocupa dos líneas (fallback) */
+  cursor: pointer;
+}
+
+/* en pantallas estrechas: sidebar colapsado -> ocultamos el email y reducimos padding */
+@media (max-width: 900px) {
+  .user-info { left: 8px; right: 8px; bottom: 12px; }
+  .user-avatar { width: 28px; height: 28px; }
+  .user-email { display: none; } /* solo avatar visible como en ChatGPT */
+  .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
+}
+
 
 
 
