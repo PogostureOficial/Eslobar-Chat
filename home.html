@@ -622,6 +622,27 @@ window.enviarMensaje = enviarMensaje;
 
    if (!chatContainer || !inputContainer) return;
 
+if (window.visualViewport) {
+     const ajustarLayout = () => {
+       const viewportHeight = window.visualViewport.height;
+       const totalHeight = window.innerHeight;
+       const tecladoHeight = totalHeight - viewportHeight;
+
+       if (tecladoHeight > 0) {
+         // El teclado está visible → movemos el input hacia arriba
+         inputContainer.style.transform = `translateY(-${tecladoHeight}px)`;
+       } else {
+         // El teclado se cerró → volvemos al lugar original
+         inputContainer.style.transform = 'translateY(0)';
+       }
+
+       // Mantenemos el scroll al fondo del chat
+       chatContainer.scrollTop = chatContainer.scrollHeight;
+     };
+
+     // Escuchamos el cambio del viewport visual (cuando aparece/desaparece teclado)
+     window.visualViewport.addEventListener('resize', ajustarLayout);
+   }
   
  });
  </script>
