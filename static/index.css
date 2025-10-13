@@ -650,7 +650,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
   transition: 0.2s ease;
-  font-weight: 200;
+  font-weight: 500;
 }
 
 .plus-btn:hover {
@@ -662,24 +662,25 @@ body {
   position: absolute;
   bottom: 40px;
   left: 0;
-  background: #1f1f1f;
-  border: 1px solid #333;
-  border-radius: 8px;
+  background: #303030;
+  border: 1px solid #454545;
+  border-radius: 999px;
   padding: 6px;
   display: none;
   flex-direction: column;
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
   z-index: 20;
+  font-weight: 500;
 }
 
 .plus-options button {
   background: none;
   border: none;
-  color: #ddd;
+  color: #ffffff;
   padding: 8px 12px;
   text-align: left;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   border-radius: 6px;
   width: 160px;
 }
@@ -804,6 +805,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
