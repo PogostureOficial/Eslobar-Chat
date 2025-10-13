@@ -113,7 +113,7 @@ input {
 }
 
 input::placeholder {
-  color: #666;
+  color: #9E9E9E;
   font-weight: 200;
 }
 
@@ -805,6 +805,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
