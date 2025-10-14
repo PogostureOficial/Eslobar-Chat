@@ -6,6 +6,8 @@
   <title>Eslobar</title>
   <link rel="stylesheet" href="/static/index.css">
   <link rel="stylesheet" href="/static/index_mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="index_mobile.css" id="theme-dark">
+  <link rel="stylesheet" href="light.css" id="theme-light" disabled>
   <link rel="icon" type="image/png" href="/static/images/icon.png">
   <link rel="manifest" href="/static/manifest.json">
   <!-- Color de la barra del navegador en móvil -->
@@ -787,9 +789,38 @@ inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
 </script>
 
 
+  <button id="theme-toggle">🌙</button>
+
+<script>
+const darkLink = document.getElementById('theme-dark');
+const lightLink = document.getElementById('theme-light');
+const toggleBtn = document.getElementById('theme-toggle');
+
+toggleBtn.style.position = 'fixed';
+toggleBtn.style.top = '10px';
+toggleBtn.style.right = '10px';
+toggleBtn.style.zIndex = '2000';
+toggleBtn.style.background = 'transparent';
+toggleBtn.style.border = 'none';
+toggleBtn.style.fontSize = '22px';
+toggleBtn.style.cursor = 'pointer';
+toggleBtn.style.color = '#fff';
+
+let isDark = true;
+
+toggleBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  lightLink.disabled = isDark;
+  toggleBtn.textContent = isDark ? '🌙' : '☀️';
+  toggleBtn.style.color = isDark ? '#fff' : '#000';
+});
+</script>
+
+
   
 </body>
 </html>
+
 
 
 
