@@ -4,7 +4,7 @@
 ======================================================= */
 
 html, body {
-  background-color: #f5f5f5 !important;
+  background-color: #fff !important; /* f5f5f5 */
   color: #000 !important;
 }
 
@@ -14,7 +14,7 @@ html, body {
 }
 
 .input-container {
-  background: #eaeaea !important;
+  background: #fff !important;
   border: 1px solid rgba(0,0,0,0.1) !important;
   box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
 }
@@ -55,5 +55,6 @@ html, body {
 }
 
 .eslobar-warning {
-  color: #333 !important;
+  color: #000 !important;
 }
+
