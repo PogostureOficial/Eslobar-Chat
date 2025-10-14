@@ -346,6 +346,10 @@
   box-shadow:
     inset 0 1px 1px rgba(255,255,255,0.08),
     0 2px 5px rgba(0,0,0,0.6); /* relieve sutil */
+
+     /* 🔧 alineación vertical perfecta */
+  position: relative;
+  top: 1px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
 }
 
 .plus-btn:active {
