@@ -68,7 +68,7 @@
   }
 
   .mobile-hamburger .bar {
-    width: 19px;
+    width: 13px;
     height: 1px;
     background: #fff;
     border-radius: 2px;
@@ -215,10 +215,10 @@
   }
 
   #titulo {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 400;
     text-align: center;
-    line-height: 1.5;
+    line-height: 1.7;
     margin: 0;
     padding: 20px;
     color: #fff;
@@ -307,11 +307,11 @@
   align-items: center;
   background-color: #373669;
   color: #aeadeb;
-  padding: 10px 13px;
+  padding: 11px 15px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 700;
-  margin-top: 0px;
+  margin-top: -10px;
   text-decoration: none;
   transition: background 0.3s ease;
 }
