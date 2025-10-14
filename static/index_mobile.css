@@ -412,7 +412,7 @@
   padding: 6px 10px; /* más pegado al borde */
   border-bottom: 1px solid #303030; /* ← barra separadora */
   background-color: #212121; /*1e1e1e*/
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  /*box-shadow: 0 1px 3px rgba(0,0,0,0.3);*/
 }
 
 /* Ajuste botón upgrade para que quede al borde derecho */
