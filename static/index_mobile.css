@@ -264,7 +264,7 @@
   margin: 0 auto;
   width: 90%;
   background: #303030;
-  padding: 2px 4px;
+  padding: 6px 8px;
   display: flex;
   align-items: center;
   border-radius: 999px;
@@ -326,12 +326,12 @@
     position: relative;
     display: flex;
     align-items: center;
-    left: -93%;
-    transform: translateY(-10%);
+    left: -92%;
+    transform: translateY(-11%);
   }
 
   .plus-btn {
-    background: #212121;
+    background: #525252;
     color: #fff;
     border: 1px solid #303030;
     font-size: 20px;
