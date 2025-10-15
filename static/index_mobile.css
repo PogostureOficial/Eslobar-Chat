@@ -456,5 +456,27 @@
   bottom: 36px !important;
 }
 
+   /* =======================================================
+   🔧 Corrección visual: área del chat bien delimitada
+======================================================= */
+
+.chat-container {
+  height: calc(100dvh - 140px) !important; /* Ajusta el alto total visible */
+  margin-top: 60px !important; /* Espacio desde la barra superior gris */
+  margin-bottom: 0 !important;
+  overflow-y: auto !important;
+  padding-bottom: 12px;
+  box-sizing: border-box;
+}
+
+/* Evita que el contenido se esconda detrás del input */
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-container::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+}
+
 
 }
