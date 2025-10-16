@@ -551,6 +551,7 @@
   cursor: pointer;
   transition: background 0.2s;
   font-family: 'Inter', sans-serif;
+  font-style: normal !important;
 }
 
 .menu-item:hover {
@@ -561,8 +562,8 @@
 .submenu {
   position: absolute;
   top: 60px;
-  left: 220px;
-  background: #2e2e2e;
+  left: 230px;
+  background: #424242;
   border-radius: 12px;
   padding: 8px 0;
   display: none;
@@ -577,6 +578,7 @@
   cursor: pointer;
   transition: background 0.2s;
   font-family: 'Inter', sans-serif;
+  font-style: normal !important;
 }
 
 .submenu-item:hover {
