@@ -807,6 +807,149 @@ body {
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
 
+/* ===== ESTILOS MENU DROPDOWN ESLOBAR ===== */
+/* Agregar este código al FINAL de /static/index.css */
+
+/* Contenedor del menú */
+.menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Header del menú (botón principal) */
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.menu-header:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.menu-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.menu-header.active .menu-arrow {
+  transform: rotate(180deg);
+}
+
+/* Dropdown menu */
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: #2f2f2f;
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 380px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.menu-dropdown.show {
+  display: block;
+}
+
+/* Items del menú */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s;
+  margin-bottom: 4px;
+}
+
+.menu-item:last-child {
+  margin-bottom: 0;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.menu-item.selected {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Icono del menú */
+.menu-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* Texto del menú */
+.menu-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-title-version {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.menu-description {
+  font-size: 13px;
+  color: #acacac;
+  line-height: 1.3;
+}
+
+/* Checkmark */
+.checkmark {
+  color: #10a37f;
+  font-size: 18px;
+  font-weight: bold;
+  display: none;
+}
+
+.menu-item.selected .checkmark {
+  display: block;
+}
+
+/* Botón "Mejorar el plan" */
+.upgrade-plan-btn {
+  width: 100%;
+  padding: 10px 16px;
+  margin-top: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.upgrade-plan-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+
 
 
 
