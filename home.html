@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Eslobar</title>
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/index_mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="index_mobile.css" id="theme-dark">
+  <link rel="stylesheet" href="light.css" id="theme-light" disabled>
+  <link rel="icon" type="image/png" href="/static/images/icon.png">
+  <link rel="manifest" href="/static/manifest.json">
+  <!-- Color de la barra del navegador en móvil -->
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Otros meta opcionales para compatibilidad -->
+  <meta name="msapplication-navbutton-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body>
+
+<!-- 🔹 Modal de confirmación -->
+<div id="logoutModal" class="logout-modal">
+  <div class="logout-content">
+    <h2>¿Seguro que quieres cerrar sesión?</h2>
+    <div class="logout-buttons">
+      <button id="confirmLogout" class="logout-confirm">Sí</button>
+      <button id="cancelLogout" class="logout-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+  
+<!-- 🔹 Barra lateral izquierda -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+  <img src="/static/images/logo.png" alt="Logo" />
+</div>
+
+  <div class="sidebar-section">Chats</div>
+  <!-- mobile plans (se usa solo en móvil via CSS) -->
+<div class="mobile-plans">
+  <div class="mobile-plans-title">Elige un plan</div>
+
+  <div class="mobile-plan-item" data-plan="basic" onclick="selectVersion('basic'); closeMobileSidebar();">
+    <img src="/static/images/basic.png" class="mobile-plan-icon" alt="basic">
+    <div class="mobile-plan-text">
+      <div class="mobile-plan-title">Eslobar</div>
+      <div class="mobile-plan-desc">Versión básica. Con límite de preguntas y pocas materias.</div>
+    </div>
+  </div>
+
+  <div class="mobile-plan-item" data-plan="plus" onclick="selectVersion('plus'); closeMobileSidebar();">
+    <img src="/static/images/plus.png" class="mobile-plan-icon" alt="plus">
+    <div class="mobile-plan-text">
+      <div class="mobile-plan-title">Eslobar Plus</div>
+      <div class="mobile-plan-desc">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
+    </div>
+  </div>
+
+  <div class="mobile-plan-item" data-plan="pro" onclick="selectVersion('pro'); closeMobileSidebar();">
+    <img src="/static/images/pro.png" class="mobile-plan-icon" alt="pro">
+    <div class="mobile-plan-text">
+      <div class="mobile-plan-title">Eslobar Pro</div>
+      <div class="mobile-plan-desc">Herramientas profesionales y acceso a todas las materias.</div>
+    </div>
+  </div>
+
+  <button id="installButton" style="display:none;">📲 Instalar aplicación</button>
+  
+</div>
+
+  <!-- 🔹 Perfil del usuario -->
+<div class="user-info">
+  <img id="userAvatar" src="/static/images/default-avatar.png" alt="Foto de perfil" class="user-avatar">
+  <div class="user-details">
+    <span id="userEmail" class="user-email">usuario@ejemplo.com</span>
+    <button id="logoutBtnSidebar" class="logout-btn-sidebar">Cerrar sesión</button>
+  </div>
+</div>
+  
+</div> <!-- ← cerrar el div.sidebar -->
+
+<div id="mobileOverlay" class="mobile-overlay" onclick="closeMobileSidebar()"></div>
+
+<!-- 🔹 Contenido principal -->
+<div class="main-content">
+  
+
+  <!-- Barra superior -->
+  <div class="top-bar">
+    
+    <!-- Menú Eslobar -->
+    <div class="menu-container">
+      <div class="menu-header" onclick="toggleMenu()">
+        <span class="menu-title">Eslobar</span>
+        <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
+      </div>
+      <div class="menu-dropdown" id="dropdownMenu">
+        <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
+          <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar</div>
+            <div class="menu-description">Versión básica. Con límite de preguntas y pocas materias.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+        <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
+          <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar Plus (La más comprada)</div>
+            <div class="menu-description">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+        <div class="menu-item" data-plan="pro" onclick="selectVersion('pro')">
+          <img src="/static/images/pro.png" alt="Eslobar Pro" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar Pro</div>
+            <div class="menu-description">Herramientas profesionales y acceso a todas las materias.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-header-left">
+  <button id="mobileMenuBtn" class="mobile-hamburger" aria-label="Abrir menú">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+  <button class="mobile-eslobar-btn" onclick="toggleMenu()">Eslobar</button>
+</div>
+
+
+    <!-- Botón Mejorar a Plus -->
+    <a href="static/plan.html" class="upgrade-btn">
+      <img src="/static/images/plus1.png" alt="Plus" class="upgrade-icon"> 
+      Obtener Plus
+    </a>
+  </div>
+
+  
+
+<div class="chat-container">
+  <!-- Título -->
+  <div id="titulo"> </div>
+
+  <!-- Contenedor del chat -->
+  <div id="chat" class="chat-box"></div>
+
+  <!-- Entrada de texto -->
+  <div class="input-container" id="inputWrapper">
+    <textarea 
+      id="mensaje" 
+      rows="1" 
+      placeholder="Pregunta lo que quieras" 
+      onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();enviarMensaje()}"></textarea>
+
+    <div class="voice-btn" id="voiceBtn" aria-hidden="true">
+      <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
+      <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
+    </div>
+
+         <div class="plus-menu">
+          <button id="plusBtn" class="plus-btn">
+            <img src="/static/images/button5.png" alt="Abrir menú" class="plus-icon">
+          </button>
+          <div id="plusOptions" class="plus-options">
+            <button id="predictBtn">🧠 Predecir exámenes</button>
+          </div>
+        </div>
+
+         <!-- Botón + y menú -->
+        <div class="plus-container">
+          <button id="plus-btn" class="plus-btn">
+            <img src="/static/images/button5.png" alt="Abrir menú" class="plus-icon">
+        </button>
+
+  <!-- Menú principal -->
+        <div id="plus-menu" class="plus-menu">
+          <div class="menu-item" id="attach-files">Adjuntar archivos</div>
+          <div class="menu-item" id="predict-exam">Predecir examen de:</div>
+          <div class="menu-item" id="get-advice">Dame consejos para aprobar:</div>
+
+          <!-- Submenú -->
+          <div id="submenu" class="submenu">
+            <div class="submenu-item" data-text="Historia">Historia</div>
+            <div class="submenu-item" data-text="Matemáticas">Matemáticas</div>
+            <div class="submenu-item" data-text="Geografía">Geografía</div>
+          </div>
+        </div>
+      </div>
+
+
+
+   </div> <!-- Cierre de input-container -->
+
+  <div class="eslobar-warning">
+      Eslobar puede cometer errores. Compruebe la información importante.
+    </div>
+
+  </div>
+
+  <!-- Info del plan -->
+  <div class="plan-info">
+    Actualmente estás utilizando el plan <strong>Básico</strong> de Eslobar. 
+    <a href="" class="plan-link">Obtener más información sobre los planes</a>
+  </div>
+</div>
+
+  <script>
+  // Si no hay sesión, volver al login
+  if (localStorage.getItem("sesion_activa") !== "true") {
+    window.location.href = "index.html";
+  }
+
+  // Si hay sesión, mostrar los datos del usuario
+  document.addEventListener("DOMContentLoaded", () => {
+  const correo = localStorage.getItem("correo_usuario");
+  const foto = localStorage.getItem("foto_usuario");
+
+  const userEmailEl = document.getElementById("userEmail");
+  const userAvatarEl = document.getElementById("userAvatar");
+
+  if (correo) userEmailEl.textContent = correo;
+  if (foto) userAvatarEl.src = foto;
+
+  console.log("Usuario activo:", correo);
+});
+</script>
+
+
+<!-- Archivo de configuración: cambiar URL backend según entorno -->
+<script src="/static/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+  if (!localStorage.getItem("sesion_activa")) {
+    window.location.href = "index.html";
+  }
+</script>
+
+<!-- ÚNICO BLOQUE JS (unificado y seguro) -->
+<script>
+
+  /* ====== Mobile sidebar & hamburger control ====== */
+(function mobileSidebarSetup() {
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+
+  if (!mobileBtn || !sidebar || !overlay) return;
+
+  // Abrir/cerrar
+  function openMobileSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    mobileBtn.classList.add('open');
+    // bloquear scroll body
+    document.body.style.overflow = 'hidden';
+    // marcar items actuales
+    if (typeof updateSelectedPlanUI === 'function') updateSelectedPlanUI();
+  }
+  window.openMobileSidebar = openMobileSidebar;
+
+  function closeMobileSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    mobileBtn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  window.closeMobileSidebar = closeMobileSidebar;
+
+  mobileBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) closeMobileSidebar();
+    else openMobileSidebar();
+  });
+
+  // Cerrar al redimensionar (si se pasa a desktop)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeMobileSidebar();
+  });
+
+  // Touch swipe para cerrar (gesto simple)
+  let touchStartX = null;
+  let touchStartY = null;
+
+  sidebar.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, {passive: true});
+
+  sidebar.addEventListener('touchmove', (e) => {
+    if (touchStartX === null) return;
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    // ignorar verticales largas
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    // si el usuario desliza a la izquierda con suficiente fuerza cerramos
+    if (dx < -40) closeMobileSidebar();
+  }, {passive: true});
+
+  // También cerrar desde overlay click (ya pusiste onclick en overlay pero reforzamos)
+  overlay.addEventListener('click', closeMobileSidebar);
+
+  // Al seleccionar un plan en móvil, actualizar UI (si se usa "data-plan")
+  document.querySelectorAll('.mobile-plan-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const plan = item.dataset.plan;
+      if (plan && typeof selectVersion === 'function') selectVersion(plan);
+      // marcar active visual
+      document.querySelectorAll('.mobile-plan-item').forEach(i => i.classList.toggle('active', i === item));
+      // cerrar sidebar
+      closeMobileSidebar();
+    });
+  });
+
+})();
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  /* =========================================================
+     VARIABLES GLOBALES
+  ========================================================= */
+  const input = document.getElementById('mensaje');
+  const chat = document.getElementById("chat");
+  const titulo = document.getElementById("titulo");
+  const btn1 = document.getElementById('btn1'); // mic
+  const btn2 = document.getElementById('btn2'); // enviar
+  const inputWrapper = document.getElementById('inputWrapper');
+  const menuArrow = document.querySelector('.menu-arrow');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+
+  btn1.style.visibility = 'visible';
+  btn2.style.visibility = 'hidden';
+
+  if (!input || !chat || !titulo || !inputWrapper) {
+    console.warn('elementos principales faltan en DOM');
+    return;
+  }
+
+  let animBtn1 = null, animBtn2 = null;
+  let previousHasText = false;
+  const D = 250; // duración animaciones
+  const easing = 'cubic-bezier(.22,1,.36,1)';
+
+  // BACKEND: usa CONFIG.BACKEND_URL si existe, si no -> '/ask'
+  const BACKEND_URL = (typeof CONFIG !== 'undefined' && CONFIG.BACKEND_URL) ? CONFIG.BACKEND_URL : '/ask';
+
+  /* =========================================================
+     UTILIDADES
+  ========================================================= */
+  function parseBold(text) {
+    return text.replace(/\*(.*?)\*/g, '<b>$1</b>');
+  }
+
+  function addBotMessage() {
+    const botMsg = document.createElement("div");
+    botMsg.className = "message bot";
+    chat.appendChild(botMsg);
+    return botMsg;
+  }
+
+  function typeWriterEffect(container, text = '', speed = 15) {
+    return new Promise((resolve) => {
+      if (!text) return resolve();
+      const parsed = marked.parse(text);
+      let i = 0;
+      const interval = setInterval(() => {
+        container.innerHTML = parsed.slice(0, i + 1);
+        if (container.parentElement) {
+          container.parentElement.scrollTop = container.parentElement.scrollHeight;
+        }
+        if (++i >= parsed.length) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, speed);
+    });
+  }
+
+  /* =========================================================
+     PLAN SELECTION MENU
+  ========================================================= */
+  let selectedPlan = localStorage.getItem('selectedPlan') || 'basic';
+
+  function selectVersion(plan) {
+    selectedPlan = plan;
+    localStorage.setItem('selectedPlan', plan);
+    updateSelectedPlanUI();
+    // Cerrar menú al seleccionar
+    if (dropdownMenu) dropdownMenu.style.display = 'none';
+  }
+
+  function updateSelectedPlanUI() {
+    const items = document.querySelectorAll('.menu-item');
+    items.forEach(item => {
+      if (item.dataset.plan === selectedPlan) item.classList.add('active');
+      else item.classList.remove('active');
+    });
+  }
+  updateSelectedPlanUI();
+
+  /* =========================================================
+     ANIMACIONES BOTONES
+  ========================================================= */
+  function cancelAnimsAndFreeze() {
+    [btn1, btn2].forEach((btn, idx) => {
+      let anim = idx === 0 ? animBtn1 : animBtn2;
+      if (anim) {
+        anim.cancel();
+        if (idx === 0) animBtn1 = null; else animBtn2 = null;
+        const cs = getComputedStyle(btn);
+        btn.style.transform = cs.transform === 'none' ? 'scale(1)' : cs.transform;
+        btn.style.opacity = cs.opacity;
+      }
+    });
+  }
+
+  function transitionToBtn2() {
+    cancelAnimsAndFreeze();
+    btn1.style.visibility = 'visible';
+    animBtn1 = btn1.animate(
+      [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
+      { duration: D, easing, fill: 'forwards' }
+    );
+    animBtn1.onfinish = () => {
+      btn1.style.visibility = 'hidden';
+      btn2.style.visibility = 'visible';
+      animBtn2 = btn2.animate(
+        [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration: D, easing, fill: 'forwards' }
+      );
+    };
+  }
+
+  function transitionToBtn1() {
+    cancelAnimsAndFreeze();
+    btn2.style.visibility = 'visible';
+    animBtn2 = btn2.animate(
+      [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
+      { duration: D, easing, fill: 'forwards' }
+    );
+    animBtn2.onfinish = () => {
+      btn2.style.visibility = 'hidden';
+      btn1.style.visibility = 'visible';
+      animBtn1 = btn1.animate(
+        [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration: D, easing, fill: 'forwards' }
+      );
+    };
+  }
+
+  /* =========================================================
+     EVENTOS INPUT & BOTONES
+  ========================================================= */
+  input.addEventListener('input', () => {
+    const hasText = input.value.trim() !== '';
+    if (hasText && !previousHasText) transitionToBtn2();
+    else if (!hasText && previousHasText) transitionToBtn1();
+    previousHasText = hasText;
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+    document.querySelector(".input-container")
+      .classList.toggle("expanded", input.scrollHeight > input.clientHeight);
+  });
+
+  btn2.addEventListener("click", enviarMensaje);
+
+  /* =========================================================
+     MENSAJES (ENVIAR)
+  ========================================================= */
+  async function enviarMensaje() {
+    const userText = input.value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+    if (!userText) return;
+
+    const chatContainer = document.querySelector(".chat-container");
+
+  // Cuando se manda el primer mensaje
+  if (!chatContainer.classList.contains("active")) {
+    chatContainer.classList.add("active");
+  }
+    // ocultar título si hay mensaje
+    titulo.style.opacity = 0;
+
+    // mensaje usuario
+    const userMsg = document.createElement("div");
+    userMsg.className = "message user";
+    userMsg.innerHTML = parseBold(userText);
+    chat.appendChild(userMsg);
+
+    // reset input
+    input.value = "";
+    input.style.height = "auto";
+    transitionToBtn1();
+    previousHasText = false;
+
+    // loading
+    const loadingMsg = document.createElement("div");
+    loadingMsg.className = "message bot loading";
+    loadingMsg.innerHTML = `<span></span>
+      <video src="/static/videos/anim1.mp4" autoplay loop muted playsinline width="40"></video>`;
+    chat.appendChild(loadingMsg);
+
+    // recalc móvil + scroll
+    if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) window.__mobileChatHelpers.recalc();
+    else chat.scrollTop = chat.scrollHeight;
+
+    // fetch al backend
+    try {
+      const resp = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userText,
+          plan: selectedPlan
+        })
+      });
+
+      const data = await resp.json();
+
+      if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) window.__mobileChatHelpers.recalc();
+
+      const botMsg = addBotMessage();
+      await typeWriterEffect(botMsg, data.reply || "⚠️ Error: sin respuesta.", 15);
+
+      // asegurar scroll y recalc
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
+
+    } catch (error) {
+      if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
+      const botMsg = addBotMessage();
+      await typeWriterEffect(botMsg, "⚠️ Error al conectar con el servidor.", 15);
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
+    }
+
+    // devolver foco y recalcular (útil en móviles)
+    input.focus();
+    if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) {
+      setTimeout(() => window.__mobileChatHelpers.recalc(), 120);
+    }
+  }
+  
+// 👉 agregar esto:
+window.enviarMensaje = enviarMensaje;
+
+  /* =========================================================
+     MOBILE HELPER: visualViewport + bloqueo scroll body
+  ========================================================= */
+  /*
+  (function mobileHelper() {
+  const vv = window.visualViewport;
+  const MIN_CHAT_HEIGHT = 120; // px
+
+  function ajustarAlturaMovil() {
+    const viewportHeight = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    const inputH = inputWrapper.offsetHeight || 64;
+    const margin = 8;
+
+    // Establecemos la altura útil del chat para que nunca quede debajo del input
+    const usable = Math.max(MIN_CHAT_HEIGHT, Math.floor(viewportHeight - inputH - margin));
+    chat.style.height = usable + 'px';
+    chat.style.maxHeight = usable + 'px';
+    chat.style.overflowY = 'auto';
+
+    // Ajustar posición del chat respecto al input (en móviles)
+    // Ponemos bottom del chat en (input height + 18px) para mantener espacio
+    if (window.innerWidth <= 768) {
+      const bottomOffset = inputH + 18;
+      chat.style.bottom = bottomOffset + 'px';
+    } else {
+      chat.style.bottom = '';
+    }
+
+    // detectar teclado por cambio de visualViewport (si existe)
+    const fullWindowInner = window.innerHeight;
+    const keyboardProbablyOpen = vv ? (viewportHeight < fullWindowInner - 100) : false;
+
+    // sólo togglear la clase; NO forzar overflow:hidden en body (evita bugs con el teclado)
+    document.body.classList.toggle('keyboard-open', !!keyboardProbablyOpen);
+
+    // titulo visible solo si no hay mensajes
+    const hasMessages = !!chat.querySelector('.message');
+    titulo.style.opacity = hasMessages ? '0' : '1';
+
+    // mantener scroll abajo
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  // listeners
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', ajustarAlturaMovil, { passive: true });
+    window.visualViewport.addEventListener('scroll', ajustarAlturaMovil, { passive: true });
+  }
+  window.addEventListener('resize', ajustarAlturaMovil);
+
+  // auto-grow textarea
+  function autoGrow() {
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+    ajustarAlturaMovil();
+  }
+  input.addEventListener('input', autoGrow);
+
+  input.addEventListener('focus', () => {
+    // recalcula rápido al enfocar para dejar espacio al teclado
+    setTimeout(() => {
+      autoGrow();
+      ajustarAlturaMovil();
+      input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }, 80);
+  });
+  input.addEventListener('blur', () => {
+    setTimeout(ajustarAlturaMovil, 80);
+  });
+
+  window.addEventListener('load', () => {
+    autoGrow();
+    ajustarAlturaMovil();
+  });
+
+  // helpers expuestos (mantener compatibilidad)
+  window.__mobileChatHelpers = {
+    recalc: ajustarAlturaMovil,
+    scrollToBottom: () => { chat.scrollTop = chat.scrollHeight; }
+  };
+})();
+*/
+  /* =========================================================
+     MENU TOGGLE (mantengo tu API)
+  ========================================================= */
+  window.toggleMenu = function() {
+    const showing = dropdownMenu.style.display === 'block';
+    dropdownMenu.style.display = showing ? 'none' : 'block';
+    if (menuArrow) menuArrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(180deg)';
+  };
+
+  document.addEventListener('click', function(e) {
+    const menuContainer = document.querySelector('.menu-container');
+    if (menuContainer && !menuContainer.contains(e.target)) {
+      dropdownMenu.style.display = 'none';
+      if (menuArrow) menuArrow.style.transform = 'rotate(0deg)';
+    }
+  });
+
+  // Exponer selectVersion para los onclick inline existentes
+  window.selectVersion = selectVersion;
+});
+
+ 
+</script>
+
+   <script>
+ document.addEventListener('DOMContentLoaded', () => {
+   const chatContainer = document.querySelector('.chat-container');
+   const inputContainer = document.querySelector('.input-container');
+
+   if (!chatContainer || !inputContainer) return;
+
+/* if (window.visualViewport) {
+     const ajustarLayout = () => {
+       const viewportHeight = window.visualViewport.height;
+       const totalHeight = window.innerHeight;
+       const tecladoHeight = totalHeight - viewportHeight;
+
+       if (tecladoHeight > 0) {
+         // El teclado está visible → movemos el input hacia arriba
+         inputContainer.style.transform = `translateY(-${tecladoHeight}px)`;
+       } else {
+         // El teclado se cerró → volvemos al lugar original
+         inputContainer.style.transform = 'translateY(0)';
+       }
+
+       // Mantenemos el scroll al fondo del chat
+       chatContainer.scrollTop = chatContainer.scrollHeight;
+     };
+
+     // Escuchamos el cambio del viewport visual (cuando aparece/desaparece teclado)
+     window.visualViewport.addEventListener('resize', ajustarLayout);
+   }
+*/
+  
+ });
+ </script>
+
+   <script>
+   // Lista de títulos posibles
+   const titulos = [
+     "¡Inicia tu progreso!",
+     "¿En que puedo ayudarte?",
+     "¡Pregúntame lo que quieras!",
+     "Tu aliado estrategico",
+     "¡Empecemos algo increíble!"
+   ];
+
+   // Selecciona el elemento del título
+   const tituloElement = document.getElementById("titulo");
+
+   // Función para elegir un título aleatorio
+   function cambiarTitulo() {
+     const indiceAleatorio = Math.floor(Math.random() * titulos.length);
+     tituloElement.textContent = titulos[indiceAleatorio];
+   }
+
+   // Ejecutar cada vez que se carga la página
+   window.addEventListener("load", cambiarTitulo);
+ </script>
+
+<script>
+  const logoutBtnSidebar = document.getElementById("logoutBtnSidebar");
+const logoutModal = document.getElementById("logoutModal");
+const confirmLogout = document.getElementById("confirmLogout");
+const cancelLogout = document.getElementById("cancelLogout");
+
+if (logoutBtnSidebar) {
+  logoutBtnSidebar.addEventListener("click", () => logoutModal.classList.add("show"));
+}
+
+confirmLogout.addEventListener("click", () => {
+  localStorage.removeItem("sesion_activa");
+  localStorage.removeItem("correo_usuario");
+  localStorage.removeItem("foto_usuario");
+  window.location.href = "/";
+});
+
+cancelLogout.addEventListener("click", () => logoutModal.classList.remove("show"));
+window.addEventListener("click", (e) => {
+  if (e.target === logoutModal) logoutModal.classList.remove("show");
+});
+  </script> <!-- ✅ acá cerrás el primer script -->
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const plusBtn = document.getElementById('plusBtn');
+  const plusOptions = document.getElementById('plusOptions');
+  const predictBtn = document.getElementById('predictBtn');
+
+  // Mostrar / ocultar menú
+  plusBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    plusOptions.style.display = plusOptions.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  // Cerrar al hacer clic fuera
+  document.addEventListener('click', () => plusOptions.style.display = 'none');
+
+  // Acción del botón "Predecir exámenes"
+  predictBtn.addEventListener('click', () => {
+    plusOptions.style.display = 'none';
+    alert('🔮 Función de predicción de exámenes próximamente disponible.');
+    // Aquí podrías llamar a tu función real, por ejemplo:
+    // predecirExamen();
+  });
+});
+</script>
+
+<script>
+/* =========================================================
+   🔧 FIX POSICIÓN INPUT EN MÓVIL (teclado abierto)
+   Mantiene el input-container fijo abajo sin moverse ni a la derecha
+========================================================= */
+(function fixMobileInputPosition() {
+  const inputWrapper = document.getElementById("inputWrapper");
+  const chat = document.getElementById("chat");
+  const vv = window.visualViewport;
+
+  if (!inputWrapper || !vv) return;
+
+  function ajustarPosicion() {
+    // Detecta si el teclado está abierto (viewport más chico que innerHeight)
+    const keyboardAbierto = vv.height < window.innerHeight - 100;
+
+    // Corrige el desplazamiento horizontal causado por zoom o teclado
+    function ajustarPosicion() {
+  const keyboardAbierto = vv.height < window.innerHeight - 100;
+
+  // Evitar corrimiento horizontal
+  inputWrapper.style.left = "0";
+  inputWrapper.style.width = "100vw";
+
+  if (keyboardAbierto) {
+    inputWrapper.style.position = "fixed";
+    const offset = window.innerHeight - vv.height - vv.offsetTop;
+    inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
+  } else {
+    inputWrapper.style.position = "fixed";
+    inputWrapper.style.bottom = "0";
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+    // Corrige posición vertical
+    if (keyboardAbierto) {
+      inputWrapper.style.position = "fixed";
+      const offset = window.innerHeight - vv.height - vv.offsetTop;
+inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
+    } else {
+      inputWrapper.style.position = "fixed";
+      inputWrapper.style.bottom = "0";
+    }
+
+    // Mantiene scroll del chat estable
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  vv.addEventListener("resize", ajustarPosicion);
+  vv.addEventListener("scroll", ajustarPosicion);
+})();
+</script>
+
+
+  <button id="theme-toggle">🌙</button>
+
+<script>
+const darkLink = document.getElementById('theme-dark');
+const lightLink = document.getElementById('theme-light');
+const toggleBtn = document.getElementById('theme-toggle');
+
+toggleBtn.style.position = 'fixed';
+toggleBtn.style.top = '10px';
+toggleBtn.style.right = '10px';
+toggleBtn.style.zIndex = '2000';
+toggleBtn.style.background = 'transparent';
+toggleBtn.style.border = 'none';
+toggleBtn.style.fontSize = '22px';
+toggleBtn.style.cursor = 'pointer';
+toggleBtn.style.color = '#fff';
+
+let isDark = true;
+
+toggleBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  lightLink.disabled = isDark;
+  toggleBtn.textContent = isDark ? '🌙' : '☀️';
+  toggleBtn.style.color = isDark ? '#fff' : '#000';
+});
+</script>
+
+<!-- Modal minimalista -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <p>Esta función no está disponible actualmente,<br>estamos trabajando para implementarla.</p>
+    <button id="close-modal">Entendido</button>
+  </div>
+</div>
+
+  <script>
+  const plusBtn = document.getElementById('plus-btn');
+  const plusMenu = document.getElementById('plus-menu');
+  const submenu = document.getElementById('submenu');
+  const modal = document.getElementById('modal');
+  const closeModal = document.getElementById('close-modal');
+  const textarea = document.getElementById('mensaje');
+
+  // Mostrar/ocultar menú principal
+  plusBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    plusMenu.style.display = plusMenu.style.display === 'flex' ? 'none' : 'flex';
+    submenu.style.display = 'none';
+  });
+
+  // Submenú
+  const getAdvice = document.getElementById('get-advice');
+  getAdvice.addEventListener('mouseenter', () => submenu.style.display = 'flex');
+  getAdvice.addEventListener('mouseleave', () => {
+    setTimeout(() => submenu.style.display = 'none', 400);
+  });
+
+  // Modal de funciones no disponibles
+  document.getElementById('attach-files').addEventListener('click', () => modal.style.display = 'flex');
+  document.getElementById('predict-exam').addEventListener('click', () => modal.style.display = 'flex');
+  closeModal.addEventListener('click', () => modal.style.display = 'none');
+
+  // Submenú materias
+  document.querySelectorAll('.submenu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      textarea.value = `Dame consejos para aprobar ${item.dataset.text}`;
+      submenu.style.display = 'none';
+      plusMenu.style.display = 'none';
+    });
+  });
+
+  // Cerrar menú al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if (!plusMenu.contains(e.target) && !plusBtn.contains(e.target)) {
+      plusMenu.style.display = 'none';
+      submenu.style.display = 'none';
+    }
+  });
+</script>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
