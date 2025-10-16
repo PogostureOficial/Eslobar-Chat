@@ -621,5 +621,112 @@
   background: #505050;
 }
 
+   /* 🔹 Contenedor principal */
+.plan-menu-container {
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+}
+
+/* 🔹 Botón principal */
+.plan-menu-header {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 🔹 Dropdown */
+.plan-menu-dropdown {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  background: #212121;
+  border-radius: 14px;
+  width: 280px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 🔹 Cada opción */
+.plan-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  transition: background 0.2s ease;
+  color: #fff;
+}
+
+.plan-option:hover {
+  background: #2b2b2b;
+}
+
+/* 🔹 Parte izquierda (icono + texto) */
+.plan-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 🔹 Iconos */
+.plan-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* 🔹 Texto */
+.plan-info-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.plan-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.plan-desc {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* 🔹 Botón “Mejorar el plan” */
+.upgrade-plan-btn {
+  background: #2f2f2f;
+  color: #fff;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.upgrade-plan-btn:hover {
+  background: #3b3b3b;
+}
+
+/* 🔹 Tilde del plan seleccionado */
+.checkmark {
+  font-size: 16px;
+  color: #999;
+  visibility: visible;
+}
+
+/* 🔹 Mostrar menú */
+.plan-menu-dropdown.show {
+  display: flex;
+}
+
 
 }
