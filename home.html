@@ -171,6 +171,28 @@
           </div>
         </div>
 
+         <!-- Botón + y menú -->
+        <div class="plus-container">
+          <button id="plus-btn" class="plus-btn">
+            <img src="/static/images/button5.png" alt="Abrir menú" class="plus-icon">
+        </button>
+
+  <!-- Menú principal -->
+        <div id="plus-menu" class="plus-menu">
+          <div class="menu-item" id="attach-files">Adjuntar archivos</div>
+          <div class="menu-item" id="predict-exam">Predecir examen de:</div>
+          <div class="menu-item" id="get-advice">Dame consejos para aprobar:</div>
+
+          <!-- Submenú -->
+          <div id="submenu" class="submenu">
+            <div class="submenu-item" data-text="Historia">Historia</div>
+            <div class="submenu-item" data-text="Matemáticas">Matemáticas</div>
+            <div class="submenu-item" data-text="Geografía">Geografía</div>
+          </div>
+        </div>
+      </div>
+
+
 
    </div> <!-- Cierre de input-container -->
 
@@ -818,10 +840,63 @@ toggleBtn.addEventListener('click', () => {
 });
 </script>
 
+<!-- Modal minimalista -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <p>Esta función no está disponible actualmente,<br>estamos trabajando para implementarla.</p>
+    <button id="close-modal">Entendido</button>
+  </div>
+</div>
+
+  <script>
+  const plusBtn = document.getElementById('plus-btn');
+  const plusMenu = document.getElementById('plus-menu');
+  const submenu = document.getElementById('submenu');
+  const modal = document.getElementById('modal');
+  const closeModal = document.getElementById('close-modal');
+  const textarea = document.getElementById('mensaje');
+
+  // Mostrar/ocultar menú principal
+  plusBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    plusMenu.style.display = plusMenu.style.display === 'flex' ? 'none' : 'flex';
+    submenu.style.display = 'none';
+  });
+
+  // Submenú
+  const getAdvice = document.getElementById('get-advice');
+  getAdvice.addEventListener('mouseenter', () => submenu.style.display = 'flex');
+  getAdvice.addEventListener('mouseleave', () => {
+    setTimeout(() => submenu.style.display = 'none', 400);
+  });
+
+  // Modal de funciones no disponibles
+  document.getElementById('attach-files').addEventListener('click', () => modal.style.display = 'flex');
+  document.getElementById('predict-exam').addEventListener('click', () => modal.style.display = 'flex');
+  closeModal.addEventListener('click', () => modal.style.display = 'none');
+
+  // Submenú materias
+  document.querySelectorAll('.submenu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      textarea.value = `Dame consejos para aprobar ${item.dataset.text}`;
+      submenu.style.display = 'none';
+      plusMenu.style.display = 'none';
+    });
+  });
+
+  // Cerrar menú al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if (!plusMenu.contains(e.target) && !plusBtn.contains(e.target)) {
+      plusMenu.style.display = 'none';
+      submenu.style.display = 'none';
+    }
+  });
+</script>
 
   
 </body>
 </html>
+
 
 
 
