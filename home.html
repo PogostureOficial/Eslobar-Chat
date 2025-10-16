@@ -88,6 +88,41 @@
 
   <!-- Barra superior -->
   <div class="top-bar">
+
+    <!-- 🔹 Menú de plan tipo ChatGPT -->
+    <div class="plan-menu-container">
+      <button class="plan-menu-header" onclick="togglePlanMenu()">
+        <span class="plan-menu-title">Eslobar</span>
+      </button>
+
+      <!-- Menú desplegable -->
+      <div class="plan-menu-dropdown" id="planDropdown">
+        <!-- Opción Plus -->
+        <div class="plan-option" data-plan="plus" onclick="selectPlan('plus')">
+          <div class="plan-left">
+            <img src="/static/images/plus.png" alt="Eslobar Plus" class="plan-icon">
+            <div class="plan-info-text">
+              <div class="plan-title">Eslobar Plus</div>
+              <div class="plan-desc">Nuestro modelo más inteligente y más</div>
+            </div>
+          </div>
+          <button class="upgrade-btn" onclick="window.location.href='/static/plan.html'">Mejorar el plan</button>
+        </div>
+
+        <!-- Opción Básica -->
+        <div class="plan-option" data-plan="basic" onclick="selectPlan('basic')">
+          <div class="plan-left">
+            <img src="/static/images/basic.png" alt="Eslobar" class="plan-icon">
+            <div class="plan-info-text">
+              <div class="plan-title">Eslobar</div>
+              <div class="plan-desc">Es genial para las tareas de todos los días.</div>
+            </div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+      </div>
+    </div>
+
     
     <!-- Menú Eslobar -->
     <div class="menu-container">
@@ -893,9 +928,34 @@ toggleBtn.addEventListener('click', () => {
   });
 </script>
 
+  <script>
+let currentPlan = 'basic';
+
+function togglePlanMenu() {
+  const menu = document.getElementById('planDropdown');
+  menu.classList.toggle('show');
+}
+
+function selectPlan(plan) {
+  currentPlan = plan;
+  document.querySelectorAll('.plan-option .checkmark').forEach(el => el.style.visibility = 'hidden');
+  const selected = document.querySelector(`.plan-option[data-plan="${plan}"] .checkmark`);
+  if (selected) selected.style.visibility = 'visible';
+}
+
+// Cierra el menú al hacer clic fuera
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('planDropdown');
+  if (!e.target.closest('.plan-menu-container')) {
+    menu.classList.remove('show');
+  }
+});
+</script>
+
   
 </body>
 </html>
+
 
 
 
