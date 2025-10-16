@@ -1,0 +1,847 @@
+/* ===== Estilos generales ===== 
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1d1d1d; /* gris oscuro */
+  /*color: #fff;
+  height: 100vh; /* ANTES ERA height */
+  /*display: flex; /*antes era flex*/
+  /*flex-direction: column;
+  align-items: center;
+  justify-content: center; /* por defecto centrado */
+ /* transition: justify-content 0.3s ease; 
+}
+
+
+/* Texto inicial */
+#titulo {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  margin-bottom: -100px;
+  margin-top: 40px;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+/* Caja del chat */
+.chat-box {
+  width: 100%;
+  max-width: 700px;
+  flex: 0; /* al inicio no ocupa altura */
+  overflow-y: auto;
+  background: none;
+  border: none;
+  margin: 12px 0;
+  transition: flex 0.4s ease, max-height 0.4s ease;
+}
+
+
+
+body:has(.chat-box .message) #titulo {
+  opacity: 0; /* desaparece cuando hay mensajes */
+}
+
+/* Mensajes */
+.message {
+  margin: 8px 0;
+  padding: 10px 14px;
+  border-radius: 60px;
+  max-width: 110%;
+  word-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.4;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.user {
+  background: #313131;
+  color: #fff;
+  align-self: flex-end;
+  margin-left: 150px;
+}
+
+.bot {
+  background: #212121;
+  color: #fff;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  margin-right: 150px;
+}
+
+.loading {
+  font-style: italic;
+  color: #aaa;
+  margin: 8px 0;
+}
+
+/* Contenedor de input */
+.input-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: #303030;
+  border: 1px solid #454545;
+  border-radius: 30px;
+  padding: 6px 10px;
+  box-shadow: 0 0 12px #171717;
+  transition: box-shadow 0.3s ease;
+  position: relative; /* necesario para los imgs absolutos dentro */
+  font-style: italic;
+}
+
+/* Brillo sutil al escribir */
+.input-container:focus-within {
+ 
+}
+
+input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+input::placeholder {
+  color: #9E9E9E;
+  font-weight: 200;
+  font-size: 1.7rem;
+}
+
+/* Botón con imágenes + animaciones */
+.voice-btn {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 15px; /* ajusta la distancia al borde derecho */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden; /* evita que la imagen sobresalga del círculo */
+  display: block; /* no necesitamos flex aquí porque las imgs serán absolutas */
+  transition: box-shadow 0.3s ease;
+}
+
+.voice-btn:hover {
+  box-shadow: 0 0 4px rgba(255,255,255,0.12);
+}
+
+.voice-btn img {
+  position: absolute;   /* <-- clave: solapan exactamente */
+  inset: 0;             /* top:0; right:0; bottom:0; left:0; */
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;  /* centra y mantiene aspecto; usa 'cover' si prefieres recortar */
+  transform-origin: center center; /* ya lo estabas forzando en JS, pero por si acaso */
+}
+
+/* Hacer que el segundo botón siempre esté al lado del primero */
+.input-container > .voice-btn + * {
+  margin-left: 8px; /* ajusta la distancia entre botones */
+}
+
+
+/* ==== Eliminar el recuadro de fondo ==== */
+/*.chat-box {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ==== Ocultar scrollbar del chat sin quitar el scroll ==== */
+.chat-box {
+  scrollbar-width: none;       /* Firefox */
+}
+.chat-box::-webkit-scrollbar { /* Chrome, Edge, Safari */
+  display: none;
+}
+
+.message.bot.loading {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espacio entre texto y video */
+  color: #666; /* gris clarito como ChatGPT */
+  font-style: italic;
+}
+.message.bot.loading video {
+  height: 20px; /* ajustá el tamaño a tu gusto */
+}
+
+#mensaje {
+  background: transparent;   /* mismo fondo que antes */
+  border: none;              /* quitar el borde blanco */
+  outline: none;             /* quitar borde azul al hacer foco */
+  color: white;              /* texto en blanco */
+  font-size: 16px;           /* mismo tamaño que el input anterior */
+  width: 100%;               /* ocupar todo el espacio disponible */
+  resize: none;              /* evitar que el usuario lo estire manualmente */
+  /*overflow-y: auto;          /* scroll solo si pasa el límite */
+  max-height: 7.5em;         /* máx 5 líneas (si tu line-height es 1.5) */
+  line-height: 1.5em;
+  padding: 10px;             /* igual que antes para que quede centrado */
+  box-sizing: border-box; 
+  font-family: Arial, sans-serif;   /* asegurar que respete el ancho */
+  padding-left: 35px; /* margen interno a la izquierda */
+}
+
+#mensaje::placeholder {
+  font-family: Arial, sans-serif;   /* hereda la misma fuente que el contenedor */
+  color: #afafaf;            /* mismo gris que usabas antes */
+  font-size: 15px;        /* asegura que coincida con el texto normal */
+  padding-left: 0px; /* margen interno a la izquierda */
+}
+
+/* NEW!!!!! Caja del chat: estado inicial centrado */
+.chat-box {
+  flex: none;
+  width: 100%;
+  max-width: 900px;
+  height: 1vh; /* inicial: chiquito en el centro */
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+
+
+body:has(.chat-box .message) #titulo {
+  opacity: 0; /* título desaparece */
+}
+
+
+/* ==== Simulación móvil en PC ==== */
+body.modo-celular {
+  width: 375px;        /* ancho típico móvil */
+  height: 667px;       /* altura típica móvil */
+  margin: 0 auto;
+  border: 1px solid #444;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* empezamos con el chat arriba */
+}
+
+.message.bot h1 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: #ffffff;
+}
+
+.message.bot h2 {
+  font-size: 1.3em;
+  margin: 8px 0;
+  color: #ffffff;
+}
+
+.message.bot h3 {
+  font-size: 1.1em;
+  margin: 6px 0;
+  color: #ffffff;
+}
+
+.message.bot p {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.message.bot ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
+/* ==== MENÚ ESLOBAR ==== */
+.menu-container {
+  position: relative;
+  margin: 16px;
+  color: #fff;
+  font-size: 19px;
+  font-family: 'Inter', sans-serif;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.menu-header:hover {
+  background-color: #313131;
+}
+
+.menu-title {
+  font-weight: 300;
+  font-size: 18px;
+  margin-top: -60px;
+  margin-right: -60px;
+}
+
+.arrow {
+  transition: transform 0.3s;
+  margin-top: 0px;
+  margin-right: 0px;
+}
+
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  background-color: #313131;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 12px;
+  width: 300px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  z-index: 100;
+}
+
+.menu-item {
+  position: relative;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer; /* 🧠 Indica que se puede hacer click */
+  display: flex;   /* 🧱 Icono + texto lado a lado */
+  align-items: flex-start; /* Alineación vertical */
+  gap: 10px; /* espacio entre icono y texto */
+}
+
+.menu-item:hover {
+  background-color: #3a3a3a; /* 🖱️ Fondo más claro al pasar el cursor */
+  transform: scale(1.02);    /* efecto leve de agrandar */
+}
+
+.menu-item.active {
+  background-color: hsla(0, 0%, 76%, 0.102); /* Fondo resaltado */
+  border: 1px solid rgba(211, 211, 211, 0.3);
+}
+
+.menu-item .checkmark {
+  display: none;
+  color: #848484;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+
+.menu-item + .menu-item {
+  border-top: 1px solid #2a2a2a;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.menu-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0; /* evita que se deforme */
+  margin: 4px 0 0 2px; /* ajuste fino opcional */
+}
+
+.menu-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-title-version {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.menu-description {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #b0b0b0;
+}
+
+.menu-arrow {
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  filter: brightness(0.8);
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+  vertical-align: middle;
+}
+
+/* === Layout general === */
+body {
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  background-color: #212121;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
+
+/* === Sidebar === */
+.sidebar {
+  width: 250px;
+  background-color: #141414;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-logo img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 24px;
+}
+.sidebar-section {
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* === Contenido principal === */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 32px;
+}
+
+/* Contenedor del chat */
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* SOLO antes del primer mensaje */
+  transition: all 0.3s ease;
+}
+
+/* Estado activo después del primer mensaje */
+.chat-container.active {
+  justify-content: flex-start; /* el chat se va arriba */
+  padding-top: 20px;
+}
+
+.chat-container.active .chat-box {
+  flex: 1; /* ahora ocupa todo el espacio vertical disponible */
+  max-height: calc(100vh - 200px); /* deja margen para input y plan-info */
+}
+
+
+/* Barra superior */
+.top-bar {
+  position: relative; /* necesario para que los hijos absolutos se posicionen relativo a la barra */
+  width: 100%;
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón Mejorar a Plus */
+.upgrade-btn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background-color: #373669;
+  color: #dcdbf6;
+  padding: 10px 13px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: -60px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+.upgrade-btn:hover {
+  background-color: #4a477a;
+}
+.upgrade-icon {
+  width: 13px;
+  height: 13px;
+  margin-right: 6px;
+}
+
+/* Info del plan */
+.plan-info {
+  font-size: 13px;
+  color: #313131;
+  margin-top: 8px;
+  text-align: center;
+}
+.plan-info .plan-link {
+  color: #3b3b3b;
+  text-decoration: none;
+  margin-left: 4px;
+}
+.plan-info .plan-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Ocultar los planes de la barra lateral solo en PC ===== */
+@media (min-width: 769px) {
+  .sidebar .mobile-plans {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Subir el título SIN afectar al resto */
+  #titulo {
+    position: relative;
+    top: -50px; /* mueve el texto hacia arriba sin empujar el contenedor */
+  }
+
+  /* Subir la barra de entrada */
+  .input-container {
+    margin-bottom: 40px; /* menos espacio al borde inferior */
+  }
+
+  /* Chat comienza arriba */
+  .chat-container {
+    justify-content: flex-start;
+    padding-top: 300px;
+  }
+}
+
+/* === Botón de Cerrar Sesión === */
+.logout-container {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logout-btn {
+  background-color: #2b2b2b;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.1s ease;
+}
+
+.logout-btn:hover {
+  background-color: #3a3a3a;
+  transform: translateY(-1px);
+}
+
+.logout-icon {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}
+
+/* === Modal de confirmación === */
+.logout-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.logout-modal.show {
+  display: flex;
+}
+
+.logout-content {
+  background: #1f1f1f;
+  color: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  width: 90%;
+  max-width: 350px;
+  animation: fadeIn 0.2s ease;
+}
+
+.logout-content h2 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.logout-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.logout-confirm,
+.logout-cancel {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.25s ease, transform 0.1s ease;
+}
+
+.logout-confirm {
+  background: #e53935;
+  color: #fff;
+}
+
+.logout-cancel {
+  background: #3a3a3a;
+  color: #fff;
+}
+
+.logout-confirm:hover {
+  background: #ff3b3b;
+  transform: translateY(-1px);
+}
+
+.logout-cancel:hover {
+  background: #4a4a4a;
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* === Botón + flotante dentro del input === */
+.plus-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  left: -96%;
+}
+
+.plus-btn {
+  background: none;
+  color: #fff;
+  border: 1px solid #303030;
+  font-size: 30px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.plus-btn:hover {
+  background: #333;
+}
+
+/* === Menú desplegable === */
+.plus-options {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  background: #303030;
+  border: 1px solid #454545;
+  border-radius: 30px;
+  padding: 6px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  z-index: 20;
+  font-weight: 500;
+}
+
+.plus-options button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 6px;
+  width: 160px;
+}
+
+.plus-options button:hover {
+  background: #2e2e2e;
+}
+
+/* ===== Perfil de usuario en sidebar ===== */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 14px;
+  border-top: 1px solid #2a2a2a;
+  border-bottom: 1px solid #2a2a2a;
+  margin-bottom: 16px;
+}
+
+.user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #3a3a3a;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-email {
+  font-size: 14px;
+  color: #f1f1f1;
+  margin-bottom: 6px;
+  word-break: break-all;
+  max-width: 150px;
+  opacity: 0.9;
+}
+
+.logout-btn-sidebar {
+  background: #2d2d2d;
+  color: #ccc;
+  font-size: 13px;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn-sidebar:hover {
+  background: #3a3a3a;
+  color: #fff;
+}
+
+/* ===== User block: pequeño y pegado al fondo del sidebar (ChatGPT-style) ===== */
+.sidebar { position: relative; }
+
+/* Ubicación fija en la parte inferior del sidebar */
+.user-info {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-top: 1px solid rgba(255,255,255,0.02); /* sutil separación */
+  background: transparent;
+}
+
+/* avatar más chico */
+.user-avatar {
+  width: 34px;   /* tamaño reducido como ChatGPT */
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(0,0,0,0.35);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+}
+
+/* detalles más discretos */
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0; /* evita overflow */
+}
+
+.user-email {
+  font-size: 13px;
+  color: #dcdcdc;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px; /* ajusta si quieres más/menos longitud visible */
+  opacity: 0.92;
+}
+
+/* boton estilo pequeño */
+.logout-btn-sidebar {
+  background: #232323;
+  color: #ddd;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding: 6px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  margin-top: 6px; /* separación sutil cuando el texto ocupa dos líneas (fallback) */
+  cursor: pointer;
+}
+
+/* en pantallas estrechas: sidebar colapsado -> ocultamos el email y reducimos padding */
+@media (max-width: 900px) {
+  .user-info { left: 8px; right: 8px; bottom: 12px; }
+  .user-avatar { width: 28px; height: 28px; }
+  .user-email { display: none; } /* solo avatar visible como en ChatGPT */
+  .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
