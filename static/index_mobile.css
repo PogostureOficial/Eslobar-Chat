@@ -533,8 +533,8 @@
 /* Menú principal */
 .plus-menu {
   position: absolute;
-  bottom: 60px;
-  left: -390px;
+  bottom: 30px;
+  left: -400px;
   background: #2e2e2e;
   border-radius: 16px;
   padding: 10px 0;
