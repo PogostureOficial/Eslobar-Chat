@@ -499,5 +499,9 @@
   display: block;
 }
 
+   .input-container textarea {
+     padding-left: 10px !important;
+   }
+
 
 }
