@@ -347,7 +347,7 @@
      /* 🔧 alineación vertical perfecta */
   position: relative;
   top: -1px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
-  left: -410px;
+  left: -400px;
 }
 
 .plus-btn:active {
