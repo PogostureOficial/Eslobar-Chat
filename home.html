@@ -129,7 +129,42 @@
     <span class="bar"></span>
     <span class="bar"></span>
   </button>
-  <button class="mobile-eslobar-btn" onclick="toggleMenu()">Eslobar</button>
+  <div class="menu-container mobile-visible">
+  <div class="menu-header" onclick="toggleMenu()">
+    <span class="menu-title">Eslobar</span>
+    <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
+  </div>
+
+  <div class="menu-dropdown" id="dropdownMenu">
+    <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
+      <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
+      <div class="menu-text">
+        <div class="menu-title-version">Eslobar</div>
+        <div class="menu-description">Versión básica. Con límite de preguntas y pocas materias.</div>
+      </div>
+      <span class="checkmark">✔</span>
+    </div>
+
+    <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
+      <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
+      <div class="menu-text">
+        <div class="menu-title-version">Eslobar Plus (La más comprada)</div>
+        <div class="menu-description">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
+      </div>
+      <span class="checkmark">✔</span>
+    </div>
+
+    <div class="menu-item" data-plan="pro" onclick="selectVersion('pro')">
+      <img src="/static/images/pro.png" alt="Eslobar Pro" class="menu-icon">
+      <div class="menu-text">
+        <div class="menu-title-version">Eslobar Pro</div>
+        <div class="menu-description">Herramientas profesionales y acceso a todas las materias.</div>
+      </div>
+      <span class="checkmark">✔</span>
+    </div>
+  </div>
+</div>
+
 </div>
 
 
@@ -896,6 +931,7 @@ toggleBtn.addEventListener('click', () => {
   
 </body>
 </html>
+
 
 
 
