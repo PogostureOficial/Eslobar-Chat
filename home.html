@@ -135,7 +135,7 @@
     <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
   </div>
 
-  <div class="menu-dropdown" id="dropdownMenu">
+  <div class="menu-dropdown" id="dropdownMenuMobile">
     <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
       <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
       <div class="menu-text">
@@ -669,10 +669,22 @@ window.enviarMensaje = enviarMensaje;
      MENU TOGGLE (mantengo tu API)
   ========================================================= */
   window.toggleMenu = function() {
-    const showing = dropdownMenu.style.display === 'block';
-    dropdownMenu.style.display = showing ? 'none' : 'block';
-    if (menuArrow) menuArrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(180deg)';
-  };
+  // detectamos si estamos en móvil o escritorio
+  const isMobile = window.innerWidth <= 768;
+
+  const menu = isMobile
+    ? document.getElementById('dropdownMenuMobile')
+    : document.getElementById('dropdownMenu');
+
+  const arrow = document.querySelector('.menu-arrow');
+
+  if (!menu) return;
+
+  const showing = menu.style.display === 'block';
+  menu.style.display = showing ? 'none' : 'block';
+  if (arrow) arrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(180deg)';
+};
+
 
   document.addEventListener('click', function(e) {
     const menuContainer = document.querySelector('.menu-container');
@@ -931,6 +943,7 @@ toggleBtn.addEventListener('click', () => {
   
 </body>
 </html>
+
 
 
 
