@@ -37,33 +37,6 @@
 </div>
 
   <div class="sidebar-section">Chats</div>
-  <!-- mobile plans (se usa solo en móvil via CSS) -->
-<div class="mobile-plans">
-  <div class="mobile-plans-title">Elige un plan</div>
-
-  <div class="mobile-plan-item" data-plan="basic" onclick="selectVersion('basic'); closeMobileSidebar();">
-    <img src="/static/images/basic.png" class="mobile-plan-icon" alt="basic">
-    <div class="mobile-plan-text">
-      <div class="mobile-plan-title">Eslobar</div>
-      <div class="mobile-plan-desc">Ideal para tareas sencillas.</div>
-    </div>
-  </div>
-
-  <div class="mobile-plan-item" data-plan="plus" onclick="selectVersion('plus'); closeMobileSidebar();">
-    <img src="/static/images/plus.png" class="mobile-plan-icon" alt="plus">
-    <div class="mobile-plan-text">
-      <div class="mobile-plan-title">Eslobar Plus</div>
-      <div class="mobile-plan-desc">Para los que realmente quieren lucirse.</div>
-    </div>
-  </div>
-
-  <div class="mobile-plan-item" data-plan="pro" onclick="selectVersion('pro'); closeMobileSidebar();">
-    <img src="/static/images/pro.png" class="mobile-plan-icon" alt="pro">
-    <div class="mobile-plan-text">
-      <div class="mobile-plan-title">Eslobar Pro</div>
-      <div class="mobile-plan-desc">Herramientas profesionales y acceso a todas las materias.</div>
-    </div>
-  </div>
 
   <button id="installButton" style="display:none;">📲 Instalar aplicación</button>
   
@@ -148,7 +121,7 @@
     <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
       <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
       <div class="menu-text">
-        <div class="menu-title-version">Eslobar Plus (La más comprada)</div>
+        <div class="menu-title-version">Eslobar Plus</div>
         <div class="menu-description">Para los pocos que quieren lucirse.</div>
       </div>
       <span class="checkmark">✔</span>
@@ -934,6 +907,7 @@ toggleBtn.addEventListener('click', () => {
   
 </body>
 </html>
+
 
 
 
