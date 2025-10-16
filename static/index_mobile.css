@@ -560,8 +560,8 @@
 /* Submenú lateral */
 .submenu {
   position: absolute;
-  top: 90px;
-  left: 240px;
+  top: 60px;
+  left: 220px;
   background: #2e2e2e;
   border-radius: 12px;
   padding: 8px 0;
