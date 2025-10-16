@@ -621,5 +621,56 @@
   background: #505050;
 }
 
+   /* ===== FIX: Asegurar que los botones sean clickeables =====================================================================================================================================================*/
+
+  
+  /* Permitir clics en el hamburger */
+  .mobile-hamburger {
+    z-index: 10001 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Permitir clics en el botón de enviar mensaje */
+  .voice-btn {
+    z-index: 150 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Permitir clics en el botón upgrade */
+  .upgrade-btn {
+    z-index: 10001 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+  }
+
+  /* Evitar que el menú dropdown tape otros elementos cuando está cerrado */
+  .menu-dropdown:not(.show) {
+    pointer-events: none !important;
+  }
+
+  .menu-dropdown.show {
+    pointer-events: auto !important;
+  }
+
+  /* Asegurar que el input-container no tape los botones */
+  .input-container {
+    pointer-events: auto !important;
+  }
+
+  /* Permitir que los elementos dentro del input sean clickeables */
+  .input-container * {
+    pointer-events: auto !important;
+  }
+
+  /* El plus-container debe estar por encima */
+  .plus-container {
+    z-index: 200 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Evitar que el overlay tape cuando no está visible */
+  .mobile-overlay:not(.visible) {
+    pointer-events: none !important;
+  }
 
 }
