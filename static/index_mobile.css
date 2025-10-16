@@ -478,5 +478,28 @@
   border-radius: 3px;
 }
 
+   .plus-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;      /* ajusta según tu imagen */
+  height: 38px;
+}
+
+.plus-btn:hover {
+  opacity: 0.85;
+}
+
+.plus-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 
 }
