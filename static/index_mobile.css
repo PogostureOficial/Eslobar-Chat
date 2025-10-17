@@ -345,8 +345,8 @@
 
      /* 🔧 alineación vertical perfecta */
   position: fixed;
-  top: -1px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
-  left: -400px;
+  top: 0px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
+  left: 0px;
 }
 
 .plus-btn:active {
