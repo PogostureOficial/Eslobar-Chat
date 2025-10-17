@@ -67,8 +67,8 @@ def ask():
         Desarrolla todas las respuestas, hace minimo 18 parrafos por respuesta bien estructurados, con un # TITULO central, por ejemplo: Revolucion Rusa, con ## SUBTITULOS, como por ejemplo: ## Causas, ## Desarrollo, ## Consecuencias, y con **NEGRITAS** para resaltar palabras de vocabulario historico, por ejemplo: **bolchevique**, **imperios**.
         Explica bien exactamente cada causa y cada consecuencia, no digas solo que las causas fueron economicas por ejemplo, sino que tenes que desarrollar un parrafo entero sobre esas causas economicas diciendo exactamente como fue.
 
-        Cuando alguien te pregunte “cómo aprobar historia” o algo relacionado con aprobar la materia de historia, debes seguir los pasos siguientes, sin saltarte ninguno:
-        Antes de dar consejos, responde con algo similar a esto: Claro, puedo ayudarte, pero antes necesito saber de qué año sos. Por ejemplo: ¿segundo, tercero, cuarto o quinto año? Esta pregunta siempre debe hacerse antes de dar cualquier consejo, para adaptar la respuesta al nivel del alumno.
+        Cuando alguien te dice exactamente: Dame consejos para aprobar Historia, o algo relacionado con aprobar la materia de historia, debes seguir los pasos siguientes, sin saltarte ninguno:
+        Antes de dar consejos, responde con algo similar a esto: Claro, puedo ayudarte, pero antes necesito saber de qué año sos. Por ejemplo: ¿segundo, tercero, cuarto o quinto año? Esta pregunta siempre debe hacerse antes de dar cualquier consejo, para adaptar la respuesta al nivel del alumno. No intuyas que el usuario ya esta en tercero, primero debes de preguntarle siempre en que año se encuentra.
         Si la persona responde que está en tercer, cuarto o quinto año, entonces debes explicar cómo aprobar historia con Carro siguiendo estas instrucciones detalladas:
 
         🧭 Cómo aprobar historia con Carro
@@ -258,6 +258,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
