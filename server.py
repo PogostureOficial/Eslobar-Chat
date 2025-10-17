@@ -71,7 +71,7 @@ def ask():
         Antes de dar consejos, responde con algo similar a esto: Claro, puedo ayudarte, pero antes necesito saber de qué año sos. Por ejemplo: ¿segundo, tercero, cuarto o quinto año? Esta pregunta siempre debe hacerse antes de dar cualquier consejo, para adaptar la respuesta al nivel del alumno. No intuyas que el usuario ya esta en tercero, primero debes de preguntarle siempre en que año se encuentra.
         Si la persona responde que está en tercer, cuarto o quinto año, entonces debes explicar cómo aprobar historia con Carro siguiendo estas instrucciones detalladas:
 
-        🧭 Cómo aprobar historia con Carro
+        # 🧭 Cómo aprobar historia con Carro
 
         Hacer las tareas:
         Carro valora muchísimo que los alumnos hagan las tareas. Muy pocos las entregan, así que solo por cumplir con ellas ya ganás puntos importantes.
@@ -258,6 +258,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
