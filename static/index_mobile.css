@@ -691,7 +691,10 @@
 ======================================================= */
 
 #installButton {
-  display: none; /* se muestra dinámicamente por JS */
+  position: fixed;
+  bottom: 20px;       /* separación desde abajo */
+  right: 20px;        /* separación desde derecha */
+  display: none;      /* se muestra dinámicamente por JS */
   background: linear-gradient(135deg, #3d3d3d, #2a2a2a);
   color: #ffffff;
   font-family: "Inter", sans-serif;
@@ -701,14 +704,13 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 999px;
   padding: 12px 22px;
-  margin: 12px auto 0;
-  width: 90%;
   max-width: 280px;
+  width: auto;        /* evita que se estire */
   text-align: center;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(0,0,0,0.4);
   transition: all 0.3s ease;
-  align-self: center;
+  z-index: 2000;      /* siempre visible sobre otros elementos */
 }
 
 /* Hover suave y sutil */
@@ -724,7 +726,7 @@
   background: linear-gradient(135deg, #353535, #262626);
 }
 
-/* Pequeña animación de pulso para atraer atención */
+/* Animación de pulso */
 @keyframes installPulse {
   0% { box-shadow: 0 0 0 0 rgba(174, 173, 235, 0.3); }
   70% { box-shadow: 0 0 0 8px rgba(174, 173, 235, 0); }
@@ -737,21 +739,22 @@
 
 /* Para que encaje dentro del sidebar */
 .sidebar #installButton {
-  align-self: center;
-  background: linear-gradient(135deg, #3a3a3a, #2b2b2b);
-  margin-top: auto; /* se queda al final del sidebar */
-  margin-bottom: 80px;
+  position: relative;  /* se vuelve relativo al sidebar */
+  bottom: auto;
+  right: auto;
+  margin-top: auto;    /* se queda al final */
+  margin-bottom: 20px;
   width: calc(100% - 24px);
   max-width: none;
+  background: linear-gradient(135deg, #3a3a3a, #2b2b2b);
 }
 
-/* Versión adaptada para pantallas ultra pequeñas */
+/* Pantallas ultra pequeñas */
 @media (max-width: 380px) {
   #installButton {
     font-size: 14px;
     padding: 10px 18px;
   }
 }
-
 
 }
