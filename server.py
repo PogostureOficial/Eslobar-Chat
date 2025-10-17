@@ -7,7 +7,7 @@ import os
 # 🔹 Historial de los últimos mensajes
 conversation_history = []   # Va a guardar [{"role": "user"/"assistant", "content": "..."}]
 
-# ELIMINAR DESPUES 🔥🔥🔥🔥🔥🔥🔥
+# ELIMINAR DESPUES 🔥
 token_usage = {}
 
 app = Flask(__name__)
@@ -258,6 +258,7 @@ def ask():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
+
 
 
 
