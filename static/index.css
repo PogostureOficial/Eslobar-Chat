@@ -286,14 +286,11 @@ body.modo-celular {
   background-color: transparent;
 }
 
-.menu-header:hover {
-  background-color: #313131;
-}
 
 .menu-title {
-  font-weight: 300;
+  font-weight: 400;
   font-size: 18px;
-  margin-top: -60px;
+  margin-top: -20px;
   margin-right: -60px;
 }
 
@@ -807,6 +804,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
