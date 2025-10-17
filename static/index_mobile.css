@@ -685,5 +685,75 @@
     pointer-events: auto !important;
   }
 
+   /* =======================================================
+   🔘 Botón "Instalar aplicación" - Estilo PWA
+   Combina con la paleta oscura (#121212 / #212121)
+   y la estética general del sitio móvil
+======================================================= */
+
+#installButton {
+  display: none; /* se muestra dinámicamente por JS */
+  background: linear-gradient(135deg, #3d3d3d, #2a2a2a);
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  padding: 12px 22px;
+  margin: 12px auto 0;
+  width: 90%;
+  max-width: 280px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
+  align-self: center;
+}
+
+/* Hover suave y sutil */
+#installButton:hover {
+  background: linear-gradient(135deg, #4a4a4a, #353535);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+}
+
+/* Presionado */
+#installButton:active {
+  transform: scale(0.97);
+  background: linear-gradient(135deg, #353535, #262626);
+}
+
+/* Pequeña animación de pulso para atraer atención */
+@keyframes installPulse {
+  0% { box-shadow: 0 0 0 0 rgba(174, 173, 235, 0.3); }
+  70% { box-shadow: 0 0 0 8px rgba(174, 173, 235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(174, 173, 235, 0); }
+}
+
+#installButton.glow {
+  animation: installPulse 2.4s infinite;
+}
+
+/* Para que encaje dentro del sidebar */
+.sidebar #installButton {
+  align-self: center;
+  background: linear-gradient(135deg, #3a3a3a, #2b2b2b);
+  margin-top: auto; /* se queda al final del sidebar */
+  margin-bottom: 8px;
+  width: calc(100% - 24px);
+  max-width: none;
+}
+
+/* Versión adaptada para pantallas ultra pequeñas */
+@media (max-width: 380px) {
+  #installButton {
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+}
+
+
 
 }
