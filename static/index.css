@@ -380,7 +380,8 @@ body.modo-celular {
 .menu-arrow {
   width: 14px;
   height: 14px;
-  margin-left: 6px;
+  margin-left: 60px;
+  margin-top: 45px;
   filter: brightness(0.8);
   transform: rotate(0deg);
   transition: transform 0.3s ease;
@@ -806,6 +807,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT */
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
+
 
 
 
