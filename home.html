@@ -955,11 +955,18 @@ window.addEventListener("appinstalled", () => {
   console.log("✅ Aplicación instalada correctamente");
   if (installButton) installButton.style.display = "none";
 });
+
+    if (installButton) {
+  installButton.style.display = "block";
+  installButton.classList.add("glow"); // ✨ Activa el pulso animado
+}
+
 </script>
 
   
 </body>
 </html>
+
 
 
 
