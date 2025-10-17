@@ -344,7 +344,7 @@
   transition: background 0.2s ease, transform 0.1s ease;
 
      /* 🔧 alineación vertical perfecta */
-  position: relative;
+  position: fixed;
   top: -1px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
   left: -400px;
 }
