@@ -904,9 +904,63 @@ toggleBtn.addEventListener('click', () => {
   });
 </script>
 
+  <script>
+/* =========================================================
+   📲 INSTALACIÓN DE LA APLICACIÓN (PWA)
+   Muestra el botón solo si el navegador permite instalar la app
+   y ejecuta el evento de instalación al presionarlo.
+========================================================= */
+
+let deferredPrompt; // Guardamos el evento para usarlo más tarde
+const installButton = document.getElementById("installButton");
+
+// Espera al evento "beforeinstallprompt"
+window.addEventListener("beforeinstallprompt", (event) => {
+  // Evita que el navegador muestre el banner por defecto
+  event.preventDefault();
+
+  // Guarda el evento para usarlo más tarde
+  deferredPrompt = event;
+
+  // Muestra el botón de instalar
+  if (installButton) {
+    installButton.style.display = "block";
+  }
+});
+
+// Cuando el usuario hace clic en el botón "Instalar aplicación"
+if (installButton) {
+  installButton.addEventListener("click", async () => {
+    if (!deferredPrompt) return; // Si no hay evento guardado, no hacemos nada
+
+    // Muestra el prompt de instalación
+    deferredPrompt.prompt();
+
+    // Espera a que el usuario elija una opción
+    const { outcome } = await deferredPrompt.userChoice;
+
+    console.log("Resultado de instalación:", outcome);
+    // Si el usuario acepta, puedes ocultar el botón
+    if (outcome === "accepted") {
+      installButton.style.display = "none";
+    }
+
+    // Limpia el evento (solo puede usarse una vez)
+    deferredPrompt = null;
+  });
+}
+
+// Detectar si la app ya está instalada (para ocultar el botón)
+window.addEventListener("appinstalled", () => {
+  console.log("✅ Aplicación instalada correctamente");
+  if (installButton) installButton.style.display = "none";
+});
+</script>
+
   
 </body>
 </html>
+
 
 
 
