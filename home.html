@@ -824,7 +824,7 @@ inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
 </script>
 
 
-  <button id="theme-toggle">🌙</button>
+  <button id="theme-toggle"> </button>
 
 <script>
 const darkLink = document.getElementById('theme-dark');
@@ -890,6 +890,7 @@ toggleBtn.addEventListener('click', () => {
   document.querySelectorAll('.submenu-item').forEach(item => {
     item.addEventListener('click', () => {
       textarea.value = `Dame consejos para aprobar ${item.dataset.text}`;
+      textarea.dispatchEvent(new Event('input'));
       submenu.style.display = 'none';
       plusMenu.style.display = 'none';
     });
