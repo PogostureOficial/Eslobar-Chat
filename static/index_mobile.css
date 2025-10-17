@@ -692,7 +692,7 @@
 
 #installButton {
   position: fixed;
-  bottom: 80px;       /* separación desde abajo */
+  bottom: 160px;       /* separación desde abajo */
   right: 20px;        /* separación desde derecha */
   display: none;      /* se muestra dinámicamente por JS */
   background: linear-gradient(135deg, #3d3d3d, #2a2a2a);
