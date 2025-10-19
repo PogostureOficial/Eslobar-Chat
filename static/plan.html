@@ -1,75 +1,168 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adquirir Eslobar</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <a href="/" class="close-btn">✕</a>
-  <header>
+
+  <main class="container">
     <h1>Adquirir <span class="highlight">Eslobar</span></h1>
     <p class="subtitle">Elige el plan que mejor se adapte a tus necesidades</p>
-  </header>
 
-  <main class="pricing-container">
-    <!-- Plan Estándar -->
-    <div class="card standard">
-      <h2>Estándar</h2>
-      <p class="price">$5.000 <span class="currency">ARS / mes</span></p>
-      <p class="description">El modelo básico, acceso a Eslobar.</p>
-      <ul class="features">
-        <li>Acceso a Eslobar</li>
-        <li>Límite de preguntas al día</li>
-        <li>Cantidad de materias limitadas</li>
-        <li>Respuestas a velocidad normal</li>
-      </ul>
-      <button class="btn disabled">Seleccionado</button>
-    </div>
+    <section class="pricing-table">
+      <div class="row header">
+        <span>Características</span>
+        <span>Básico</span>
+        <span>Plus</span>
+        <span>Pro</span>
+      </div>
 
-    <!-- Plan Premium -->
-    <div class="card premium">
-      <span class="badge">Popular</span> <!-- NUEVO ELEMENTO -->
-      <h2>Premium</h2>
-      <p class="price">$10.000 <span class="currency">ARS / mes</span></p>
-      <p class="description">El modelo Premium, con funciones exclusivas</p>
-      <ul class="features">
-        <li>Acceso a Eslobar con inteligencia avanzada</li>
-        <li>Sin límite de preguntas</li>
-        <li>Acceso a todas las materias</li>
-        <li>Respuestas de alta velocidad</li>
-        <li>Función para predecir exámenes</li>
-        <li>Capacidad para resumir clases</li>
-        <li>Acceso temprano a nuevas características</li>
-      </ul>
-      <button class="btn primary">Obtener Premium</button>
-    </div>
+      <div class="row">
+        <span>Acceso a Eslobar</span>
+        <span><img src="static/images/tick1.png" class="tick tick-basic" alt="tick básico"></span>
+        <span><img src="static/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
+        <span><img src="static/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+     </div>
 
-    <!-- Plan Pro -->
-    <div class="card pro">
-      <h2>Pro</h2>
-      <p class="price">$100.000 <span class="currency">ARS / mes</span></p>
-      <p class="description">La mejor experiencia y control total</p>
-      <ul class="features">
-        <li>Acceso a Eslobar con inteligencia avanzada</li>
-        <li>Sin límite de preguntas</li>
-        <li>Acceso a todas las materias</li>
-        <li>Respuestas instantáneas</li>
-        <li>Función para predecir exámenes</li>
-        <li>Capacidad para resumir clases</li>
-        <li>Acceso temprano a nuevas características</li>
-        <li>Posibilidad de desarrollar nuevas versiones</li>
-      </ul>
-      <button class="btn outline">Obtener Pro</button>
-    </div>
+      <div class="row">
+        <span>Velocidad de respuestas</span>
+        <span>Lento</span><span>Alto</span><span>Instantáneo</span>
+      </div>
+
+      <div class="row">
+        <span>Razonamiento avanzado</span>
+        <span>—</span>
+        <span><img src="static/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
+        <span><img src="static/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+      </div>
+
+      <div class="row">
+        <span>Multi-función</span>
+        <span>—</span>
+        <span><img src="static/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
+        <span><img src="static/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+      </div>
+
+      <div class="row">
+        <span>Sin cola de espera</span>
+        <span>—</span>
+        <span><img src="static/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
+        <span><img src="static/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+      </div>
+
+      <div class="row">
+        <span>Múltiples chats</span>
+        <span>—</span>
+        <span><img src="static/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
+        <span><img src="static/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+      </div>
+
+      <div class="row">
+        <span>Acceso a funciones futuras</span>
+        <span>—</span>
+        <span><img src="static/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
+        <span><img src="static/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+      </div>
+
+      <div class="row">
+        <span>Mejoras continuas</span>
+        <span>—</span>
+        <span><img src="static/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
+        <span><img src="static/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+      </div>
+
+      <div class="row prices">
+        <span>Precio (mensual)</span>
+        <span>4.999$</span><span>9.999$</span><span>49.999$</span>
+      </div>
+    </section>
+
+    <button class="btn" id="choosePlanBtn">Elegir plan</button>
+    <p class="renewal-note">Cada suscripción se renueva mensualmente. Puedes cancelar en cualquier momento.</p>
   </main>
 
-  <footer>
-    <p>© 2025 Eslobar Inc. Todos los derechos reservados.</p>
-  </footer>
+  <!-- Modal -->
+  <!-- Modal tipo "bottom sheet" -->
+<div id="planModal" class="bottom-sheet">
+  <div class="sheet-content">
+    <div class="sheet-header"></div>
+
+    <div class="plans">
+      <div class="plan-card">
+        <div class="plan-info">
+          <h3>Eslobar</h3>
+          <p>Ideal para aquellos que solo desean llegar al 7.</p>
+        </div>
+        <button class="acquire-btn">Adquirir plan</button>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-info">
+          <h3>Eslobar Plus</h3>
+          <p>Para quienes quieren obtener el mejor desempeño academico.</p>
+        </div>
+        <button class="acquire-btn">Adquirir plan</button>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-info">
+          <h3>Eslobar Pro</h3>
+          <p>Solo para los pocos que quieran aprovechar Eslobar en su totalidad.</p>
+        </div>
+        <button class="acquire-btn">Adquirir plan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
+  <script>
+  const sheet = document.getElementById('planModal');
+  const openBtn = document.getElementById('choosePlanBtn');
+
+  // Crear overlay (fondo oscuro)
+  const overlay = document.createElement('div');
+  overlay.classList.add('overlay');
+  document.body.appendChild(overlay);
+
+  // Mostrar modal
+  openBtn.addEventListener('click', () => {
+    overlay.classList.add('show');
+    sheet.classList.add('show');
+    document.documentElement.style.overflow = 'hidden';
+  });
+
+  // Función para cerrar modal con animación
+  function closeSheet() {
+    sheet.classList.add('closing');
+    sheet.classList.remove('show');
+    overlay.classList.remove('show');
+    sheet.addEventListener(
+      'transitionend',
+      () => {
+        sheet.classList.remove('closing');
+        document.documentElement.style.overflow = '';
+      },
+      { once: true }
+    );
+  }
+
+  // Cerrar al hacer clic fuera (en el overlay)
+  overlay.addEventListener('click', closeSheet);
+
+  // Cerrar al presionar ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sheet.classList.contains('show')) closeSheet();
+  });
+</script>
+
+
+
+
 </body>
 </html>
-
-
