@@ -802,7 +802,7 @@
 }
 
 /* Efecto de enfoque al input */
-#.input-container.highlight {
+.input-container.highlight {
   position: relative;
   z-index: 10005;
   box-shadow: 0 0 20px 6px rgba(255, 255, 255, 0.4);
@@ -813,6 +813,12 @@
   opacity: 0;
   transition: opacity 0.6s ease;
 }
+
+   /* Durante el tutorial, bajar z-index del upgrade-btn */
+  #tutorialOverlay:not(.hidden) ~ .top-bar .upgrade-btn,
+  body:has(#tutorialOverlay:not(.hidden)) .upgrade-btn {
+    z-index: 1 !important;
+  }
 
 
 }
