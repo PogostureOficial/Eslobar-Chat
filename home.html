@@ -432,23 +432,28 @@ document.addEventListener('DOMContentLoaded', function() {
     return botMsg;
   }
 
-  function typeWriterEffect(container, text = '', speed = 15) {
-    return new Promise((resolve) => {
-      if (!text) return resolve();
-      const parsed = marked.parse(text);
-      let i = 0;
-      const interval = setInterval(() => {
-        container.innerHTML = parsed.slice(0, i + 1);
-        if (container.parentElement) {
-          container.parentElement.scrollTop = container.parentElement.scrollHeight;
-        }
-        if (++i >= parsed.length) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, speed);
-    });
-  }
+  function typeWriterEffect(container, text = '', maxDuration = 5000) {
+  return new Promise((resolve) => {
+    if (!text) return resolve();
+    const parsed = marked.parse(text);
+    let i = 0;
+
+    // Calculamos la velocidad para que nunca tarde más de maxDuration
+    const speed = Math.min(15, maxDuration / parsed.length);
+
+    const interval = setInterval(() => {
+      container.innerHTML = parsed.slice(0, i + 1);
+      if (container.parentElement) {
+        container.parentElement.scrollTop = container.parentElement.scrollHeight;
+      }
+      if (++i >= parsed.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
 
   /* =========================================================
      PLAN SELECTION MENU
@@ -1115,6 +1120,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
 </body>
 </html>
+
 
 
 
