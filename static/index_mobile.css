@@ -820,5 +820,8 @@
     z-index: 1 !important;
   }
 
+.input-container {
+  z-index: 10060 !important;
+}
 
 }
