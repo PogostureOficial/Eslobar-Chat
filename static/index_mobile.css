@@ -764,7 +764,7 @@
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(0px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -797,18 +797,19 @@
 }
 
 .welcome-modal button {
-  background: #00aaff;
-  color: white;
+  background: #fff;
+  color: #000;
   border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
+  border-radius: 999px;
+  padding: 10px 28px;
   cursor: pointer;
   font-size: 15px;
   transition: background 0.3s ease;
 }
 
 .welcome-modal button:disabled {
-  background: #555;
+  background: #3f3f3f;
+  color: #515151;
   cursor: not-allowed;
 }
 
@@ -819,8 +820,9 @@
 .step-count {
   display: block;
   margin-top: 10px;
-  font-size: 13px;
-  color: #aaa;
+  font-size: 8px;
+  color: #fff;
+  font-weight: 500;
 }
 
 .color-options {
