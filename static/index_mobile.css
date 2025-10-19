@@ -820,7 +820,7 @@
 .step-count {
   display: block;
   margin-top: 10px;
-  font-size: 8px;
+  font-size: 15px;
   color: #fff;
   font-weight: 500;
 }
@@ -895,6 +895,91 @@
 
 .color-option.selected {
   border-color: #fff;
+}
+
+
+/* ----- Estilo del paso 2 (nombre) ----- */
+
+#modal-step-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+#modal-step-2 h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.3em;
+  font-weight: 700;
+}
+
+#modal-step-2 p {
+  font-size: 0.95rem;
+  color: #cfcfcf;
+  margin-bottom: 1.8em;
+}
+
+/* ----- Input minimalista ----- */
+.input-container {
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 1.5em;
+}
+
+#userName {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+#userName::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Efecto visual al enfocar */
+#userName:focus {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* ----- Botón "Continuar" ----- */
+.continue-btn {
+  width: 80%;
+  max-width: 300px;
+  padding: 12px 0;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: #444;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+.continue-btn.active {
+  background: #ffffff;
+  color: #111;
+  cursor: pointer;
+}
+
+.continue-btn.active:hover {
+  background: #e0e0e0;
+}
+
+/* Indicador de paso */
+.step-indicator {
+  margin-top: 1.2em;
+  font-size: 0.8rem;
+  color: #aaa;
 }
 
 
