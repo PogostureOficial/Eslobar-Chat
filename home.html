@@ -975,7 +975,7 @@ window.addEventListener("appinstalled", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("tutorialOverlay");
   const textEl = document.getElementById("tutorialText");
-  const inputWrapper = document.getElementById(".input-container");
+  const inputWrapper = document.querySelector(".input-container");
   const input = document.getElementById("mensaje");
   const sendBtn = document.getElementById("voiceBtn"); // tu botón para enviar
 
@@ -1040,6 +1040,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
 </body>
 </html>
+
 
 
 
