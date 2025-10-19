@@ -849,5 +849,53 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+   /* ===== Paso 3: Selección de color ===== */
+.example-message {
+  color: white;
+  margin: 20px auto;
+  padding: 10px 14px;
+  border-radius: 16px;
+  width: fit-content;
+  max-width: 80%;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: background 0.3s ease;
+}
+
+/* Colores iguales que .message en el chat */
+.example-message.gris { background: #3a3a3a; }
+.example-message.azul { background: #007bff; }
+.example-message.rosa { background: #ff4da6; }
+
+.color-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 15px 0 25px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.3s;
+}
+
+.color-option:hover {
+  transform: scale(1.15);
+}
+
+.color-option.gray  { background: #3a3a3a; }
+.color-option.blue  { background: #007bff; }
+.color-option.pink  { background: #ff4da6; }
+
+.color-option.selected {
+  border-color: #fff;
+}
+
 
 }
