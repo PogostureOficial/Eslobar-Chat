@@ -1016,9 +1016,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </script>
 
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Espera un poquito a que se cargue todo visualmente
+  setTimeout(() => {
+    const input = document.getElementById("mensaje");
+    if (input) {
+      input.scrollIntoView({ behavior: "smooth", block: "center" });
+      input.focus(); // forza el foco
+      input.style.zIndex = "99999"; // asegura que quede arriba del overlay
+    }
+
+    // Evita que el botón upgrade se enfoque o ilumine
+    const upgradeBtn = document.querySelector(".upgrade-btn");
+    if (upgradeBtn) {
+      upgradeBtn.setAttribute("tabindex", "-1");
+      upgradeBtn.style.pointerEvents = "none";
+    }
+  }, 500); // medio segundo para que cargue todo
+});
+</script>
+
   
 </body>
 </html>
+
 
 
 
