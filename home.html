@@ -88,6 +88,25 @@
 
   <div class="sidebar-section">Chats</div>
 
+    <!-- ---- Pegar directamente ALTERNATIVO EN TU SIDEBAR: justo después de =========================================================================================================================================================
+       <div class="sidebar-section">Chats</div> ---- -->
+  <div id="chat-controls" style="display:flex;gap:8px;align-items:center;">
+    <button id="newChatBtn" title="Nuevo chat" style="border:none;background:#2b2b2b;color:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;">
+      + Nuevo
+    </button>
+  </div>
+
+  <!-- Contenedor donde aparecerán los chats guardados -->
+  <div id="chatList" class="chat-list" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"></div>
+
+  <!-- -----------------------------------------------------
+       Instrucción: agregar este script AL FINAL del body (DESPUÉS
+       de **todos** tus scripts existentes y justo antes de </body>):
+       /static/chat-storage.js  (puedes poner el archivo en /static/)
+     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+ 
+
+
   <button id="installButton" style="display:none;">📲 Instalar aplicación</button>
   
 </div>
@@ -1092,8 +1111,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script src="/static/chat-storage.js"></script>
+  
 </body>
 </html>
+
 
 
 
