@@ -208,6 +208,12 @@
   </div>
 </div>
 
+  <!-- 🔹 Tutorial interactivo inicial -->
+<div id="tutorialOverlay" class="hidden">
+  <div class="tutorialText" id="tutorialText"></div>
+</div>
+
+
   <script>
   // Si no hay sesión, volver al login
   if (localStorage.getItem("sesion_activa") !== "true") {
@@ -964,9 +970,49 @@ window.addEventListener("appinstalled", () => {
 
 </script>
 
-  
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("tutorialOverlay");
+  const textEl = document.getElementById("tutorialText");
+  const inputWrapper = document.getElementById("inputWrapper");
+  const input = document.getElementById("mensaje");
+  const sendBtn = document.getElementById("voiceBtn"); // tu botón para enviar
+
+  // Mostrar solo si es la primera vez
+  if (!localStorage.getItem("tutorialDone")) {
+    overlay.classList.remove("hidden");
+    inputWrapper.classList.add("highlight");
+    textEl.textContent = "Pregúntale algo a Eslobar";
+
+    function endTutorial() {
+  textEl.classList.add("fade-out");
+  setTimeout(() => {
+    overlay.classList.add("hidden");
+    inputWrapper.classList.remove("highlight");
+    localStorage.setItem("tutorialDone", "true");
+  }, 600);
+}
+
+
+    // Cuando el usuario presiona Enter
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter" && !e.shiftKey && input.value.trim() !== "") {
+        endTutorial();
+      }
+    });
+
+    // Cuando presiona el botón de enviar (micrófono o flecha)
+    sendBtn.addEventListener("click", () => {
+      if (input.value.trim() !== "") endTutorial();
+    });
+  }
+});
+</script>
+
 </body>
 </html>
+
 
 
 
