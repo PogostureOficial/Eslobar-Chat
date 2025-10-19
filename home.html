@@ -970,76 +970,10 @@ window.addEventListener("appinstalled", () => {
 
 </script>
 
-
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const overlay = document.getElementById("tutorialOverlay");
-  const textEl = document.getElementById("tutorialText");
-  const inputWrapper = document.querySelector(".input-container");
-  const input = document.getElementById("mensaje");
-  const sendBtn = document.getElementById("voiceBtn"); // tu botón para enviar
-
-  // Mostrar solo si es la primera vez
-  if (!localStorage.getItem("tutorialDone")) {
-    overlay.classList.remove("hidden");
-    inputWrapper.classList.add("highlight");
-    textEl.textContent = "Pregúntale algo a Eslobar";
-
-    function endTutorial() {
-  textEl.classList.add("fade-out");
-  setTimeout(() => {
-    overlay.classList.add("hidden");
-    inputWrapper.classList.remove("highlight");
-    localStorage.setItem("tutorialDone", "true");
-  }, 600);
-}
-
-
-    // Cuando el usuario presiona Enter
-    input.addEventListener("keydown", e => {
-      if (e.key === "Enter" && !e.shiftKey && input.value.trim() !== "") {
-        endTutorial();
-      }
-    });
-
-    // Cuando presiona el botón de enviar (micrófono o flecha)
-    sendBtn.addEventListener("click", () => {
-      if (input.value.trim() !== "") endTutorial();
-    });
-  }
-});
-
-    window.addEventListener("load", () => {
-  const input = document.getElementById("mensaje");
-  if (input) input.focus(); // Forzar foco en el input
-});
-
-</script>
-
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Espera un poquito a que se cargue todo visualmente
-  setTimeout(() => {
-    const input = document.getElementById("mensaje");
-    if (input) {
-      input.scrollIntoView({ behavior: "smooth", block: "center" });
-      input.focus(); // forza el foco
-      input.style.zIndex = "99999"; // asegura que quede arriba del overlay
-    }
-
-    // Evita que el botón upgrade se enfoque o ilumine
-    const upgradeBtn = document.querySelector(".upgrade-btn");
-    if (upgradeBtn) {
-      upgradeBtn.setAttribute("tabindex", "-1");
-      upgradeBtn.style.pointerEvents = "none";
-    }
-  }, 500); // medio segundo para que cargue todo
-});
-</script>
-
   
 </body>
 </html>
+
 
 
 
