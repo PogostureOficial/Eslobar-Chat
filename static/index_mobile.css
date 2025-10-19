@@ -824,4 +824,36 @@
   z-index: 10060 !important;
 }
 
+   /* === VISIBILIDAD DEL INPUT DURANTE EL OVERLAY === */
+
+/* Oscurece el fondo */
+#tutorialOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(5px);
+  z-index: 1000; /* debajo del input */
+}
+
+/* Saca el input del contexto del chat y lo pone arriba de todo */
+.input-container {
+  position: fixed !important;
+  bottom: 36px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 700px; /* opcional: igual que el ancho del chat */
+  z-index: 10060 !important;
+}
+
+/* Mensaje debajo del input */
+.eslobar-warning {
+  position: fixed !important;
+  bottom: 6px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10061 !important;
+}
+
+
 }
