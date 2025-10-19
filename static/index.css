@@ -388,12 +388,13 @@ body.modo-celular {
 /* === Layout general === */
 body {
   margin: 0;
-  display: flex;
-  height: 100vh;
   background-color: #212121;
   color: #fff;
   font-family: "Inter", sans-serif;
+  display: block; /* 🔹 restablece el flujo vertical normal */
+  height: auto;   /* 🔹 permite scroll si es necesario */
 }
+
 
 /* === Sidebar === */
 .sidebar {
@@ -821,6 +822,7 @@ body {
   color: #fff !important;
   background: #222 !important;
 }
+
 
 
 
