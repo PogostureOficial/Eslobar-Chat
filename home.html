@@ -1008,10 +1008,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+    window.addEventListener("load", () => {
+  const input = document.getElementById("mensaje");
+  if (input) input.focus(); // Forzar foco en el input
+});
+
 </script>
 
+  
 </body>
 </html>
+
 
 
 
