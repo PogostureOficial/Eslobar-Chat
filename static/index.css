@@ -805,5 +805,22 @@ body {
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
 }
 
+.input-container {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+  background: #333 !important;
+  display: flex !important;
+  width: 80% !important;
+}
+
+#mensaje {
+  display: block !important;
+  color: #fff !important;
+  background: #222 !important;
+}
+
 
 
