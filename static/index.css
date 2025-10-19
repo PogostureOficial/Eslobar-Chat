@@ -388,12 +388,13 @@ body.modo-celular {
 /* === Layout general === */
 body {
   margin: 0;
+  display: flex;
+  height: 100vh;
   background-color: #212121;
   color: #fff;
   font-family: "Inter", sans-serif;
-  display: block; /* 🔹 restablece el flujo vertical normal */
-  height: auto;   /* 🔹 permite scroll si es necesario */
 }
+
 
 
 /* === Sidebar === */
@@ -799,29 +800,16 @@ body {
 }
 
 /* en pantallas estrechas: sidebar colapsado -> ocultamos el email y reducimos padding */
-@media (max-width: 900px) {
+/*@media (max-width: 900px) {
   .user-info { left: 8px; right: 8px; bottom: 12px; }
   .user-avatar { width: 28px; height: 28px; }
-  .user-email { display: none; } /* solo avatar visible como en ChatGPT */
-  .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado */
-}
+  .user-email { display: none; } /* solo avatar visible como en ChatGPT 
+  .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado 
+} */
 
-.input-container {
-  position: fixed !important;
-  bottom: 20px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 9999 !important;
-  background: #333 !important;
-  display: flex !important;
-  width: 80% !important;
-}
 
-#mensaje {
-  display: block !important;
-  color: #fff !important;
-  background: #222 !important;
-}
+
+
 
 
 
