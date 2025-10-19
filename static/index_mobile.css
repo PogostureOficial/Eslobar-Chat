@@ -269,7 +269,7 @@
   border-radius: 999px;
   border: 1px solid #454545;
   box-shadow: 0 6px 20px #171717;
-  z-index: 1200;
+  z-index: 10002;
   will-change: transform;
   backface-visibility: hidden;
   transform: translateY(0);
