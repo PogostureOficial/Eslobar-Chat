@@ -982,5 +982,76 @@
   color: #aaa;
 }
 
+/* ===========================
+   Estilos para lista de chats
+   =========================== */
+
+.chat-list {
+  max-height: calc(100vh - 220px); /* ajustable: deja espacio para logo / perfil */
+  overflow-y: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: transparent;
+  color: #e6e6e6;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.03);
+  font-size: 14px;
+}
+
+.chat-item:hover {
+  background: rgba(255,255,255,0.02);
+  transform: translateY(-1px);
+}
+
+.chat-item.active {
+  background: linear-gradient(90deg, rgba(174,173,235,0.08), rgba(100,100,160,0.04));
+  border-color: rgba(174,173,235,0.14);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+}
+
+.chat-item .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  padding-right: 8px;
+}
+
+.chat-item .meta {
+  font-size: 11px;
+  color: #aeb2c0;
+  margin-left: 6px;
+}
+
+/* Botoncito de borrar chat */
+.chat-item .trash-btn {
+  background: transparent;
+  border: none;
+  color: #ff7b7b;
+  font-size: 14px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.chat-item .trash-btn:hover { background: rgba(255,123,123,0.06); }
+
+/* Botón nuevo chat estilo responsivo */
+#newChatBtn {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+
 
 }
