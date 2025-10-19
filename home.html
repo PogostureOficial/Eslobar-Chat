@@ -39,20 +39,19 @@
 
     <div id="step3" class="step">
       <h2>Elige el color de tus mensajes</h2>
-      <div class="color-options">
-        <label>
-          <input type="radio" name="msgColor" value="gris" checked>
-          <div class="color-sample gray">Gris (por defecto)</div>
-        </label>
-        <label>
-          <input type="radio" name="msgColor" value="azul">
-          <div class="color-sample blue">Azul</div>
-        </label>
-        <label>
-          <input type="radio" name="msgColor" value="rosa">
-          <div class="color-sample pink">Rosa</div>
-        </label>
+
+      <!-- Mensaje de ejemplo -->
+      <div id="colorPreview" class="message example-message">
+        Explícame la revolución francesa
       </div>
+
+      <!-- Opciones de color -->
+      <div class="color-picker">
+        <div class="color-option gray" data-color="gris" title="Gris (por defecto)"></div>
+        <div class="color-option blue" data-color="azul" title="Azul"></div>
+        <div class="color-option pink" data-color="rosa" title="Rosa"></div>
+      </div>
+
       <button id="finish">Terminar</button>
       <span class="step-count">3/3</span>
     </div>
@@ -1049,10 +1048,33 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => overlay.remove(), 500);
   });
 });
+
+    // ====== Paso 3: vista previa dinámica ======
+const colorOptions = document.querySelectorAll(".color-option");
+const previewMsg = document.getElementById("colorPreview");
+
+colorOptions.forEach(opt => {
+  opt.addEventListener("click", () => {
+    // Quitar selección previa
+    colorOptions.forEach(o => o.classList.remove("selected"));
+
+    // Marcar seleccionado
+    opt.classList.add("selected");
+
+    // Cambiar color del mensaje de ejemplo
+    const color = opt.getAttribute("data-color");
+    previewMsg.className = "message example-message " + color;
+
+    // Guardar selección
+    localStorage.setItem("eslobarColor", color);
+  });
+});
+
 </script>
 
 </body>
 </html>
+
 
 
 
