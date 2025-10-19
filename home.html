@@ -1015,12 +1015,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const finish = document.getElementById("finish");
   const usernameInput = document.getElementById("username-input");
 
-  // Si ya completó la bienvenida, no mostrar
+  /*
+  // Si ya completó la bienvenida, no mostrar=========================================================================== DESCOMENTAR LUEGO =========================================================
   if (localStorage.getItem("eslobarSetupDone") === "true") {
     overlay.style.display = "none";
     return;
   }
-
+*/
   // Paso 1 → Paso 2
   continue1.addEventListener("click", () => {
     steps[0].classList.remove("active");
@@ -1052,6 +1053,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
 
 
