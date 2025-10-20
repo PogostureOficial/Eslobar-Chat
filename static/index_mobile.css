@@ -218,7 +218,7 @@
     font-weight: 400;
     text-align: center;
     line-height: 1.7;
-    margin-top: 200px;
+    margin-top: 0px;
     padding: 20px;
     color: #fff;
     top: 50%;
@@ -458,7 +458,7 @@
 ======================================================= */
 
 .chat-container {
-  height: calc(100dvh - 140px) !important; /* Ajusta el alto total visible */
+  height: calc(100dvh - 190px) !important; /* Ajusta el alto total visible */
   margin-top: -130px !important; /* Espacio desde la barra superior gris */
   margin-bottom: 0 !important;
   overflow-y: auto !important;
