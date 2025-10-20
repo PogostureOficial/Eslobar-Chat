@@ -1125,44 +1125,50 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<script src="/static/chat-storage.js"></script>
-
   <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const chatContainer = document.getElementById("chat-container");
+// Este código fuerza que el contenedor del chat se expanda automáticamente
+// tanto al cargar mensajes guardados como al enviar nuevos.
 
-  if (!chatContainer) return;
+function ajustarAlturaChat() {
+  const contenedor = document.querySelector('#chat-container');
 
-  // Observador que detecta cuando se cargan mensajes al contenedor
-  const observer = new MutationObserver(() => {
-    if (chatContainer.children.length > 0) {
-      // 🔹 Agranda el contenedor si hay mensajes
-      chatContainer.style.minHeight = "400px"; // Ajusta el valor según tu diseño
-      chatContainer.style.display = "flex";
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    } else {
-      // 🔹 Lo deja chico si no hay mensajes
-      chatContainer.style.minHeight = "100px";
-    }
-  });
+  if (!contenedor) return;
 
-  // Escucha cuando se agregan o eliminan mensajes
-  observer.observe(chatContainer, { childList: true, subtree: true });
+  // Si tiene mensajes dentro (elementos hijos)
+  if (contenedor.children.length > 0) {
+    contenedor.style.minHeight = '400px';
+    contenedor.style.display = 'flex';
+    contenedor.scrollTop = contenedor.scrollHeight;
+  } else {
+    contenedor.style.minHeight = '120px';
+  }
+}
 
-  // 🔹 Si los mensajes se cargan antes de que el observador inicie (por ejemplo, chats guardados)
-  // Forzamos el ajuste inicial
-  setTimeout(() => {
-    if (chatContainer.children.length > 0) {
-      chatContainer.style.minHeight = "400px";
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-  }, 500);
+// Intento inicial (por si los mensajes ya están cargados al abrir la página)
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(ajustarAlturaChat, 1000);
 });
+
+// Reajustar cada vez que se cambia el contenido del chat (por mensajes guardados o nuevos)
+const observer = new MutationObserver(ajustarAlturaChat);
+setInterval(() => {
+  const contenedor = document.querySelector('#chat-container');
+  if (contenedor && !contenedor.hasAttribute('data-observando')) {
+    observer.observe(contenedor, { childList: true, subtree: true });
+    contenedor.setAttribute('data-observando', 'true');
+  }
+}, 1000);
+
+// También, si tienes una función llamada loadChat o similar, inyecta esto:
+window.addEventListener('load', ajustarAlturaChat);
 </script>
 
-  
+
+<script src="/static/chat-storage.js"></script>
+
 </body>
 </html>
+
 
 
 
