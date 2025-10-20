@@ -218,7 +218,7 @@
     font-weight: 400;
     text-align: center;
     line-height: 1.7;
-    margin: 0;
+    margin-top: 200px;
     padding: 20px;
     color: #fff;
     top: 50%;
@@ -1005,7 +1005,6 @@
   background: transparent;
   color: #e6e6e6;
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.03);
   font-size: 14px;
 }
 
