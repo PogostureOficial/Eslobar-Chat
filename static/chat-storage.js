@@ -144,24 +144,27 @@ waitForEnviarMensaje(() => {
 
      // --- Renderizar mensajes en DOM (limpia y pone mensajes) ---
      function renderChatMessagesFromArray(messages) {
-        disconnectObserver();
+          disconnectObserver();
 
-        chatContainer.innerHTML = '';
-        messages.forEach(msg => {
-          const div = document.createElement('div');
-          div.className = msg.role === 'user' ? 'message user' : 'message bot';
-          div.innerHTML = msg.html || escapeHtml(msg.content || '');
-          chatContainer.appendChild(div);
-        });
+          chatContainer.innerHTML = '';
+          messages.forEach(msg => {
+              const div = document.createElement('div');
+              div.className = msg.role === 'user' ? 'message user' : 'message bot';
+              div.innerHTML = msg.html || escapeHtml(msg.content || '');
+              chatContainer.appendChild(div);
+          });
 
-        // Forzamos redimensionar y scroll
-        setTimeout(() => {
-          chatContainer.scrollTop = chatContainer.scrollHeight;
-          if (tituloEl) tituloEl.style.opacity = chatContainer.querySelector('.message') ? '0' : '1';
-        }, 0);
+          // Forzamos redimensionar y scroll **después de renderizar**
+          requestAnimationFrame(() => {
+              chatContainer.scrollTop = chatContainer.scrollHeight;
+              if (tituloEl) {
+                  tituloEl.style.opacity = chatContainer.querySelector('.message') ? '0' : '1';
+              }
+          });
 
-        connectObserver();
+          connectObserver();
       }
+
 
 
      // --- Load chat (cuando clickeás en sidebar) ---
@@ -322,6 +325,7 @@ waitForEnviarMensaje(() => {
 
    })();
 }); // <- cierra el callback y la llamada a waitForEnviarMensaje
+
 
 
 
