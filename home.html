@@ -316,26 +316,27 @@
   </div>
 </div>
 
-<div id="configModal" class="modal">
-  <div class="modal-content">
+<div id="configModal" class="config-modal">
+  <div class="config-modal-content">
     <h2>⚙️ Configuración</h2>
 
     <label>Nombre</label>
     <input type="text" id="configName" placeholder="Tu nombre">
 
     <label>Color de mensajes</label>
-    <div class="color-picker">
-      <div class="color-option gray" data-color="gris"></div>
-      <div class="color-option blue" data-color="azul"></div>
-      <div class="color-option pink" data-color="rosa"></div>
+    <div class="config-color-picker">
+      <div class="config-color-option gray" data-color="gris"></div>
+      <div class="config-color-option blue" data-color="azul"></div>
+      <div class="config-color-option pink" data-color="rosa"></div>
     </div>
 
     <p>📧 Correo registrado: <span id="configEmail"></span></p>
 
-    <button id="saveConfig" class="continue-btn">Guardar cambios</button>
-    <button id="closeConfig" class="continue-btn">Cerrar</button>
+    <button id="saveConfig" class="config-btn">Guardar cambios</button>
+    <button id="closeConfig" class="config-btn">Cerrar</button>
   </div>
 </div>
+
 
   <script>
   // Si no hay sesión, volver al login
@@ -1285,6 +1286,7 @@ document.getElementById("saveConfig").addEventListener("click", () => {
   </script>
 </body>
 </html>
+
 
 
 
