@@ -1138,5 +1138,99 @@
   transition: width 0.4s ease;
 }
 
+.upload-area {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.upload-area:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.upload-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.preview-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.preview-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #0088cc;
+}
+
+   .summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.summary-list li {
+  margin: 8px 0;
+  color: #ddd;
+}
+.profile-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  width: 100%;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.profile-button:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.sidebar-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-menu {
+  display: none;
+  flex-direction: column;
+  background: #2a2a2a;
+  border-radius: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+.profile-menu.show {
+  display: flex;
+}
+
+.profile-menu .menu-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.profile-menu .menu-item:hover {
+  background: rgba(255,255,255,0.07);
+}
+
+
 
 }
