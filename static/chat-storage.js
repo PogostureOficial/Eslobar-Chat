@@ -144,30 +144,25 @@ waitForEnviarMensaje(() => {
 
      // --- Renderizar mensajes en DOM (limpia y pone mensajes) ---
      function renderChatMessagesFromArray(messages) {
-       // desconectar observer temporalmente (evitar que guardemos el render como "nuevo")
-       disconnectObserver();
+        disconnectObserver();
 
-       chatContainer.innerHTML = '';
-       messages.forEach(msg => {
-         const div = document.createElement('div');
-         if (msg.role === 'user') {
-           div.className = 'message user';
-           // usamos innerHTML con small formatting
-           div.innerHTML = msg.html || formatUserContentToHTML(msg.content || '');
-         } else {
-           div.className = 'message bot';
-           div.innerHTML = msg.html || escapeHtml(msg.content || '');
-         }
-         chatContainer.appendChild(div);
-       });
+        chatContainer.innerHTML = '';
+        messages.forEach(msg => {
+          const div = document.createElement('div');
+          div.className = msg.role === 'user' ? 'message user' : 'message bot';
+          div.innerHTML = msg.html || escapeHtml(msg.content || '');
+          chatContainer.appendChild(div);
+        });
 
-       // after render: put scroll bottom and title hide/show
-       chatContainer.scrollTop = chatContainer.scrollHeight;
-       if (tituloEl) tituloEl.style.opacity = chatContainer.querySelector('.message') ? '0' : '1';
+        // Forzamos redimensionar y scroll
+        setTimeout(() => {
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+          if (tituloEl) tituloEl.style.opacity = chatContainer.querySelector('.message') ? '0' : '1';
+        }, 0);
 
-       // reconectar observer
-       connectObserver();
-     }
+        connectObserver();
+      }
+
 
      // --- Load chat (cuando clickeás en sidebar) ---
      function loadChat(id) {
@@ -307,24 +302,16 @@ waitForEnviarMensaje(() => {
 
      // --- Inicialización general ---
      function init() {
-       // render sidebar con los chats guardados
-       renderSidebar();
+        renderSidebar();
+        // Abrir siempre chat vacío al cargar
+        openNewEmptyChat();
 
-       // intentar restaurar chat seleccionado anteriormente (si existe)
-       const lastId = localStorage.getItem(CURRENT_KEY);
-       if (lastId) {
-         const found = chats.find(c => c.id === lastId);
-         if (found) {
-           currentChatId = lastId;
-           renderChatMessagesFromArray(found.messages || []);
-         } else {
-           // si no se encuentra, abrir nuevo chat vacío
-           openNewEmptyChat();
-         }
-       } else {
-         // no hay chat abierto: abrir chat vacío (temporal)
-         openNewEmptyChat();
-       }
+        connectObserver();
+        initEnviarWrapper();
+
+        newChatBtn.addEventListener('click', openNewEmptyChat);
+      }
+
 
        // conectar observer
        connectObserver();
@@ -347,6 +334,7 @@ waitForEnviarMensaje(() => {
 
    })();
 }); // <- cierra el callback y la llamada a waitForEnviarMensaje
+
 
 
 
