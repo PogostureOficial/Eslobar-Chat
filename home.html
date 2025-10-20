@@ -22,6 +22,10 @@
   <!-- ====== Ventana de Bienvenida ====== -->
 <div id="welcome-overlay">
   <div class="welcome-modal">
+    <div class="progress-bar">
+      <div class="progress" style="width: 33%;"></div>
+    </div>
+
     <div id="step1" class="step active">
       <h2>Bienvenido a Eslobar</h2>
       <p>Antes de que puedas comenzar a usar Eslobar, hagamos algunos ajustes para personalizar su experiencia.</p>
@@ -30,21 +34,23 @@
     </div>
 
       <div id="step2" class="step">
-      <h2>Tu nombre</h2>
-      <p>Escribe tu nombre para personalizar tu experiencia.</p>
+      <h2 class="welcome-title">👋 Personalicemos tu experiencia</h2>
+      <p class="welcome-subtitle">Dinos cómo quieres que te llame la IA:</p>
 
-      <div class="name-container">
+      <div class="name-container fancy-input">
         <input 
           type="text" 
           id="userName" 
-          placeholder="Tu nombre..." 
+          placeholder="Escribe tu nombre aquí..." 
           maxlength="20"
         >
+        <span class="input-underline"></span>
       </div>
 
       <button id="continueBtn" class="continue-btn" disabled>Continuar</button>
       <span class="step-indicator">2/3</span>
     </div>
+
 
     <div id="step3" class="step">
       <h2>Elige el color de tus mensajes</h2>
@@ -1096,6 +1102,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+      // ✅ Seleccionar gris por defecto al cargar el paso 3
+    const defaultColor = "gris";
+    localStorage.setItem("eslobarColor", defaultColor);
+    previewMsg.classList.add(defaultColor);
+    document.querySelector('.color-option.gray').classList.add('selected');
+
+
   // ✅ Terminar bienvenida
   if (finish) {
     finish.addEventListener("click", () => {
@@ -1136,6 +1149,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
 </body>
 </html>
+
 
 
 
