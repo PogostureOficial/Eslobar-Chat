@@ -70,6 +70,35 @@
       <button id="finish">Terminar</button>
       <span class="step-count">3/3</span>
     </div>
+
+    <div id="step4" class="step">
+      <h2>Sube tu foto de perfil 📸</h2>
+      <p>Elige una imagen para que te identifique en Eslobar.</p>
+
+      <label for="profileImage" class="upload-area">
+        <div class="upload-icon">📁</div>
+        <p>Haz clic aquí para subir tu foto</p>
+        <input type="file" id="profileImage" accept="image/*" style="display: none;">
+      </label>
+
+      <div id="previewContainer" class="preview-container" style="display:none;">
+        <img id="previewImage" class="preview-image" alt="Vista previa">
+      </div>
+
+      <button id="finishSetup" class="continue-btn" disabled>Finalizar</button>
+      <span class="step-indicator">4/4</span>
+    </div>
+
+    <div id="step5" class="step">
+      <h2>✅ Todo listo, <span id="finalName"></span>!</h2>
+      <p>Has completado la configuración inicial de Eslobar.</p>
+      <ul class="summary-list">
+        <li>📛 Nombre: <span id="summaryName"></span></li>
+        <li>🎨 Color elegido: <span id="summaryColor"></span></li>
+        <li>🖼️ Foto de perfil subida correctamente</li>
+      </ul>
+      <button id="enterApp" class="continue-btn">Entrar a Eslobar</button>
+    </div>
   </div>
 </div>
 
@@ -118,12 +147,17 @@
 
   <!-- 🔹 Perfil del usuario -->
 <div class="user-info">
-  <img id="userAvatar" src="/static/images/default-avatar.png" alt="Foto de perfil" class="user-avatar">
-  <div class="user-details">
-    <span id="userEmail" class="user-email">usuario@ejemplo.com</span>
-    <button id="logoutBtnSidebar" class="logout-btn-sidebar">Cerrar sesión</button>
+  <button id="profileButton" class="profile-button">
+    <img id="userAvatarSidebar" src="/static/images/default-avatar.png" alt="Foto" class="sidebar-avatar">
+    <span id="sidebarUserName">Usuario</span>
+  </button>
+
+  <div id="profileMenu" class="profile-menu">
+    <div class="menu-item" id="openConfig">⚙️ Configuración</div>
+    <div class="menu-item" id="logoutSidebar">🚪 Cerrar sesión</div>
   </div>
 </div>
+
   
 </div> <!-- ← cerrar el div.sidebar -->
 
@@ -282,6 +316,26 @@
   </div>
 </div>
 
+<div id="configModal" class="modal">
+  <div class="modal-content">
+    <h2>⚙️ Configuración</h2>
+
+    <label>Nombre</label>
+    <input type="text" id="configName" placeholder="Tu nombre">
+
+    <label>Color de mensajes</label>
+    <div class="color-picker">
+      <div class="color-option gray" data-color="gris"></div>
+      <div class="color-option blue" data-color="azul"></div>
+      <div class="color-option pink" data-color="rosa"></div>
+    </div>
+
+    <p>📧 Correo registrado: <span id="configEmail"></span></p>
+
+    <button id="saveConfig" class="continue-btn">Guardar cambios</button>
+    <button id="closeConfig" class="continue-btn">Cerrar</button>
+  </div>
+</div>
 
   <script>
   // Si no hay sesión, volver al login
@@ -1145,10 +1199,93 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script src="/static/chat-storage.js"></script>
 
+<script>
+  const profileInput = document.getElementById("profileImage");
+const previewImage = document.getElementById("previewImage");
+const previewContainer = document.getElementById("previewContainer");
+const finishSetup = document.getElementById("finishSetup");
 
-  
+if (profileInput) {
+  profileInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        previewContainer.style.display = "block";
+        localStorage.setItem("eslobarAvatar", e.target.result);
+        finishSetup.disabled = false;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+</script>
+
+<script>
+
+  finishSetup.addEventListener("click", () => {
+  steps[3].classList.remove("active");
+  steps[4].classList.add("active");
+
+  document.getElementById("finalName").textContent = localStorage.getItem("eslobarUsername");
+  document.getElementById("summaryName").textContent = localStorage.getItem("eslobarUsername");
+  document.getElementById("summaryColor").textContent = localStorage.getItem("eslobarColor");
+});
+
+document.getElementById("enterApp").addEventListener("click", () => {
+  localStorage.setItem("eslobarSetupDone", "true");
+  overlay.remove();
+  aplicarColorUsuario();
+  actualizarSidebar();
+});
+
+</script>
+
+  <script>
+
+    function actualizarSidebar() {
+  const name = localStorage.getItem("eslobarUsername");
+  const avatar = localStorage.getItem("eslobarAvatar");
+  if (name) document.getElementById("sidebarUserName").textContent = name;
+  if (avatar) document.getElementById("userAvatarSidebar").src = avatar;
+}
+
+document.getElementById("profileButton").addEventListener("click", () => {
+  document.getElementById("profileMenu").classList.toggle("show");
+});
+
+  </script>
+
+  <script>
+
+    document.getElementById("openConfig").addEventListener("click", () => {
+  document.getElementById("configModal").style.display = "flex";
+  document.getElementById("configName").value = localStorage.getItem("eslobarUsername");
+  document.getElementById("configEmail").textContent = localStorage.getItem("correo_usuario") || "No disponible";
+});
+
+document.getElementById("closeConfig").addEventListener("click", () => {
+  document.getElementById("configModal").style.display = "none";
+});
+
+document.getElementById("saveConfig").addEventListener("click", () => {
+  const newName = document.getElementById("configName").value.trim();
+  if (newName) localStorage.setItem("eslobarUsername", newName);
+
+  const selectedColor = document.querySelector(".color-option.selected")?.getAttribute("data-color");
+  if (selectedColor) localStorage.setItem("eslobarColor", selectedColor);
+
+  aplicarColorUsuario();
+  actualizarSidebar();
+  document.getElementById("configModal").style.display = "none";
+});
+
+  </script>
 </body>
 </html>
+
 
 
 
