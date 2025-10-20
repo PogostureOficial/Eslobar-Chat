@@ -207,12 +207,11 @@
     align-items: center;
     height: calc(100dvh - 70px);
     overflow: hidden !important;
-    padding: 160px;
+    padding: 16px;
     margin: 0 !important;
     box-sizing: border-box;
     z-index: 1;
   }
-
 
   #titulo {
     font-size: 30px;
