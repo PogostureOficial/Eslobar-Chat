@@ -1231,6 +1231,140 @@
   background: rgba(255,255,255,0.07);
 }
 
+/* ============================
+   ⚙️ Modal de Configuración
+   ============================ */
+.config-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  animation: fadeInModal 0.3s ease;
+}
+
+.config-modal-content {
+  background: #1f1f1f;
+  padding: 30px 32px;
+  border-radius: 20px;
+  max-width: 450px;
+  width: 90%;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+  animation: scaleIn 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.config-modal-content h2 {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+/* ✏️ Inputs */
+.config-modal-content input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.config-modal-content input[type="text"]:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px #0088cc;
+}
+
+/* 🎨 Selector de color */
+.config-color-picker {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.config-color-option {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.3s;
+}
+
+.config-color-option.gray  { background: #3a3a3a; }
+.config-color-option.blue  { background: #007bff; }
+.config-color-option.pink  { background: #ff4da6; }
+
+.config-color-option.selected {
+  border-color: #fff;
+  transform: scale(1.1);
+}
+
+/* 📧 Email */
+.config-modal-content p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #bdbdbd;
+}
+
+.config-modal-content span {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 🔘 Botones */
+.config-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background 0.3s ease;
+}
+
+#saveConfig.config-btn {
+  background: #0088cc;
+  color: #fff;
+}
+
+#saveConfig.config-btn:hover {
+  background: #0099ee;
+}
+
+#closeConfig.config-btn {
+  background: rgba(255,255,255,0.12);
+  color: #ddd;
+}
+
+#closeConfig.config-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Animaciones */
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
 
 }
