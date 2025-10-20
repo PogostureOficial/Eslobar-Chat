@@ -312,28 +312,17 @@ waitForEnviarMensaje(() => {
         newChatBtn.addEventListener('click', openNewEmptyChat);
       }
 
-
-       // conectar observer
-       connectObserver();
-
-       // wrap enviarMensaje (tiene que ejecutarse cuando window.enviarMensaje ya exista)
-       initEnviarWrapper();
-
-       // new chat button
-       newChatBtn.addEventListener('click', () => {
-         openNewEmptyChat();
-       });
-
     // al cargar, si hay mensajes en tempMessages (por ejemplo si el usuario
     // escribió y la IA ya respondió antes de que se persistiera), se mantienen
     // en la vista pero no persisten hasta que se envie el primer mensaje del chat.
-     }
+     
 
   // Ejecutar inicialización en el siguiente tick (ya que script se carga al final)
      setTimeout(init, 50);
 
    })();
 }); // <- cierra el callback y la llamada a waitForEnviarMensaje
+
 
 
 
