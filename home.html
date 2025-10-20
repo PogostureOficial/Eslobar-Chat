@@ -1223,13 +1223,14 @@ if (profileInput) {
 <script>
 
   finishSetup.addEventListener("click", () => {
-  steps[3].classList.remove("active");
-  steps[4].classList.add("active");
+    const steps = document.querySelectorAll(".step"); // ✅ volver a definirlo aquí
+    steps[3].classList.remove("active");
+    steps[4].classList.add("active");
 
-  document.getElementById("finalName").textContent = localStorage.getItem("eslobarUsername");
-  document.getElementById("summaryName").textContent = localStorage.getItem("eslobarUsername");
-  document.getElementById("summaryColor").textContent = localStorage.getItem("eslobarColor");
-});
+    document.getElementById("finalName").textContent = localStorage.getItem("eslobarUsername");
+    document.getElementById("summaryName").textContent = localStorage.getItem("eslobarUsername");
+    document.getElementById("summaryColor").textContent = localStorage.getItem("eslobarColor");
+  });
 
 document.getElementById("enterApp").addEventListener("click", () => {
   localStorage.setItem("eslobarSetupDone", "true");
@@ -1282,6 +1283,7 @@ document.getElementById("saveConfig").addEventListener("click", () => {
   </script>
 </body>
 </html>
+
 
 
 
