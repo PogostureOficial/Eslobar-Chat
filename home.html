@@ -1118,37 +1118,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script src="/static/chat-storage.js"></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const chatContainer = document.querySelector('.chat-container');
-  const chat = document.getElementById('chat');
-  const inputWrapper = document.getElementById('inputWrapper');
-
-  if (!chatContainer || !chat || !inputWrapper) return;
-
-  // 1️⃣ Forzar que el chat empiece "activo" (agrandado)
-  chatContainer.classList.add('active');
-
-  // 2️⃣ Ajustar altura inicial igual que cuando se envía un mensaje
-  function ajustarAlturaChat() {
-    const viewportHeight = window.innerHeight;
-    const inputHeight = inputWrapper.offsetHeight || 64;
-    const margin = 8; // opcional, para dejar un pequeño espacio
-
-    chat.style.height = (viewportHeight - inputHeight - margin) + 'px';
-    chat.style.overflowY = 'auto';
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  // Ejecutar al cargar
-  ajustarAlturaChat();
-
-  // Ajustar al redimensionar ventana
-  window.addEventListener('resize', ajustarAlturaChat);
-});
-</script>
 
   
 </body>
 </html>
+
 
