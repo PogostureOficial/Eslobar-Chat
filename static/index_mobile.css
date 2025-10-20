@@ -1015,9 +1015,7 @@
 }
 
 .chat-item.active {
-  background: linear-gradient(90deg, rgba(174,173,235,0.08), rgba(100,100,160,0.04));
-  border-color: rgba(174,173,235,0.14);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+  background: #212121;
 }
 
 .chat-item .title {
@@ -1030,7 +1028,7 @@
 
 .chat-item .meta {
   font-size: 11px;
-  color: #aeb2c0;
+  color: #212121;
   margin-left: 6px;
 }
 
