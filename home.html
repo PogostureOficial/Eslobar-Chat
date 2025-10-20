@@ -1234,6 +1234,7 @@ if (profileInput) {
 
 document.getElementById("enterApp").addEventListener("click", () => {
   localStorage.setItem("eslobarSetupDone", "true");
+  const overlay = document.getElementById("welcome-overlay"); // ✅ redefinir aquí
   overlay.remove();
   aplicarColorUsuario();
   actualizarSidebar();
@@ -1283,6 +1284,7 @@ document.getElementById("saveConfig").addEventListener("click", () => {
   </script>
 </body>
 </html>
+
 
 
 
