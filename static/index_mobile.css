@@ -213,6 +213,10 @@
     z-index: 1;
   }
 
+   .chat-container.active {
+  height: calc(100vh - 120px); /* ajusta según tu layout */
+}
+
   #titulo {
     font-size: 30px;
     font-weight: 400;
