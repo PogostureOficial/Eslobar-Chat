@@ -1049,6 +1049,16 @@
   letter-spacing: 0.2px;
 }
 
+:root {
+  --user-msg-bg: #3a3a3a; /* valor por defecto */
+}
+
+.message.user {
+  background: var(--user-msg-bg) !important;
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
 
 
 }
