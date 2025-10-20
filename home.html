@@ -1126,9 +1126,44 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script src="/static/chat-storage.js"></script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const chatContainer = document.getElementById("chat-container");
+
+  if (!chatContainer) return;
+
+  // Observador que detecta cuando se cargan mensajes al contenedor
+  const observer = new MutationObserver(() => {
+    if (chatContainer.children.length > 0) {
+      // 🔹 Agranda el contenedor si hay mensajes
+      chatContainer.style.minHeight = "400px"; // Ajusta el valor según tu diseño
+      chatContainer.style.display = "flex";
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    } else {
+      // 🔹 Lo deja chico si no hay mensajes
+      chatContainer.style.minHeight = "100px";
+    }
+  });
+
+  // Escucha cuando se agregan o eliminan mensajes
+  observer.observe(chatContainer, { childList: true, subtree: true });
+
+  // 🔹 Si los mensajes se cargan antes de que el observador inicie (por ejemplo, chats guardados)
+  // Forzamos el ajuste inicial
+  setTimeout(() => {
+    if (chatContainer.children.length > 0) {
+      chatContainer.style.minHeight = "400px";
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  }, 500);
+});
+</script>
+
   
 </body>
 </html>
+
 
 
 
