@@ -154,25 +154,14 @@ waitForEnviarMensaje(() => {
           chatContainer.appendChild(div);
         });
 
-  // Forzar redimensionar chat-container si hay mensajes
-        if (messages.length > 0) {
-          chatContainer.style.justifyContent = 'flex-start'; // mensajes arriba
-          chatContainer.style.alignItems = 'stretch';       // ocupan ancho completo
-        } else {
-          chatContainer.style.justifyContent = 'center';    // comportamiento por defecto
-          chatContainer.style.alignItems = 'center';
-        }
-
-  // Scroll al final
+        // Forzamos redimensionar y scroll
         setTimeout(() => {
           chatContainer.scrollTop = chatContainer.scrollHeight;
-          if (tituloEl) tituloEl.style.opacity = messages.length ? '0' : '1';
+          if (tituloEl) tituloEl.style.opacity = chatContainer.querySelector('.message') ? '0' : '1';
         }, 0);
 
         connectObserver();
       }
-
-
 
 
      // --- Load chat (cuando clickeás en sidebar) ---
@@ -333,9 +322,6 @@ waitForEnviarMensaje(() => {
 
    })();
 }); // <- cierra el callback y la llamada a waitForEnviarMensaje
-
-
-
 
 
 
