@@ -240,19 +240,20 @@ waitForEnviarMensaje(() => {
              for (const node of mut.addedNodes) {
                if (!(node instanceof Element)) continue;
                if (node.classList.contains('message') && node.classList.contains('bot')) {
+                 // ignorar loading nodes
                  if (node.classList.contains('loading')) continue;
-
-                 const html = node.innerHTML || '';
-                 const text = node.innerText || '';
-
-                 // Guardar **después de la animación de escritura**
-                 typeWriterEffect(node, text).then(() => {
+                 // Esperamos un poco para obtener el contenido final (typewriter)
+                 setTimeout(() => {
+                   // sólo guardar si hay un chat persistido; si no, lo guardamos temporalmente
+                   const html = node.innerHTML || '';
+                   const text = node.innerText || '';
                    if (currentChatId) {
-                     appendMessageToCurrentChat('assistant', node.innerHTML, text);
+                     appendMessageToCurrentChat('assistant', html, text);
                    } else {
-                     tempMessages.push({ role: 'assistant', content: text, html: node.innerHTML, ts: Date.now() });
+                  // si no hay chat persistido, añadir a tempMessages (no persiste hasta primer envio)
+                     tempMessages.push({ role: 'assistant', content: text, html, ts: Date.now() });
                    }
-                 });
+                 }, 5000);
                }
              }
            }
@@ -346,6 +347,8 @@ waitForEnviarMensaje(() => {
 
    })();
 }); // <- cierra el callback y la llamada a waitForEnviarMensaje
+
+
 
 
 
