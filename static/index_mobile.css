@@ -1060,5 +1060,83 @@
   border-bottom-right-radius: 4px;
 }
 
+   /* ===== Títulos más elegantes ===== */
+.welcome-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+  font-size: 1rem;
+  color: #bdbdbd;
+  margin-bottom: 24px;
+}
+
+/* ===== Input moderno y minimalista ===== */
+.fancy-input {
+  position: relative;
+  width: 80%;
+  max-width: 300px;
+  margin: 0 auto 1.8em;
+}
+
+#userName {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  outline: none;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+#userName::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+  font-style: italic;
+}
+
+#userName:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Línea animada debajo del input */
+.input-underline {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #0088cc;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+#userName:focus + .input-underline {
+  width: 100%;
+  left: 0;
+}
+
+   .progress-bar {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  height: 6px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  height: 6px;
+  background: #0088cc;
+  width: 0;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
 
 }
