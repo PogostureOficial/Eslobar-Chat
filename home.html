@@ -418,6 +418,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // BACKEND: usa CONFIG.BACKEND_URL si existe, si no -> '/ask'
   const BACKEND_URL = (typeof CONFIG !== 'undefined' && CONFIG.BACKEND_URL) ? CONFIG.BACKEND_URL : '/ask';
 
+  const chatContainer = document.querySelector('.chat-container');
+
+// Activar contenedor si ya hay mensajes
+if (chatContainer && chat.querySelector('.message')) {
+    chatContainer.classList.add('active');
+    if (titulo) titulo.style.opacity = 0;
+}
+
+
   /* =========================================================
      UTILIDADES
   ========================================================= */
@@ -1120,6 +1129,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
 </body>
 </html>
+
 
 
 
