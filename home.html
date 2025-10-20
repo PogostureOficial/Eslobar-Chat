@@ -418,15 +418,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // BACKEND: usa CONFIG.BACKEND_URL si existe, si no -> '/ask'
   const BACKEND_URL = (typeof CONFIG !== 'undefined' && CONFIG.BACKEND_URL) ? CONFIG.BACKEND_URL : '/ask';
 
-  const chatContainer = document.querySelector('.chat-container');
-
-// Activar contenedor si ya hay mensajes
-if (chatContainer && chat.querySelector('.message')) {
-    chatContainer.classList.add('active');
-    if (titulo) titulo.style.opacity = 0;
-}
-
-
   /* =========================================================
      UTILIDADES
   ========================================================= */
@@ -1125,84 +1116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-  <script>
-// Este código fuerza que el contenedor del chat se expanda automáticamente
-// tanto al cargar mensajes guardados como al enviar nuevos.
-
-function ajustarAlturaChat() {
-  const contenedor = document.querySelector('#chat-container');
-
-  if (!contenedor) return;
-
-  // Si tiene mensajes dentro (elementos hijos)
-  if (contenedor.children.length > 0) {
-    contenedor.style.minHeight = '400px';
-    contenedor.style.display = 'flex';
-    contenedor.scrollTop = contenedor.scrollHeight;
-  } else {
-    contenedor.style.minHeight = '120px';
-  }
-}
-
-// Intento inicial (por si los mensajes ya están cargados al abrir la página)
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(ajustarAlturaChat, 1000);
-});
-
-// Reajustar cada vez que se cambia el contenido del chat (por mensajes guardados o nuevos)
-const observer = new MutationObserver(ajustarAlturaChat);
-setInterval(() => {
-  const contenedor = document.querySelector('#chat-container');
-  if (contenedor && !contenedor.hasAttribute('data-observando')) {
-    observer.observe(contenedor, { childList: true, subtree: true });
-    contenedor.setAttribute('data-observando', 'true');
-  }
-}, 1000);
-
-// También, si tienes una función llamada loadChat o similar, inyecta esto:
-window.addEventListener('load', ajustarAlturaChat);
-</script>
-
-
 <script src="/static/chat-storage.js"></script>
-
+  
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
