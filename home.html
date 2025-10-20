@@ -345,7 +345,7 @@
   }
 
   // Si hay sesión, mostrar los datos del usuario
-  document.addEventListener("DOMContentLoaded", () => {
+  /*document.addEventListener("DOMContentLoaded", () => {
   const correo = localStorage.getItem("correo_usuario");
   const foto = localStorage.getItem("foto_usuario");
 
@@ -356,7 +356,7 @@
   if (foto) userAvatarEl.src = foto;
 
   console.log("Usuario activo:", correo);
-});
+});*/
 </script>
 
 
@@ -1166,16 +1166,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ✅ Terminar bienvenida
   if (finish) {
-    finish.addEventListener("click", () => {
-      const color = localStorage.getItem("eslobarColor") || "gris";
-      localStorage.setItem("eslobarSetupDone", "true");
-      overlay.style.opacity = "0";
-      setTimeout(() => {
-        overlay.remove();
-        aplicarColorUsuario(); // aplicar color automáticamente al terminar
-      }, 500);
-    });
-  }
+  finish.addEventListener("click", () => {
+    steps[2].classList.remove("active"); // paso 3 → 4
+    steps[3].classList.add("active");
+  });
+}
+
 
   // ✅ Aplicar color guardado al cargar chat
   function aplicarColorUsuario() {
@@ -1275,7 +1271,7 @@ document.getElementById("saveConfig").addEventListener("click", () => {
   const newName = document.getElementById("configName").value.trim();
   if (newName) localStorage.setItem("eslobarUsername", newName);
 
-  const selectedColor = document.querySelector(".color-option.selected")?.getAttribute("data-color");
+  const selectedColor = document.querySelector(".config-color-option.selected")?.getAttribute("data-color");
   if (selectedColor) localStorage.setItem("eslobarColor", selectedColor);
 
   aplicarColorUsuario();
@@ -1286,6 +1282,7 @@ document.getElementById("saveConfig").addEventListener("click", () => {
   </script>
 </body>
 </html>
+
 
 
 
