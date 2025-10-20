@@ -207,15 +207,12 @@
     align-items: center;
     height: calc(100dvh - 70px);
     overflow: hidden !important;
-    padding: 16px;
+    padding: 160px;
     margin: 0 !important;
     box-sizing: border-box;
     z-index: 1;
   }
 
-   .chat-container.active {
-  height: calc(100vh - 120px); /* ajusta según tu layout */
-}
 
   #titulo {
     font-size: 30px;
