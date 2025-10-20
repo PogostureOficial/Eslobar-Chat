@@ -1098,6 +1098,7 @@
 #userName::placeholder {
   color: rgba(255, 255, 255, 0.35);
   font-style: italic;
+  font-size: 1.1rem;
 }
 
 #userName:focus {
