@@ -1534,8 +1534,8 @@
   background: rgba(255,255,255,0.05);
 }
 .sidebar-btn img {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 /* Lista de chats */
@@ -1582,7 +1582,7 @@
   flex-direction: column;
   overflow: hidden;
   z-index: 1000;
-  margin-left: 90px;
+  margin-left: -90px;
 }
 .chat-dropdown button {
   background: none;
