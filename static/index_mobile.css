@@ -762,9 +762,8 @@
 }
 
 .sidebar #installButton img {
-  width: 20px;
-  height: 20px;
-  opacity: 0.9;
+  width: 26px;
+  height: 26px;
 }
 
 
@@ -1567,7 +1566,7 @@
   flex-direction: column;
   overflow: hidden;
   z-index: 1000;
-  margin-left: -90px;
+  margin-left: 130px;
 }
 .chat-dropdown button {
   background: none;
