@@ -737,33 +737,36 @@
 }
 
 /* Para que encaje dentro del sidebar */
+/* 🔹 Botón "Instalar app" dentro del sidebar */
 .sidebar #installButton {
   position: relative;
-  width: calc(100% - 24px);
-  margin: 10px auto 8px;
-  background: #2a2a2a;
-  border: 1px solid rgba(255,255,255,0.05);
-  color: #fff;
-  font-weight: 500;
-  text-align: left;
-  padding: 10px 14px;
-  border-radius: 8px;
-  display: flex;
+  display: flex !important; /* 🔧 forzamos visibilidad */
   align-items: center;
   gap: 10px;
   justify-content: flex-start;
+  width: calc(100% - 24px);
+  margin: 4px auto 10px;
+  padding: 10px 14px;
+  background: #2a2a2a;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  text-align: left;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s ease;
 }
 
 .sidebar #installButton:hover {
   background: rgba(255,255,255,0.08);
 }
+
 .sidebar #installButton img {
-  width: 18px;
-  height: 18px;
-  opacity: 0.85;
+  width: 20px;
+  height: 20px;
+  opacity: 0.9;
 }
+
 
 
 /* Pantallas ultra pequeñas */
@@ -1602,27 +1605,39 @@
 }
 
 /* Usuario abajo */
+/* 🔹 Alineación correcta del bloque de usuario */
 .user-info {
   display: flex;
   align-items: center;
+  justify-content: flex-start; /* 🔧 alinear a la izquierda */
+  gap: 10px;
   padding: 12px 14px;
   border-top: 1px solid rgba(255,255,255,0.06);
   background: #1e1f20;
-  gap: 10px;
 }
 
 .sidebar-avatar {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.12);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 #sidebarUserName {
   font-size: 14px;
   color: #fff;
   font-weight: 500;
+  margin: 0;
 }
+
 
 
    .sidebar-divider {
