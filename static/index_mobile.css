@@ -1695,5 +1695,74 @@
   color: #ff4c4c;
 }
 
+   /* ============================================================================================== APARTADO DE AJUSTES =================================================================*/
+
+
+   /* ===== Settings modal (estilo ChatGPT-like) ===== */
+.settings-modal{
+  background:#1f1f1f; color:#fff; width:min(920px,94vw);
+  border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,.6);
+  display:flex; flex-direction:column; max-height:88vh; overflow:hidden;
+}
+.settings-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+.settings-header h2{display:flex;gap:10px;align-items:center;font-size:20px;font-weight:800}
+.settings-brand{width:20px;height:20px;opacity:.9}
+.icon-btn{background:transparent;border:none;color:#bbb;font-size:18px;cursor:pointer}
+.icon-btn:hover{color:#fff}
+
+.settings-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);background:#1b1b1b}
+.settings-tab{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:transparent;border:1px solid transparent;color:#ddd;font-weight:600;cursor:pointer}
+.settings-tab img{width:18px;height:18px;opacity:.9}
+.settings-tab:hover{background:rgba(255,255,255,.06)}
+.settings-tab.active{background:#2a2a2a;border-color:rgba(255,255,255,.08);color:#fff}
+
+.settings-body{overflow:auto;padding:6px 2px}
+.settings-panel{display:none;padding:14px 16px}
+.settings-panel.active{display:block}
+
+.setting-row{display:flex;justify-content:space-between;gap:18px;padding:14px 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.setting-meta{max-width:520px}
+.setting-title{font-weight:700;margin-bottom:6px}
+.setting-desc{color:#bdbdbd;font-size:13px}
+.setting-control{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+.input,.select{background:#2a2a2a;border:1px solid rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:10px 12px;font-size:14px}
+.radio{display:inline-flex;align-items:center;gap:8px;margin-right:8px}
+
+/* Switch */
+.switch{position:relative;display:inline-block;width:44px;height:24px}
+.switch input{display:none}
+.slider{position:absolute;inset:0;background:#3a3a3a;border-radius:999px;transition:.2s}
+.slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch input:checked + .slider{background:#0a84ff}
+.switch input:checked + .slider:before{transform:translateX(20px)}
+
+/* Buttons */
+.btn{border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;background:#2e2e2e;color:#fff}
+.btn:hover{background:#3a3a3a}
+.btn.primary{background:#0a84ff}
+.btn.primary:hover{background:#187dff}
+.btn.secondary{background:#373737}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.12)}
+.btn.danger{background:#3b0e12;color:#ff8a8a;border:1px solid rgba(255,0,0,.15)}
+.btn.danger:hover{background:#52161a}
+.btn-icon{width:16px;height:16px;margin-right:6px;vertical-align:middle}
+
+.settings-footer{display:flex;justify-content:flex-end;gap:10px;padding:12px 16px;border-top:1px solid rgba(255,255,255,.06);background:#181818}
+
+.color-dots .config-color-option{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer}
+.color-dots .config-color-option.gray{background:#3a3a3a}
+.color-dots .config-color-option.blue{background:#007bff}
+.color-dots .config-color-option.pink{background:#ff4da6}
+.color-dots .config-color-option.selected{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
+
+.muted{color:#bdbdbd}
+.empty-state{display:flex;gap:10px;align-items:center;justify-content:center;height:160px;color:#bdbdbd}
+.empty-state img{width:22px;height:22px;opacity:.9}
+
+/* Modal backdrop (ya tenías .config-modal; lo reforzamos) */
+.config-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:99999;align-items:center;justify-content:center}
+.config-modal.show{display:flex}
+
 
 }
