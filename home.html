@@ -321,24 +321,244 @@
   </div>
 </div>
 
-<div id="configModal" class="config-modal">
-  <div class="config-modal-content">
-    <h2>⚙️ Configuración</h2>
-
-    <label>Nombre</label>
-    <input type="text" id="configName" placeholder="Tu nombre">
-
-    <label>Color de mensajes</label>
-    <div class="config-color-picker">
-      <div class="config-color-option gray" data-color="gris"></div>
-      <div class="config-color-option blue" data-color="azul"></div>
-      <div class="config-color-option pink" data-color="rosa"></div>
+<div id="configModal" class="config-modal" aria-hidden="true">
+  <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <!-- Header -->
+    <div class="settings-header">
+      <h2 id="settingsTitle"><img src="/static/images/icon1.png" alt="" class="settings-brand"> Configuración</h2>
+      <button id="settingsCloseX" class="icon-btn" aria-label="Cerrar">✕</button>
     </div>
 
-    <p>📧 Correo registrado: <span id="configEmail"></span></p>
+    <!-- Tabs (9 ítems) -->
+    <div class="settings-tabs" role="tablist">
+      <button class="settings-tab active" data-tab="general" role="tab">
+        <img src="/static/images/icon1.png" alt=""> General
+      </button>
+      <button class="settings-tab" data-tab="notificaciones" role="tab">
+        <img src="/static/images/icon2.png" alt=""> Notificaciones
+      </button>
+      <button class="settings-tab" data-tab="personalizacion" role="tab">
+        <img src="/static/images/icon3.png" alt=""> Personalización
+      </button>
+      <button class="settings-tab" data-tab="apps" role="tab">
+        <img src="/static/images/icon4.png" alt=""> Aplicaciones y conectores
+      </button>
+      <button class="settings-tab" data-tab="calendarios" role="tab">
+        <img src="/static/images/icon5.png" alt=""> Calendarios
+      </button>
+      <button class="settings-tab" data-tab="datos" role="tab">
+        <img src="/static/images/icon6.png" alt=""> Controles de datos
+      </button>
+      <button class="settings-tab" data-tab="seguridad" role="tab">
+        <img src="/static/images/icon7.png" alt=""> Seguridad
+      </button>
+      <button class="settings-tab" data-tab="parental" role="tab">
+        <img src="/static/images/icon8.png" alt=""> Controles parentales
+      </button>
+      <button class="settings-tab" data-tab="cuenta" role="tab">
+        <img src="/static/images/icon9.png" alt=""> Cuenta
+      </button>
+    </div>
 
-    <button id="saveConfig" class="config-btn">Guardar cambios</button>
-    <button id="closeConfig" class="config-btn">Cerrar</button>
+    <!-- Panels -->
+    <div class="settings-body">
+      <!-- GENERAL -->
+      <section class="settings-panel active" data-panel="general">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Tema</div>
+            <div class="setting-desc">Usar el tema del sistema o forzar claro/oscuro.</div>
+          </div>
+          <div class="setting-control">
+            <label class="radio"><input type="radio" name="theme" value="system" checked> Sistema</label>
+            <label class="radio"><input type="radio" name="theme" value="light"> Claro</label>
+            <label class="radio"><input type="radio" name="theme" value="dark"> Oscuro</label>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Color de acento</div>
+            <div class="setting-desc">Afecta algunos controles y resaltes.</div>
+          </div>
+          <div class="setting-control">
+            <select id="accentColor" class="select">
+              <option value="default">Predeterminado</option>
+              <option value="blue">Azul</option>
+              <option value="pink">Rosa</option>
+              <option value="purple">Violeta</option>
+              <option value="green">Verde</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Idioma</div>
+            <div class="setting-desc">Interfaz y respuestas.</div>
+          </div>
+          <div class="setting-control">
+            <select id="uiLanguage" class="select">
+              <option value="auto">Automático</option>
+              <option value="es">Español</option>
+              <option value="en">English</option>
+              <option value="pt">Português</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Mostrar modelos adicionales</div>
+            <div class="setting-desc">Muestra opciones avanzadas en la app.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="showAdvanced">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTIFICACIONES -->
+      <section class="settings-panel" data-panel="notificaciones">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Notificaciones push</div>
+            <div class="setting-desc">Recibir avisos cuando haya nuevas respuestas.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="pushEnabled"><span class="slider"></span></label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Resúmenes por correo</div>
+            <div class="setting-desc">Un resumen semanal de tus chats.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="weeklyEmail"><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- PERSONALIZACIÓN -->
+      <section class="settings-panel" data-panel="personalizacion">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Color de tus mensajes</div>
+            <div class="setting-desc">Igual al onboarding.</div>
+          </div>
+          <div class="setting-control color-dots">
+            <button class="config-color-option gray"  data-color="gris"  aria-label="Gris"></button>
+            <button class="config-color-option blue"  data-color="azul"  aria-label="Azul"></button>
+            <button class="config-color-option pink"  data-color="rosa"  aria-label="Rosa"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPS / CONECTORES -->
+      <section class="settings-panel" data-panel="apps">
+        <div class="empty-state">
+          <img src="/static/images/icon4.png" alt="">
+          Próximamente podrás conectar Google Drive, OneDrive y más.
+        </div>
+      </section>
+
+      <!-- CALENDARIOS -->
+      <section class="settings-panel" data-panel="calendarios">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Conectar Google Calendar</div>
+            <div class="setting-desc">Usar eventos en respuestas y recordatorios.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn secondary" id="connectCalendarBtn">Conectar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTROLES DE DATOS -->
+      <section class="settings-panel" data-panel="datos">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Historial de chats</div>
+            <div class="setting-desc">Exportar o borrar permanentemente.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn" id="exportChatsBtn">Exportar</button>
+            <button class="btn danger" id="wipeChatsBtn">
+              <img src="/static/images/delete.png" alt="" class="btn-icon"> Borrar todo
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEGURIDAD -->
+      <section class="settings-panel" data-panel="seguridad">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Bloqueo con PIN</div>
+            <div class="setting-desc">Solicitar PIN al abrir la app.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="pinLock"><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARENTAL -->
+      <section class="settings-panel" data-panel="parental">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Filtro de contenido</div>
+            <div class="setting-desc">Restringe ciertos temas en las respuestas.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="contentFilter"><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- CUENTA -->
+      <section class="settings-panel" data-panel="cuenta">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Correo</div>
+            <div class="setting-desc">Cuenta vinculada.</div>
+          </div>
+          <div class="setting-control">
+            <span id="settingsEmail" class="muted"></span>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Nombre para mostrar</div>
+          </div>
+          <div class="setting-control">
+            <input id="settingsName" type="text" class="input" placeholder="Tu nombre">
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Cerrar sesión</div>
+            <div class="setting-desc">Te desconecta de este dispositivo.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn danger" id="logoutBtnFull">
+              <img src="/static/images/delete.png" alt="" class="btn-icon"> Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="settings-footer">
+      <button id="closeSettings" class="btn ghost">Cerrar</button>
+      <button id="saveSettings" class="btn primary">Guardar cambios</button>
+    </div>
   </div>
 </div>
 
@@ -1344,8 +1564,173 @@ if (userInfoBlock) {
 }
 
   </script>
+
+
+
+
+
+
+
+
+
+<script>
+(function settingsInit(){
+  const modal = document.getElementById('configModal');
+  if (!modal) return;
+
+  const tabs = modal.querySelectorAll('.settings-tab');
+  const panels = modal.querySelectorAll('.settings-panel');
+
+  // ==== abrir desde el bloque de usuario (ya lo hacías)
+  // Podés seguir usando tu listener existente. También expongo función:
+  window.openSettings = function(){
+    loadSettingsFromStorage();
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+  };
+
+  // ==== cerrar
+  const closeBtns = [document.getElementById('settingsCloseX'), document.getElementById('closeSettings')];
+  closeBtns.forEach(b=> b && b.addEventListener('click', closeModal));
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  function closeModal(){
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    // restauro valores (por si tocaste algo y cancelaste)
+    loadSettingsFromStorage();
+  }
+
+  // ==== tabs
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      const key = tab.dataset.tab;
+      modal.querySelector(`.settings-panel[data-panel="${key}"]`)?.classList.add('active');
+    });
+  });
+
+  // ==== color dots (personalización)
+  modal.querySelectorAll('.config-color-option').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      modal.querySelectorAll('.config-color-option').forEach(o=>o.classList.remove('selected'));
+      el.classList.add('selected');
+    });
+  });
+
+  // ==== guardar
+  document.getElementById('saveSettings')?.addEventListener('click', ()=>{
+    // tema
+    const theme = modal.querySelector('input[name="theme"]:checked')?.value || 'system';
+    localStorage.setItem('eslobarTheme', theme);
+    // acento
+    localStorage.setItem('eslobarAccent', document.getElementById('accentColor').value);
+    // idioma
+    localStorage.setItem('eslobarLang', document.getElementById('uiLanguage').value);
+    // switches
+    localStorage.setItem('eslobarShowAdvanced', document.getElementById('showAdvanced').checked ? '1' : '0');
+    localStorage.setItem('eslobarPush', document.getElementById('pushEnabled').checked ? '1' : '0');
+    localStorage.setItem('eslobarWeeklyEmail', document.getElementById('weeklyEmail').checked ? '1' : '0');
+    localStorage.setItem('eslobarPinLock', document.getElementById('pinLock').checked ? '1' : '0');
+    localStorage.setItem('eslobarFilter', document.getElementById('contentFilter').checked ? '1' : '0');
+    // nombre
+    const newName = document.getElementById('settingsName').value.trim();
+    if (newName) localStorage.setItem('eslobarUsername', newName);
+    // color mensajes
+    const selectedDot = modal.querySelector('.config-color-option.selected');
+    if (selectedDot) localStorage.setItem('eslobarColor', selectedDot.getAttribute('data-color'));
+
+    // aplica cambios visuales que ya tenías
+    if (typeof aplicarColorUsuario === 'function') aplicarColorUsuario();
+    if (typeof actualizarSidebar === 'function') actualizarSidebar();
+
+    // tema claro/oscuro real usando tus hojas linkeadas
+    applyThemeFromStorage();
+
+    closeModal();
+  });
+
+  // ==== acciones varias
+  document.getElementById('logoutBtnFull')?.addEventListener('click', ()=>{
+    localStorage.removeItem("sesion_activa");
+    localStorage.removeItem("correo_usuario");
+    localStorage.removeItem("foto_usuario");
+    window.location.href = "/";
+  });
+
+  document.getElementById('wipeChatsBtn')?.addEventListener('click', ()=>{
+    if (!confirm('¿Borrar TODOS los chats? Esta acción no se puede deshacer.')) return;
+    try { window.ChatStore?.wipeAll?.(); } catch(e){}
+    alert('Listo. Se borró el historial.');
+  });
+
+  document.getElementById('exportChatsBtn')?.addEventListener('click', ()=>{
+    try { window.ChatStore?.export?.(); } catch(e){ alert('Export no disponible.'); }
+  });
+
+  document.getElementById('connectCalendarBtn')?.addEventListener('click', ()=>{
+    alert('Conexión de calendario: próximamente.');
+  });
+
+  // ==== carga inicial
+  function loadSettingsFromStorage(){
+    // tema
+    const theme = localStorage.getItem('eslobarTheme') || 'system';
+    modal.querySelectorAll('input[name="theme"]').forEach(r => r.checked = (r.value === theme));
+    // acento
+    document.getElementById('accentColor').value = localStorage.getItem('eslobarAccent') || 'default';
+    // idioma
+    document.getElementById('uiLanguage').value = localStorage.getItem('eslobarLang') || 'auto';
+    // switches
+    document.getElementById('showAdvanced').checked   = localStorage.getItem('eslobarShowAdvanced') === '1';
+    document.getElementById('pushEnabled').checked    = localStorage.getItem('eslobarPush') === '1';
+    document.getElementById('weeklyEmail').checked    = localStorage.getItem('eslobarWeeklyEmail') === '1';
+    document.getElementById('pinLock').checked        = localStorage.getItem('eslobarPinLock') === '1';
+    document.getElementById('contentFilter').checked  = localStorage.getItem('eslobarFilter') === '1';
+    // cuenta
+    document.getElementById('settingsEmail').textContent = localStorage.getItem('correo_usuario') || 'No disponible';
+    document.getElementById('settingsName').value = localStorage.getItem('eslobarUsername') || '';
+    // color dots
+    const color = localStorage.getItem('eslobarColor') || 'gris';
+    modal.querySelectorAll('.config-color-option').forEach(o=>{
+      o.classList.toggle('selected', o.getAttribute('data-color') === color);
+    });
+  }
+
+  // helper: aplica links de tema que ya tenías (#theme-dark / #theme-light)
+  function applyThemeFromStorage(){
+    const pref = localStorage.getItem('eslobarTheme') || 'system';
+    const darkLink = document.getElementById('theme-dark');
+    const lightLink = document.getElementById('theme-light');
+    if (!darkLink || !lightLink) return;
+
+    if (pref === 'system'){
+      const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      lightLink.disabled = dark;
+    } else if (pref === 'light'){
+      lightLink.disabled = false;
+    } else {
+      lightLink.disabled = true;
+    }
+  }
+
+  // opcional: abrir con user-info (ya lo hacías)
+  const userBlock = document.querySelector('.user-info');
+  if (userBlock){
+    userBlock.style.cursor = 'pointer';
+    userBlock.addEventListener('click', ()=> window.openSettings());
+  }
+
+  // arranque
+  loadSettingsFromStorage();
+  applyThemeFromStorage();
+})();
+</script>
+
 </body>
 </html>
+
 
 
 
