@@ -1636,6 +1636,61 @@
   margin-bottom: 6px;
 }
 
+/* =======================================================
+   🗂️ Mejora visual del menú de los tres puntitos (chat-dropdown)
+   ======================================================= */
+
+/* 🔹 Estilo base de los botones del menú */
+.chat-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espacio entre ícono y texto */
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 8px 22px;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: "Inter", sans-serif;
+}
+
+/* 🔹 Iconos generales dentro del menú */
+.chat-dropdown button::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8;
+}
+
+/* ✏️ Icono para "Cambiar nombre" */
+.chat-dropdown button.rename-btn::before {
+  background-image: url("/static/images/edit.png");
+}
+
+/* 🗑️ Icono y color para "Borrar" */
+.chat-dropdown button.delete-btn {
+  color: #ff6b6b; /* texto rojo */
+}
+
+.chat-dropdown button.delete-btn::before {
+  background-image: url("/static/images/delete.png");
+}
+
+/* Hover */
+.chat-dropdown button:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.chat-dropdown button.delete-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff4c4c;
+}
 
 
 }
