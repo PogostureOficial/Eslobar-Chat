@@ -342,6 +342,16 @@
   </div>
 </div>
 
+  <script>
+  document.querySelectorAll('.config-color-option').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.config-color-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    });
+  });
+  </script>
+
+
 
   <script>
   // Si no hay sesión, volver al login
@@ -1242,13 +1252,12 @@ if (profileInput) {
 <script>
 
   finishSetup.addEventListener("click", () => {
-    const steps = document.querySelectorAll(".step"); // ✅ volver a definirlo aquí
+    const steps = document.querySelectorAll(".step");
     steps[3].classList.remove("active");
     steps[4].classList.add("active");
 
-    document.getElementById("finalName").textContent = localStorage.getItem("eslobarUsername");
-    document.getElementById("summaryName").textContent = localStorage.getItem("eslobarUsername");
-    document.getElementById("summaryColor").textContent = localStorage.getItem("eslobarColor");
+    const finalName = document.getElementById("finalName");
+    if (finalName) finalName.textContent = localStorage.getItem("eslobarUsername") || '';
   });
 
 document.getElementById("enterApp").addEventListener("click", () => {
@@ -1337,6 +1346,7 @@ if (userInfoBlock) {
   </script>
 </body>
 </html>
+
 
 
 
