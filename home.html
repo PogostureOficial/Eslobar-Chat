@@ -616,6 +616,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const mensaje = document.getElementById("mensaje").value.trim();
     if (!userText) return;
 
+       // 🔗 ChatStore: asegura chat activo y guarda mensaje del usuario
+    if (window.ChatStore) ChatStore.addUserMessage(userText);
+
     const chatContainer = document.querySelector(".chat-container");
 
   // Cuando se manda el primer mensaje
@@ -667,6 +670,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const botMsg = addBotMessage();
       await typeWriterEffect(botMsg, data.reply || "⚠️ Error: sin respuesta.", 15);
 
+         // 🔗 ChatStore: guarda la respuesta del bot
+      if (window.ChatStore) ChatStore.addBotMessage(data.reply || "⚠️ Error: sin respuesta.");
+
       // asegurar scroll y recalc
       if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
 
@@ -674,6 +680,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
       const botMsg = addBotMessage();
       await typeWriterEffect(botMsg, "⚠️ Error al conectar con el servidor.", 15);
+      // 🔗 ChatStore: persistimos el error como respuesta bot (opcional)
+      if (window.ChatStore) ChatStore.addBotMessage("⚠️ Error al conectar con el servidor.");
       if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
     }
 
@@ -1200,6 +1208,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script src="/static/chat-storage.js"></script>
 
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.ChatStore) ChatStore.init();
+  });
+</script>
+
+
 <script>
   const profileInput = document.getElementById("profileImage");
 const previewImage = document.getElementById("previewImage");
@@ -1303,8 +1318,26 @@ document.addEventListener('click', () => {
 });
 </script>
 
+  <script>
+    // Abrir modal de configuración al tocar el bloque de usuario (foto/nombre)
+const userInfoBlock = document.querySelector('.user-info');
+if (userInfoBlock) {
+  userInfoBlock.style.cursor = 'pointer';
+  userInfoBlock.addEventListener('click', () => {
+    const modal = document.getElementById('configModal');
+    if (modal) modal.style.display = 'flex';
+    // prellenar datos
+    const nameInput = document.getElementById('configName');
+    if (nameInput) nameInput.value = localStorage.getItem("eslobarUsername") || '';
+    const emailSpan = document.getElementById('configEmail');
+    if (emailSpan) emailSpan.textContent = localStorage.getItem("correo_usuario") || "No disponible";
+  });
+}
+
+  </script>
 </body>
 </html>
+
 
 
 
