@@ -1572,12 +1572,13 @@
   flex-direction: column;
   overflow: hidden;
   z-index: 1000;
+  margin-left: 90px;
 }
 .chat-dropdown button {
   background: none;
   border: none;
   color: #fff;
-  padding: 8px 14px;
+  padding: 8px 22px;
   text-align: left;
   font-size: 13px;
   cursor: pointer;
