@@ -112,46 +112,57 @@
   
 <!-- 🔹 Barra lateral izquierda -->
 <div class="sidebar">
-  <div class="sidebar-logo">
-  <img src="/static/images/logo.png" alt="Logo" />
-</div>
+  <!-- 🔹 Logo -->
+  <div class="sidebar-header">
+    <img src="/static/images/logo.png" alt="Logo Eslobar" class="sidebar-logo">
+  </div>
 
-  <div class="sidebar-section">Chats</div>
-
-    <!-- ---- Pegar directamente ALTERNATIVO EN TU SIDEBAR: justo después de =========================================================================================================================================================
-       <div class="sidebar-section">Chats</div> ---- -->
-  <div id="chat-controls" style="display:flex;gap:8px;align-items:center;">
-    <button id="newChatBtn" title="Nuevo chat" style="border:none;background:#2b2b2b;color:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;">
-      + Nuevo
+  <!-- 🔹 Botones principales -->
+  <div class="sidebar-buttons">
+    <button id="newChatBtn" class="sidebar-btn">
+      <img src="/static/images/new-chat.png" alt="Nuevo"> Nuevo chat
+    </button>
+    <button id="searchChatsBtn" class="sidebar-btn">
+      <img src="/static/images/search.png" alt="Buscar"> Buscar chats
+    </button>
+    <button id="installButton" class="sidebar-btn">
+      <img src="/static/images/app.png" alt="Instalar"> Instalar app
     </button>
   </div>
 
-  <!-- Contenedor donde aparecerán los chats guardados -->
-  <div id="chatList" class="chat-list" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"></div>
-
-  <!-- -----------------------------------------------------
-       Instrucción: agregar este script AL FINAL del body (DESPUÉS
-       de **todos** tus scripts existentes y justo antes de </body>):
-       /static/chat-storage.js  (puedes poner el archivo en /static/)
-     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
- 
-
-
-  <button id="installButton" style="display:none;">📲 Instalar aplicación</button>
-
-    <!-- 🔹 Perfil del usuario -->
-  <div class="user-info">
-    <button id="profileButton" class="profile-button">
-      <img id="userAvatarSidebar" src="/static/images/default-avatar.png" alt="Foto" class="sidebar-avatar">
-      <span id="sidebarUserName">Usuario</span>
-    </button>
-  
-    <div id="profileMenu" class="profile-menu">
-      <div class="menu-item" id="openConfig">⚙️ Configuración</div>
-      <div class="menu-item" id="logoutSidebar">🚪 Cerrar sesión</div>
+  <!-- 🔹 Lista de chats -->
+  <div class="chat-list">
+    <div class="chat-item">
+      <span class="chat-title">Hola</span>
+      <div class="chat-actions">
+        <button class="chat-menu-btn">⋯</button>
+        <div class="chat-dropdown">
+          <button class="rename-btn">Cambiar nombre</button>
+          <button class="delete-btn">Borrar</button>
+        </div>
+      </div>
+    </div>
+    <div class="chat-item">
+      <span class="chat-title">Examen de Historia</span>
+      <div class="chat-actions">
+        <button class="chat-menu-btn">⋯</button>
+        <div class="chat-dropdown">
+          <button class="rename-btn">Cambiar nombre</button>
+          <button class="delete-btn">Borrar</button>
+        </div>
+      </div>
     </div>
   </div>
-</div> <!-- ← cerrar el div.sidebar -->
+
+  <!-- 🔹 Usuario -->
+  <div class="user-info">
+    <img id="userAvatarSidebar" src="/static/images/default-avatar.png" alt="Avatar" class="sidebar-avatar">
+    <div class="user-details">
+      <span id="sidebarUserName">benja</span>
+    </div>
+  </div>
+</div>
+
 
 <div id="mobileOverlay" class="mobile-overlay" onclick="closeMobileSidebar()"></div>
 
@@ -1273,8 +1284,26 @@ document.getElementById("saveConfig").addEventListener("click", () => {
 });
 
   </script>
+
+  <!-- ✅ Script para desplegar los tres puntitos de cada chat -->
+<script>
+document.querySelectorAll('.chat-menu-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const dropdown = btn.nextElementSibling;
+    document.querySelectorAll('.chat-dropdown').forEach(d => d.style.display = 'none');
+    dropdown.style.display = 'flex';
+  });
+});
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.chat-dropdown').forEach(d => d.style.display = 'none');
+});
+</script>
+
 </body>
 </html>
+
 
 
 
