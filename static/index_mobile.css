@@ -1434,6 +1434,48 @@
   display: flex;
 }
 
+/* ===== Paso 4: Subida de imagen ===== */
+.upload-area {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 35px;
+  width: 85%;
+  max-width: 300px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.upload-area:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.upload-icon {
+  width: 60px;
+  height: 60px;
+  background-image: url("/static/images/doc.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.upload-area p {
+  font-size: 14px;
+  color: #ddd;
+  margin: 0;
+  line-height: 1.4;
+}
+
+
 
 
 }
