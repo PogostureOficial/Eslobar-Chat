@@ -1173,23 +1173,22 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 
-  // ✅ Aplicar color guardado al cargar chat
-  function aplicarColorUsuario() {
-    const color = localStorage.getItem("eslobarColor") || "gris";
-    document.documentElement.style.setProperty("--user-msg-bg", obtenerColor(color));
-  }
-
-  // ✅ Convertir color guardado en valor HEX
-  function obtenerColor(nombre) {
+   // ✅ DESPUÉS: las hacemos globales
+  window.obtenerColor = function(nombre) {
     switch (nombre) {
       case "azul": return "#007bff";
       case "rosa": return "#ff4da6";
       default: return "#3a3a3a";
     }
-  }
+  };
+
+  window.aplicarColorUsuario = function() {
+    const color = localStorage.getItem("eslobarColor") || "gris";
+    document.documentElement.style.setProperty("--user-msg-bg", window.obtenerColor(color));
+  };
 
   // ✅ Aplicar el color cuando se carga la página
-  aplicarColorUsuario();
+  window.aplicarColorUsuario();
 });
 </script>
 
@@ -1284,6 +1283,7 @@ document.getElementById("saveConfig").addEventListener("click", () => {
   </script>
 </body>
 </html>
+
 
 
 
