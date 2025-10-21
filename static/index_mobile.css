@@ -458,7 +458,7 @@
 ======================================================= */
 
 .chat-container {
-  height: calc(100dvh - 120px) !important; /* Ajusta el alto total visible */
+  height: calc(100dvh - 100px) !important; /* Ajusta el alto total visible */
   margin-top: -80px !important; /* Espacio desde la barra superior gris */
   margin-bottom: 0 !important;
   overflow-y: auto !important;
