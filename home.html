@@ -1507,7 +1507,7 @@ document.getElementById("profileButton").addEventListener("click", () => {
 
   <script>
 
-    document.getElementById("openConfig").addEventListener("click", () => {
+  /*  document.getElementById("openConfig").addEventListener("click", () => {
   document.getElementById("configModal").style.display = "flex";
   document.getElementById("configName").value = localStorage.getItem("eslobarUsername");
   document.getElementById("configEmail").textContent = localStorage.getItem("correo_usuario") || "No disponible";
@@ -1527,7 +1527,7 @@ document.getElementById("saveConfig").addEventListener("click", () => {
   aplicarColorUsuario();
   actualizarSidebar();
   document.getElementById("configModal").style.display = "none";
-});
+}); */
 
   </script>
 
@@ -1728,8 +1728,51 @@ if (userInfoBlock) {
 })();
 </script>
 
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('configModal');
+  const openers = [
+    document.getElementById('openConfig'),
+    document.querySelector('.user-info') // tu bloque de usuario abre el modal
+  ].filter(Boolean);
+  const closer = document.getElementById('closeConfig');
+  const saver  = document.getElementById('saveConfig');
+  const appRoot = document.querySelector('.main-content') || document.body;
+
+  let lastFocus = null;
+
+  function openModal() {
+    lastFocus = document.activeElement;
+    modal.classList.add('show');
+    modal.removeAttribute('aria-hidden');       // ← importante
+    appRoot.setAttribute('inert','');           // ← bloquea foco del fondo
+    // enfocar el primer control del modal
+    const first = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    first?.focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');  // solo si quieres marcarlo como oculto
+    appRoot.removeAttribute('inert');
+    // devuelve el foco
+    lastFocus?.focus();
+  }
+
+  openers.forEach(btn => btn.addEventListener('click', openModal));
+  closer?.addEventListener('click', closeModal);
+  saver?.addEventListener('click', closeModal);
+
+  // cierra al clicar backdrop
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+});
+</script>
+
 </body>
 </html>
+
 
 
 
