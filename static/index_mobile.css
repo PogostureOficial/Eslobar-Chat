@@ -1764,11 +1764,4 @@
 .config-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:99999;align-items:center;justify-content:center}
 .config-modal.show{display:flex}
 
-.mobile-hamburger .bar {
-    width: 13px;
-    height: 1px;
-    background: #000;
-    border-radius: 2px;
-    transition: transform 0.3s ease;
-  }
 }
