@@ -1549,20 +1549,18 @@ document.addEventListener('click', () => {
 
   <script>
     // Abrir modal de configuración al tocar el bloque de usuario (foto/nombre)
-const userInfoBlock = document.querySelector('.user-info');
-if (userInfoBlock) {
-  userInfoBlock.style.cursor = 'pointer';
-  userInfoBlock.addEventListener('click', () => {
-    const modal = document.getElementById('configModal');
-    if (modal) modal.style.display = 'flex';
-    // prellenar datos
-    const nameInput = document.getElementById('configName');
-    if (nameInput) nameInput.value = localStorage.getItem("eslobarUsername") || '';
-    const emailSpan = document.getElementById('configEmail');
-    if (emailSpan) emailSpan.textContent = localStorage.getItem("correo_usuario") || "No disponible";
-  });
-}
-
+    const userInfoBlock = document.querySelector('.user-info');
+    if (userInfoBlock) {
+      userInfoBlock.style.cursor = 'pointer';
+     // Reemplazo limpio
+      const userInfoBlock = document.querySelector('.user-info');
+      if (userInfoBlock) {
+        userInfoBlock.style.cursor = 'pointer';
+        userInfoBlock.addEventListener('click', () => {
+          // abre con la lógica nueva (clase .show, aria-hidden, inert, foco, etc.)
+          window.openSettings();
+        });
+      }
   </script>
 
 
@@ -1772,6 +1770,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
 
