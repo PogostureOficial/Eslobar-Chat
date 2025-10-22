@@ -333,3 +333,11 @@ video:not(.no-invert) {
 /* Aseguramos que el warning no tape el input */
 .input-container { background:#ffffff !important; }
 
+.user {
+  background: #000;
+  color: #fff;
+  align-self: flex-end;
+  margin-left: 150px;
+}
+
+
