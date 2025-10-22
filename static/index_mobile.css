@@ -296,7 +296,7 @@
   /* Botón Mejorar a Plus */
 .upgrade-btn {
   position: absolute;
-  left: 70%;
+  left: 55%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
