@@ -1,0 +1,294 @@
+/* =======================================================
+   index_desktop.css
+   Estilos SOLO para pantallas >= 769px (PC/Notebook)
+   Reutiliza las MISMAS clases del CSS móvil
+======================================================= */
+
+@media (min-width: 769px) {
+
+  /* -------- 1) Base / reset -------- */
+  html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: #212121;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    overflow: hidden; /* el scroll va en los contenedores */
+  }
+
+  /* -------- 2) Layout general: Sidebar fijo + área de app -------- */
+  /* Sidebar SIEMPRE visible a la izquierda (estilo ChatGPT) */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;                /* un poco más ancha que en móvil */
+    height: 100vh;
+    background: #1e1f20;
+    transform: none !important;  /* cancela el deslizado de móvil */
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding: 12px 0 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  /* lista de chats dentro del sidebar scrolleable */
+  .chat-list {
+    flex: 1;
+    max-height: none;
+    overflow-y: auto;
+    padding: 0 10px 8px;
+  }
+
+  /* El resto de la app se desplaza a la derecha del sidebar */
+  body, main {
+    display: block;
+    height: 100vh;
+  }
+
+  main {
+    margin-left: 280px; /* deja espacio al sidebar */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* -------- 3) Top bar en escritorio -------- */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    background: #212121;
+    border-bottom: 1px solid #303030;
+  }
+
+  /* En PC no hay hamburguesa ni overlay móvil */
+  .mobile-hamburger,
+  .mobile-overlay {
+    display: none !important;
+  }
+
+  /* Menú “Eslobar” visible en la topbar (no versión .mobile-visible) */
+  .menu-container {
+    display: inline-flex !important;
+    position: relative;
+    z-index: 1;
+  }
+  .menu-container.mobile-visible { display: inline-flex !important; }
+
+  .menu-dropdown {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    width: 280px;
+    background: #2e2e2e;
+    border-radius: 12px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0,0,0,.45);
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .menu-dropdown.show { display: flex !important; }
+
+  /* Botón upgrade a la derecha */
+  .upgrade-btn {
+    position: static;
+    transform: none;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #373669;
+    color: #aeadeb;
+    z-index: 1;
+    pointer-events: auto;
+  }
+
+  /* -------- 4) Home del chat centrado, como en la captura -------- */
+  .main-content { padding: 0; }
+
+  .chat-container {
+    flex: 1;
+    min-height: 0;              /* permite que el flex hijo haga scroll */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    /* título + input centrados verticalmente */
+    padding: 24px 24px 32px;
+    margin: 0 !important;
+    height: auto !important;
+    overflow: auto !important;  /* scroll interno si hace falta */
+    box-sizing: border-box;
+  }
+
+  /* Título: “¿Qué toca hoy?” grande y ligero */
+  #titulo {
+    margin: 0 0 18px 0;
+    padding: 0;
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: clamp(28px, 4.2vw, 42px); /* responsivo como ChatGPT */
+    color: #fff;
+    text-align: center;
+  }
+
+  /* -------- 5) Input de búsqueda centrado (estilo barra ChatGPT) -------- */
+  .input-container {
+    position: relative;       /* ya no fijo al fondo en PC */
+    bottom: auto !important;
+    left: auto;
+    right: auto;
+    width: min(860px, 76vw);  /* ancho similar a la captura */
+    margin: 0 auto;
+    background: #303030;
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid #454545;
+    box-shadow: 0 10px 28px rgba(0,0,0,.35);
+    display: flex;
+    align-items: center;
+    transform: none;
+  }
+
+  .input-container textarea {
+    flex: 1;
+    min-height: 48px;
+    max-height: 180px;
+    padding: 16px 46px 16px 46px;  /* deja espacio para + a la izq y mic a la der */
+    background: #2a2a2a;
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    resize: none;
+    line-height: 1.3;
+    font-size: 16px;
+  }
+
+  /* Botón + a la IZQUIERDA dentro de la barra */
+  .plus-container {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  .plus-btn {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .plus-btn img,
+  .plus-icon { width: 100%; height: 100%; object-fit: contain; display:block; }
+
+  /* Micrófono / enviar a la DERECHA */
+  .voice-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 36px;
+    height: 36px;
+    transform: translateY(-50%);
+    margin: 0;
+  }
+
+  /* Warning debajo del input (como ChatGPT) */
+  .eslobar-warning {
+    position: static;
+    transform: none;
+    margin-top: 10px;
+    font-size: 12px;
+    opacity: .9;
+    text-align: center;
+    width: auto;
+  }
+
+  /* -------- 6) Menú + y submenús (mismo HTML, ubicaciones de escritorio) -------- */
+  .plus-menu {
+    position: absolute;
+    top: calc(100% + 10px);   /* despliega por debajo del input */
+    left: 0;
+    width: 260px;
+    background: #2e2e2e;
+    border-radius: 14px;
+    padding: 8px 0;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 28px rgba(0,0,0,.45);
+    border: 1px solid rgba(255,255,255,0.06);
+    z-index: 20;
+  }
+  .plus-menu.show { display: flex; }
+
+  .submenu {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 8px);
+    width: 180px;
+    background: #2e2e2e;
+    border-radius: 12px;
+    padding: 8px 0;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 10px 28px rgba(0,0,0,.45);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .submenu.show { display: flex; }
+
+  /* -------- 7) Mensajería (por si hay historial ya cargado) -------- */
+  .chat-box {
+    width: min(900px, 80vw);
+    margin: 8px auto 0;
+    padding: 0 4px;
+    border-radius: 12px;
+  }
+
+  .message {
+    font-size: 15px;
+    line-height: 1.45;
+    max-width: 100%;
+  }
+
+  /* -------- 8) Cosas móviles que NO deben afectar escritorio -------- */
+  .chat-input { display: none; }               /* el viejo input fijo de móvil */
+  .plan-info { display: block; }               /* si querés mostrar info extra */
+  .menu-container.mobile-visible { display: inline-flex !important; }
+  #installButton { position: static; display: none !important; } /* no PWA en PC */
+
+  /* -------- 9) Scroll agradable dentro del área central -------- */
+  .chat-container::-webkit-scrollbar,
+  .chat-list::-webkit-scrollbar { width: 8px; }
+  .chat-container::-webkit-scrollbar-thumb,
+  .chat-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.14);
+    border-radius: 6px;
+  }
+
+  /* -------- 10) Modales y overlays se mantienen centrados -------- */
+  .config-modal,
+  .modal {
+    display: none;             /* se muestran por JS */
+    align-items: center;
+    justify-content: center;
+  }
+
+}
