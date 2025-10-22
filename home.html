@@ -1353,13 +1353,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const colorOptions = document.querySelectorAll(".color-option");
   const previewMsg = document.getElementById("colorPreview");
 
-  /*// ✅ Si ya completó el setup, ocultar cartel
+  // ✅ Si ya completó el setup, ocultar cartel
   if (localStorage.getItem("eslobarSetupDone") === "true") {
     overlay.style.display = "none";
     aplicarColorUsuario(); // aplicar color al cargar
     return;
   }
-*/
+
   // ✅ Paso 1 → Paso 2
   if (continue1) {
     continue1.addEventListener("click", () => {
@@ -1706,6 +1706,7 @@ document.addEventListener('click', () => {
 
 </body>
 </html>
+
 
 
 
