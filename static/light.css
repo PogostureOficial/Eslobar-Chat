@@ -76,7 +76,7 @@ video:not(.no-invert) {
 .message { color:#111827 !important; }
 .message.user {
   /* mantiene tu var de color de usuario, pero texto oscuro */
-  color:#111827 !important;
+  color:#fff !important;
 }
 .bot {
   background:#f5f5f7 !important; /* gris muy claro tipo iOS */
@@ -347,6 +347,7 @@ video:not(.no-invert) {
     border-radius: 2px;
     transition: transform 0.3s ease;
   }
+
 
 
 
