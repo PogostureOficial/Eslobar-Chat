@@ -300,7 +300,7 @@
   /* Botón Mejorar a Plus */
 .upgrade-btn {
   position: absolute;
-  left: 50%;
+  left: 70%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
