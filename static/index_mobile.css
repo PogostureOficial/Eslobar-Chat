@@ -1941,4 +1941,48 @@
   margin-left: -50px;
 }
 
+   /* =======================================================
+   🔧 Alineación perfecta de la flecha con el texto "Eslobar"
+======================================================= */
+
+.menu-header {
+  display: inline-flex;           /* 🔹 Alinea texto y flecha horizontalmente */
+  align-items: center;            /* 🔹 Centra verticalmente ambos */
+  justify-content: flex-start;    /* 🔹 Mantiene la flecha a la derecha del texto */
+  gap: 4px;                       /* 🔹 Espaciado mínimo y uniforme */
+  cursor: pointer;
+}
+
+.menu-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-arrow {
+  width: 12px;                    /* 🔹 Tamaño consistente sin importar resolución */
+  height: 12px;
+  object-fit: contain;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;         /* 🔹 Corrige cualquier leve desalineación */
+  transform: translateY(0);       /* 🔹 Evita desplazamiento hacia arriba/abajo */
+}
+
+/* 📱 Asegura que el layout se mantenga en pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu-header {
+    gap: 3px;
+  }
+
+  .menu-arrow {
+    width: 11px;
+    height: 11px;
+  }
+}
+
 }
