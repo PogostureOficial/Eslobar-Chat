@@ -340,4 +340,13 @@ video:not(.no-invert) {
   margin-left: 150px;
 }
 
+.mobile-hamburger .bar {
+    width: 13px;
+    height: 1px;
+    background: #000;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+  }
+
+
 
