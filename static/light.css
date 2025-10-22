@@ -1,60 +1,335 @@
 /* =======================================================
    light.css
-   Sobrescribe solo colores para el modo claro
+   Overrides de color para modo claro (mobile + desktop)
+   - No cambia layout ni tamaños, SOLO colores/sombras/bordes
+   - Invierte todas las imágenes por pedido explícito
 ======================================================= */
 
+/* ---------- Base ---------- */
 html, body {
-  background-color: #fff !important; /* f5f5f5 */
-  color: #000 !important;
-}
-
-.sidebar {
   background-color: #ffffff !important;
-  border-right: 1px solid rgba(0,0,0,0.05) !important;
+  color: #111827 !important; /* gris-900 */
 }
 
-.input-container {
-  background: #fff !important;
-  border: 1px solid rgba(0,0,0,0.1) !important;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
+/* Invertir TODAS las imágenes y vídeos en modo claro
+   (puedes excluir alguna con .no-invert) */
+img:not(.no-invert),
+video:not(.no-invert) {
+  filter: invert(1) hue-rotate(180deg) !important;
 }
 
-.input-container textarea {
-  background: #ffffff !important;
-  color: #000 !important;
-}
-
+/* ---------- Top bar ---------- */
 .top-bar {
   background-color: #ffffff !important;
-  border-bottom: 1px solid rgba(0,0,0,0.1) !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  border-bottom: 1px solid #e5e7eb !important; /* gris-200 */
+  color: #111827 !important;
 }
 
-.bot {
-  background: #f0f0f0 !important;
-  color: #000 !important;
+/* ---------- Sidebar móvil / desktop ---------- */
+.sidebar {
+  background-color: #fafafa !important;           /* gris-50 */
+  border-right: 1px solid #e5e7eb !important;
+  color: #111827 !important;
+}
+.sidebar .sidebar-section { color: #6b7280 !important; } /* gris-500 */
+.sidebar-btn { color: #111827 !important; }
+.sidebar-btn:hover { background: rgba(17,24,39,0.04) !important; } /* gris-900@4% */
+.sidebar-divider { border-top: 1px solid #e5e7eb !important; }
+.sidebar-section-title { color: #6b7280 !important; }
+
+.user-info {
+  background:#fafafa !important;
+  border-top: 1px solid #e5e7eb !important;
+}
+#sidebarUserName { color:#111827 !important; }
+
+/* Overlay móvil */
+.mobile-overlay {
+  background: rgba(0,0,0,0.35) !important;
 }
 
+/* ---------- Lista de planes (sidebar) ---------- */
+.mobile-plans-title { color:#111827 !important; }
 .mobile-plan-item {
-  border: 1px solid rgba(0,0,0,0.06) !important;
+  background: transparent !important;
+  border: 1px solid rgba(17,24,39,0.06) !important;
+}
+.mobile-plan-item:hover { background: rgba(17,24,39,0.04) !important; }
+.mobile-plan-title { color:#111827 !important; }
+.mobile-plan-desc { color:#6b7280 !important; }
+.mobile-plan-item.active {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
 }
 
-.mobile-plan-item:hover {
-  background: rgba(0,0,0,0.04) !important;
+/* ---------- Chat ---------- */
+.main-content { background:#ffffff !important; }
+.chat-container {
+  background:#ffffff !important;
+  color:#111827 !important;
+}
+#titulo { color:#111827 !important; }
+
+.chat-box { background: transparent !important; }
+
+/* Burbujas */
+.message { color:#111827 !important; }
+.message.user {
+  /* mantiene tu var de color de usuario, pero texto oscuro */
+  color:#111827 !important;
+}
+.bot {
+  background:#f5f5f7 !important; /* gris muy claro tipo iOS */
+  color:#111827 !important;
+  border-bottom-left-radius: 4px;
 }
 
-.mobile-plan-title,
-.mobile-plan-text,
-.sidebar .sidebar-section {
-  color: #222 !important;
+/* ---------- Input ---------- */
+.input-container {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  box-shadow: 0 6px 18px rgba(17,24,39,0.08) !important;
 }
+.input-container textarea {
+  background:#f7f7f9 !important;
+  color:#111827 !important;
+  border:1px solid #eef0f3 !important;
+}
+.voice-btn { /* sin color propio */ }
 
+/* Botón + y menús */
+.plus-btn { /* imagen ya se invierte por regla global */ }
+.plus-menu {
+  background:#ffffff !important;
+  box-shadow: 0 10px 24px rgba(17,24,39,0.12) !important;
+  border:1px solid #e5e7eb !important;
+}
+.menu-item { color:#111827 !important; }
+.menu-item:hover { background:#f3f4f6 !important; }
+.submenu {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  box-shadow: 0 10px 24px rgba(17,24,39,0.12) !important;
+}
+.submenu-item { color:#111827 !important; }
+.submenu-item:hover { background:#f3f4f6 !important; }
+
+/* ---------- Botón Upgrade ---------- */
 .upgrade-btn {
-  background-color: #d9d8ff !important;
-  color: #4a47a3 !important;
+  background-color:#eef2ff !important; /* indigo-50 */
+  color:#3730a3 !important;            /* indigo-800 */
+}
+.upgrade-btn:hover { background:#e0e7ff !important; }
+
+/* ---------- Aviso fijo ---------- */
+.eslobar-warning { color:#374151 !important; } /* gris-700 */
+
+/* ---------- Input barra inferior fallback ---------- */
+.chat-input {
+  background:#ffffff !important;
+  border-top:1px solid #e5e7eb !important;
+}
+.chat-input input {
+  background:#f7f7f9 !important; color:#111827 !important;
+}
+.chat-input button {
+  background:#111827 !important; color:#ffffff !important;
 }
 
-.eslobar-warning {
-  color: #000 !important;
+/* ---------- Menú Eslobar (dropdown) ---------- */
+.menu-dropdown {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  box-shadow: 0 10px 24px rgba(17,24,39,0.12) !important;
 }
+.menu-description { color:#6b7280 !important; }
+
+/* ---------- Modal GENÉRICO ---------- */
+.modal { background: rgba(0,0,0,0.45) !important; }
+.modal-content {
+  background:#ffffff !important;
+  color:#111827 !important;
+  box-shadow: 0 12px 32px rgba(17,24,39,0.18) !important;
+}
+.modal-content button {
+  background:#f3f4f6 !important; color:#111827 !important;
+}
+.modal-content button:hover { background:#e5e7eb !important; }
+
+/* ---------- PWA Install dentro del sidebar ---------- */
+.sidebar #installButton {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  color:#111827 !important;
+}
+.sidebar #installButton:hover { background:#f3f4f6 !important; }
+
+/* ---------- Bienvenida / Onboarding ---------- */
+#welcome-overlay {
+  background: rgba(0,0,0,0.45) !important;
+}
+.welcome-modal {
+  background:#ffffff !important;
+  color:#111827 !important;
+  box-shadow: 0 12px 32px rgba(17,24,39,0.18) !important;
+}
+.welcome-modal p { color:#4b5563 !important; }
+.welcome-modal button {
+  background:#111827 !important; color:#ffffff !important;
+}
+.welcome-modal button:disabled {
+  background:#e5e7eb !important; color:#9ca3af !important;
+}
+.step-count { color:#374151 !important; }
+
+.example-message { color:#111827 !important; }
+/* Mantiene colores de fondo de ejemplo (gris/azul/rosa) */
+
+/* Input nombre onboarding */
+#userName {
+  background: rgba(17,24,39,0.05) !important;
+  color:#111827 !important;
+}
+#userName::placeholder { color: rgba(17,24,39,0.45) !important; }
+#userName:focus {
+  background: rgba(17,24,39,0.08) !important;
+  box-shadow: 0 0 0 2px #93c5fd !important; /* azul-300 */
+}
+.input-underline { background:#0ea5e9 !important; } /* sky-500 */
+
+.progress-bar { background:#e5e7eb !important; }
+.progress { background:#0ea5e9 !important; }
+
+/* Upload */
+.upload-area {
+  background:#ffffff !important;
+  border:2px dashed rgba(17,24,39,0.15) !important;
+}
+.upload-area:hover {
+  background:#f9fafb !important;
+  border-color: rgba(17,24,39,0.28) !important;
+}
+.upload-area p { color:#4b5563 !important; }
+.preview-image { border-color:#0ea5e9 !important; }
+
+/* ---------- Lista de chats ---------- */
+.chat-list::-webkit-scrollbar-thumb {
+  background: rgba(17,24,39,0.15) !important;
+}
+.chat-item { color:#111827 !important; }
+.chat-item:hover { background: rgba(17,24,39,0.04) !important; }
+.chat-item.active { background:#f5f5f7 !important; }
+
+/* ---------- Dropdown de cada chat ---------- */
+.chat-dropdown {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  box-shadow: 0 10px 24px rgba(17,24,39,0.12) !important;
+}
+.chat-dropdown button { color:#111827 !important; }
+.chat-dropdown button:hover { background:#f3f4f6 !important; }
+.chat-dropdown button.delete-btn { color:#dc2626 !important; } /* rojo-600 */
+.chat-dropdown button.delete-btn:hover {
+  background: rgba(220,38,38,0.08) !important;
+}
+
+/* ---------- Settings modal (estilo ChatGPT-like) ---------- */
+.settings-modal{
+  background:#ffffff !important;
+  color:#111827 !important;
+  box-shadow: 0 24px 64px rgba(17,24,39,0.18) !important;
+}
+.settings-header { border-bottom:1px solid #e5e7eb !important; }
+.settings-header h2 { color:#111827 !important; }
+.icon-btn { color:#6b7280 !important; }
+.icon-btn:hover { color:#111827 !important; }
+
+.settings-tabs {
+  background:#f9fafb !important;
+  border-bottom:1px solid #e5e7eb !important;
+}
+.settings-tab {
+  color:#374151 !important;
+  border:1px solid transparent !important;
+}
+.settings-tab:hover { background:#eef2f7 !important; }
+.settings-tab.active {
+  background:#ffffff !important;
+  border-color:#e5e7eb !important;
+  color:#111827 !important;
+}
+
+.settings-panel { background:#ffffff !important; }
+.setting-row { border-bottom:1px solid #e5e7eb !important; }
+.setting-title { color:#111827 !important; }
+.setting-desc { color:#6b7280 !important; }
+
+.input,.select {
+  background:#ffffff !important;
+  color:#111827 !important;
+  border:1px solid #e5e7eb !important;
+}
+.radio { color:#111827 !important; }
+
+/* Switch claro */
+.slider { background:#d1d5db !important; } /* gris-300 */
+.switch input:checked + .slider { background:#0a84ff !important; }
+
+/* Botones */
+.btn { background:#f3f4f6 !important; color:#111827 !important; }
+.btn:hover { background:#e5e7eb !important; }
+.btn.primary { background:#0a84ff !important; color:#fff !important; }
+.btn.primary:hover { background:#187dff !important; }
+.btn.secondary { background:#e5e7eb !important; }
+.btn.ghost { background:transparent !important; border:1px solid #e5e7eb !important; color:#111827 !important; }
+.btn.danger { background:#fee2e2 !important; color:#b91c1c !important; border:1px solid #fecaca !important; }
+.btn.danger:hover { background:#fecaca !important; }
+
+.settings-footer { background:#f9fafb !important; border-top:1px solid #e5e7eb !important; }
+
+.color-dots .config-color-option.selected {
+  border-color:#111827 !important;
+  box-shadow:0 0 0 2px rgba(17,24,39,.12) !important;
+}
+
+.muted { color:#6b7280 !important; }
+.empty-state { color:#6b7280 !important; }
+
+/* ---------- Config modal antiguo (por compatibilidad) ---------- */
+.config-modal { background: rgba(0,0,0,0.45) !important; }
+.config-modal-content {
+  background:#ffffff !important;
+  color:#111827 !important;
+  box-shadow:0 12px 32px rgba(17,24,39,0.18) !important;
+}
+.config-modal-content input[type="text"] {
+  background:#ffffff !important;
+  color:#111827 !important;
+  border:1px solid #e5e7eb !important;
+}
+#saveConfig.config-btn {
+  background:#0a84ff !important; color:#fff !important;
+}
+#saveConfig.config-btn:hover { background:#187dff !important; }
+#closeConfig.config-btn {
+  background:#f3f4f6 !important; color:#111827 !important;
+}
+#closeConfig.config-btn:hover { background:#e5e7eb !important; }
+
+/* ---------- Welcome steps: colores de puntos ---------- */
+.color-option.gray  { background:#9ca3af !important; } /* gris-400 */
+.color-option.blue  { background:#3b82f6 !important; }
+.color-option.pink  { background:#ec4899 !important; }
+
+/* ---------- Scrollbars (suave en claro) ---------- */
+.chat-container::-webkit-scrollbar-thumb {
+  background: rgba(17,24,39,0.18) !important;
+}
+
+/* ---------- Otros pequeños toques ---------- */
+#installButton:hover { background: linear-gradient(135deg,#f3f4f6,#e5e7eb) !important; }
+#installButton:active { background: linear-gradient(135deg,#e5e7eb,#d1d5db) !important; }
+
+/* Aseguramos que el warning no tape el input */
+.input-container { background:#ffffff !important; }
 
