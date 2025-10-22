@@ -1764,4 +1764,97 @@
 .config-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:99999;align-items:center;justify-content:center}
 .config-modal.show{display:flex}
 
+
+   /* -------------------------------------------------------
+   🔹 Top-bar estilo ChatGPT (compacto y minimalista)
+------------------------------------------------------- */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background-color: #212121;
+  border-bottom: 1px solid #2c2c2c;
+  height: 50px; /* más compacto */
+  box-sizing: border-box;
+}
+
+/* -------------------------------------------------------
+   🔹 Botón de menú (hamburger estilo ChatGPT)
+------------------------------------------------------- */
+.mobile-hamburger {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobile-hamburger .bar {
+  display: block;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Líneas tipo ChatGPT */
+.mobile-hamburger .bar:nth-child(1) {
+  width: 16px;
+  height: 2px;
+}
+.mobile-hamburger .bar:nth-child(2) {
+  width: 10px;
+  height: 2px;
+}
+
+/* Animación al abrir */
+.mobile-hamburger.open .bar:nth-child(1) {
+  transform: rotate(45deg) translateY(3px);
+  width: 14px;
+}
+.mobile-hamburger.open .bar:nth-child(2) {
+  transform: rotate(-45deg) translateY(-3px);
+  width: 14px;
+}
+
+/* -------------------------------------------------------
+   🔹 Botón “Eslobar” y “Obtener” compactos
+------------------------------------------------------- */
+.mobile-eslobar-btn {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+}
+
+.upgrade-btn {
+  background-color: #2d2d4f;
+  color: #aeadeb;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 4px;
+  transition: background 0.3s ease;
+}
+
+.upgrade-btn:hover {
+  background-color: #3b3a66;
+}
+
 }
