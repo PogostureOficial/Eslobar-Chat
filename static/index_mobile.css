@@ -1740,7 +1740,7 @@
 /* Buttons */
 .btn{border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;background:#2e2e2e;color:#fff}
 .btn:hover{background:#3a3a3a}
-.btn.primary{background:#0a84ff}
+.btn.primary{background:#fff;color:#000}
 .btn.primary:hover{background:#187dff}
 .btn.secondary{background:#373737}
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.12)}
