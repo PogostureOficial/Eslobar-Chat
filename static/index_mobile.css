@@ -68,17 +68,13 @@
   }
 
   .mobile-hamburger .bar {
-    width: 13px;
-    height: 1px;
+    width: 0px;
+    height: 0px;
     background: #fff;
     border-radius: 2px;
     transition: transform 0.3s ease;
   }
 
-  .mobile-hamburger.open .bar:nth-child(1),
-  .mobile-hamburger.open .bar:nth-child(2) {
-    transform: translateY(0) rotate(0deg);
-  }
 
   /* -------------------------------------------------------
      4. Sidebar móvil
@@ -1811,15 +1807,16 @@
 .mobile-hamburger .bar:nth-child(2) {
   width: 10px;
   height: 2px;
+  margin-right: 8px;
 }
 
 /* Animación al abrir */
 .mobile-hamburger.open .bar:nth-child(1) {
-  transform: rotate(45deg) translateY(3px);
+  transform: rotate(0deg) translateY(0px);
   width: 14px;
 }
 .mobile-hamburger.open .bar:nth-child(2) {
-  transform: rotate(-45deg) translateY(-3px);
+  transform: rotate(0deg) translateY(-0px);
   width: 14px;
 }
 
@@ -1844,7 +1841,7 @@
   color: #aeadeb;
   font-size: 13px;
   padding: 6px 10px;
-  border-radius: 12px;
+  border-radius: 999px;
   font-weight: 600;
   display: flex;
   align-items: center;
