@@ -137,18 +137,14 @@ video:not(.no-invert) {
 }
 
 /* ---------- Menú Eslobar (dropdown) ---------- */
-.mobile-eslobar-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  background: transparent;
-  border: none;
+.menu-title {
   color: #000 !important;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 4px 6px;
 }
+
+.menu-title-version {
+  color: #000 !important;
+}
+
 .menu-dropdown {
   background:#ffffff !important;
   border:1px solid #e5e7eb !important;
@@ -359,6 +355,7 @@ video:not(.no-invert) {
     border-radius: 2px;
     transition: transform 0.3s ease;
   }
+
 
 
 
