@@ -1854,4 +1854,91 @@
   background-color: #3b3a66;
 }
 
+   /* =======================================================
+   🔧 Corrección final top-bar estilo ChatGPT
+======================================================= */
+
+/* 🔹 Top-bar limpia, sin bordes dobles ni margen extraño */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  height: 50px;
+  background-color: #212121;
+  border-bottom: none !important; /* ❌ elimina la línea fantasma */
+  box-sizing: border-box;
+}
+
+/* 🔹 Ícono de menú con solo dos líneas, sin espacio inferior */
+.mobile-hamburger {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+
+/* 🔧 Fuerza a eliminar cualquier pseudo-línea residual */
+.mobile-hamburger::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* 🔹 Barras tipo ChatGPT */
+.mobile-hamburger .bar {
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-hamburger .bar:nth-child(1) {
+  width: 16px;
+  height: 2px;
+}
+.mobile-hamburger .bar:nth-child(2) {
+  width: 10px;
+  height: 2px;
+  margin-right: 6px;
+}
+
+/* 🔹 Texto “Eslobar” con flecha perfectamente alineados */
+.mobile-header-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px; /* separación mínima entre texto y flecha */
+}
+
+.mobile-eslobar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Flecha (SVG o imagen) justo al lado del texto */
+.mobile-eslobar-btn svg,
+.mobile-eslobar-btn img {
+  width: 12px;
+  height: 12px;
+  margin-left: 0;
+}
+
 }
