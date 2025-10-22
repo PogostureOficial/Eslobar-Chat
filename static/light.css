@@ -91,7 +91,7 @@ video:not(.no-invert) {
   box-shadow: 0 6px 18px rgba(17,24,39,0.08) !important;
 }
 .input-container textarea {
-  background:#f7f7f9 !important;
+  background:#fff !important;
   color:#111827 !important;
   border:1px solid #eef0f3 !important;
 }
@@ -137,6 +137,18 @@ video:not(.no-invert) {
 }
 
 /* ---------- Menú Eslobar (dropdown) ---------- */
+.mobile-eslobar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  color: #000 !important;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
 .menu-dropdown {
   background:#ffffff !important;
   border:1px solid #e5e7eb !important;
@@ -347,6 +359,7 @@ video:not(.no-invert) {
     border-radius: 2px;
     transition: transform 0.3s ease;
   }
+
 
 
 
