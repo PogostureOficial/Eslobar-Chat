@@ -1711,7 +1711,7 @@
 .icon-btn:hover{color:#fff}
 
 .settings-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);background:#1b1b1b}
-.settings-tab{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:transparent;border:1px solid transparent;color:#ddd;font-weight:600;cursor:pointer}
+.settings-tab{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:transparent;border:1px solid transparent;color:#fff;font-weight:500;cursor:pointer}
 .settings-tab img{width:18px;height:18px;opacity:.9}
 .settings-tab:hover{background:rgba(255,255,255,.06)}
 .settings-tab.active{background:#2a2a2a;border-color:rgba(255,255,255,.08);color:#fff}
