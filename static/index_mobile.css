@@ -2024,4 +2024,110 @@ html, body {
   font-family: inherit !important;
 }
 
+
+/* =======================================================
+   🧩 Ajuste final: estilo ChatGPT realista
+======================================================= */
+
+/* 🔹 Topbar compacta y separada con línea sutil */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background-color: #212121;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 10000;
+}
+
+/* 🔹 Asegura que el contenido del chat empiece justo debajo del topbar */
+.chat-container {
+  position: fixed;
+  top: 48px; /* coincide con altura del topbar */
+  bottom: 60px; /* deja espacio para el input */
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  padding: 12px 16px 80px; /* margen inferior extra para scroll libre */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #212121;
+}
+
+/* 🔹 Mensajes alineados como en ChatGPT */
+.message {
+  border-radius: 18px;
+  padding: 10px 14px;
+  line-height: 1.5;
+  max-width: 95%;
+  width: fit-content;
+}
+
+/* 🔹 Mensaje del bot (gris oscuro, borde inferior plano) */
+.bot {
+  background: #2a2a2a;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+/* 🔹 Mensaje del usuario (más claro, alineado a la derecha) */
+.user {
+  background: #3d3d3d;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+/* 🔹 Input pegado al borde inferior (como ChatGPT) */
+.input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1e1e1e;
+  padding: 8px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10001;
+}
+
+/* Textarea del input */
+.input-container textarea {
+  flex: 1;
+  border: none;
+  resize: none;
+  background: #2b2b2b;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  outline: none;
+}
+
+/* Botón enviar */
+.input-container button {
+  background: #ffffff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.input-container button:hover {
+  background: #d8d8d8;
+}
+
+
 }
