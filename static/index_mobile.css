@@ -1954,12 +1954,13 @@
 }
 
 .menu-title {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 15px;
   color: #fff;
   display: inline-block;
   margin: 0;
   padding: 0;
+  margin-left: -30px;
 }
 
 .menu-arrow {
@@ -1971,6 +1972,7 @@
   padding: 0;
   vertical-align: middle;         /* 🔹 Corrige cualquier leve desalineación */
   transform: translateY(0);       /* 🔹 Evita desplazamiento hacia arriba/abajo */
+  margin-left: 5px;
 }
 
 /* 📱 Asegura que el layout se mantenga en pantallas pequeñas */
