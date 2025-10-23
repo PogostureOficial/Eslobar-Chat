@@ -196,7 +196,7 @@ input::placeholder {
 #mensaje::placeholder {
   font-family: inherit;
   color: #afafaf;            /* mismo gris que usabas antes */
-  font-size: 15px;        /* asegura que coincida con el texto normal */
+  font-size: 18px;        /* asegura que coincida con el texto normal */
   padding-left: 0px; /* margen interno a la izquierda */
 }
 
@@ -802,6 +802,7 @@ body {
   .user-email { display: none; } /* solo avatar visible como en ChatGPT 
   .logout-btn-sidebar { display: none; } /* opcional: ocultar botón en modo colapsado 
 } */
+
 
 
 
