@@ -2041,14 +2041,14 @@ html, body {
   justify-content: space-between;
   padding: 0 12px;
   background-color: #212121;
-  border-bottom: 3px solid #fff;
+  border: 3px solid #fff;
   z-index: 10000;
 }
 
 /* 🔹 Asegura que el contenido del chat empiece justo debajo del topbar */
 .chat-container {
   position: fixed;
-  top: 48px; /* coincide con altura del topbar */
+  top: 150px; /* coincide con altura del topbar */
   bottom: 0px; /* deja espacio para el input */
   left: 0;
   right: 0;
@@ -2063,8 +2063,8 @@ html, body {
 
 /* 🔹 Mensajes alineados como en ChatGPT */
 .message {
-  border-radius: 999px;
-  padding: 8px 12px;
+  border-radius: 18px;
+  padding: 6px 14px;
   line-height: 1.5;
   max-width: 100%;
   width: fit-content;
@@ -2072,13 +2072,13 @@ html, body {
 
 /* 🔹 Mensaje del bot (gris oscuro, borde inferior plano) */
 .bot {
-  background: #2b2b2b;
+  background: #212121;
   align-self: flex-start;
 }
 
 /* 🔹 Mensaje del usuario (más claro, alineado a la derecha) */
 .user {
-  background: #3d3d3d;
+  background: #2b2b2b;
   align-self: flex-end;
 }
 
