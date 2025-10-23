@@ -1988,6 +1988,8 @@
    .upgrade-btn {
   background-color: #373669;
   color: #dcdbf6;
- 
+  padding: 14px 18px;
+  font-weight: 600;
 }
+   
 }
