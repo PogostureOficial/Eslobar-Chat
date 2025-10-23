@@ -4,12 +4,31 @@
    Mantiene misma paleta y comportamiento visual del CSS de PC
 ======================================================= */
 
+/* =======================================================
+   🔠 Fuente global: Segoe UI en todo el sitio
+======================================================= */
+
+html, body {
+  font-family: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color: inherit;
+}
+
+/* Aplicar herencia a todo */
+*, *::before, *::after {
+  font-family: inherit !important;
+}
+
+
 /* -------------------------------------------------------
    1. Reset y configuración base
 ------------------------------------------------------- */
 * { box-sizing: border-box; }
 
 @media (max-width: 768px) {
+   
 
   html, body {
     height: 100dvh;
@@ -17,12 +36,13 @@
     padding: 0;
     background-color: #212121; /* 212121*/
     color: #fff;
-    font-family: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
     overscroll-behavior: none;
     touch-action: none;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 
 
@@ -1994,5 +2014,6 @@
   padding: 14px 18px;
   font-weight: 600;
 }
+   
    
 }
