@@ -286,7 +286,7 @@ html, body {
   display: flex;
   align-items: center;
   border-radius: 999px;
-  border: 1px solid #454545;
+  border: 1px solid #3a3a3a;
   box-shadow: 0 6px 20px #171717;
   z-index: 10002;
   will-change: transform;
@@ -1994,6 +1994,8 @@ html, body {
   padding: 0;
   vertical-align: middle;         /* 🔹 Corrige cualquier leve desalineación */
   transform: translateY(0);       /* 🔹 Evita desplazamiento hacia arriba/abajo */
+  margin-left: 5px;
+  margin-top: 2px;
 }
 
 /* 📱 Asegura que el layout se mantenga en pantallas pequeñas */
@@ -2041,7 +2043,6 @@ html, body {
   justify-content: space-between;
   padding: 0 12px;
   background-color: #212121;
-  border: 3px solid #fff;
   z-index: 10000;
 }
 
@@ -2078,8 +2079,18 @@ html, body {
 
 /* 🔹 Mensaje del usuario (más claro, alineado a la derecha) */
 .user {
-  background: #2b2b2b;
+  background: #303030;
   align-self: flex-end;
+}
+
+ .topbar-divider {
+  position: fixed;
+  top: 48px; /* coincide con la altura del topbar */
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08); /* gris sutil como ChatGPT */
+  z-index: 9999; /* justo debajo de la barra */
 }
 
 
