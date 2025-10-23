@@ -2015,5 +2015,13 @@ html, body {
   font-weight: 600;
 }
    
-   
+.message,
+.menu-item,
+.submenu-item,
+.config-modal-content,
+.sidebar-btn,
+.chat-dropdown button {
+  font-family: inherit !important;
+}
+
 }
