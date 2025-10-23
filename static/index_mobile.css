@@ -17,11 +17,14 @@
     padding: 0;
     background-color: #212121; /* 212121*/
     color: #fff;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
     overscroll-behavior: none;
     touch-action: none;
   }
+
 
   /* -------------------------------------------------------
      2. Layout general (body, main, topbar)
