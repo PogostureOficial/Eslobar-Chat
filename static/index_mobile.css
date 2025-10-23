@@ -17,7 +17,7 @@
     padding: 0;
     background-color: #212121; /* 212121*/
     color: #fff;
-    font-family: "Inter", sans-serif;
+    font-family: "Roboto", sans-serif;
     overflow: hidden;
     overscroll-behavior: none;
     touch-action: none;
@@ -1954,7 +1954,7 @@
 
 .menu-title {
   font-weight: 400;
-  font-size: 22px;
+  font-size: 19px;
   color: #fff;
   display: inline-block;
   margin: 0;
@@ -1985,4 +1985,9 @@
   }
 }
 
+   .upgrade-btn {
+  background-color: #373669;
+  color: #dcdbf6;
+ 
+}
 }
