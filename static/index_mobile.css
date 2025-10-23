@@ -203,7 +203,7 @@
     align-items: center;
     height: calc(100dvh - 70px);
     overflow: hidden !important;
-    padding: 16px;
+    padding: 18px;
     margin: 0 !important;
     box-sizing: border-box;
     z-index: 1;
@@ -230,7 +230,7 @@
 
   .message {
     margin: 8px 0;
-    padding: 8px 10px;
+    padding: 8px 14px;
     border-radius: 40px;
     max-width: 100%;
     word-wrap: break-word;
@@ -433,7 +433,7 @@
    /* ✅ Mensaje fijo debajo del input (como ChatGPT) */
 .eslobar-warning {
   position: fixed;
-  bottom: 6px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
@@ -1072,7 +1072,6 @@
   background: var(--user-msg-bg) !important;
   color: #fff;
   align-self: flex-end;
-  border-bottom-right-radius: 4px;
 }
 
    /* ===== Títulos más elegantes ===== */
@@ -1955,24 +1954,23 @@
 
 .menu-title {
   font-weight: 400;
-  font-size: 15px;
+  font-size: 22px;
   color: #fff;
   display: inline-block;
   margin: 0;
   padding: 0;
-  margin-left: -30px;
+  margin-left: -10px;
 }
 
 .menu-arrow {
-  width: 12px;                    /* 🔹 Tamaño consistente sin importar resolución */
-  height: 12px;
+  width: 13px;                    /* 🔹 Tamaño consistente sin importar resolución */
+  height: 13px;
   object-fit: contain;
   display: inline-block;
   margin: 0;
   padding: 0;
   vertical-align: middle;         /* 🔹 Corrige cualquier leve desalineación */
   transform: translateY(0);       /* 🔹 Evita desplazamiento hacia arriba/abajo */
-  margin-left: 5px;
 }
 
 /* 📱 Asegura que el layout se mantenga en pantallas pequeñas */
