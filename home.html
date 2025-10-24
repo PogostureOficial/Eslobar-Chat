@@ -246,6 +246,17 @@
 </div>
 
 
+    <!-- 🔹 Selector de personalidad -->
+    <div class="personality-selector">
+      <select id="aiPersonality" class="personality-dropdown">
+        <option value="generico">Genérico</option>
+        <option value="acuna">Acuña</option>
+        <option value="navarra">Navarra</option>
+        <option value="carro">Carro</option>
+      </select>
+    </div>
+
+
     <!-- Botón Mejorar a Plus -->
     <a href="static/plan.html" class="upgrade-btn">
       <img src="/static/images/plus1.png" alt="Plus" class="upgrade-icon"> 
@@ -890,7 +901,8 @@ document.addEventListener('DOMContentLoaded', function() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: userText,
-          plan: selectedPlan
+          plan: selectedPlan,
+          personality: localStorage.getItem("aiPersonality") || "generico"
         })
       });
 
@@ -1704,10 +1716,24 @@ document.addEventListener('click', () => {
 })();
 </script>
 
-  
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const selector = document.getElementById("aiPersonality");
+
+  // Cargar la selección previa si existe
+  const saved = localStorage.getItem("aiPersonality") || "generico";
+  selector.value = saved;
+
+  selector.addEventListener("change", () => {
+    localStorage.setItem("aiPersonality", selector.value);
+  });
+});
+</script>
+
 
 </body>
 </html>
+
 
 
 
