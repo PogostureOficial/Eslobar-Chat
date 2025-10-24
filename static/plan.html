@@ -6,10 +6,73 @@
   <title>Adquirir Eslobar</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* 🔥 Cartel principal animado */
+    .discount-banner {
+      background: linear-gradient(90deg, #ff0077, #ff8c00, #ff0077);
+      background-size: 200% 200%;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      padding: 18px;
+      border-radius: 14px;
+      text-align: center;
+      margin: 30px auto 40px;
+      animation: gradientShift 3s ease infinite, bounceIn 1.2s ease;
+      box-shadow: 0 0 25px rgba(255, 80, 120, 0.3);
+      width: 90%;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* 💰 Precios antiguos */
+    .old-price {
+      font-size: 0.9rem;
+      color: #ff4d4d;
+      text-decoration: line-through;
+      opacity: 0.8;
+      display: block;
+      margin-top: 4px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 💎 Ajuste visual del precio actual */
+    .row.prices span:not(:first-child) {
+      font-size: 1.4rem;
+      font-weight: 700;
+      position: relative;
+    }
+
+    /* Efecto sutil en hover */
+    .row.prices span:not(:first-child):hover {
+      color: #00ffc8;
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+  </style>
 </head>
 <body>
 
   <main class="container">
+    <!-- 🧨 Cartel de descuento -->
+    <div class="discount-banner">¡Aprovecha el 90% de Descuento por tiempo limitado!</div>
+
     <h1>Adquirir <span class="highlight">Eslobar</span></h1>
     <p class="subtitle">Elige el plan que mejor se adapte a tus necesidades</p>
 
@@ -23,10 +86,10 @@
 
       <div class="row">
         <span>Acceso a Eslobar</span>
-        <span><img src="/images/tick1.png" class="tick tick-basic" alt="tick básico"></span>
-        <span><img src="/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
-        <span><img src="/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
-     </div>
+        <span><img src="/images/tick1.png" class="tick tick-basic"></span>
+        <span><img src="/images/tick2.png" class="tick tick-plus"></span>
+        <span><img src="/images/tick1.png" class="tick tick-pro"></span>
+      </div>
 
       <div class="row">
         <span>Velocidad de respuestas</span>
@@ -36,48 +99,59 @@
       <div class="row">
         <span>Razonamiento avanzado</span>
         <span>—</span>
-        <span><img src="/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
-        <span><img src="images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+        <span><img src="/images/tick2.png" class="tick"></span>
+        <span><img src="/images/tick1.png" class="tick"></span>
       </div>
 
       <div class="row">
         <span>Multi-función</span>
         <span>—</span>
-        <span><img src="/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
-        <span><img src="/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+        <span><img src="/images/tick2.png" class="tick"></span>
+        <span><img src="/images/tick1.png" class="tick"></span>
       </div>
 
       <div class="row">
         <span>Sin cola de espera</span>
         <span>—</span>
-        <span><img src="/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
-        <span><img src="/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+        <span><img src="/images/tick2.png" class="tick"></span>
+        <span><img src="/images/tick1.png" class="tick"></span>
       </div>
 
       <div class="row">
         <span>Múltiples chats</span>
         <span>—</span>
-        <span><img src="/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
-        <span><img src="/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+        <span><img src="/images/tick2.png" class="tick"></span>
+        <span><img src="/images/tick1.png" class="tick"></span>
       </div>
 
       <div class="row">
         <span>Acceso a funciones futuras</span>
         <span>—</span>
-        <span><img src="/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
-        <span><img src="/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+        <span><img src="/images/tick2.png" class="tick"></span>
+        <span><img src="/images/tick1.png" class="tick"></span>
       </div>
 
       <div class="row">
         <span>Mejoras continuas</span>
         <span>—</span>
-        <span><img src="/images/tick2.png" class="tick tick-plus" alt="tick plus"></span>
-        <span><img src="/images/tick1.png" class="tick tick-pro" alt="tick pro"></span>
+        <span><img src="/images/tick2.png" class="tick"></span>
+        <span><img src="/images/tick1.png" class="tick"></span>
       </div>
 
       <div class="row prices">
         <span>Precio (mensual)</span>
-        <span>4.999$</span><span>9.999$</span><span>49.999$</span>
+        <span>
+          4.999$
+          <span class="old-price">Antes 49.999$</span>
+        </span>
+        <span>
+          9.999$
+          <span class="old-price">Antes 99.999$</span>
+        </span>
+        <span>
+          49.999$
+          <span class="old-price">Antes 499.999$</span>
+        </span>
       </div>
     </section>
 
@@ -86,84 +160,72 @@
   </main>
 
   <!-- Modal -->
-  <!-- Modal tipo "bottom sheet" -->
-<div id="planModal" class="bottom-sheet">
-  <div class="sheet-content">
-    <div class="sheet-header"></div>
+  <div id="planModal" class="bottom-sheet">
+    <div class="sheet-content">
+      <div class="sheet-header"></div>
 
-    <div class="plans">
-      <div class="plan-card">
-        <div class="plan-info">
-          <h3>Eslobar</h3>
-          <p>Ideal para aquellos que solo desean llegar al 7.</p>
+      <div class="plans">
+        <div class="plan-card">
+          <div class="plan-info">
+            <h3>Eslobar</h3>
+            <p>Ideal para aquellos que solo desean llegar al 7.</p>
+          </div>
+          <button class="acquire-btn">Adquirir plan</button>
         </div>
-        <button class="acquire-btn">Adquirir plan</button>
-      </div>
 
-      <div class="plan-card">
-        <div class="plan-info">
-          <h3>Eslobar Plus</h3>
-          <p>Para quienes quieren obtener el mejor desempeño academico.</p>
+        <div class="plan-card">
+          <div class="plan-info">
+            <h3>Eslobar Plus</h3>
+            <p>Para quienes quieren obtener el mejor desempeño académico.</p>
+          </div>
+          <button class="acquire-btn">Adquirir plan</button>
         </div>
-        <button class="acquire-btn">Adquirir plan</button>
-      </div>
 
-      <div class="plan-card">
-        <div class="plan-info">
-          <h3>Eslobar Pro</h3>
-          <p>Solo para los pocos que quieran aprovechar Eslobar en su totalidad.</p>
+        <div class="plan-card">
+          <div class="plan-info">
+            <h3>Eslobar Pro</h3>
+            <p>Solo para los pocos que quieran aprovechar Eslobar en su totalidad.</p>
+          </div>
+          <button class="acquire-btn">Adquirir plan</button>
         </div>
-        <button class="acquire-btn">Adquirir plan</button>
       </div>
     </div>
   </div>
-</div>
 
-
-  
   <script>
-  const sheet = document.getElementById('planModal');
-  const openBtn = document.getElementById('choosePlanBtn');
+    const sheet = document.getElementById('planModal');
+    const openBtn = document.getElementById('choosePlanBtn');
 
-  // Crear overlay (fondo oscuro)
-  const overlay = document.createElement('div');
-  overlay.classList.add('overlay');
-  document.body.appendChild(overlay);
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    document.body.appendChild(overlay);
 
-  // Mostrar modal
-  openBtn.addEventListener('click', () => {
-    overlay.classList.add('show');
-    sheet.classList.add('show');
-    document.documentElement.style.overflow = 'hidden';
-  });
+    openBtn.addEventListener('click', () => {
+      overlay.classList.add('show');
+      sheet.classList.add('show');
+      document.documentElement.style.overflow = 'hidden';
+    });
 
-  // Función para cerrar modal con animación
-  function closeSheet() {
-    sheet.classList.add('closing');
-    sheet.classList.remove('show');
-    overlay.classList.remove('show');
-    sheet.addEventListener(
-      'transitionend',
-      () => {
-        sheet.classList.remove('closing');
-        document.documentElement.style.overflow = '';
-      },
-      { once: true }
-    );
-  }
+    function closeSheet() {
+      sheet.classList.add('closing');
+      sheet.classList.remove('show');
+      overlay.classList.remove('show');
+      sheet.addEventListener(
+        'transitionend',
+        () => {
+          sheet.classList.remove('closing');
+          document.documentElement.style.overflow = '';
+        },
+        { once: true }
+      );
+    }
 
-  // Cerrar al hacer clic fuera (en el overlay)
-  overlay.addEventListener('click', closeSheet);
+    overlay.addEventListener('click', closeSheet);
 
-  // Cerrar al presionar ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sheet.classList.contains('show')) closeSheet();
-  });
-</script>
-
-
-
-
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sheet.classList.contains('show')) closeSheet();
+    });
+  </script>
 </body>
 </html>
 
