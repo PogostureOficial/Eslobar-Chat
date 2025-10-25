@@ -343,13 +343,22 @@
     appId: "1:62754213665:web:3e9fcce1c08f6d0a113860"
   };
 
+  // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Configurar reCAPTCHA invisible
-  window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    size: 'invisible'
-  }, auth);
+  // ⚠️ Esperar a que el DOM cargue antes de inicializar reCAPTCHA
+  window.addEventListener('load', () => {
+    // Configurar reCAPTCHA invisible correctamente
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible'
+    });
+
+    // ✅ Esto garantiza que el reCAPTCHA esté listo
+    window.recaptchaVerifier.render().then(() => {
+      console.log("reCAPTCHA listo ✅");
+    });
+  });
 
   // Evento del botón de teléfono
   document.getElementById("microsoftBtn").addEventListener("click", () => {
@@ -370,7 +379,7 @@
       document.getElementById("step2").style.display = "block";
     } catch (err) {
       console.error(err);
-      showStatus("Error", "No se pudo enviar el SMS. Verificá el número.");
+      showStatus("Error", "No se pudo enviar el SMS. Verificá el número o el dominio no está autorizado.");
     }
   });
 
@@ -393,6 +402,7 @@
     }
   });
 </script>
+
 
 
 <script>
@@ -605,6 +615,7 @@
 </script>
 </body>
 </html>
+
 
 
 
