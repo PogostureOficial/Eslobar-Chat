@@ -243,6 +243,36 @@
         <span class="txt">Continuar con Telefono</span>
       </button>
 
+      <!-- Modal: inicio con teléfono -->
+      <div class="modal-backdrop" id="modalPhone">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="phoneTitle">
+          <h2 id="phoneTitle">Continuar con Telefono</h2>
+
+          <!-- Paso 1: ingresar número -->
+          <div id="step1">
+            <p>Ingresá tu número (incluyendo el código de país).</p>
+            <div class="email-input">
+              <input id="phoneInput" type="tel" placeholder="+5491123456789" />
+              <button class="send-code" id="sendCodeBtn">Enviar SMS</button>
+            </div>
+          </div>
+
+          <!-- Paso 2: verificar código -->
+          <div id="step2" style="display:none;">
+            <p>Ingresá el código que recibiste por SMS.</p>
+            <div class="email-input">
+              <input id="codeInput" type="text" placeholder="123456" maxlength="6" />
+              <button class="send-code" id="verifyCodeBtn">Verificar</button>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-white" onclick="hideModal('modalPhone')">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+
       <div class="divider" aria-hidden="true"></div>
 
       <!-- Correo -->
@@ -297,6 +327,74 @@
     </div>
   </div>
 
+<!-- Contenedor reCAPTCHA (invisible) -->
+<div id="recaptcha-container"></div>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+  // Configuración de tu proyecto Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyD9WDja2WveaA6Qe8z3VUpLu7svwL4um44",
+    authDomain: "eslobar-d4c99.firebaseapp.com",
+    projectId: "eslobar-d4c99",
+    appId: "1:62754213665:web:3e9fcce1c08f6d0a113860"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Configurar reCAPTCHA invisible
+  window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+    size: 'invisible'
+  }, auth);
+
+  // Evento del botón de teléfono
+  document.getElementById("microsoftBtn").addEventListener("click", () => {
+    showModal('modalPhone');
+  });
+
+  // Enviar SMS
+  document.getElementById("sendCodeBtn").addEventListener("click", async () => {
+    const phone = document.getElementById("phoneInput").value.trim();
+    if (!phone) {
+      showStatus("Error", "Ingresá un número de teléfono válido (con código de país).");
+      return;
+    }
+    try {
+      const confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+      window.confirmationResult = confirmationResult;
+      document.getElementById("step1").style.display = "none";
+      document.getElementById("step2").style.display = "block";
+    } catch (err) {
+      console.error(err);
+      showStatus("Error", "No se pudo enviar el SMS. Verificá el número.");
+    }
+  });
+
+  // Verificar código
+  document.getElementById("verifyCodeBtn").addEventListener("click", async () => {
+    const code = document.getElementById("codeInput").value.trim();
+    if (!code) {
+      showStatus("Error", "Ingresá el código que recibiste por SMS.");
+      return;
+    }
+    try {
+      const result = await window.confirmationResult.confirm(code);
+      const user = result.user;
+      localStorage.setItem("sesion_activa", "true");
+      localStorage.setItem("telefono_usuario", user.phoneNumber);
+      window.location.href = "/home.html";
+    } catch (err) {
+      console.error(err);
+      showStatus("Error", "Código incorrecto o expirado.");
+    }
+  });
+</script>
+
+
 <script>
   /* --------- Configuración EmailJS (usa la clave que tenías) ---------- */
   try {
@@ -320,10 +418,6 @@
 
   /* ---------- Servicio no disponible (Apple / Microsoft) ---------- */
   document.getElementById("appleBtn").addEventListener("click", (e) => {
-    e.preventDefault();
-    showModal('modalUnavailable');
-  });
-  document.getElementById("microsoftBtn").addEventListener("click", (e) => {
     e.preventDefault();
     showModal('modalUnavailable');
   });
@@ -511,6 +605,7 @@
 </script>
 </body>
 </html>
+
 
 
 
