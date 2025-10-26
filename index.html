@@ -2589,44 +2589,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!continueBtn || !emailInput) return;
 
-  continueBtn.addEventListener("click", () => {
+  continueBtn.addEventListener("click", async () => {  // ← async agregado
     const email = emailInput.value.trim();
 
     // 🔍 Validar formato y dominio
     if (!email.endsWith("@gmail.com") || !/^[^\s@]+@gmail\.com$/.test(email)) {
       errorMsg.style.display = "block";
       return;
-      const codigo = Math.floor(100000 + Math.random() * 900000);
-      localStorage.setItem("codigo_verificacion", String(codigo));
+    }
+
+    errorMsg.style.display = "none"; // ocultar mensaje si es válido
+
+    // ✅ Guardamos el correo
+    localStorage.setItem("correo_usuario", email);
+
+    // ✉️ Generar y enviar el código automáticamente
+    const codigo = Math.floor(100000 + Math.random() * 900000);
+    localStorage.setItem("codigo_verificacion", String(codigo));
+
+    try {
       await emailjs.send("service_nwp6u6j", "template_l73amke", {
         email,
         codigo: String(codigo),
         time: new Date(Date.now() + 15 * 60000).toLocaleTimeString(),
       });
-
+    } catch (err) {
+      console.error("Error enviando correo:", err);
+      alert("No se pudo enviar el código, intentá de nuevo.");
+      return;
     }
 
-    errorMsg.style.display = "none"; // ocultar mensaje si es válido
-
-    // ✅ Guardamos el correo y abrimos el modal de verificación
-    localStorage.setItem("correo_usuario", email);
-
-    // Cerramos modal principal y abrimos verificación
+    // 📬 Pasar al modal de verificación
     document.getElementById("authModal").style.display = "none";
     const verifyModal = document.getElementById("verifyModal");
     if (verifyModal) verifyModal.style.display = "flex";
 
-    // Reiniciamos inputs de verificación
+    // Reiniciar los campos de verificación
     const inputs = Array.from(document.querySelectorAll("#codeRow input"));
     inputs.forEach(i => i.value = "");
     inputs[0]?.focus();
-
-    // (Opcional: si querés que se envíe código automáticamente)
-    // acá podrías llamar tu función de envío de código si ya existe:
-    // enviarCodigo(email);
   });
 });
 </script>
+
 
 
 </body>
