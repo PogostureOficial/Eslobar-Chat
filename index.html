@@ -69,9 +69,9 @@
 
   /* —— MODALES —— */
   .auth-backdrop{
-    position: fixed; inset: 0; z-index: 9999;
+    position: fixed; inset: 0; z-index: 99999;
     display:none; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(0px);
   }
   .auth-modal{
     width: min(92vw, 440px); color:#fff; text-align:center;
@@ -207,9 +207,8 @@
 
   /* 🔹 Ajuste del placeholder */
   body.guest .input-container textarea::placeholder {
-    font-size: 11px; /* más chico */
-    opacity: 0.8;
-    margin-left: -30px;
+    font-size: 13px; /* más chico */
+    margin-left: -90px;
   }
 
 /* 🔹 Ajusta el texto para no quedar centrado verticalmente */
