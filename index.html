@@ -421,6 +421,33 @@
     }
   }
 
+    /* 🎨 Botones debajo del input con íconos */
+  .input-options button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .input-options button:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  .option-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+
   
 
 
@@ -724,6 +751,18 @@
   </div>
 </div>
 
+<div id="loginRequiredModal" class="auth-backdrop">
+  <div class="auth-modal">
+    <h2>Acceso restringido</h2>
+    <p>Para acceder a esta función es necesario que inicie sesión.</p>
+    <div class="auth-actions" style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
+      <button class="auth-cta cancel" id="laterBtn">Más tarde</button>
+      <button class="auth-cta main" id="goLoginBtn">Iniciar sesión</button>
+    </div>
+  </div>
+</div>
+
+
 
 <!-- 🔹 Modal: correo (input + envío de código) -->
 <div id="emailModal" class="auth-backdrop">
@@ -833,10 +872,20 @@
       </div>
 
       <div class="input-options">
-        <button>📎 Adjuntar</button>
-        <button>🌐 Buscar</button>
-        <button>📘 Estudiemos</button>
+        <button id="btnAdjuntar">
+          <img src="/static/images/logo1.png" alt="Adjuntar" class="option-icon">
+          Adjuntar
+        </button>
+        <button id="btnBuscar">
+          <img src="/static/images/logo2.png" alt="Buscar" class="option-icon">
+          Dar consejos
+        </button>
+        <button id="btnEstudiar">
+          <img src="/static/images/logo3.png" alt="Estudiemos" class="option-icon">
+          Predeci examen
+        </button>
       </div>
+
 
 
 
@@ -2496,6 +2545,34 @@ document.addEventListener("DOMContentLoaded", () => {
       serviceModal.style.display = "none";
     });
   }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loginModal = document.getElementById("loginRequiredModal");
+  const laterBtn = document.getElementById("laterBtn");
+  const goLoginBtn = document.getElementById("goLoginBtn");
+
+  // Botones que disparan el modal
+  ["btnAdjuntar", "btnBuscar", "btnEstudiar"].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", () => {
+      loginModal.style.display = "flex";
+    });
+  });
+
+  // Cerrar modal
+  if (laterBtn) laterBtn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+  });
+
+  // Abrir modal de inicio de sesión
+  if (goLoginBtn) goLoginBtn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+    const authModal = document.getElementById("authModal");
+    if (authModal) authModal.style.display = "flex";
+  });
 });
 </script>
 
