@@ -244,6 +244,50 @@
     border-color: rgba(255,255,255,0.4);
   }
 
+  /* 🔹 Oculta el botón del sidebar cuando no hay sesión */
+  body.guest .mobile-hamburger {
+    display: none !important;
+  }
+
+    /* 🔹 Ajuste del textarea */
+  body.guest #mensaje {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.4;
+    flex: 1;
+    resize: none;
+    padding: 6px 8px;
+    margin: 0;
+    height: auto;
+  }
+
+  body.guest #mensaje::placeholder {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  /* 🔹 Botón enviar */
+  body.guest .voice-btn {
+    position: static;
+    width: 36px;
+    height: 36px;
+    margin-left: 6px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+  }
+
+  body.guest .voice-btn:hover {
+    transform: translateY(-1px);
+  }
 
 
 </style>
