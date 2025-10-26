@@ -124,8 +124,20 @@
   .btn-disabled{ background:#1a1a1a; color:#555; }
   .btn-active{ background:#fff; color:#000; font-weight:700; }
 
+    /* ✅ Permitir chat normal para invitados */
+  body.guest .chat-container::before {
+    content: none !important;
+  }
 
+  body.guest .chat-container {
+    display: flex !important;
+    flex-direction: column;
+    height: 100% !important;
+  }
 
+  body.guest .chat-box {
+    min-height: 60vh !important;
+  }
 
 </style>
 
