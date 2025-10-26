@@ -248,10 +248,18 @@
       renderChatList();
       setupListEvents();
       setupNewChatBtn();
-      // abrir último seleccionado si hay, sinó dejar vacío
-      if (currentId && findChat(currentId)) openChat(currentId);
-      else clearChatUI();
+
+      // 🆕 Siempre iniciar un chat nuevo al entrar, sin borrar historial anterior
+      const nuevo = createChat('Nuevo chat');
+      clearChatUI();
+      renderChatList();
+      openChat(nuevo.id);
+      console.log('🆕 Nuevo chat creado automáticamente al cargar la página');
+
+      // También podés mantener la UI sincronizada con el título visible
+      if (titleEl) titleEl.style.opacity = '1';
     },
+
     addUserMessage(text) {
       if (!currentId || !findChat(currentId)) createAndOpenChat();
       addMessage('user', text);
@@ -266,3 +274,4 @@
     deleteChat
   };
 })();
+
