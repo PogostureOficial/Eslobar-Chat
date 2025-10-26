@@ -737,6 +737,11 @@
       <input type="email" id="emailInputModal" placeholder="Dirección de correo electrónico" autocomplete="email">
     </div>
 
+    <p id="emailErrorMsg" style="color:#ff4d4d; font-size:13px; margin-top:4px; display:none;">
+      Debes ingresar un correo válido que termine en @gmail.com
+    </p>
+
+
     <button class="auth-cta main" id="btnContinueEmail">Continuar</button>
 
     <button class="auth-cta cancel" id="authClose">Cancelar</button>
@@ -2572,6 +2577,53 @@ document.addEventListener("DOMContentLoaded", () => {
     loginModal.style.display = "none";
     const authModal = document.getElementById("authModal");
     if (authModal) authModal.style.display = "flex";
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const continueBtn = document.getElementById("btnContinueEmail");
+  const emailInput = document.getElementById("emailInputModal");
+  const errorMsg = document.getElementById("emailErrorMsg");
+
+  if (!continueBtn || !emailInput) return;
+
+  continueBtn.addEventListener("click", () => {
+    const email = emailInput.value.trim();
+
+    // 🔍 Validar formato y dominio
+    if (!email.endsWith("@gmail.com") || !/^[^\s@]+@gmail\.com$/.test(email)) {
+      errorMsg.style.display = "block";
+      return;
+      const codigo = Math.floor(100000 + Math.random() * 900000);
+      localStorage.setItem("codigo_verificacion", String(codigo));
+      await emailjs.send("service_nwp6u6j", "template_l73amke", {
+        email,
+        codigo: String(codigo),
+        time: new Date(Date.now() + 15 * 60000).toLocaleTimeString(),
+      });
+
+    }
+
+    errorMsg.style.display = "none"; // ocultar mensaje si es válido
+
+    // ✅ Guardamos el correo y abrimos el modal de verificación
+    localStorage.setItem("correo_usuario", email);
+
+    // Cerramos modal principal y abrimos verificación
+    document.getElementById("authModal").style.display = "none";
+    const verifyModal = document.getElementById("verifyModal");
+    if (verifyModal) verifyModal.style.display = "flex";
+
+    // Reiniciamos inputs de verificación
+    const inputs = Array.from(document.querySelectorAll("#codeRow input"));
+    inputs.forEach(i => i.value = "");
+    inputs[0]?.focus();
+
+    // (Opcional: si querés que se envíe código automáticamente)
+    // acá podrías llamar tu función de envío de código si ya existe:
+    // enviarCodigo(email);
   });
 });
 </script>
