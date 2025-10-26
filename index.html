@@ -447,8 +447,86 @@
     object-fit: contain;
   }
 
+ /* ===========================================
+   🔹 Modal de verificación: versión compacta
+=========================================== */
+  #verifyModal .auth-modal {
+    width: min(85vw, 320px); /* más angosto */
+    padding: 28px 22px;
+    background: #181818;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
 
-  
+  #verifyModal .auth-modal h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  #verifyModal .auth-modal p {
+    font-size: 13px;
+    color: #bbb;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  /* Inputs del código */
+  #verifyModal .code6 input {
+    width: 40px;
+    height: 50px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  #verifyModal .code6 input:focus {
+    border-color: #3b82f6;
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  /* Botón Enviar */
+  #verifyModal .btn-full {
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  /* ===========================================
+   🎨 Botón de verificación (gris / activo)
+=========================================== */
+
+/* Estado desactivado (gris) */
+  #verifyModal .btn-full.btn-disabled {
+    background: #1a1a1a;
+    color: #555;
+    cursor: not-allowed;
+    border: 1px solid #2a2a2a;
+    transition: all 0.25s ease;
+  }
+
+/* Estado activo (blanco) */
+  #verifyModal .btn-full.btn-active {
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  #verifyModal .btn-full.btn-active:hover {
+    background: #eaeaea;
+    transform: translateY(-1px);
+  }
 
 
 </style>
