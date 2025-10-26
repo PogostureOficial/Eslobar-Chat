@@ -25,6 +25,40 @@
 
 <style>
   /* ==== Estilos iguales a index.html (botones/modales) ==== */
+
+    /* 🔒 VISUAL PARA INVITADOS (sin sesión activa) */
+  body.guest #welcome-overlay,
+  body.guest .upgrade-btn,
+  body.guest .eslobar-warning,
+  body.guest .plan-info,
+  body.guest .sidebar,
+  body.guest .menu-dropdown,
+  body.guest .menu-container {
+    display: none !important;
+  }
+
+  body.guest .topbar-login-btn {
+    display: block !important;
+    position: absolute;
+    left: 18px;
+    top: 12px;
+    font-size: 15px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  /* opcional: centrar el chat vacío con mensaje de invitado */
+  body.guest .chat-container::before {
+    content: "Inicia sesión para usar Eslobar.";
+    display: block;
+    color: #777;
+    text-align: center;
+    margin-top: 40vh;
+    font-size: 16px;
+  }
+
   :root{
     --bg: #1b1b1b;
     --panel: #1f1f1f;
@@ -743,7 +777,7 @@
   <script>
   // Si no hay sesión, volver al login
   if (localStorage.getItem("sesion_activa") !== "true") {
-    window.location.href = "index.html";
+    document.body.classList.add("guest");
   }
 
   // Si hay sesión, mostrar los datos del usuario
@@ -768,7 +802,7 @@
 
   <script>
   if (!localStorage.getItem("sesion_activa")) {
-    window.location.href = "index.html";
+    document.body.classList.add("guest");
   }
 </script>
 
