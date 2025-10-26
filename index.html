@@ -1967,86 +1967,96 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $("btnGoogle")?.addEventListener("click", handleGoogleStart);
 
-  // =========================
-  //   FLUJO: CORREO + CÓDIGO
-  // =========================
-  $("emailSend")?.addEventListener("click", async ()=>{
-    const email = ($("emailInput").value || "").trim();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      alert("Ingresá un correo válido.");
-      return;
-    }
-    // Generar y guardar
-    const codigo = Math.floor(100000 + Math.random() * 900000);
-    localStorage.setItem("codigo_verificacion", String(codigo));
-    localStorage.setItem("correo_usuario", email);
+// =========================
+//   FLUJO: CORREO + CÓDIGO
+// =========================
+$("emailSend")?.addEventListener("click", async () => {
+  const email = ($("emailInput").value || "").trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert("Ingresá un correo válido.");
+    return;
+  }
 
-    // Enviar Email
-    try {
-      await emailjs.send("service_nwp6u6j","template_l73amke",{ 
-      email, 
-      codigo: String(codigo), 
-      time: new Date(Date.now()+15*60000).toLocaleTimeString()
+  const codigo = Math.floor(100000 + Math.random() * 900000);
+  localStorage.setItem("codigo_verificacion", String(codigo));
+  localStorage.setItem("correo_usuario", email);
+
+  try {
+    await emailjs.send("service_nwp6u6j", "template_l73amke", {
+      email,
+      codigo: String(codigo),
+      time: new Date(Date.now() + 15 * 60000).toLocaleTimeString(),
     });
-    hide("emailModal"); 
+
+    hide("emailModal");
     show("verifyModal");
 
-    // Esperar a que el modal se muestre antes de buscar los inputs
-    setTimeout(() => {
-      const codeRow = document.getElementById("codeRow");
-      if (!codeRow) return console.warn("⚠️ No se encontró #codeRow en el DOM");
-      const inputs = Array.from(codeRow.querySelectorAll("input"));
-      if (inputs.length) inputs[0].focus();
-    }, 150);
+    // Esperar a que se muestre el modal
+    setTimeout(() => inicializarVerificacion(), 200);
+  } catch (err) {
+    console.error(err);
+    alert("No pudimos enviar el correo. Intentá nuevamente.");
+  }
+});
 
-    } catch(err){
-      console.error(err);
-      alert("No pudimos enviar el correo. Intentá nuevamente.");
-    }
+// =========================
+//   CONFIGURAR VERIFICACIÓN
+// =========================
+function inicializarVerificacion() {
+  const codeRow = document.getElementById("codeRow");
+  const btn = document.getElementById("verifyBtn");
+  if (!codeRow || !btn) return;
+
+  const inputs = Array.from(codeRow.querySelectorAll("input"));
+  inputs.forEach((inp) => (inp.value = "")); // limpiar campos
+
+  // 🔹 mover entre inputs
+  inputs.forEach((inp, idx) => {
+    inp.addEventListener("input", () => {
+      if (inp.value.length === 1 && idx < inputs.length - 1) inputs[idx + 1].focus();
+      const completo = inputs.every((i) => i.value.trim() !== "");
+      btn.disabled = !completo;
+      btn.className = `btn-full ${completo ? "btn-active" : "btn-disabled"}`;
+    });
+
+    inp.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !inp.value && idx > 0) inputs[idx - 1].focus();
+    });
   });
 
-  // Armar código 6 dígitos + habilitar botón
-  function setupVerifyInputs(){
-    const codeRow = $("#codeRow");
-    if (!codeRow) return; // evitar error
-    const inputs = Array.from(codeRow.querySelectorAll("input"));
+  // 🔹 evento del botón “Enviar”
+  btn.onclick = () => {
+    const ingresado = inputs.map((i) => i.value).join("");
+    const real = localStorage.getItem("codigo_verificacion");
+    const correo = localStorage.getItem("correo_usuario");
 
-    const btn = $("verifyBtn");
-    if (!inputs.length) return;
-    inputs.forEach((inp, idx)=>{
-      inp.addEventListener("input", ()=>{
-        if (inp.value.length === 1 && idx < inputs.length-1) inputs[idx+1].focus();
-        const completo = inputs.every(i => i.value.trim() !== "");
-        btn.disabled = !completo;
-        btn.className = `btn-full ${completo ? "btn-active" : "btn-disabled"}`;
-      });
-      inp.addEventListener("keydown", (e)=>{
-        if (e.key === "Backspace" && !inp.value && idx > 0) inputs[idx-1].focus();
-      });
-    });
+    if (!correo) {
+      alert("Falta correo, reiniciá el proceso.");
+      hide("verifyModal");
+      show("authModal");
+      return;
+    }
 
-    btn.addEventListener("click", ()=>{
-      const ingresado = inputs.map(i=>i.value).join("");
-      const real = localStorage.getItem("codigo_verificacion");
-      const correo = localStorage.getItem("correo_usuario");
-      if (!correo){ alert("Falta correo, reiniciá el proceso."); hide("verifyModal"); show("authModal"); return; }
-      if (ingresado === real){
-        // Generar avatar por inicial
-        const inicial = correo.charAt(0).toUpperCase();
-        const colores = ["#FF5733","#33C1FF","#28A745","#FFC300","#9B59B6","#E67E22"];
-        const color = colores[Math.floor(Math.random()*colores.length)];
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="50" fill="${color}"/><text x="50%" y="55%" font-size="50" text-anchor="middle" fill="white" font-family="Arial" dy=".3em">${inicial}</text></svg>`;
-        const avatar = "data:image/svg+xml;base64,"+btoa(svg);
+    if (ingresado === real) {
+      const inicial = correo.charAt(0).toUpperCase();
+      const colores = ["#FF5733", "#33C1FF", "#28A745", "#FFC300", "#9B59B6", "#E67E22"];
+      const color = colores[Math.floor(Math.random() * colores.length)];
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="50" fill="${color}"/><text x="50%" y="55%" font-size="50" text-anchor="middle" fill="white" font-family="Arial" dy=".3em">${inicial}</text></svg>`;
+      const avatar = "data:image/svg+xml;base64," + btoa(svg);
 
-        localStorage.setItem("foto_usuario", avatar);
-        localStorage.setItem("sesion_activa", "true");
-        localStorage.removeItem("codigo_verificacion");
-        location.reload(); 
-      } else {
-        alert("Código incorrecto.");
-      }
-    });
-  }
+      localStorage.setItem("foto_usuario", avatar);
+      localStorage.setItem("sesion_activa", "true");
+      localStorage.removeItem("codigo_verificacion");
+      location.reload();
+    } else {
+      alert("Código incorrecto.");
+    }
+  };
+
+  // Foco inicial en el primer input
+  inputs[0].focus();
+}
+
 
   // 👇 Llamala cuando el DOM esté listo
   setupVerifyInputs();
