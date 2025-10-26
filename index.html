@@ -269,7 +269,7 @@
     border-radius: 14px;
     padding: 32px 28px;
     text-align: center;
-    width: min(80vw, 420px);
+    width: min(90vw, 380px);
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -360,13 +360,22 @@
 
   .auth-input-row input {
     width: 90%;
-    background: #1b1b1b;
-    border: 1px solid #2a2a2a;
+    background: #2f2f2f;
+    border: 1px solid #4e4e4e;
     border-radius: 99px;
-    padding: 12px 14px;
+    padding: 14px 16px;
     color: #fff;
     font-size: 14px;
     outline: none;
+  }
+
+  /* 🔠 Placeholder con misma fuente y estilo */
+  .auth-input-row input::placeholder {
+    color: #4e4e4e; /* gris suave */
+    font-family: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
   }
 
   .auth-input-row input:focus {
@@ -374,9 +383,9 @@
   }
 
   .auth-cta.main {
-    width: 90%;
+    width: 100%;
     margin-top: 10px;
-    padding: 10px 14px;
+    padding: 12px 16px;
     border: none;
     border-radius: 99px;
     background: #fff;
@@ -411,6 +420,8 @@
       padding: 24px;
     }
   }
+
+  
 
 
 </style>
