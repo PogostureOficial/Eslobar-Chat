@@ -125,74 +125,12 @@
   .btn-active{ background:#fff; color:#000; font-weight:700; }
 
 
-  /* ===== 🎨 Estilo pantalla inicial sin sesión ===== */
-.landing-screen {
-  position: fixed;
-  inset: 0;
-  background: #121212;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 99999;
-}
 
-.landing-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 28px;
-}
-
-.landing-logo {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #fff;
-}
-
-.landing-login-btn {
-  background: #fff;
-  color: #000;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.landing-login-btn:hover {
-  background: #e6e6e6;
-}
-
-.landing-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.landing-content h1 {
-  font-size: 2rem;
-  font-weight: 500;
-  margin: 0;
-  text-align: center;
-  opacity: 0.9;
-}
 
 </style>
 
 </head>
 <body>
-
-  <!-- ====== Pantalla de bienvenida minimalista ====== -->
-  <div id="landingScreen" class="landing-screen">
-    <div class="landing-header">
-      <div class="landing-logo">Eslobar</div>
-      <button id="landingLoginBtn" class="landing-login-btn">Iniciar sesión</button>
-    </div>
-    <div class="landing-content">
-      <h1>Cuando quieras.</h1>
-    </div>
-  </div>
 
 
   <!-- ====== Ventana de Bienvenida ====== -->
@@ -2189,35 +2127,6 @@ function inicializarVerificacion() {
       google.accounts.id.prompt();
     }
   }
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // 🔹 Siempre crear un nuevo chat al entrar
-  const nuevoID = "chat_" + Date.now();
-  localStorage.setItem("chat_actual", nuevoID);
-  localStorage.setItem(nuevoID, JSON.stringify([]));
-
-  // 🔹 Mostrar landing solo si no hay sesión activa
-  const landing = document.getElementById("landingScreen");
-  const sesion = localStorage.getItem("sesion_activa") === "true";
-
-  if (!sesion) {
-    landing.style.display = "flex";
-    document.querySelector(".main-content").style.display = "none";
-    document.querySelector(".sidebar").style.display = "none";
-  } else {
-    landing.style.display = "none";
-  }
-
-  // 🔹 Acción del botón "Iniciar sesión"
-  document.getElementById("landingLoginBtn")?.addEventListener("click", () => {
-    landing.style.display = "none";
-    document.querySelector(".main-content").style.display = "";
-    document.querySelector(".sidebar").style.display = "";
-    show("authModal");
-  });
-});
 </script>
 
 
