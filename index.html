@@ -1701,9 +1701,9 @@ document.getElementById("enterApp").addEventListener("click", () => {
   if (avatar) document.getElementById("userAvatarSidebar").src = avatar;
 }
 
-document.getElementById("profileButton").addEventListener("click", () => {
+/*document.getElementById("profileButton").addEventListener("click", () => {
   document.getElementById("profileMenu").classList.toggle("show");
-});
+});*/
 
   </script>
 
@@ -1999,8 +1999,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Armar código 6 dígitos + habilitar botón
-  (function setupVerifyInputs(){
-    const inputs = Array.from($("#codeRow").querySelectorAll("input"));
+  function setupVerifyInputs(){
+    const codeRow = $("#codeRow");
+    if (!codeRow) return; // evitar error
+    const inputs = Array.from(codeRow.querySelectorAll("input"));
+
     const btn = $("verifyBtn");
     if (!inputs.length) return;
     inputs.forEach((inp, idx)=>{
