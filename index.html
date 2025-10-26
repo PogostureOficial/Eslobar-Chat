@@ -2705,6 +2705,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputs = Array.from(document.querySelectorAll("#codeRow input"));
     inputs.forEach(i => i.value = "");
     inputs[0]?.focus();
+
+    // 🔧 Inicializar el comportamiento de los inputs (activar botón)
+    setTimeout(() => inicializarVerificacion(), 200);
+
   });
 });
 </script>
