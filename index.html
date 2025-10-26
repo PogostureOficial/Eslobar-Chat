@@ -187,6 +187,63 @@
     display: none !important;
   }
 
+  /* =========================================================
+   🔧 Ajustes del input-container (modo invitado)
+========================================================= */
+
+  body.guest .input-container {
+    height: 90px; /* 🔹 más alto */
+    border-radius: 14px; /* 🔹 menos redondeado */
+    padding: 8px 12px 10px;
+    flex-direction: column; /* 🔹 permite colocar los botones debajo del texto */
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  /* 🔹 Oculta el botón "+" */
+  body.guest .plus-btn {
+    display: none !important;
+  }
+
+  /* 🔹 Ajuste del placeholder */
+  body.guest .input-container textarea::placeholder {
+    font-size: 13px; /* más chico */
+    opacity: 0.8;
+  }
+
+/* 🔹 Ajusta el texto para no quedar centrado verticalmente */
+  body.guest .input-container textarea {
+    padding: 10px 12px;
+    line-height: 1.4;
+    font-size: 14px;
+  }
+
+/* 🔹 Contenedor de los tres botones */
+  body.guest .input-options {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    justify-content: flex-start;
+  }
+
+/* 🔹 Botones debajo del placeholder */
+  body.guest .input-options button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  body.guest .input-options button:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
+  }
+
+
 
 </style>
 
@@ -570,6 +627,13 @@
           </div>
         </div>
       </div>
+
+      <div class="input-options">
+        <button>📎 Adjuntar</button>
+        <button>🌐 Buscar</button>
+        <button>📘 Estudiemos</button>
+      </div>
+
 
 
 
