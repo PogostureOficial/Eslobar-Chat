@@ -1920,20 +1920,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <!-- === Lógica de autenticación embebida === -->
 <script type="module">
-  // —— Firebase Teléfono ——
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-  import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-
-  // Tu config
-  const firebaseConfig = {
-    apiKey: "AIzaSyD9WDja2WveaA6Qe8z3VUpLu7svwL4um44",
-    authDomain: "eslobar-d4c99.firebaseapp.com",
-    projectId: "eslobar-d4c99",
-    appId: "1:62754213665:web:3e9fcce1c08f6d0a113860"
-  };
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
   // —— EmailJS ——
   try { emailjs.init("Ze_UcmuGqxNN8zCoU"); } catch(e){ console.warn("EmailJS init fallo", e); }
 
@@ -1964,16 +1950,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // Cierre por botón
   $("authClose")?.addEventListener("click", ()=> hide("authModal"));
   $("emailCancel")?.addEventListener("click", ()=> { hide("emailModal"); show("authModal"); });
-  $("phoneCancel")?.addEventListener("click", ()=> { hide("phoneModal"); show("authModal"); });
 
   // Esc para cerrar modales
   document.addEventListener("keydown", (e)=>{
-    if (e.key === "Escape") ["authModal","emailModal","verifyModal","phoneModal"].forEach(hide);
+    if (e.key === "Escape") ["authModal","emailModal","verifyModal"].forEach(hide);
   });
 
   // —— Abrir sub-flujos desde modal principal ——
   $("btnCorreo")?.addEventListener("click", ()=> { hide("authModal"); show("emailModal"); });
-  $("btnTelefono")?.addEventListener("click", ()=> { hide("authModal"); show("phoneModal"); initRecaptcha(); });
+
+  // 🔹 Teléfono (desactivado)
+  $("btnTelefono")?.addEventListener("click", ()=> {
+    hide("authModal");
+    alert("📱 Servicio no disponible actualmente.");
+  });
+
   $("btnGoogle")?.addEventListener("click", handleGoogleStart);
 
   // =========================
@@ -1992,7 +1983,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Enviar Email
     try {
-      await emailjs.send("service_nwp6u6j","template_l73amke",{ email, codigo: String(codigo), time: new Date(Date.now()+15*60000).toLocaleTimeString()});
+      await emailjs.send("service_nwp6u6j","template_l73amke",{ 
+        email, 
+        codigo: String(codigo), 
+        time: new Date(Date.now()+15*60000).toLocaleTimeString()
+      });
       hide("emailModal"); show("verifyModal");
       // foco en primer input
       const inputs = Array.from($("#codeRow").querySelectorAll("input"));
@@ -2007,6 +2002,7 @@ document.addEventListener("DOMContentLoaded", () => {
   (function setupVerifyInputs(){
     const inputs = Array.from($("#codeRow").querySelectorAll("input"));
     const btn = $("verifyBtn");
+    if (!inputs.length) return;
     inputs.forEach((inp, idx)=>{
       inp.addEventListener("input", ()=>{
         if (inp.value.length === 1 && idx < inputs.length-1) inputs[idx+1].focus();
@@ -2025,7 +2021,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const correo = localStorage.getItem("correo_usuario");
       if (!correo){ alert("Falta correo, reiniciá el proceso."); hide("verifyModal"); show("authModal"); return; }
       if (ingresado === real){
-        // Generar avatar por inicial (como en tu verificacion.html)
+        // Generar avatar por inicial
         const inicial = correo.charAt(0).toUpperCase();
         const colores = ["#FF5733","#33C1FF","#28A745","#FFC300","#9B59B6","#E67E22"];
         const color = colores[Math.floor(Math.random()*colores.length)];
@@ -2034,9 +2030,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         localStorage.setItem("foto_usuario", avatar);
         localStorage.setItem("sesion_activa", "true");
-        // limpiar código
         localStorage.removeItem("codigo_verificacion");
-        location.reload(); // recarga para mostrar toda la UI
+        location.reload(); 
       } else {
         alert("Código incorrecto.");
       }
@@ -2044,48 +2039,10 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
 
   // =========================
-  //   FLUJO: TELÉFONO (SMS)
-  // =========================
-  let recaptchaVerifier, confirmationResult;
-  function initRecaptcha(){
-    if (window._recaptchaReady) return;
-    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-    window._recaptchaReady = true;
-  }
-
-  $("phoneSend")?.addEventListener("click", async ()=>{
-    try{
-      const phone = ($("phoneInput").value || "").trim();
-      if (!phone){ alert("Ingresá un número válido."); return; }
-      if (!window._recaptchaReady) initRecaptcha();
-      confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
-      $("#phoneStep1").style.display = "none";
-      $("#phoneStep2").style.display = "block";
-    }catch(err){
-      console.error(err);
-      alert("No se pudo enviar el SMS. Verificá el dominio y el número.");
-    }
-  });
-
-  $("phoneVerify")?.addEventListener("click", async ()=>{
-    try{
-      const code = ($("phoneCode").value || "").trim();
-      if (!code){ alert("Ingresá el código recibido por SMS."); return; }
-      const result = await confirmationResult.confirm(code);
-      const user = result.user;
-      localStorage.setItem("sesion_activa", "true");
-      localStorage.setItem("telefono_usuario", user.phoneNumber || "");
-      location.reload();
-    }catch(err){
-      console.error(err);
-      alert("Código de SMS incorrecto o expirado.");
-    }
-  });
-
-  // =========================
   //   FLUJO: GOOGLE (GSI)
   // =========================
   const GOOGLE_CLIENT_ID = "681954592440-8435k741g9o7tcfluuvqhkkdr6fulgnv.apps.googleusercontent.com";
+
   function parseJwt(token){
     try{
       const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
@@ -2096,7 +2053,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function initGSI(){
     if (!(window.google && google.accounts && google.accounts.id)) return false;
     google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredentialResponse });
-    // Render “oculto” para inicializar librería
     const hidden = document.createElement('div'); hidden.id = "gsi-hidden"; hidden.style.display="none";
     document.body.appendChild(hidden);
     google.accounts.id.renderButton(hidden, { theme:"outline", size:"large" });
@@ -2113,10 +2069,14 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("correo_usuario", correo);
       if (foto) localStorage.setItem("foto_usuario", foto);
 
-      // Envío de código para doble paso (igual que correo)
+      // Envío de código
       const codigo = Math.floor(100000 + Math.random() * 900000);
       localStorage.setItem("codigo_verificacion", String(codigo));
-      await emailjs.send("service_nwp6u6j","template_l73amke",{ email: correo, codigo: String(codigo), time: new Date(Date.now()+15*60000).toLocaleTimeString()});
+      await emailjs.send("service_nwp6u6j","template_l73amke",{ 
+        email: correo, 
+        codigo: String(codigo), 
+        time: new Date(Date.now()+15*60000).toLocaleTimeString()
+      });
       hide("authModal"); show("verifyModal");
       const inputs = Array.from($("#codeRow").querySelectorAll("input"));
       inputs.forEach(i=> i.value=""); inputs[0].focus();
@@ -2128,7 +2088,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function handleGoogleStart(){
     if (!initGSI()){
-      // reintento corto
       let tries = 0;
       const t = setInterval(()=>{
         tries++;
