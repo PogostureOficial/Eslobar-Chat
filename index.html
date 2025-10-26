@@ -528,6 +528,90 @@
     transform: translateY(-1px);
   }
 
+  /* =======================================================
+   🎭 Selector de personalidad — estilo profesional
+======================================================= */
+  .personality-selector {
+    position: relative;
+    display: inline-block;
+    font-family: "Segoe UI", "Inter", sans-serif;
+  }
+
+  .selector-btn {
+    background: #2a2a2a;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .selector-btn:hover {
+    background: #3a3a3a;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    min-width: 260px;
+    padding: 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    z-index: 999;
+  }
+
+  .dropdown.show {
+    display: block;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .option:hover {
+    background: #2f2f2f;
+  }
+
+  .opt-text strong {
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .opt-text p {
+    color: #aaa;
+    font-size: 12.5px;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .option .check {
+    color: #fff;
+    opacity: 0;
+    font-size: 14px;
+  }
+
+  .option.active .check {
+    opacity: 1;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
 
 </style>
 
@@ -760,17 +844,40 @@
 </div>
 
 
-    <!-- 🔹 Selector de personalidad -->
     <div class="personality-selector">
-      <select id="aiPersonality" class="personality-dropdown">
-        <option value="generico">Genérico</option>
-        <option value="acuna">Acuña</option>
-        <option value="navarra">Navarra</option>
-        <option value="carro">Carro</option>
-        <option value="mika">Mika</option>    <!-- 🆕 -->
-        <option value="gladys">Gladys</option>    <!-- 🆕 -->
-      </select>
+      <button id="selectedPersonality" class="selector-btn">Genérico ▾</button>
+      <div id="personalityDropdown" class="dropdown">
+        <div class="option active">
+          <div class="opt-text">
+            <strong>Genérico</strong>
+            <p>Modo estándar con tono equilibrado.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+        <div class="option">
+          <div class="opt-text">
+            <strong>Acuña</strong>
+            <p>Profesor de Ciencias sociales y Geografia</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+        <div class="option">
+          <div class="opt-text">
+            <strong>Navarra</strong>
+            <p>Profesor de Herramientas Digitales y Fisica.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+        <div class="option">
+          <div class="opt-text">
+            <strong>Carro</strong>
+            <p>Profesor de Historia.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+      </div>
     </div>
+
 
 
     <!-- Botón Mejorar a Plus -->
@@ -2715,8 +2822,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<script>
+const selectorBtn = document.getElementById("selectedPersonality");
+const dropdown = document.getElementById("personalityDropdown");
+const options = dropdown.querySelectorAll(".option");
 
+selectorBtn.addEventListener("click", () => {
+  dropdown.classList.toggle("show");
+});
 
+options.forEach(opt => {
+  opt.addEventListener("click", () => {
+    options.forEach(o => o.classList.remove("active"));
+    opt.classList.add("active");
+    selectorBtn.textContent = opt.querySelector("strong").textContent + " ▾";
+    dropdown.classList.remove("show");
+    
+    // 🧠 Mantiene el funcionamiento actual
+    const selected = opt.querySelector("strong").textContent;
+    localStorage.setItem("ia_personality", selected);
+  });
+});
+
+// Cierra al hacer clic afuera
+document.addEventListener("click", (e) => {
+  if (!selectorBtn.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.remove("show");
+  }
+});
+</script>
 
 </body>
 </html>
