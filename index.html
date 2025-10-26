@@ -1984,14 +1984,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Enviar Email
     try {
       await emailjs.send("service_nwp6u6j","template_l73amke",{ 
-        email, 
-        codigo: String(codigo), 
-        time: new Date(Date.now()+15*60000).toLocaleTimeString()
-      });
-      hide("emailModal"); show("verifyModal");
-      // foco en primer input
-      const inputs = Array.from($("#codeRow").querySelectorAll("input"));
-      inputs[0].focus();
+      email, 
+      codigo: String(codigo), 
+      time: new Date(Date.now()+15*60000).toLocaleTimeString()
+    });
+    hide("emailModal"); 
+    show("verifyModal");
+
+    // Esperar a que el modal se muestre antes de buscar los inputs
+    setTimeout(() => {
+      const codeRow = document.getElementById("codeRow");
+      if (!codeRow) return console.warn("⚠️ No se encontró #codeRow en el DOM");
+      const inputs = Array.from(codeRow.querySelectorAll("input"));
+      if (inputs.length) inputs[0].focus();
+    }, 150);
+
     } catch(err){
       console.error(err);
       alert("No pudimos enviar el correo. Intentá nuevamente.");
