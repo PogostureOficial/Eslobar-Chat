@@ -179,6 +179,15 @@
     transform: translateY(-1px);
   }
 
+  /* =========================================================
+   🚫 Ocultar botón del sidebar en modo invitado
+========================================================= */
+  body.guest #sidebarToggle,
+  body.guest .menu-btn {
+    display: none !important;
+  }
+
+
 </style>
 
 </head>
