@@ -2129,7 +2129,25 @@ function inicializarVerificacion() {
   }
 </script>
 
-
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Esperamos a que ChatStore esté disponible
+  if (window.ChatStore && typeof ChatStore.newChat === "function") {
+    // Simula que el usuario presionó el botón "Nuevo chat"
+    ChatStore.newChat();
+    console.log("🆕 Nuevo chat iniciado automáticamente al entrar");
+  } else {
+    // Si todavía no cargó ChatStore, intentamos un poco más tarde
+    const interval = setInterval(() => {
+      if (window.ChatStore && typeof ChatStore.newChat === "function") {
+        ChatStore.newChat();
+        clearInterval(interval);
+        console.log("🆕 Nuevo chat iniciado automáticamente (reintento)");
+      }
+    }, 300);
+  }
+});
+</script>
 
 
 </body>
