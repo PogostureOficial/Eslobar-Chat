@@ -261,6 +261,157 @@
     margin-top: 15px;
   }
 
+  /* ===========================================================
+   🎨 NUEVO DISEÑO MODAL DE INICIO DE SESIÓN (estilo ChatGPT)
+=========================================================== */
+  .auth-modal {
+    background: #141414;
+    border-radius: 14px;
+    padding: 32px 28px;
+    text-align: center;
+    width: min(90vw, 420px);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-modal h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .auth-modal .auth-subtitle {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  .auth-btn {
+    width: 100%;
+    background: #1f1f1f;
+    border: 1px solid #2b2b2b;
+    border-radius: 999px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .auth-btn:hover {
+    background: #2b2b2b;
+    transform: translateY(-1px);
+  }
+
+  .auth-btn .ico {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-btn .ico img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+  .auth-btn .txt {
+    flex: 1;
+    text-align: left;
+    font-size: 15px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #2f2f2f;
+  }
+
+  .divider span {
+    margin: 0 10px;
+    color: #aaa;
+    font-size: 13px;
+  }
+
+  .auth-input-row {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .auth-input-row input {
+    width: 100%;
+    background: #1b1b1b;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
+
+  .auth-input-row input:focus {
+    border-color: #3b3b3b;
+  }
+
+  .auth-cta.main {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .auth-cta.main:hover {
+    background: #e9e9e9;
+    transform: translateY(-1px);
+  }
+
+  .auth-cta.cancel {
+    background: transparent;
+    color: #aaa;
+    border: none;
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .auth-cta.cancel:hover {
+    color: #fff;
+  }
+
+  /* 📱 Ajustes responsive */
+  @media (max-width: 480px) {
+    .auth-modal {
+      width: 90%;
+      padding: 24px;
+    }
+  }
+
 
 </style>
 
@@ -519,24 +670,49 @@
 <!-- 🔹 Modal principal: elegir método -->
 <div id="authModal" class="auth-backdrop">
   <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-    <h2 id="authTitle">Iniciar sesión en Eslobar</h2>
+    <h2 id="authTitle">Iniciar sesión o registrarse</h2>
+    <p class="auth-subtitle">Obtendrás respuestas más inteligentes y podrás cargar archivos, imágenes y mucho más.</p>
+
     <button class="auth-btn" id="btnGoogle">
       <span class="ico"><img src="/static/google.png" alt="Google"></span>
       <span class="txt">Continuar con Google</span>
     </button>
-    <button class="auth-btn" id="btnCorreo">
-      <span class="ico"><img src="/static/corre.png" alt="Correo"></span>
-      <span class="txt">Continuar con correo</span>
+
+    <button class="auth-btn" id="btnMicrosoft">
+      <span class="ico"><img src="/static/images/microsoft.png" alt="Microsoft"></span>
+      <span class="txt">Continuar con Microsoft</span>
     </button>
+
+    <button class="auth-btn" id="btnApple">
+      <span class="ico"><img src="/static/images/apple.png" alt="Apple"></span>
+      <span class="txt">Continuar con Apple</span>
+    </button>
+
     <button class="auth-btn" id="btnTelefono">
       <span class="ico"><img src="/static/telefono.png" alt="Teléfono"></span>
-      <span class="txt">Continuar con teléfono</span>
+      <span class="txt">Continuar con el teléfono</span>
     </button>
-    <div class="auth-actions">
-      <button class="auth-cta" id="authClose">Cancelar</button>
+
+    <div class="divider"><span>o</span></div>
+
+    <div class="auth-input-row">
+      <input type="email" id="emailInputModal" placeholder="Dirección de correo electrónico" autocomplete="email">
     </div>
+
+    <button class="auth-cta main" id="btnContinueEmail">Continuar</button>
+
+    <button class="auth-cta cancel" id="authClose">Cancelar</button>
   </div>
 </div>
+
+<div id="serviceModal" class="auth-backdrop">
+  <div class="auth-modal">
+    <h2>Servicio no disponible</h2>
+    <p>Este servicio actualmente no está disponible.</p>
+    <button class="auth-cta main" id="closeServiceModal">Entendido</button>
+  </div>
+</div>
+
 
 <!-- 🔹 Modal: correo (input + envío de código) -->
 <div id="emailModal" class="auth-backdrop">
@@ -2287,6 +2463,27 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("🆕 Nuevo chat iniciado automáticamente (reintento)");
       }
     }, 300);
+  }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const unavailableButtons = ["btnMicrosoft", "btnApple", "btnTelefono"];
+  const serviceModal = document.getElementById("serviceModal");
+  const closeServiceModal = document.getElementById("closeServiceModal");
+
+  unavailableButtons.forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", () => {
+      serviceModal.style.display = "flex";
+    });
+  });
+
+  if (closeServiceModal) {
+    closeServiceModal.addEventListener("click", () => {
+      serviceModal.style.display = "none";
+    });
   }
 });
 </script>
