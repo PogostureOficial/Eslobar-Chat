@@ -2039,7 +2039,10 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Código incorrecto.");
       }
     });
-  })();
+  }
+
+  // 👇 Llamala cuando el DOM esté listo
+  document.addEventListener("DOMContentLoaded", setupVerifyInputs);
 
   // =========================
   //   FLUJO: GOOGLE (GSI)
