@@ -2125,7 +2125,7 @@ html, body {
 .plus-menu {
   position: absolute;
   bottom: calc(100% + 10px); /* 🔥 siempre arriba del botón */
-  left: 50%;
+  left: 90%;
   transform: translateX(-50%);
   background: #303030;
   border-radius: 14px;
