@@ -356,6 +356,146 @@ video:not(.no-invert) {
     transition: transform 0.3s ease;
   }
 
+/* =======================================================
+   🔥 SOPORTE PARA NUEVOS ELEMENTOS DEL MODO OSCURO
+   VERSIÓN ADAPTADA A light.css (tema blanco)
+======================================================= */
+
+/* 🔄 FONDO GLOBAL */
+.auth-backdrop {
+  background: rgba(0,0,0,0.35) !important;
+}
+
+/* 🧱 Contenedor del modal de login + verificación */
+.auth-modal {
+  background:#ffffff !important;
+  color:#111827 !important;
+  border:1px solid #e5e7eb !important;
+  box-shadow:0 12px 32px rgba(17,24,39,0.18) !important;
+}
+
+/* ✍️ Inputs del modal */
+.auth-input-row input {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  color:#111827 !important;
+}
+.auth-input-row input::placeholder {
+  color:#6b7280 !important;
+}
+
+/* 🔘 Botones sociales de login */
+.auth-btn {
+  background:#f3f4f6 !important;
+  border:1px solid #e5e7eb !important;
+  color:#111827 !important;
+}
+.auth-btn:hover {
+  background:#e5e7eb !important;
+}
+.auth-btn .ico img {
+  filter:none !important;
+}
+
+/* ➖ Divider */
+.divider span,
+.divider::before,
+.divider::after {
+  background:#e5e7eb !important;
+  color:#6b7280 !important;
+}
+
+/* ✅ Botón CTA principal */
+.auth-cta.main {
+  background:#111827 !important;
+  color:#fff !important;
+}
+.auth-cta.main:hover {
+  background:#000 !important;
+}
+
+/* ❌ Cancelar */
+.auth-cta.cancel {
+  color:#6b7280 !important;
+}
+.auth-cta.cancel:hover {
+  color:#111827 !important;
+}
+
+/* 🔢 Código de verificación */
+#verifyModal .code6 input {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  color:#111827 !important;
+}
+
+/* 📩 Botón enviar código */
+#verifyModal .btn-full.btn-disabled {
+  background:#f3f4f6 !important;
+  color:#9ca3af !important;
+  border:1px solid #e5e7eb !important;
+}
+#verifyModal .btn-full.btn-active {
+  background:#111827 !important;
+  color:#ffffff !important;
+}
+
+/* 🧑‍🎨 SELECTOR DE PERSONALIDAD */
+.selector-btn {
+  background:#ffffff !important;
+  color:#111827 !important;
+  border:1px solid #e5e7eb !important;
+}
+.selector-btn:hover {
+  background:#f3f4f6 !important;
+}
+
+.dropdown {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+  box-shadow:0 10px 24px rgba(17,24,39,0.12) !important;
+}
+.option:hover {
+  background:#f3f4f6 !important;
+}
+.option .check {
+  color:#111827 !important;
+}
+.opt-text strong {
+  color:#111827 !important;
+}
+.opt-text p {
+  color:#6b7280 !important;
+}
+
+/* ✍️ Input (modo invitado) */
+body.guest .input-container {
+  background:#ffffff !important;
+  border:1px solid #e5e7eb !important;
+}
+body.guest .input-container textarea {
+  background:#ffffff !important;
+  color:#111827 !important;
+}
+body.guest .input-container textarea::placeholder {
+  color:#9ca3af !important;
+}
+
+/* 🎯 Botones debajo del textarea */
+body.guest .input-options button {
+  border:1px solid #e5e7eb !important;
+  color:#111827 !important;
+}
+body.guest .input-options button:hover {
+  background:#f3f4f6 !important;
+}
+
+/* 🎤 Editor de voz */
+body.guest .voice-btn {
+  filter:none !important;
+}
+
+
 
 
 
