@@ -2518,19 +2518,6 @@ document.addEventListener('click', () => {
 })();
 </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const selector = document.getElementById("aiPersonality");
-
-  // Cargar la selección previa si existe
-  const saved = localStorage.getItem("aiPersonality") || "generico";
-  selector.value = saved;
-
-  selector.addEventListener("change", () => {
-    localStorage.setItem("aiPersonality", selector.value);
-  });
-});
-</script>
 
 <!-- === Lógica de autenticación embebida === -->
 <script type="module">
