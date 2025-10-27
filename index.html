@@ -2868,29 +2868,45 @@ const selectorBtn = document.getElementById("selectedPersonality");
 const dropdown = document.getElementById("personalityDropdown");
 const options = dropdown.querySelectorAll(".option");
 
+function applyPersonality() {
+  const saved = localStorage.getItem("aiPersonality") || "Genérico";
+
+  options.forEach(o => {
+    o.classList.toggle(
+      "active",
+      o.querySelector("strong").textContent === saved
+    );
+  });
+
+  selectorBtn.textContent = saved + " ▾";
+}
+
+// Abrir / cerrar menú
 selectorBtn.addEventListener("click", () => {
   dropdown.classList.toggle("show");
 });
 
+// Seleccionar una opción
 options.forEach(opt => {
   opt.addEventListener("click", () => {
-    options.forEach(o => o.classList.remove("active"));
-    opt.classList.add("active");
-    selectorBtn.textContent = opt.querySelector("strong").textContent + " ▾";
-    dropdown.classList.remove("show");
-    
-    // 🧠 Mantiene el funcionamiento actual
     const selected = opt.querySelector("strong").textContent;
-    localStorage.setItem("ia_personality", selected);
+    localStorage.setItem("aiPersonality", selected);
+
+    applyPersonality(); 
+    dropdown.classList.remove("show");
   });
 });
 
-// Cierra al hacer clic afuera
+// Cerrar al hacer click fuera
 document.addEventListener("click", (e) => {
   if (!selectorBtn.contains(e.target) && !dropdown.contains(e.target)) {
     dropdown.classList.remove("show");
   }
 });
+
+// ✅ Inicializar al cargar
+applyPersonality();
+
 </script>
 
 </body>
