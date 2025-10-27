@@ -2122,8 +2122,8 @@ html, body {
   display: none;
   flex-direction: column;
   position: absolute;
-  bottom: 60px;
-  left: -590px;
+  bottom: 20px;
+  left: -480px;
   box-shadow: 0 6px 25px rgba(0,0,0,.5);
   border: 1px solid rgba(255,255,255,0.07);
   z-index: 2000;
@@ -2148,8 +2148,8 @@ html, body {
 
 /* ✅ Iconos */
 .plus-icon-img {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   filter: brightness(1.3);
 }
 
