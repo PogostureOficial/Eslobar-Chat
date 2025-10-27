@@ -364,7 +364,7 @@ html, body {
 
      /* 🔧 alineación vertical perfecta */
   position: fixed;
-  top: 10px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
+  top: 30px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
   left: 10px;
 }
 
