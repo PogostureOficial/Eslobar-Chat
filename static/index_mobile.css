@@ -464,7 +464,7 @@ html, body {
   text-align: center;
   width: 100%;
   pointer-events: none;
-  z-index: 100;
+  z-index: 10010;
 }
 
 /* ✅ Subir un poco el input para dejar espacio */
