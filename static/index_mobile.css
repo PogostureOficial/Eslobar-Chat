@@ -2113,30 +2113,36 @@ html, body {
   background: #3a3a3a;
 }
 
+/* ✅ Contenedor del botón + */
 .plus-container {
-  position: relative;  /* El menú ahora depende de este contenedor */
-  display: inline-flex;
-  align-items: center;
+  position: fixed; /* SIEMPRE pegado al input */
+  bottom: 70px; /* Mismo nivel del input */
+  left: 18px;  /* Ajusta según tu diseño */
+  z-index: 10002;
 }
 
-/* ✅ Menú SIEMPRE arriba del botón + */
+/* ✅ El menú se posiciona respecto al botón + */
 .plus-menu {
   position: absolute;
-  bottom: 100%;  /* 🔥 Menú sale inmediatamente arriba */
-  transform: translateX(-50%) translateY(-8px);
+  bottom: calc(100% + 10px); /* 🔥 siempre arriba del botón */
+  left: 50%;
+  transform: translateX(-50%);
   background: #303030;
-  padding: 6px 0;
-  border-radius: 12px;
-  width: 250px;
+  border-radius: 14px;
+  padding: 8px 0;
+  width: 260px;
   display: none;
   flex-direction: column;
-  box-shadow: 0 6px 25px rgba(0,0,0,0.45);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
   border: 1px solid rgba(255,255,255,0.07);
-  z-index: 5000;
-  margin-right: 550px;
-  font-family: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
-  font-style: normal;
 }
+
+/* Evita movimientos raros */
+#plus-btn {
+  position: relative;
+  z-index: 10003;
+}
+
 
 
 /* ✅ Cada ítem con icono + texto alineados */
