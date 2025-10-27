@@ -2123,9 +2123,9 @@ html, body {
 .plus-menu {
   position: absolute;
   bottom: 100%;  /* 🔥 Menú sale inmediatamente arriba */
-  left: 50%;
+  left: 10%;
   transform: translateX(-50%) translateY(-8px);
-  background: #1f1f1f;
+  background: #303030;
   padding: 6px 0;
   border-radius: 12px;
   width: 250px;
