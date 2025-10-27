@@ -2162,6 +2162,7 @@ html, body {
   transition: background 0.2s ease;
   font-family: inherit !important;
   text-align: left; /* Alinea el contenido textual */
+  font-style: normal !important;
 }
 
 .plus-item:hover {
