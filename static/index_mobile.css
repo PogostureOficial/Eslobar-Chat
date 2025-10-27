@@ -2113,21 +2113,29 @@ html, body {
   background: #3a3a3a;
 }
 
-/* ✅ Reset visual del menú + */
+.plus-container {
+  position: relative;  /* El menú ahora depende de este contenedor */
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ✅ Menú SIEMPRE arriba del botón + */
 .plus-menu {
+  position: absolute;
+  bottom: 100%;  /* 🔥 Menú sale inmediatamente arriba */
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
   background: #1f1f1f;
-  border-radius: 14px;
   padding: 6px 0;
+  border-radius: 12px;
   width: 250px;
   display: none;
   flex-direction: column;
-  position: absolute;
-  bottom: 20px;
-  left: -480px;
-  box-shadow: 0 6px 25px rgba(0,0,0,.5);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.45);
   border: 1px solid rgba(255,255,255,0.07);
-  z-index: 2000;
+  z-index: 5000;
 }
+
 
 /* ✅ Cada ítem con icono + texto alineados */
 .plus-item {
