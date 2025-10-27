@@ -132,12 +132,7 @@
 ========================================================= */
 
   /* Selector de personalidad centrado */
-  body.guest .personality-selector {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+ 
 
   body.guest .personality-dropdown {
     background: rgba(255, 255, 255, 0.08);
@@ -546,7 +541,6 @@
     font-size: 17px;
     cursor: pointer;
     transition: background 0.2s;
-    left: -40%;
   }
 
   .selector-btn:hover {
@@ -612,6 +606,38 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ✅ Botón misma apariencia siempre */
+  .personality-selector {
+      position: absolute;
+      top: 12px;
+      z-index: 1000;
+  }
+
+/* 🔹 Invitado → esquina izquierda */
+  body.guest .personality-selector {
+      left: 12px !important;
+  }
+
+/* 🔹 Logueado → esquina derecha */
+  body:not(.guest) .personality-selector {
+        right: 12px !important;
+  }
+
+/* ✅ Estilo profesional minimalista */
+  .selector-btn {
+      background: #2a2a2a;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+  }
+
+  .selector-btn:hover {
+      background: #3a3a3a;
+  }
 
 </style>
 
