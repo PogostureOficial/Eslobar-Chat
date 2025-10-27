@@ -495,6 +495,21 @@ body.guest .voice-btn {
   filter:none !important;
 }
 
+/* 🧹 Borde feo fuera del textarea */
+.input-container textarea {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 🖤 Descripción del modal de inicio sesión → texto oscuro */
+.auth-modal p,
+.auth-modal .auth-subtitle {
+  color: #111827 !important;
+}
+
+
+
 
 
 
