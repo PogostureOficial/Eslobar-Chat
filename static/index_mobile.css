@@ -2124,7 +2124,7 @@ html, body {
 /* ✅ El menú se posiciona respecto al botón + */
 .plus-menu {
   position: absolute;
-  bottom: calc(100% + 10px); /* 🔥 siempre arriba del botón */
+  bottom: calc(100% + 10px); /*  siempre arriba del botón */
   left: 90%;
   transform: translateX(-50%);
   background: #303030;
