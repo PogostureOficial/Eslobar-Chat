@@ -2221,8 +2221,6 @@ html, body {
 .mic-button {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: #3a3a3a;
   border: none;
   display: flex;
   align-items: center;
