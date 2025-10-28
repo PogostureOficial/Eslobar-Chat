@@ -1847,7 +1847,7 @@ html, body {
    🔹 Botón “Eslobar” y “Obtener” compactos
 ------------------------------------------------------- */
 .mobile-eslobar-btn {
-  font-size: 15px;
+  font-size: 0px;
   font-weight: 600;
   color: #fff;
   background: transparent;
