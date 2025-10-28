@@ -2225,7 +2225,7 @@ html, body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: -200px; /* ✅ Espaciado respecto al botón enviar */
+  margin-left: -70px; /* ✅ Espaciado respecto al botón enviar */
   padding: 0; /* ✅ Para que no se agrande */
 }
 
@@ -2238,8 +2238,8 @@ html, body {
 
 /* ✅ El icono se respeta tal cual */
 .mic-icon {
-  width: 38px; /* ✅ Tamaño natural del botón */
-  height: 38px;
+  width: 40px; /* ✅ Tamaño natural del botón */
+  height: 40px;
   object-fit: contain;
 }
 
