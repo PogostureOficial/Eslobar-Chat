@@ -1067,7 +1067,8 @@
       placeholder="Pregunta lo que quieras" 
       onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();enviarMensaje()}"></textarea>
 
-    
+    <!-- ✅ Nuevo contenedor para alinear mic + enviar juntos -->
+  <div class="send-group">
     <!-- ✅ primero mic -->
     <button id="micButton" class="mic-button">
       <img src="/static/images/button6.png" class="mic-icon" alt="Mic">
@@ -1078,6 +1079,7 @@
       <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
       <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
     </div>
+  <div>
 
          <div class="plus-menu">
           <button id="plusBtn" class="plus-btn">
