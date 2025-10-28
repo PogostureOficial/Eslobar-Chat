@@ -2225,7 +2225,7 @@ html, body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: -80px; /* ✅ Espaciado respecto al botón enviar */
+  margin-left: -200px; /* ✅ Espaciado respecto al botón enviar */
   padding: 0; /* ✅ Para que no se agrande */
 }
 
