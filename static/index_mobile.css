@@ -2210,7 +2210,7 @@ html, body {
 }
 
 .plus-divider {
-  width: 100%;
+  width: 80%;
   height: 1px;
   background: rgba(255,255,255,0.08);
   margin: 6px 0;
