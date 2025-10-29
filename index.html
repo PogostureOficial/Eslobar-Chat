@@ -3041,5 +3041,35 @@ applyPersonality();
 
 </script>
 
+<script>
+  const THEME_IMG_MAP = [
+    {
+      match: /\/static\/images\/button1(\.png)?$/i,
+      dark:  '/static/images/button1.png',
+      light: '/static/images/button1_light.png'
+    },
+    {
+      match: /\/static\/images\/button5(\.png)?$/i,
+      dark:  '/static/images/button5.png',
+      light: '/static/images/button5_light.png'
+    }
+  ];
+
+  function applyThemeImageSwapByName() {
+    const light = isLightThemeActive();
+    document.querySelectorAll('img').forEach(img => {
+      const rule = THEME_IMG_MAP.find(r => r.match.test(img.src));
+      if (!rule) return;
+      const desired = light ? rule.light : rule.dark;
+      if (img.src.endsWith(desired)) return;
+      img.classList.add('no-invert'); // asegurar que no se invierta
+      img.src = desired;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', applyThemeImageSwapByName);
+</script>
+
+
 </body>
 </html>
