@@ -20,6 +20,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <!-- === Login embebido en home: dependencias === -->
 <link rel="preconnect" href="https://accounts.google.com">
+<script>
+  // Shim para evitar "handleGoogleStart is not defined" si algo lo llama temprano
+<script> window.handleGoogleStart = window.handleGoogleStart || function(){}; </script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
