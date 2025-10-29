@@ -79,7 +79,7 @@ video:not(.no-invert) {
   color:#fff !important;
 }
 .bot {
-  background:#f5f5f7 !important; /* gris muy claro tipo iOS */
+  background:#fff !important; /* gris muy claro tipo iOS */
   color:#111827 !important;
   border-bottom-left-radius: 4px;
 }
@@ -507,6 +507,7 @@ body.guest .voice-btn {
 .auth-modal .auth-subtitle {
   color: #111827 !important;
 }
+
 
 
 
