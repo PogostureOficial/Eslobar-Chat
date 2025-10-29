@@ -508,6 +508,26 @@ body.guest .voice-btn {
   color: #111827 !important;
 }
 
+/* 🔆 Light mode: textos del menú + y submenús en negro */
+.plus-menu .plus-item span { 
+  color: #111827 !important; 
+}
+
+.plus-options button {           /* el menú pequeño (botón Predict/Adjuntar) */
+  color: #111827 !important;
+}
+
+.submenu .submenu-item {         /* items del submenú (Historia/Geo/… ) */
+  color: #111827 !important;
+}
+
+/* opcional: bordes y fondo más claros para mejor contraste */
+.plus-menu {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.12) !important;
+}
+
+
 
 
 
