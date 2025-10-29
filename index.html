@@ -692,6 +692,26 @@
       padding-bottom: 50px !important;
   }
 
+  /* ✅ Textarea alineado bien a la izquierda */
+  body.guest .input-container textarea {
+      text-align: left !important;
+      width: calc(100% - 60px) !important; /* espacio para el botón enviar */
+  }
+
+/* ✅ Ocultar micrófono */
+  #micButton {
+      display: none !important;
+  }
+
+/* ✅ Enviar abajo a la derecha */
+  body.guest .send-group {
+      position: absolute !important;
+      bottom: 12px !important;
+      right: 12px !important;
+      gap: 0 !important;
+  }
+
+
 
 </style>
 
