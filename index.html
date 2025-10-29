@@ -711,7 +711,10 @@
       gap: 0 !important;
   }
 
-
+  /* oculta cualquier modal mientras mostramos el chooser de Google */
+  .auth-backdrop.suspended {
+    display: none !important;
+  }
 
 </style>
 
@@ -2770,7 +2773,7 @@ window.inicializarVerificacion = inicializarVerificacion;
 
 
 
-  // =========================
+   // =========================
   //   FLUJO: GOOGLE (GSI)
   // =========================
   const GOOGLE_CLIENT_ID = "681954592440-8435k741g9o7tcfluuvqhkkdr6fulgnv.apps.googleusercontent.com";
@@ -2784,52 +2787,88 @@ window.inicializarVerificacion = inicializarVerificacion;
 
   function initGSI(){
     if (!(window.google && google.accounts && google.accounts.id)) return false;
-    google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredentialResponse });
-    const hidden = document.createElement('div'); hidden.id = "gsi-hidden"; hidden.style.display="none";
-    document.body.appendChild(hidden);
+
+    // Inicializamos con opciones modernas y sin selección automática
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleCredentialResponse,
+      auto_select: false,
+      use_fedcm_for_prompt: true,  // mejora consistencia del chooser
+    });
+
+    // Render oculto (mantiene el SDK listo)
+    const hidden = document.getElementById("gsi-hidden") || (() => {
+      const d = document.createElement('div');
+      d.id = "gsi-hidden"; d.style.display="none"; document.body.appendChild(d);
+      return d;
+    })();
     google.accounts.id.renderButton(hidden, { theme:"outline", size:"large" });
     google.accounts.id.disableAutoSelect();
     return true;
   }
 
+  // 🔑 Cuando Google devuelve la credencial → iniciamos sesión DIRECTO
   async function handleCredentialResponse(resp){
     try{
-      if (!resp || !resp.credential) throw new Error("sin credential");
+      if (!resp || !resp.credential) throw new Error("Sin credential");
       const info = parseJwt(resp.credential);
+
       const correo = info.email || "";
       const foto = info.picture || "";
-      localStorage.setItem("correo_usuario", correo);
-      if (foto) localStorage.setItem("foto_usuario", foto);
+      if (correo) localStorage.setItem("correo_usuario", correo);
+      if (foto)   localStorage.setItem("foto_usuario", foto);
 
-      // Envío de código
-      const codigo = Math.floor(100000 + Math.random() * 900000);
-      localStorage.setItem("codigo_verificacion", String(codigo));
-      await emailjs.send("service_nwp6u6j","template_l73amke",{ 
-        email: correo, 
-        codigo: String(codigo), 
-        time: new Date(Date.now()+15*60000).toLocaleTimeString()
-      });
-      hide("authModal"); show("verifyModal");
-      const inputs = Array.from($("#codeRow").querySelectorAll("input"));
-      inputs.forEach(i=> i.value=""); inputs[0].focus();
+      // ✅ Activamos sesión SIN verificación por código
+      localStorage.setItem("sesion_activa", "true");
+
+      // Cerrar cualquier modal que haya quedado
+      document.querySelectorAll(".auth-backdrop").forEach(el => el.style.display = "none");
+
+      // 🔄 Refrescamos para que se apliquen todos los estados UI de logueado
+      location.reload();
+
     }catch(err){
       console.error("Google error:", err);
+      // Si algo falla, reponemos el modal
+      document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.remove("suspended"));
+      show("authModal");
       alert("No se pudo completar la autenticación con Google.");
     }
   }
 
-  async function handleGoogleStart(){
-    if (!initGSI()){
-      let tries = 0;
-      const t = setInterval(()=>{
+  // 👉 Llamado desde el botón "Continuar con Google"
+  window.handleGoogleStart = function(){
+    const authModal = document.getElementById("authModal");
+    // Ocultamos modales para que el chooser nunca quede por detrás
+    document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.add("suspended"));
+
+    // Si aún no está listo el SDK, lo reintentamos un poco
+    let tries = 0;
+    function go(){
+      if (!initGSI()){
         tries++;
-        if (initGSI()){ clearInterval(t); google.accounts.id.prompt(); }
-        else if (tries>10){ clearInterval(t); alert("Google tardó en cargar. Intentá de nuevo."); }
-      }, 200);
-    } else {
-      google.accounts.id.prompt();
+        if (tries > 10) {
+          // Reponemos modales si no pudimos
+          document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.remove("suspended"));
+          alert("Google tardó en cargar. Intentá de nuevo.");
+          return;
+        }
+        return setTimeout(go, 200);
+      }
+      // Ya inicializado → mostramos el chooser
+      google.accounts.id.prompt((notification) => {
+        // Si el usuario cancela o no se puede mostrar, devolvemos el modal
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.remove("suspended"));
+          if (authModal) authModal.style.display = "flex";
+        }
+      });
     }
+    go();
   }
+
+  // Enlazamos el botón principal
+  $("btnGoogle")?.addEventListener("click", window.handleGoogleStart);
 </script>
 
 <script>
