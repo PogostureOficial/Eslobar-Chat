@@ -655,20 +655,43 @@
     display: none !important;
   }
 
-  /* ✅ Corrección de posiciones */
+   /* ✅ Colocar textarea arriba y botones abajo */
   body.guest .input-container {
-      flex-direction: row !important;
-      align-items: center !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      height: auto !important;
   }
 
+  /* ✅ Texto bien ubicado arriba */
   body.guest .input-container textarea {
       margin-top: 0 !important;
+      width: 100% !important;
   }
 
+/* ✅ Botones justo debajo del textarea */
   body.guest .input-options {
-      margin-bottom: 0 !important;
-      margin-top: 6px !important;
+      display: flex !important;
+      margin: 6px 0 0 !important;
+      gap: 8px !important;
+      justify-content: flex-start !important;
   }
+
+  /* ✅ Botón enviar a la derecha sin bajar */
+  body.guest .send-group {
+      position: absolute !important;
+      right: 12px !important;
+      bottom: 12px !important;
+      display: flex !important;
+      gap: 6px !important;
+  }
+
+  /* Evitar que el contenido se empuje por el botón */
+  body.guest .input-container {
+      position: relative !important;
+      padding-bottom: 50px !important;
+  }
+
 
 </style>
 
