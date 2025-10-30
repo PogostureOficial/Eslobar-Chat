@@ -116,8 +116,8 @@ video:not(.no-invert) {
 
 /* ---------- Botón Upgrade ---------- */
 .upgrade-btn {
-  background-color:#eef2ff !important; /* indigo-50 */
-  color:#3730a3 !important;            /* indigo-800 */
+  background-color:#edeef7!important; /* indigo-50 */
+  color:#706ece !important;            /* indigo-800 */
 }
 .upgrade-btn:hover { background:#e0e7ff !important; }
 
@@ -526,6 +526,7 @@ body.guest .voice-btn {
   background: #ffffff !important;
   border-color: rgba(0,0,0,0.12) !important;
 }
+
 
 
 
