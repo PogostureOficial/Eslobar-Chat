@@ -1853,14 +1853,20 @@ document.addEventListener('DOMContentLoaded', function() {
     else chat.scrollTop = chat.scrollHeight;
 
     // fetch al backend
+    // fetch al backend (con session_id)
     try {
+      // 🔹 Generar o recuperar ID de sesión persistente
+      const session_id = localStorage.getItem("session_id") || crypto.randomUUID();
+      localStorage.setItem("session_id", session_id);
+
       const resp = await fetch(BACKEND_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: userText,
           plan: selectedPlan,
-          personality: localStorage.getItem("aiPersonality") || "generico"
+          personality: localStorage.getItem("aiPersonality") || "generico",
+          session_id: session_id
         })
       });
 
