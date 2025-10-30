@@ -3259,6 +3259,49 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const selectorBtn = document.getElementById("selectedPersonality");
+  const dropdown = document.getElementById("personalityDropdown");
+  const options = dropdown.querySelectorAll(".option");
+
+  // Mostrar / ocultar el menú
+  selectorBtn.addEventListener("click", () => {
+    dropdown.classList.toggle("show");
+  });
+
+  // Selección de personalidad
+  options.forEach(option => {
+    option.addEventListener("click", () => {
+      // Quitar activo anterior
+      options.forEach(o => o.classList.remove("active"));
+      option.classList.add("active");
+
+      // Tomar el nombre (del strong)
+      const name = option.querySelector("strong").textContent.trim();
+      selectorBtn.textContent = name;
+
+      // Guardar en localStorage (clave usada por el backend)
+      localStorage.setItem("aiPersonality", name.toLowerCase());
+
+      // Cerrar dropdown
+      dropdown.classList.remove("show");
+    });
+  });
+
+  // Mantener la selección al recargar
+  const saved = localStorage.getItem("aiPersonality");
+  if (saved) {
+    selectorBtn.textContent = saved.charAt(0).toUpperCase() + saved.slice(1);
+    options.forEach(o => {
+      const n = o.querySelector("strong").textContent.trim().toLowerCase();
+      o.classList.toggle("active", n === saved);
+    });
+  }
+});
+</script>
+
+
 
 </body>
 </html>
