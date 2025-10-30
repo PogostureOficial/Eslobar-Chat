@@ -3250,16 +3250,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔹 Seleccionar una opción
   options.forEach(opt => {
-    opt.addEventListener("click", () => {
-      const key  = opt.dataset.personality;  // usa la clave exacta del backend
+    opt.addEventListener("click", async () => {
+      const key  = opt.dataset.personality;
       const name = opt.querySelector("strong").textContent.trim();
 
-      localStorage.setItem("aiPersonality", key); // guarda la CLAVE (acuna, carro, etc.)
+      localStorage.setItem("aiPersonality", key);
       options.forEach(o => o.classList.remove("active"));
       opt.classList.add("active");
 
       selectorBtn.textContent = name;
       dropdown.classList.remove("show");
+
+      // 🔹 Reiniciar historial del chat en el servidor
+      const session_id = localStorage.getItem("session_id");
+      if (session_id) {
+        await fetch("/reset", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id })
+        });
+      }
+
+      // (Opcional) Aviso visual al usuario
+      alert(`🎭 Personalidad cambiada a ${name}. Se reinició el contexto del chat.`);
     });
   });
 
