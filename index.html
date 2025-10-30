@@ -988,6 +988,7 @@
           </div>
           <span class="check">✔</span>
         </div>
+
         <div class="option" data-personality="acuna">
           <div class="opt-text">
             <strong>Acuña</strong>
@@ -995,6 +996,7 @@
           </div>
           <span class="check">✔</span>
         </div>
+
         <div class="option" data-personality="navarra">
           <div class="opt-text">
             <strong>Navarra</strong>
@@ -1002,6 +1004,7 @@
           </div>
           <span class="check">✔</span>
         </div>
+
         <div class="option" data-personality="carro">
           <div class="opt-text">
             <strong>Carro</strong>
@@ -1009,10 +1012,16 @@
           </div>
           <span class="check">✔</span>
         </div>
+
+        <div class="option" data-personality="mika">
+          <div class="opt-text">
+            <strong>Micaela</strong>
+            <p>Profesora de Matemáticas.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
       </div>
     </div>
-
-
 
     <!-- Botón Mejorar a Plus -->
     <a href="static/plan.html" class="upgrade-btn">
@@ -3034,57 +3043,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 <script>
-const selectorBtn = document.getElementById("selectedPersonality");
-const dropdown = document.getElementById("personalityDropdown");
-const options = dropdown.querySelectorAll(".option");
-
-function applyPersonality() {
-  const saved = localStorage.getItem("aiPersonality") || "Genérico";
-
-  options.forEach(o => {
-    o.classList.toggle(
-      "active",
-      o.querySelector("strong").textContent === saved
-    );
-  });
-
-  selectorBtn.textContent = saved + " ";
-}
-
-// Abrir / cerrar menú
-selectorBtn.addEventListener("click", () => {
-  dropdown.classList.toggle("show");
-});
-
-// Seleccionar una opción
-options.forEach(opt => {
-  opt.addEventListener("click", () => {
-    const key = opt.dataset.personality; // <-- toma el valor del atributo
-    const name = opt.querySelector("strong").textContent.trim();
-
-    localStorage.setItem("aiPersonality", key);
-    selectorBtn.textContent = name;
-    
-    options.forEach(o => o.classList.remove("active"));
-    opt.classList.add("active");
-
-    dropdown.classList.remove("show");
-  });
-});
-
-// Cerrar al hacer click fuera
-document.addEventListener("click", (e) => {
-  if (!selectorBtn.contains(e.target) && !dropdown.contains(e.target)) {
-    dropdown.classList.remove("show");
-  }
-});
-
-// ✅ Inicializar al cargar
-applyPersonality();
-
-</script>
-
-<script>
   // ✅ Detecta si el link de tema claro está activo
   function isLightThemeActive() {
     const lightLink = document.getElementById('theme-light');
@@ -3263,5 +3221,58 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+<script>
+  const selectorBtn = document.getElementById("selectedPersonality");
+  const dropdown    = document.getElementById("personalityDropdown");
+  const options     = dropdown.querySelectorAll(".option");
+
+  // 🔹 Función para aplicar la personalidad guardada
+  function applyPersonality() {
+    const key = localStorage.getItem("aiPersonality") || "generico";
+    let name = "Genérico";
+
+    options.forEach(o => {
+      const isActive = (o.dataset.personality === key);
+      o.classList.toggle("active", isActive);
+      if (isActive) {
+        name = o.querySelector("strong").textContent.trim();
+      }
+    });
+
+    selectorBtn.textContent = name;
+  }
+
+  // 🔹 Abrir / cerrar menú
+  selectorBtn.addEventListener("click", () => {
+    dropdown.classList.toggle("show");
+  });
+
+  // 🔹 Seleccionar una opción
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      const key  = opt.dataset.personality;  // usa la clave exacta del backend
+      const name = opt.querySelector("strong").textContent.trim();
+
+      localStorage.setItem("aiPersonality", key); // guarda la CLAVE (acuna, carro, etc.)
+      options.forEach(o => o.classList.remove("active"));
+      opt.classList.add("active");
+
+      selectorBtn.textContent = name;
+      dropdown.classList.remove("show");
+    });
+  });
+
+  // 🔹 Cerrar al hacer clic fuera
+  document.addEventListener("click", (e) => {
+    if (!selectorBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove("show");
+    }
+  });
+
+  // 🔹 Inicializar al cargar
+  applyPersonality();
+</script>
+
 </body>
 </html>
