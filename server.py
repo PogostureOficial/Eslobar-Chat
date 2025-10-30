@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify, send_from_directory
+from collections import defaultdict
 from flask_cors import CORS
 from openai import OpenAI
 import traceback
 import os
 
-# 🔹 Historial de los últimos mensajes
-conversation_history = []   # Va a guardar [{"role": "user"/"assistant", "content": "..."}]
+# Cada sesión tendrá su propio historial
+conversation_histories = defaultdict(list)
 
 # ELIMINAR DESPUES 🔥
 token_usage = {}
@@ -42,6 +43,8 @@ def serve_static_files(path):
 @app.route("/ask", methods=["POST"])
 def ask():
     data = request.get_json()
+    session_id = data.get("session_id", "default")
+    history = conversation_histories[session_id]
     user_message = data.get("message", "")
     plan = data.get("plan", "basic")  # "basic", "plus" o "pro"
     personality = data.get("personality", "generico")
@@ -292,26 +295,26 @@ def ask():
     try:
 
         # Guardar mensaje del usuario
-        conversation_history.append({"role": "user", "content": user_message})
+        history.append({"role": "user", "content": user_message})
         
         # Mantener solo los últimos 5 turnos (usuario + IA) -> 10 mensajes en total
-        if len(conversation_history) > 10:
-            conversation_history.pop(0)
+        if len(history) > 10:
+            history.pop(0)
 
         # 🔹 Llamada al modelo
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",   # o "gpt-4o-mini" si quieres ese
-            messages = [{"role": "system", "content": system_prompt}] + conversation_history
+            messages = [{"role": "system", "content": system_prompt}] + history
         )
 
         reply = response.choices[0].message.content
 
         # Guardar la respuesta de la IA
-        conversation_history.append({"role": "assistant", "content": reply})
+        history.append({"role": "assistant", "content": reply})
 
         # Mantener solo los últimos 10 (5 turnos)
-        if len(conversation_history) > 10:
-            conversation_history.pop(0)
+        if len(history) > 10:
+            history.pop(0)
         
         return jsonify({"reply": reply})
 
@@ -337,6 +340,7 @@ def reset_conversation():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port, debug=False)
+
 
 
 
