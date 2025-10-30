@@ -3059,10 +3059,15 @@ selectorBtn.addEventListener("click", () => {
 // Seleccionar una opción
 options.forEach(opt => {
   opt.addEventListener("click", () => {
-    const selected = opt.querySelector("strong").textContent;
-    localStorage.setItem("aiPersonality", selected);
+    const key = opt.dataset.personality; // <-- toma el valor del atributo
+    const name = opt.querySelector("strong").textContent.trim();
 
-    applyPersonality(); 
+    localStorage.setItem("aiPersonality", key);
+    selectorBtn.textContent = name;
+    
+    options.forEach(o => o.classList.remove("active"));
+    opt.classList.add("active");
+
     dropdown.classList.remove("show");
   });
 });
