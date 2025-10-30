@@ -444,10 +444,10 @@ video:not(.no-invert) {
 .selector-btn {
   background:#ffffff !important;
   color:#111827 !important;
-  border:1px solid #e5e7eb !important;
+  border: none !important;
 }
 .selector-btn:hover {
-  background:#f3f4f6 !important;
+  background: none !important;
 }
 
 .dropdown {
@@ -526,6 +526,7 @@ body.guest .voice-btn {
   background: #ffffff !important;
   border-color: rgba(0,0,0,0.12) !important;
 }
+
 
 
 
