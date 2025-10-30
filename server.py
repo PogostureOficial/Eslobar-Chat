@@ -322,10 +322,22 @@ def ask():
         # Devuelve error genérico al frontend
         return jsonify({"error": str(e)}), 500
 
+@app.route("/reset", methods=["POST"])
+def reset_conversation():
+    data = request.get_json()
+    session_id = data.get("session_id", "default")
+
+    # Limpia solo el historial de esa sesión
+    if session_id in conversation_histories:
+        conversation_histories[session_id] = []
+
+    return jsonify({"status": "ok", "message": f"Historial reiniciado para {session_id}"})
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port, debug=False)
+
 
 
 
