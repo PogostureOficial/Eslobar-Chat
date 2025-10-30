@@ -3106,89 +3106,96 @@ applyPersonality();
 </script>
 
 <script>
-  // 🌓 ¿tema claro activo?
-  function isLightThemeActive() {
+(() => {
+  // ——— util: ¿tema claro activo?
+  const isLightThemeActive = () => {
     const lightLink = document.getElementById('theme-light');
     return !!lightLink && lightLink.disabled === false;
-  }
+  };
 
-  // 🎬 Swap de videos (soporta <video src> y <video><source>)
-  function applyThemeVideoSwapByName() {
+  // ——— regla de mapeo
+  const VIDEO_RULE = {
+    match: /\/static\/videos\/anim1(?:_light)?\.mp4$/i,
+    dark:  '/static/videos/anim1.mp4',
+    light: '/static/videos/anim1_light.mp4'
+  };
+
+  // ——— reemplaza src en <video> o en sus <source>
+  function swapVideo(el) {
     const light = isLightThemeActive();
 
-    // Coincidir anim1.mp4 o anim1_light.mp4
-    const VIDEO_RULE = {
-      match: /\/static\/videos\/anim1(_light)?\.mp4$/i,
-      dark:  '/static/videos/anim1.mp4',
-      light: '/static/videos/anim1_light.mp4'
-    };
-
-    // Helper para reemplazar src y recargar
-    function replaceVideoSrc(videoEl, newSrc) {
-      if (!videoEl) return;
-      videoEl.classList.add('no-invert');     // evita inversión en light.css
-      videoEl.src = newSrc;                   // para <video src="...">
-      videoEl.load();
-      videoEl.play?.().catch(() => {});
-    }
-
-    // 1) <video src="...">
-    document.querySelectorAll('video').forEach(v => {
-      // si tiene <source>, lo manejamos más abajo
-      if (v.querySelector('source')) return;
-
-      const current = v.currentSrc || v.src || '';
+    // Caso <video src="...">
+    if (el.tagName === 'VIDEO' && !el.querySelector('source')) {
+      const current = el.currentSrc || el.src || '';
       if (!VIDEO_RULE.match.test(current)) return;
-
-      const desired = light ? VIDEO_RULE.light : VIDEO_RULE.dark;
-      if (!current.endsWith(desired)) replaceVideoSrc(v, desired);
-    });
-
-    // 2) <video><source src="..."></video>
-    document.querySelectorAll('video source').forEach(s => {
-      const current = s.src || '';
-      if (!VIDEO_RULE.match.test(current)) return;
-
       const desired = light ? VIDEO_RULE.light : VIDEO_RULE.dark;
       if (!current.endsWith(desired)) {
-        s.src = desired;
-        const video = s.parentElement;
+        el.classList.add('no-invert');
+        el.src = desired;
+        el.load();
+        el.play?.().catch(()=>{});
+      }
+      return;
+    }
+
+    // Caso <video><source src="..."></video>
+    if (el.tagName === 'SOURCE') {
+      const current = el.src || '';
+      if (!VIDEO_RULE.match.test(current)) return;
+      const desired = light ? VIDEO_RULE.light : VIDEO_RULE.dark;
+      if (!current.endsWith(desired)) {
+        el.src = desired;
+        const video = el.parentElement;
         if (video && video.tagName === 'VIDEO') {
           video.classList.add('no-invert');
           video.load();
-          video.play?.().catch(() => {});
+          video.play?.().catch(()=>{});
         }
       }
-    });
+    }
   }
 
-  // ▶️ Al cargar
-  document.addEventListener('DOMContentLoaded', applyThemeVideoSwapByName);
+  // ——— aplica a todos los videos actuales (por si ya hay alguno)
+  function applyNow() {
+    document.querySelectorAll('video').forEach(v => swapVideo(v));
+    document.querySelectorAll('video source').forEach(s => swapVideo(s));
+  }
 
-  // 🔁 Cuando tocás el toggle de tema
-  (function hookThemeToggle() {
-    const btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    btn.addEventListener('click', () => setTimeout(applyThemeVideoSwapByName, 0));
-  })();
+  // ——— observar DOM: cuando se inserta el loader con <video>, hacemos swap
+  const observer = new MutationObserver(mutations => {
+    for (const m of mutations) {
+      m.addedNodes.forEach(node => {
+        if (!(node instanceof HTMLElement)) return;
 
-  // 👂 Cambio de preferencia del SO
+        // si insertan directamente el <video>…
+        if (node.tagName === 'VIDEO') swapVideo(node);
+
+        // si insertan un contenedor con <video> adentro…
+        node.querySelectorAll?.('video, video source').forEach(el => swapVideo(el));
+      });
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // ——— hooks de cambio de tema ya existentes
+  document.addEventListener('DOMContentLoaded', applyNow);
+
+  const themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn) themeBtn.addEventListener('click', () => setTimeout(applyNow, 0));
+
   if (window.matchMedia) {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    mq.addEventListener('change', () => setTimeout(applyThemeVideoSwapByName, 0));
+    mq.addEventListener('change', () => setTimeout(applyNow, 0));
   }
 
-  // 👀 Cambio del atributo disabled en #theme-light
-  (function observeThemeLink(){
-    const lightLink = document.getElementById('theme-light');
-    if (!lightLink || !window.MutationObserver) return;
-    new MutationObserver(() => applyThemeVideoSwapByName())
+  const lightLink = document.getElementById('theme-light');
+  if (lightLink && window.MutationObserver) {
+    new MutationObserver(() => applyNow())
       .observe(lightLink, { attributes: true, attributeFilter: ['disabled'] });
-  })();
+  }
+})();
 </script>
-
-
-
 
 
 </body>
