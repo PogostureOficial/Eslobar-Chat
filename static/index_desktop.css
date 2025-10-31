@@ -1,294 +1,2249 @@
 /* =======================================================
-   index_desktop.css
-   Estilos SOLO para pantallas >= 769px (PC/Notebook)
-   Reutiliza las MISMAS clases del CSS móvil
+🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥💀🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+   index_mobile.css
+   Estilos exclusivos para pantallas <= 768px
+   Mantiene misma paleta y comportamiento visual del CSS de PC
 ======================================================= */
 
-@media (min-width: 769px) {
+/* =======================================================
+    Fuente global: Segoe UI en todo el sit
+======================================================= */
 
-  /* -------- 1) Base / reset -------- */
+html, body {
+  font-family: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color: inherit;
+}
+
+/* Aplicar herencia a todo */
+*, *::before, *::after {
+  font-family: inherit !important;
+}
+
+
+/* -------------------------------------------------------
+   1. Reset y configuración base
+------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+@media (max-width: 768px) {
+   
+
   html, body {
-    height: 100vh;
+    height: 100dvh;
     margin: 0;
     padding: 0;
-    background: #212121;
+    background-color: #212121; /* 212121*/
     color: #fff;
-    font-family: "Inter", sans-serif;
-    overflow: hidden; /* el scroll va en los contenedores */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 
-  /* -------- 2) Layout general: Sidebar fijo + área de app -------- */
-  /* Sidebar SIEMPRE visible a la izquierda (estilo ChatGPT) */
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 280px;                /* un poco más ancha que en móvil */
-    height: 100vh;
-    background: #1e1f20;
-    transform: none !important;  /* cancela el deslizado de móvil */
-    border-right: 1px solid rgba(255,255,255,0.06);
-    padding: 12px 0 10px;
-    z-index: 1000;
+
+  /* -------------------------------------------------------
+     2. Layout general (body, main, topbar)
+  ------------------------------------------------------- */
+  body, main {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 10px;
-    overflow: hidden;
-  }
-
-  /* lista de chats dentro del sidebar scrolleable */
-  .chat-list {
-    flex: 1;
-    max-height: none;
-    overflow-y: auto;
-    padding: 0 10px 8px;
-  }
-
-  /* El resto de la app se desplaza a la derecha del sidebar */
-  body, main {
-    display: block;
     height: 100vh;
   }
 
   main {
-    margin-left: 280px; /* deja espacio al sidebar */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    justify-content: flex-start;
   }
 
-  /* -------- 3) Top bar en escritorio -------- */
+  .menu-container { display: none !important; }
+
   .top-bar {
-    position: sticky;
-    top: 0;
-    z-index: 900;
-    display: flex;
+    padding: 10px 12px;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 16px;
-    background: #212121;
-    border-bottom: 1px solid #303030;
+    gap: 8px;
   }
 
-  /* En PC no hay hamburguesa ni overlay móvil */
-  .mobile-hamburger,
-  .mobile-overlay {
-    display: none !important;
-  }
-
-  /* Menú “Eslobar” visible en la topbar (no versión .mobile-visible) */
-  .menu-container {
-    display: inline-flex !important;
-    position: relative;
-    z-index: 1;
-  }
-  .menu-container.mobile-visible { display: inline-flex !important; }
-
-  .menu-dropdown {
-    position: absolute;
-    top: 44px;
-    left: 0;
-    width: 280px;
-    background: #2e2e2e;
-    border-radius: 12px;
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 8px 22px rgba(0,0,0,.45);
-    border: 1px solid rgba(255,255,255,.06);
-  }
-  .menu-dropdown.show { display: flex !important; }
-
-  /* Botón upgrade a la derecha */
-  .upgrade-btn {
-    position: static;
-    transform: none;
-    margin: 0;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: #373669;
-    color: #aeadeb;
-    z-index: 1;
-    pointer-events: auto;
-  }
-
-  /* -------- 4) Home del chat centrado, como en la captura -------- */
-  .main-content { padding: 0; }
-
-  .chat-container {
-    flex: 1;
-    min-height: 0;              /* permite que el flex hijo haga scroll */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;    /* título + input centrados verticalmente */
-    padding: 24px 24px 32px;
-    margin: 0 !important;
-    height: auto !important;
-    overflow: auto !important;  /* scroll interno si hace falta */
-    box-sizing: border-box;
-  }
-
-  /* Título: “¿Qué toca hoy?” grande y ligero */
-  #titulo {
-    margin: 0 0 18px 0;
-    padding: 0;
-    font-weight: 500;
-    line-height: 1.2;
-    font-size: clamp(28px, 4.2vw, 42px); /* responsivo como ChatGPT */
-    color: #fff;
-    text-align: center;
-  }
-
-  /* -------- 5) Input de búsqueda centrado (estilo barra ChatGPT) -------- */
-  .input-container {
-    position: relative;       /* ya no fijo al fondo en PC */
-    bottom: auto !important;
-    left: auto;
-    right: auto;
-    width: min(860px, 76vw);  /* ancho similar a la captura */
-    margin: 0 auto;
-    background: #303030;
-    padding: 6px;
-    border-radius: 999px;
-    border: 1px solid #454545;
-    box-shadow: 0 10px 28px rgba(0,0,0,.35);
-    display: flex;
-    align-items: center;
-    transform: none;
-  }
-
-  .input-container textarea {
-    flex: 1;
-    min-height: 48px;
-    max-height: 180px;
-    padding: 16px 46px 16px 46px;  /* deja espacio para + a la izq y mic a la der */
-    background: #2a2a2a;
-    color: #fff;
-    border: 0;
-    border-radius: 999px;
-    resize: none;
-    line-height: 1.3;
-    font-size: 16px;
-  }
-
-  /* Botón + a la IZQUIERDA dentro de la barra */
-  .plus-container {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    z-index: 2;
-    pointer-events: auto;
-  }
-
-  .plus-btn {
-    background: none;
-    border: none;
-    width: 32px;
-    height: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-
-  .plus-btn img,
-  .plus-icon { width: 100%; height: 100%; object-fit: contain; display:block; }
-
-  /* Micrófono / enviar a la DERECHA */
-  .voice-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
+  /* -------------------------------------------------------
+     3. Botón Hamburgersa
+  ------------------------------------------------------- */
+  .mobile-hamburger {
     width: 36px;
     height: 36px;
-    transform: translateY(-50%);
-    margin: 0;
+    background: transparent;
+    border: none;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    position: relative;
+    z-index: 1250;
+    pointer-events: auto;
   }
 
-  /* Warning debajo del input (como ChatGPT) */
-  .eslobar-warning {
-    position: static;
-    transform: none;
-    margin-top: 10px;
-    font-size: 12px;
-    opacity: .9;
-    text-align: center;
-    width: auto;
+  .mobile-hamburger .bar {
+    width: 0px;
+    height: 0px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
   }
 
-  /* -------- 6) Menú + y submenús (mismo HTML, ubicaciones de escritorio) -------- */
-  .plus-menu {
-    position: absolute;
-    top: calc(100% + 10px);   /* despliega por debajo del input */
+
+  /* -------------------------------------------------------
+     4. Sidebar móvil
+  ------------------------------------------------------- */
+  .sidebar {
+    position: fixed;
     left: 0;
-    width: 260px;
-    background: #2e2e2e;
-    border-radius: 14px;
-    padding: 8px 0;
-    display: none;
-    flex-direction: column;
-    box-shadow: 0 10px 28px rgba(0,0,0,.45);
-    border: 1px solid rgba(255,255,255,0.06);
-    z-index: 20;
-  }
-  .plus-menu.show { display: flex; }
-
-  .submenu {
-    position: absolute;
     top: 0;
-    left: calc(100% + 8px);
-    width: 180px;
-    background: #2e2e2e;
-    border-radius: 12px;
-    padding: 8px 0;
-    display: none;
+    height: 100vh;
+    width: 50%;
+    max-width: 320px;
+    background-color: #1C1C1C;
+    padding: 18px 12px;
+    transform: translateX(-110%);
+    transition: transform 360ms cubic-bezier(.22,1,.36,1);
+    z-index: 10010;
+    display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 28px rgba(0,0,0,.45);
+    gap: 18px;
+    border-right: 1px solid rgba(255,255,255,0.02);
+  }
+
+  .sidebar.open { transform: translateX(0); }
+
+  .sidebar-logo img {
+    width: 44px;
+    height: 44px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .sidebar .sidebar-section {
+    color: #bdbdbd;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.48);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 260ms ease, visibility 260ms;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .mobile-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* -------------------------------------------------------
+     5. Planes dentro del sidebar
+  ------------------------------------------------------- */
+  .mobile-plans-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+
+  .mobile-plan-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 180ms ease, transform 160ms;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.02);
+  }
+
+  .mobile-plan-item + .mobile-plan-item { margin-top: 10px; }
+
+  .mobile-plan-item:hover {
+    background: rgba(255,255,255,0.02);
+    transform: translateY(-2px);
+  }
+
+  .mobile-plan-icon {
+    width: 34px;
+    height: 34px;
+    filter: brightness(1);
+  }
+
+  .mobile-plan-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #e8e8e8;
+  }
+
+  .mobile-plan-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #fff;
+  }
+
+  .mobile-plan-desc {
+    color: #b7b7b7;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .mobile-plan-item.active {
+    background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.06);
   }
-  .submenu.show { display: flex; }
 
-  /* -------- 7) Mensajería (por si hay historial ya cargado) -------- */
+  /* -------------------------------------------------------
+     6. Chat principal y título
+  ------------------------------------------------------- */
+  .main-content { padding: 12px; }
+
+  .chat-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100dvh - 70px);
+    overflow: hidden !important;
+    padding: 18px;
+    margin: 0 !important;
+    box-sizing: border-box;
+    z-index: 1;
+  }
+
+  #titulo {
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.7;
+    margin-top: 0px;
+    padding: 20px;
+    color: #fff;
+    top: 50%;
+  }
+
   .chat-box {
-    width: min(900px, 80vw);
-    margin: 8px auto 0;
-    padding: 0 4px;
+    width: 100%;
+    max-width: 100%;
+    margin: 10px 0;
+    padding: 12px;
     border-radius: 12px;
   }
 
   .message {
-    font-size: 15px;
-    line-height: 1.45;
+    margin: 8px 0;
+    padding: 8px 10px;
+    border-radius: 40px;
     max-width: 100%;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.4;
+    font-family: Arial, sans-serif;
   }
 
-  /* -------- 8) Cosas móviles que NO deben afectar escritorio -------- */
-  .chat-input { display: none; }               /* el viejo input fijo de móvil */
-  .plan-info { display: block; }               /* si querés mostrar info extra */
-  .menu-container.mobile-visible { display: inline-flex !important; }
-  #installButton { position: static; display: none !important; } /* no PWA en PC */
-
-  /* -------- 9) Scroll agradable dentro del área central -------- */
-  .chat-container::-webkit-scrollbar,
-  .chat-list::-webkit-scrollbar { width: 8px; }
-  .chat-container::-webkit-scrollbar-thumb,
-  .chat-list::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,.14);
-    border-radius: 6px;
+  .bot {
+    background: #212121;
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
   }
 
-  /* -------- 10) Modales y overlays se mantienen centrados -------- */
-  .config-modal,
-  .modal {
-    display: none;             /* se muestran por JS */
+  .plan-info { display: none; }
+
+  /* -------------------------------------------------------
+     7. Input y control del teclado
+  ------------------------------------------------------- */
+  .input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 95%;
+  background: #303030;
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 6px 20px #171717;
+  z-index: 10002;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateY(0);
+  transition: transform 120ms linear;
+}
+
+  .input-container textarea {
+    flex: 1;
+    padding: 24px 30px; /*6, 10*/
+    border: none;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: #fff;
+    resize: none;
+    max-height: 120px;
+  }
+
+  .voice-btn {
+    width: 38px;
+    height: 38px;
+    margin-left: 8px;
+    transform: translateY(-50%);
+  }
+
+  /* -------------------------------------------------------
+     8. Botón "Mejorar a Plus"
+  ------------------------------------------------------- */
+  /* Botón Mejorar a Plus */
+.upgrade-btn {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background-color: #373669;
+  color: #aeadeb;
+  padding: 11px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: -5px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+  .upgrade-btn svg {
+    width: 22px;
+    height: 22px;
+    color: #fff;
+  }
+
+  .plus-menu {
+    position: relative;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    left: -92%;
+    transform: translateY(-11%);
   }
+
+  .plus-btn {
+  background: #3a3a3a; /* antes #525252 → gris más claro */
+  color: #fff;
+  border: 1px solid #2e2e2e; /* antes #303030 → más integrado */
+  font-size: 20px;
+  width: 42px; /* antes 32px → más proporcionado */
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.1s ease;
+
+     /* 🔧 alineación vertical perfecta */
+  position: fixed;
+  top: 60px; /* Ajusta 1px hacia abajo; usa 0 o 2 si lo necesitás exacto */
+  left: -2px;
+}
+
+.plus-btn:active {
+  transform: scale(0.95);
+  background: #2e2e2e; /* leve oscurecimiento al presionar */
+}
+
+
+  /* -------------------------------------------------------
+     9. Ajustes finales
+  ------------------------------------------------------- */
+  .chat-input {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1a1a1a;
+    padding: 5px; /* 10 */
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .chat-input input {
+    flex: 1;
+    padding: 5px; /* 10 */
+    border: none;
+    border-radius: 8px;
+    background: #2a2a2a;
+    color: #fff;
+  }
+
+  .chat-input button {
+    margin-left: 8px;
+    padding: 10px 9px; /* 12 */
+    border-radius: 8px;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+
+   /* ==========================================================
+   MOBILE HEADER - botón Eslobar + barra separadora
+========================================================== */
+
+.mobile-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-eslobar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.mobile-eslobar-btn:active {
+  opacity: 0.7;
+}
+
+/* Ajustes top-bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px; /* más pegado al borde */
+  border-bottom: 1px solid #303030; /* ← barra separadora */
+  background-color: #212121; /*1e1e1e*/
+  /*box-shadow: 0 1px 3px rgba(0,0,0,0.3);*/
+}
+
+/* Ajuste botón upgrade para que quede al borde derecho */
+.upgrade-btn {
+  margin-right: 2px;
+  padding: 6px 10px;
+}
+
+   /* ✅ Mensaje fijo debajo del input (como ChatGPT) */
+.eslobar-warning {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  pointer-events: none;
+  z-index: 10010;
+}
+
+/* ✅ Subir un poco el input para dejar espacio */
+.input-container {
+  bottom: 36px !important;
+}
+
+   /* =======================================================
+   🔧 Corrección visual: área del chat bien delimitada
+======================================================= */
+
+.chat-container {
+  height: calc(100dvh - 100px) !important; /* Ajusta el alto total visible */
+  margin-top: -80px !important; /* Espacio desde la barra superior gris */
+  margin-bottom: 0 !important;
+  overflow-y: auto !important;
+  padding-bottom: 12px;
+  box-sizing: border-box;
+}
+
+/* Evita que el contenido se esconda detrás del input */
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-container::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+}
+
+   .plus-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;      /* ajusta según tu imagen */
+  height: 38px;
+}
+
+.plus-btn:hover {
+  opacity: 0.85;
+}
+
+.plus-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+   .input-container textarea {
+     padding-left: 50px !important;
+   }
+
+
+   /* ===== Menú del botón + ===== */
+.plus-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.plus-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  /*align-items: center;
+  justify-content: center;*/
+}
+
+.plus-btn img {
+  width: 38px;
+  height: 38px;
+  transition: transform 0.2s ease;
+}
+
+.plus-btn:hover img {
+  transform: scale(1.05);
+}
+
+/* Menú principal */
+.plus-menu {
+  position: absolute;
+  bottom: 20px;
+  left: -410px;
+  background: #2e2e2e;
+  border-radius: 16px;
+  padding: 10px 0;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  width: 230px;
+  z-index: 100;
+}
+
+.menu-item {
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.menu-item:hover {
+  background: #3d3d3d;
+}
+
+/* Submenú lateral */
+.submenu {
+  position: absolute;
+  top: 60px;
+  left: 225px;
+  background: #2e2e2e;
+  border-radius: 12px;
+  padding: 8px 0;
+  display: none;
+  flex-direction: column;
+  width: 160px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.submenu-item {
+  color: #fff;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.submenu-item:hover {
+  background: #3d3d3d;
+}
+
+/* Modal minimalista */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #2e2e2e;
+  color: white;
+  padding: 24px 32px;
+  border-radius: 16px;
+  text-align: center;
+  font-size: 15px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.modal-content button {
+  margin-top: 16px;
+  padding: 8px 18px;
+  background: #3d3d3d;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-content button:hover {
+  background: #505050;
+}
+
+/* =======================================================
+   🔧 Mostrar el menú Eslobar en móvil
+======================================================= */
+
+/* Por defecto sigue oculto */
+.menu-container.mobile-visible {
+  display: none;
+}
+
+  .menu-container.mobile-visible {
+    display: inline-block !important;
+    position: relative;
+    z-index: 1300;
+  }
+
+  /* Ocultar el menú de escritorio */
+  .top-bar > .menu-container:not(.mobile-visible) {
+    display: none !important;
+  }
+
+  /* Ajustar el dropdown para móvil */
+  .menu-dropdown {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: #2e2e2e;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    width: 260px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .menu-dropdown.show {
+    display: flex !important;
+  }
+
+  .menu-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    align-items: flex-start;
+  }
+
+  .menu-item img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .menu-text {
+    flex: 1;
+  }
+
+  .menu-description {
+    font-size: 13px;
+    color: #bdbdbd;
+  }
+
+   /* Permitir clics en el botón upgrade */
+  .upgrade-btn {
+    z-index: 10001 !important;
+    pointer-events: auto !important;
+  }
+
+   /* =======================================================
+   🔘 Botón "Instalar aplicación" - Estilo PWA
+   Combina con la paleta oscura (#121212 / #212121)
+   y la estética general del sitio móvil
+======================================================= */
+
+/* #installButton {
+  position: fixed;
+  bottom: 960px;       /* separación desde abajo 
+  right: 20px;        /* separación desde derecha 
+  display: none;      /* se muestra dinámicamente por JS 
+  background: #212121;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border-radius: 999px;
+  padding: 6px 15px;
+  max-width: 280px;
+  width: auto;        /* evita que se estire 
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
+  z-index: 2000;      /* siempre visible sobre otros elementos 
+} /*
+
+/* Hover suave y sutil */
+#installButton:hover {
+  background: linear-gradient(135deg, #4a4a4a, #353535);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+}
+
+/* Presionado */
+#installButton:active {
+  transform: scale(0.97);
+  background: linear-gradient(135deg, #353535, #262626);
+}
+
+/* Animación de pulso */
+@keyframes installPulse {
+  0% { box-shadow: 0 0 0 0 rgba(174, 173, 235, 0.3); }
+  70% { box-shadow: 0 0 0 8px rgba(174, 173, 235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(174, 173, 235, 0); }
+}
+
+#installButton.glow {
+  animation: installPulse 2.4s infinite;
+}
+
+/* Para que encaje dentro del sidebar */
+/* 🔹 Botón "Instalar app" dentro del sidebar */
+.sidebar #installButton {
+  position: relative;
+  display: flex !important; /* 🔧 forzamos visibilidad */
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-start;
+  width: calc(100% - 24px);
+  margin: 4px auto 10px;
+  padding: 10px 14px;
+  background: #2a2a2a;
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sidebar #installButton:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.sidebar #installButton img {
+  width: 26px;
+  height: 26px;
+}
+
+
+
+/* Pantallas ultra pequeñas */
+@media (max-width: 380px) {
+  #installButton {
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+}
+
+
+   /* ===== Bienvenida ===== */
+#welcome-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(0px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.welcome-modal {
+  background: #1f1f1f;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 400px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  animation: fadeIn 0.5s ease;
+}
+
+.step { display: none; opacity: 0; transition: opacity 0.4s ease; }
+.step.active { display: block; opacity: 1; }
+
+.welcome-modal h2 {
+  margin-bottom: 10px;
+}
+
+.welcome-modal p {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.welcome-modal button {
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 28px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.3s ease;
+}
+
+.welcome-modal button:disabled {
+  background: #3f3f3f;
+  color: #515151;
+  cursor: not-allowed;
+}
+
+.welcome-modal button:hover:not(:disabled) {
+  background: #0088cc;
+}
+
+.step-count {
+  display: block;
+  margin-top: 10px;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.color-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.color-sample {
+  padding: 8px 12px;
+  border-radius: 10px;
+  width: 80%;
+  text-align: center;
+  color: #fff;
+}
+
+.color-sample.gray { background: #3a3a3a; }
+.color-sample.blue { background: #007bff; }
+.color-sample.pink { background: #ff4da6; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+   /* ===== Paso 3: Selección de color ===== */
+.example-message {
+  color: white;
+  margin: 20px auto;
+  padding: 10px 14px;
+  border-radius: 16px;
+  width: fit-content;
+  max-width: 80%;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: background 0.3s ease;
+}
+
+/* Colores iguales que .message en el chat */
+.example-message.gris { background: #3a3a3a; }
+.example-message.azul { background: #007bff; }
+.example-message.rosa { background: #ff4da6; }
+
+.color-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 15px 0 25px;
+}
+
+.color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.3s;
+}
+
+.color-option:hover {
+  transform: scale(1.15);
+}
+
+.color-option.gray  { background: #3a3a3a; }
+.color-option.blue  { background: #007bff; }
+.color-option.pink  { background: #ff4da6; }
+
+.color-option.selected {
+  border-color: #fff;
+}
+
+
+/* ----- Estilo del paso 2 (nombre) ----- */
+
+#modal-step-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+#modal-step-2 h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.3em;
+  font-weight: 700;
+}
+
+#modal-step-2 p {
+  font-size: 0.95rem;
+  color: #cfcfcf;
+  margin-bottom: 1.8em;
+}
+
+/* ----- Input minimalista ----- */
+.name-container {
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 1.5em;
+}
+
+#userName {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+#userName::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Efecto visual al enfocar */
+#userName:focus {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* ----- Botón "Continuar" ----- */
+.continue-btn {
+  width: 80%;
+  max-width: 300px;
+  padding: 12px 0;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: #444;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+}
+
+.continue-btn.active {
+  background: #ffffff;
+  color: #111;
+  cursor: pointer;
+}
+
+.continue-btn.active:hover {
+  background: #e0e0e0;
+}
+
+/* Indicador de paso */
+.step-indicator {
+  margin-top: 1.2em;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* ===========================
+   Estilos para lista de chats
+   =========================== */
+
+.chat-list {
+  max-height: calc(100vh - 220px); /* ajustable: deja espacio para logo / perfil */
+  overflow-y: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: transparent;
+  color: #e6e6e6;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.chat-item:hover {
+  background: rgba(255,255,255,0.02);
+  transform: translateY(-1px);
+}
+
+.chat-item.active {
+  background: #212121;
+}
+
+.chat-item .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  padding-right: 8px;
+}
+
+.chat-item .meta {
+  font-size: 11px;
+  color: #212121;
+  margin-left: 6px;
+}
+
+/* Botoncito de borrar chat */
+.chat-item .trash-btn {
+  background: transparent;
+  border: none;
+  color: #ff7b7b;
+  font-size: 14px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.chat-item .trash-btn:hover { background: rgba(255,123,123,0.06); }
+
+/* Botón nuevo chat estilo responsivo */
+#newChatBtn {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+:root {
+  --user-msg-bg: #3a3a3a; /* valor por defecto */
+}
+
+.message.user {
+  background: var(--user-msg-bg) !important;
+  color: #fff;
+  align-self: flex-end;
+}
+
+   /* ===== Títulos más elegantes ===== */
+.welcome-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+  font-size: 1rem;
+  color: #bdbdbd;
+  margin-bottom: 24px;
+}
+
+/* ===== Input moderno y minimalista ===== */
+.fancy-input {
+  position: relative;
+  width: 80%;
+  max-width: 300px;
+  margin: 0 auto 1.8em;
+}
+
+#userName {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  outline: none;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+#userName::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+#userName:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+/* Línea animada debajo del input */
+.input-underline {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #0088cc;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+#userName:focus + .input-underline {
+  width: 100%;
+  left: 0;
+}
+
+   .progress-bar {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  height: 6px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  height: 6px;
+  background: #0088cc;
+  width: 0;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.upload-area {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.upload-area:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.upload-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.preview-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.preview-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #0088cc;
+}
+
+   .summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.summary-list li {
+  margin: 8px 0;
+  color: #ddd;
+}
+.profile-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  width: 100%;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.profile-button:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.sidebar-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-menu {
+  display: none;
+  flex-direction: column;
+  background: #2a2a2a;
+  border-radius: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+.profile-menu.show {
+  display: flex;
+}
+
+.profile-menu .menu-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.profile-menu .menu-item:hover {
+  background: rgba(255,255,255,0.07);
+}
+
+/* ============================
+   ⚙️ Modal de Configuración
+   ============================ */
+.config-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  animation: fadeInModal 0.3s ease;
+}
+
+.config-modal-content {
+  background: #1f1f1f;
+  padding: 30px 32px;
+  border-radius: 20px;
+  max-width: 450px;
+  width: 90%;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+  animation: scaleIn 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.config-modal-content h2 {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+/* ✏️ Inputs */
+.config-modal-content input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.config-modal-content input[type="text"]:focus {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px #0088cc;
+}
+
+/* 🎨 Selector de color */
+.config-color-picker {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.config-color-option {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.3s;
+}
+
+.config-color-option.gray  { background: #3a3a3a; }
+.config-color-option.blue  { background: #007bff; }
+.config-color-option.pink  { background: #ff4da6; }
+
+.config-color-option.selected {
+  border-color: #fff;
+  transform: scale(1.1);
+}
+
+/* 📧 Email */
+.config-modal-content p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #bdbdbd;
+}
+
+.config-modal-content span {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 🔘 Botones */
+.config-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: background 0.3s ease;
+}
+
+#saveConfig.config-btn {
+  background: #0088cc;
+  color: #fff;
+}
+
+#saveConfig.config-btn:hover {
+  background: #0099ee;
+}
+
+#closeConfig.config-btn {
+  background: rgba(255,255,255,0.12);
+  color: #ddd;
+}
+
+#closeConfig.config-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Animaciones */
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+   /* === Distribución vertical del sidebar === */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+}
+
+.sidebar-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.15);
+}
+
+#sidebarUserName {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.profile-menu {
+  display: none;
+  flex-direction: column;
+  background: #2a2a2a;
+  border-radius: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+.profile-menu.show {
+  display: flex;
+}
+
+/* ===== Paso 4: Subida de imagen ===== */
+.upload-area {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 35px;
+  width: 85%;
+  max-width: 300px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.upload-area:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.upload-icon {
+  width: 60px;
+  height: 60px;
+  background-image: url("/static/images/doc.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.upload-area p {
+  font-size: 14px;
+  color: #ddd;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===== Sidebar estilo ChatGPT ===== */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  padding-top: 14px; /* 🔹 deja un margen arriba */
+  background: #1e1f20;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 0;
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+
+
+
+/* Botones principales */
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 10px 10px;
+}
+.sidebar-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sidebar-btn:hover {
+  background: rgba(255,255,255,0.05);
+}
+.sidebar-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Lista de chats */
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  color: #fff;
+  font-size: 14px;
+}
+.chat-item:hover {
+  background: rgba(255,255,255,0.06);
+}
+.chat-actions {
+  position: relative;
+}
+.chat-menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.chat-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  background: #2a2a2a;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+  margin-left: 130px;
+}
+.chat-dropdown button {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 8px 22px;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 1000;
+}
+.chat-dropdown button:hover {
+  background: rgba(255,255,255,0.1);
+}
+.chat-menu-btn.active + .chat-dropdown {
+  display: flex;
+}
+
+/* Usuario abajo */
+/* 🔹 Alineación correcta del bloque de usuario */
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 🔧 alinear a la izquierda */
+  gap: 10px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: #1e1f20;
+}
+
+.sidebar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.12);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#sidebarUserName {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+  margin: 0;
+}
+
+
+
+   .sidebar-divider {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 10px 0;
+}
+
+.sidebar-section-title {
+  color: #bdbdbd;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 12px;
+  margin-bottom: 6px;
+}
+
+/* =======================================================
+   🗂️ Mejora visual del menú de los tres puntitos (chat-dropdown)
+   ======================================================= */
+
+/* 🔹 Estilo base de los botones del menú */
+.chat-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espacio entre ícono y texto */
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 8px 22px;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: "Inter", sans-serif;
+}
+
+/* 🔹 Iconos generales dentro del menú */
+.chat-dropdown button::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8;
+}
+
+/* ✏️ Icono para "Cambiar nombre" */
+.chat-dropdown button.rename-btn::before {
+  background-image: url("/static/images/edit.png");
+  width: 26px;
+  height: 26px;
+}
+
+/* 🗑️ Icono y color para "Borrar" */
+.chat-dropdown button.delete-btn {
+  color: #ff6b6b; /* texto rojo */
+}
+
+.chat-dropdown button.delete-btn::before {
+  background-image: url("/static/images/delete.png");
+}
+
+/* Hover */
+.chat-dropdown button:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.chat-dropdown button.delete-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff4c4c;
+}
+
+   /* ============================================================================================== APARTADO DE AJUSTES =================================================================*/
+
+
+   /* ===== Settings modal (estilo ChatGPT-like) ===== */
+.settings-modal{
+  background:#1f1f1f; color:#fff; width:min(920px,94vw);
+  border-radius:20px; box-shadow:0 20px 60px rgba(0,0,0,.6);
+  display:flex; flex-direction:column; max-height:88vh; overflow:hidden;
+}
+.settings-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+.settings-header h2{display:flex;gap:10px;align-items:center;font-size:20px;font-weight:800}
+.settings-brand{width:20px;height:20px;opacity:.9}
+.icon-btn{background:transparent;border:none;color:#bbb;font-size:18px;cursor:pointer}
+.icon-btn:hover{color:#fff}
+
+.settings-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);background:#1b1b1b}
+.settings-tab{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:transparent;border:1px solid transparent;color:#fff;font-weight:500;cursor:pointer}
+.settings-tab img{width:24px;height:24px;opacity:.9}
+.settings-tab:hover{background:rgba(255,255,255,.06)}
+.settings-tab.active{background:#2a2a2a;border-color:rgba(255,255,255,.08);color:#fff}
+
+.settings-body{overflow:auto;padding:6px 2px}
+.settings-panel{display:none;padding:14px 16px}
+.settings-panel.active{display:block}
+
+.setting-row{display:flex;justify-content:space-between;gap:18px;padding:14px 10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.setting-meta{max-width:520px}
+.setting-title{font-weight:700;margin-bottom:6px}
+.setting-desc{color:#bdbdbd;font-size:13px}
+.setting-control{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+.input,.select{background:#2a2a2a;border:1px solid rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:10px 12px;font-size:14px}
+.radio{display:inline-flex;align-items:center;gap:8px;margin-right:8px}
+
+/* Switch */
+.switch{position:relative;display:inline-block;width:44px;height:24px}
+.switch input{display:none}
+.slider{position:absolute;inset:0;background:#3a3a3a;border-radius:999px;transition:.2s}
+.slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.switch input:checked + .slider{background:#0a84ff}
+.switch input:checked + .slider:before{transform:translateX(20px)}
+
+/* Buttons */
+.btn{border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;background:#2e2e2e;color:#fff}
+.btn:hover{background:#3a3a3a}
+.btn.primary{background:#fff;color:#000}
+.btn.primary:hover{background:#187dff}
+.btn.secondary{background:#373737}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.12)}
+.btn.danger{background:#3b0e12;color:#ff8a8a;border:1px solid rgba(255,0,0,.15)}
+.btn.danger:hover{background:#52161a}
+.btn-icon{width:16px;height:16px;margin-right:6px;vertical-align:middle}
+
+.settings-footer{display:flex;justify-content:flex-end;gap:10px;padding:12px 16px;border-top:1px solid rgba(255,255,255,.06);background:#181818}
+
+.color-dots .config-color-option{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer}
+.color-dots .config-color-option.gray{background:#3a3a3a}
+.color-dots .config-color-option.blue{background:#007bff}
+.color-dots .config-color-option.pink{background:#ff4da6}
+.color-dots .config-color-option.selected{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
+
+.muted{color:#bdbdbd}
+.empty-state{display:flex;gap:10px;align-items:center;justify-content:center;height:160px;color:#bdbdbd}
+.empty-state img{width:22px;height:22px;opacity:.9}
+
+/* Modal backdrop (ya tenías .config-modal; lo reforzamos) */
+.config-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:99999;align-items:center;justify-content:center}
+.config-modal.show{display:flex}
+
+
+   /* -------------------------------------------------------
+   🔹 Top-bar estilo ChatGPT (compacto y minimalista)
+------------------------------------------------------- */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background-color: #212121;
+  border-bottom: 1px solid #2c2c2c;
+  height: 50px; /* más compacto */
+  box-sizing: border-box;
+}
+
+/* -------------------------------------------------------
+   🔹 Botón de menú (hamburger estilo ChatGPT)
+------------------------------------------------------- */
+.mobile-hamburger {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mobile-hamburger .bar {
+  display: block;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Líneas tipo ChatGPT */
+.mobile-hamburger .bar:nth-child(1) {
+  width: 16px;
+  height: 2px;
+}
+.mobile-hamburger .bar:nth-child(2) {
+  width: 10px;
+  height: 2px;
+  margin-right: 8px;
+}
+
+/* Animación al abrir */
+.mobile-hamburger.open .bar:nth-child(1) {
+  transform: rotate(0deg) translateY(0px);
+  width: 14px;
+}
+.mobile-hamburger.open .bar:nth-child(2) {
+  transform: rotate(0deg) translateY(-0px);
+  width: 14px;
+}
+
+/* -------------------------------------------------------
+   🔹 Botón “Eslobar” y “Obtener” compactos
+------------------------------------------------------- */
+.mobile-eslobar-btn {
+  font-size: 0px;
+  font-weight: 600;
+  color: #fff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+}
+
+.upgrade-btn {
+  background-color: #2d2d4f;
+  color: #aeadeb;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 4px;
+  transition: background 0.3s ease;
+}
+
+.upgrade-btn:hover {
+  background-color: #3b3a66;
+}
+
+   /* =======================================================
+   🔧 Corrección final top-bar estilo ChatGPT
+======================================================= */
+
+/* 🔹 Top-bar limpia, sin bordes dobles ni margen extraño */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  height: 50px;
+  background-color: #212121;
+  border-bottom: none !important; /* ❌ elimina la línea fantasma */
+  box-sizing: border-box;
+}
+
+/* 🔹 Ícono de menú con solo dos líneas, sin espacio inferior */
+.mobile-hamburger {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+
+/* 🔧 Fuerza a eliminar cualquier pseudo-línea residual */
+.mobile-hamburger::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* 🔹 Barras tipo ChatGPT */
+.mobile-hamburger .bar {
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-hamburger .bar:nth-child(1) {
+  width: 16px;
+  height: 2px;
+}
+.mobile-hamburger .bar:nth-child(2) {
+  width: 10px;
+  height: 2px;
+  margin-right: 6px;
+}
+
+/* 🔹 Texto “Eslobar” con flecha perfectamente alineados */
+.mobile-header-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px; /* separación mínima entre texto y flecha */
+}
+
+.mobile-eslobar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Flecha (SVG o imagen) justo al lado del texto */
+.mobile-eslobar-btn svg,
+.mobile-eslobar-btn img {
+  width: 12px;
+  height: 12px;
+  margin-left: -50px;
+}
+
+   /* =======================================================
+   🔧 Alineación perfecta de la flecha con el texto "Eslobar"
+======================================================= */
+
+.menu-header {
+  display: inline-flex;           /* 🔹 Alinea texto y flecha horizontalmente */
+  align-items: center;            /* 🔹 Centra verticalmente ambos */
+  justify-content: flex-start;    /* 🔹 Mantiene la flecha a la derecha del texto */
+  gap: 4px;                       /* 🔹 Espaciado mínimo y uniforme */
+  cursor: pointer;
+}
+
+.menu-title {
+  font-weight: 400;
+  font-size: 19px;
+  color: #fff;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  margin-left: -1000px;
+}
+
+.menu-arrow {
+  width: 13px;                    /* 🔹 Tamaño consistente sin importar resolución */
+  height: 13px;
+  object-fit: contain;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;         /* 🔹 Corrige cualquier leve desalineación */
+  transform: translateY(0);       /* 🔹 Evita desplazamiento hacia arriba/abajo */
+  margin-left: 5px;
+  margin-top: 2px;
+}
+
+/* 📱 Asegura que el layout se mantenga en pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu-header {
+    gap: 3px;
+  }
+
+  .menu-arrow {
+    width: 11px;
+    height: 11px;
+  }
+}
+
+   .upgrade-btn {
+  background-color: #373669;
+  color: #dcdbf6;
+  padding: 11px 15px;
+  font-weight: 600;
+}
+   
+.message,
+.menu-item,
+.submenu-item,
+.config-modal-content,
+.sidebar-btn,
+.chat-dropdown button {
+  font-family: inherit !important;
+}
+
+
+/* =======================================================
+   🧩 Ajuste final: estilo ChatGPT realista
+======================================================= */
+
+/* 🔹 Topbar compacta y separada con línea sutil */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background-color: #212121;
+  z-index: 10000;
+}
+
+/* 🔹 Asegura que el contenido del chat empiece justo debajo del topbar */
+.chat-container {
+  position: fixed;
+  top: 150px; /* coincide con altura del topbar */
+  bottom: 0px; /* deja espacio para el input */
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  padding: 12px 16px 80px; /* margen inferior extra para scroll libre */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #212121;
+}
+
+/* 🔹 Mensajes alineados como en ChatGPT */
+.message {
+  border-radius: 18px;
+  padding: 6px 14px;
+  line-height: 1.5;
+  max-width: 100%;
+  width: fit-content;
+}
+
+/* 🔹 Mensaje del bot (gris oscuro, borde inferior plano) */
+.bot {
+  background: #212121;
+  align-self: flex-start;
+}
+
+/* 🔹 Mensaje del usuario (más claro, alineado a la derecha) */
+.user {
+  background: #303030;
+  align-self: flex-end;
+}
+
+ .topbar-divider {
+  position: fixed;
+  top: 48px; /* coincide con la altura del topbar */
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08); /* gris sutil como ChatGPT */
+  z-index: 9999; /* justo debajo de la barra */
+}
+
+.personality-selector {
+  position: absolute;
+  top: 10px;
+  right: 150px;
+}
+
+.personality-dropdown {
+  background: #2b2b2b;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.personality-dropdown:hover {
+  background: #3a3a3a;
+}
+
+/* ✅ Contenedor del botón + */
+.plus-container {
+  position: fixed; /* SIEMPRE pegado al input */
+  bottom: 70px; /* Mismo nivel del input */
+  left: 18px;  /* Ajusta según tu diseño */
+  z-index: 10002;
+}
+
+/* ✅ El menú se posiciona respecto al botón + */
+.plus-menu {
+  position: absolute;
+  bottom: calc(100% + 10px); /*  siempre arriba del botón */
+  left: 90%;
+  transform: translateX(-50%);
+  background: #303030;
+  border-radius: 14px;
+  padding: 8px 0;
+  width: 260px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.07);
+  margin-left: 100px;
+  bottom: -10px;
+}
+
+/* Evita movimientos raros */
+#plus-btn {
+  position: relative;
+  z-index: 10003;
+}
+
+
+
+.plus-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;  /* 🔥 Alinea todo a la izquierda */
+  gap: 12px;  /* Espacio entre icono y texto */
+  
+  width: 100%;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #fff;
+  transition: background 0.2s ease;
+  font-family: inherit !important;
+  text-align: left; /* Alinea el contenido textual */
+  font-style: normal !important;
+}
+
+.plus-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+
+/* ✅ Iconos */
+.plus-icon-img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(1.3);
+}
+
+/* ✅ Submenú estilo ChatGPT */
+.submenu {
+  position: absolute;
+  top: 10px;
+  left: 255px;
+  display: none;
+  background: #1f1f1f;
+  flex-direction: column;
+  border-radius: 10px;
+  width: 180px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 6px 20px rgba(0,0,0,.4);
+}
+
+.submenu-item {
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.submenu-item:hover {
+  background: rgba(255,255,255,0.10);
+}
+
+/* ✅ Fuente consistente */
+.plus-item,
+.submenu-item {
+  font-family: inherit !important;
+}
+
+.plus-divider {
+  width: 80%;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 6px 0;
+}
+
+
+/* ✅ Botón Micrófono: mismo estilo que el botón enviar */
+.mic-button {
+  background: none; /* ✅ Sin fondo */
+  border: none; /* ✅ Sin bordes */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: -90px; /* ✅ Espaciado respecto al botón enviar */
+  padding: 0; /* ✅ Para que no se agrande */
+}
+
+/* ✅ Nada de cambiar tamaño ni poner sombras */
+.mic-button:hover,
+.mic-button:active {
+  background: none;
+  transform: none;
+}
+
+/* ✅ El icono se respeta tal cual */
+.mic-icon {
+  width: 42px; /* ✅ Tamaño natural del botón */
+  height: 42px;
+  object-fit: contain;
+}
+
+
 
 }
