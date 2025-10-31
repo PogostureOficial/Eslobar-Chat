@@ -747,6 +747,26 @@
   pointer-events: none !important;
 }
 
+/* 🔽 Flecha junto al selector de personalidad */
+.selector-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* Espacio entre texto y flecha */
+}
+
+.arrow-icon {
+  width: 14px;
+  height: 14px;
+  filter: invert(1); /* Blanco en modo oscuro */
+  opacity: 0.8;
+  transition: transform 0.2s ease;
+}
+
+.selector-wrapper:hover .arrow-icon {
+  transform: translateY(2px);
+}
+
+
 </style>
 
 </head>
@@ -979,7 +999,10 @@
 
 
     <div class="personality-selector">
-      <button id="selectedPersonality" class="selector-btn">Genérico</button>
+      <div class="selector-wrapper">
+        <button id="selectedPersonality" class="selector-btn">Genérico</button>
+        <img src="/static/images/arrow.png" class="arrow-icon" alt="Flecha">
+      </div>
       <div id="personalityDropdown" class="dropdown">
         <div class="option active" data-personality="generico">
           <div class="opt-text">
