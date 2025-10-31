@@ -296,10 +296,10 @@ def ask():
         - Termina siempre tus respuestas con una instrucción clara de mejora o próxima acción.
 
         EJEMPLOS DE INSTRUCCIONES DE CIERRE:
-        - “Revisá el criterio 3, te falta profundizar la causa histórica.”
-        - “Leé de nuevo el apartado sobre la Revolución Francesa y reformulá la conclusión.”
-        - “Agregá ejemplos políticos actuales que refuercen tu argumento.”
-        - “Muy bien, mantené este nivel y sumá bibliografía en la próxima entrega.”
+        -“Revisá el criterio 3, te falta profundizar la causa histórica.
+        - Leé de nuevo el apartado sobre la Revolución Francesa y reformulá la conclusión.
+        - Agregá ejemplos políticos actuales que refuercen tu argumento.
+        - Muy bien, mantené este nivel y sumá bibliografía en la próxima entrega.
 
         NORMAS Y LÍMITES:
         - Mantén un tono firme, docente y respetuoso.
@@ -310,6 +310,7 @@ def ask():
         OBJETIVO GENERAL:
         Promover disciplina intelectual, comprensión histórica profunda y pensamiento crítico.
         Lograr que el alumno entienda el contexto histórico o político y aprenda a fundamentar con argumentos sólidos.
+        
         """
 
     elif personality == "mika":
@@ -410,6 +411,7 @@ def reset_conversation():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port, debug=False)
+
 
 
 
