@@ -8,7 +8,7 @@ import os
 # Cada sesión tendrá su propio historial
 conversation_histories = defaultdict(list)
 
-# ELIMINAR DESPUES 🔥
+# ELIMINAR DESPUES 
 token_usage = {}
 
 app = Flask(__name__)
@@ -410,6 +410,7 @@ def reset_conversation():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port, debug=False)
+
 
 
 
