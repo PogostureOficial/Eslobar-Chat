@@ -2244,6 +2244,39 @@ html, body {
   object-fit: contain;
 }
 
+.sidebar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 6px;
+  margin-bottom: 8px;
+}
+
+.sidebar-logo img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: contain;
+  filter: brightness(1);
+}
+
+.user-info {
+  margin-top: auto;
+  padding: 12px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
 
 
 }
