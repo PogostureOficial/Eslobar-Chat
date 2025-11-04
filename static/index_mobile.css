@@ -1532,6 +1532,8 @@ html, body {
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.2s;
+  margin-right: 10px;
+  font-weight: 500;
 }
 .sidebar-btn:hover {
   background: rgba(255,255,255,0.05);
