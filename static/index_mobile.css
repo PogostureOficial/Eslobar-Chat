@@ -2276,7 +2276,84 @@ html, body {
   object-fit: cover;
 }
 
+/* === Sidebar estilo ChatGPT === */
+.sidebar{
+  width: 260px;
+  background:#111215;
+  color:#e7e7ea;
+  border-right:1px solid #26272e;
+  padding:8px 8px 10px;
+  display:flex;
+  flex-direction:column;
+}
 
+/* Encabezado (logo + nombre) */
+.sidebar-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  height:44px;
+  padding:6px 8px 10px;
+  margin:2px 4px 6px;
+}
+.sidebar-logo{width:24px;height:24px;object-fit:contain;filter:invert(1) saturate(0);}
+.app-name{font-size:14px;font-weight:600;letter-spacing:.2px;color:#e7e7ea;}
+
+/* Botones superiores: Nuevo chat / Buscar chats / Instalar app */
+.sidebar-buttons{display:flex;flex-direction:column;gap:4px;padding:2px;}
+.sidebar-btn{
+  display:flex;align-items:center;gap:10px;
+  height:36px;width:100%;
+  padding:0 10px;border-radius:8px;
+  background:transparent;border:none;color:#e7e7ea;
+  font-size:14px;cursor:pointer;text-align:left;
+}
+.sidebar-btn img{width:18px;height:18px;filter:invert(1);opacity:.9}
+.sidebar-btn:hover{background:#1a1b1f}
+
+/* Tarjeta "Instalar app" como ChatGPT */
+#installButton.sidebar-btn{
+  height:auto;padding:10px 12px;border:1px solid rgba(255,255,255,.06);
+  background:#17181c;border-radius:10px;gap:12px;
+}
+
+/* Separador y título "Chats" */
+.sidebar-divider{height:1px;background:#26272e;margin:10px 6px;}
+.sidebar-section-title{
+  font-size:12px;color:#9aa1ac;text-transform:uppercase;
+  letter-spacing:.08em;margin:8px 10px 6px;
+}
+
+/* Lista de chats */
+.chat-list{flex:1;min-height:0;overflow:auto;padding:2px 4px;display:flex;flex-direction:column;gap:2px;}
+.chat-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 10px;border-radius:8px;cursor:pointer;
+}
+.chat-item:hover{background:#1a1b1f}
+.chat-title{
+  flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-size:14px;color:#e7e7ea;
+}
+.chat-actions{margin-left:6px}
+.chat-menu-btn{
+  background:transparent;border:none;color:#aeb2bb;
+  font-size:18px;line-height:0;padding:4px;border-radius:6px;cursor:pointer;
+}
+.chat-menu-btn:hover{background:#202127}
+
+/* Footer usuario */
+.user-info{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 8px 8px;margin-top:6px;
+  border-top:1px solid #26272e;
+}
+.sidebar-avatar{width:28px;height:28px;border-radius:999px;object-fit:cover;}
+.user-details{font-size:14px;color:#e7e7ea;}
+
+/* Scrollbar sutil */
+.sidebar ::-webkit-scrollbar{width:8px}
+.sidebar ::-webkit-scrollbar-thumb{background:#2a2b31;border-radius:6px}
 
 
 }
