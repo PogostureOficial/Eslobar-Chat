@@ -2279,9 +2279,9 @@ html, body {
 /* === Sidebar estilo ChatGPT === */
 .sidebar{
   width: 260px;
-  background:#111215;
-  color:#e7e7ea;
-  border-right:1px solid #26272e;
+  background:#181818;
+  color:#fff;
+  border-right:1px solid #232323;
   padding:8px 8px 10px;
   display:flex;
   flex-direction:column;
