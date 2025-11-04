@@ -1,0 +1,3354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Eslobar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/index.css">
+  <link rel="stylesheet" href="/static/index_mobile.css" media="(max-width: 768px)">
+  <link rel="stylesheet" href="/static/index_desktop.css" media="(min-width: 769px)">
+  <link rel="stylesheet" href="index_mobile.css" id="theme-dark">
+  <link rel="stylesheet" href="light.css" id="theme-light" disabled>
+  <link rel="icon" type="image/png" href="/static/images/icon.png">
+  <link rel="manifest" href="/static/manifest.json">
+  <!-- Color de la barra del navegador en móvil  -->
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Otros meta opcionales para compatibilidad -->
+  <meta name="msapplication-navbutton-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- === Login embebido en home: dependencias === -->
+<link rel="preconnect" href="https://accounts.google.com">
+<script> window.handleGoogleStart = window.handleGoogleStart || function(){}; </script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<style>
+  /* ==== Estilos iguales a index.html (botones/modales) ==== */
+
+    /* 🔒 VISUAL PARA INVITADOS  */
+  body.guest #welcome-overlay,
+  body.guest .upgrade-btn,
+  body.guest .plan-info,
+  body.guest .sidebar,
+  body.guest .menu-dropdown,
+  body.guest .menu-container {
+    display: none !important;
+  }
+
+  /* opcional: centrar el chat vacío con mensaje de invitado */
+  body.guest .chat-container::before {
+    content: "Inicia sesión para usar Eslobar.";
+    display: block;
+    color: #777;
+    text-align: center;
+    margin-top: 40vh;
+    font-size: 16px;
+  }
+
+  :root{
+    --bg: #1b1b1b;
+    --panel: #1f1f1f;
+    --muted: #6f6f6f;
+    --accent-border: #2f2f2f;
+    --btn-bg: #252525;
+    --white: #ffffff;
+    --radius: 999px;
+  }
+  /* botón “Iniciar sesión” (topbar, esquina superior derecha) */
+  .topbar-login-btn{
+    position:absolute; right:18px; top:12px;
+    background:transparent; border:none; color:#fff; font-size:15px; cursor:pointer;
+  }
+
+  /* Contenedores ocultables cuando es invitado */
+  .guest .sidebar,
+  .guest .upgrade-btn,
+  .guest .eslobar-warning { display:none !important; }
+
+  /* —— MODALES —— */
+  .auth-backdrop{
+    position: fixed; inset: 0; z-index: 99999;
+    display:none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(0px);
+  }
+  .auth-modal{
+    width: min(92vw, 440px); color:#fff; text-align:center;
+    background:#141414; border-radius:14px; padding:22px 26px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
+  .auth-modal h2{ margin:0 0 8px; font-size:20px; font-weight:600; }
+  .auth-modal p { margin:0 0 18px; color: var(--muted); font-size:14px; }
+  .auth-actions{ display:flex; gap:10px; justify-content:center; }
+
+  .auth-btn{
+    width:100%; background: var(--btn-bg); color:#fff;
+    border:1px solid var(--accent-border); border-radius:999px;
+    padding:12px 18px; text-align:left; cursor:pointer;
+    transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    display:flex; gap:14px; align-items:center; margin:10px 0;
+  }
+  .auth-btn:hover{ transform: translateY(-2px); background:#2a2a2a; border-color:#3a3a3a; }
+  .auth-btn .ico{ width:36px; height:36px; display:inline-flex; border-radius:999px; align-items:center; justify-content:center; overflow:hidden; }
+  .auth-btn .ico img{ width:22px; height:22px; display:block; object-fit:cover; }
+  .auth-btn .txt{ flex:1; text-align:center; margin-left:-36px; }
+
+  .auth-input-row{ display:flex; gap:8px; width:100%; justify-content:center; margin-bottom:10px; }
+  .auth-input-row input{
+    flex:1; background:#171717; border:1px solid #2f2f2f; color:#fff;
+    border-radius:10px; padding:10px 12px; outline:none;
+  }
+  .auth-cta{ background:#fff; color:#000; border:none; border-radius:10px; padding:10px 14px; font-weight:700; cursor:pointer; }
+
+  /* Verificación de código (6 inputs) */
+  .code6{ display:flex; gap:10px; justify-content:center; margin:18px 0 22px; }
+  .code6 input{
+    width:45px; height:55px; background:#1a1a1a; border:none; border-radius:12px;
+    color:#fff; font-size:22px; text-align:center; box-shadow: 0 0 8px rgba(255,255,255,0.05);
+  }
+  .code6 input:focus{ outline:none; box-shadow:0 0 12px rgba(255,255,255,0.15); }
+  .btn-full{ width:100%; padding:14px; border-radius:12px; border:none; cursor:pointer; }
+  .btn-disabled{ background:#1a1a1a; color:#555; }
+  .btn-active{ background:#fff; color:#000; font-weight:700; }
+
+    /* ✅ Permitir chat normal para invitados */
+  body.guest .chat-container::before {
+    content: none !important;
+  }
+
+  body.guest .chat-container {
+    display: flex !important;
+    flex-direction: column;
+    height: 100% !important;
+  }
+
+  body.guest .chat-box {
+    min-height: 60vh !important;
+  }
+
+  /* =========================================================
+   🎨 Estilos mejorados para topbar sin sesión
+========================================================= */
+
+  /* Selector de personalidad centrado */
+ 
+
+  body.guest .personality-dropdown {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(6px);
+  }
+
+  body.guest .personality-dropdown:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Botón Iniciar sesión minimalista */
+  body.guest .topbar-login-btn {
+    position: absolute;
+    right: 14px;
+    top: 8px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  body.guest .topbar-login-btn:hover {
+    background: #f2f2f2;
+    transform: translateY(-1px);
+  }
+
+  /* =========================================================
+   🚫 Ocultar botón del sidebar en modo invitado
+========================================================= */
+  body.guest #sidebarToggle,
+  body.guest .menu-btn {
+    display: none !important;
+  }
+
+  /* =========================================================
+   🔧 Ajustes del input-container (modo invitado)
+========================================================= */
+
+  body.guest .input-container {
+    height: 90px; /* 🔹 más alto */
+    border-radius: 22px; /* 🔹 menos redondeado */
+    padding: 8px 12px 10px;
+    flex-direction: column; /* 🔹 permite colocar los botones debajo del texto */
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  /* 🔹 Oculta el botón "+" */
+  body.guest .plus-btn {
+    display: none !important;
+  }
+
+  /* 🔹 Ajuste del placeholder */
+  body.guest .input-container textarea::placeholder {
+    font-size: 13px; /* más chico */
+    margin-left: -90px;
+  }
+
+/* 🔹 Ajusta el texto para no quedar centrado verticalmente */
+  body.guest .input-container textarea {
+    padding: 10px 12px;
+    line-height: 1.4;
+    font-size: 14px;
+    overflow: hidden !important;
+    margin-top: 80px;
+  }
+
+/* 🔹 Contenedor de los tres botones */
+  body.guest .input-options {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 300px;
+    justify-content: flex-start;
+  }
+
+/* 🔹 Botones debajo del placeholder */
+  body.guest .input-options button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  body.guest .input-options button:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  /* 🔹 Oculta el botón del sidebar cuando no hay sesión */
+  body.guest .mobile-hamburger {
+    display: none !important;
+  }
+
+  body.guest #mensaje::placeholder {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  /* 🔹 Botón enviar */
+  body.guest .voice-btn {
+    margin-left: 6px;
+    margin-top: 15px;
+  }
+
+  /* ===========================================================
+   🎨 NUEVO DISEÑO MODAL DE INICIO DE SESIÓN(estilo ChatGPT)
+=========================================================== */
+  .auth-modal {
+    background: #212121;
+    border-radius: 14px;
+    padding: 32px 28px;
+    text-align: center;
+    width: min(90vw, 380px);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-modal h2 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .auth-modal .auth-subtitle {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  .auth-btn {
+    width: 100%;
+    background: #2f2f2f;
+    border: 1px solid #4e4e4e;
+    border-radius: 999px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .auth-btn:hover {
+    background: #2b2b2b;
+    transform: translateY(-1px);
+  }
+
+  .auth-btn .ico {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-btn .ico img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+  .auth-btn .txt {
+    flex: 1;
+    text-align: center;
+    font-size: 15px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #aaa;
+  }
+
+  .divider span {
+    margin: 0 10px;
+    color: #aaa;
+    font-size: 13px;
+  }
+
+  .auth-input-row {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .auth-input-row input {
+    width: 90%;
+    background: #2f2f2f;
+    border: 1px solid #4e4e4e;
+    border-radius: 99px;
+    padding: 14px 16px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
+
+  /* 🔠 Placeholder con misma fuente y estilo */
+  .auth-input-row input::placeholder {
+    color: #9b9b9b; /* gris suave */
+    font-family: "Segoe UI", "Inter", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+
+  .auth-input-row input:focus {
+    border-color: #3b3b3b;
+  }
+
+  .auth-cta.main {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 99px;
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .auth-cta.main:hover {
+    background: #e9e9e9;
+    transform: translateY(-1px);
+  }
+
+  .auth-cta.cancel {
+    background: transparent;
+    color: #aaa;
+    border: none;
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .auth-cta.cancel:hover {
+    color: #fff;
+  }
+
+  /* 📱 Ajustes responsive */
+  @media (max-width: 480px) {
+    .auth-modal {
+      width: 90%;
+      padding: 24px;
+    }
+  }
+
+    /* 🎨 Botones debajo del input con íconos */
+  .input-options button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .input-options button:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  .option-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+ /* ===========================================
+   🔹 Modal de verificación: versión compacta
+=========================================== */
+  #verifyModal .auth-modal {
+    width: min(85vw, 320px); /* más angosto */
+    padding: 28px 22px;
+    background: #181818;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
+  #verifyModal .auth-modal h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  #verifyModal .auth-modal p {
+    font-size: 13px;
+    color: #fff;
+    margin-bottom: 18px;
+    line-height: 1.4;
+  }
+
+  /* Inputs del código */
+  #verifyModal .code6 input {
+    width: 40px;
+    height: 50px;
+    background: #2f2f2f;
+    border: 1px solid #4e4e4e;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  #verifyModal .code6 input:focus {
+    border-color: #3b82f6;
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  /* Botón Enviar */
+  #verifyModal .btn-full {
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  /* ===========================================
+   🎨 Botón de verificación (gris / activo)
+=========================================== */
+
+/* Estado desactivado (gris) */
+  #verifyModal .btn-full.btn-disabled {
+    background: #1a1a1a;
+    color: #555;
+    cursor: not-allowed;
+    border: 1px solid #2a2a2a;
+    transition: all 0.25s ease;
+  }
+
+/* Estado activo (blanco) */
+  #verifyModal .btn-full.btn-active {
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+
+  #verifyModal .btn-full.btn-active:hover {
+    background: #eaeaea;
+    transform: translateY(-1px);
+  }
+
+  /* =======================================================
+   🎭 Selector de personalidad — estilo profesional
+======================================================= */
+  .personality-selector {
+    position: relative;
+    display: inline-block;
+    font-family: "Segoe UI", "Inter", sans-serif;
+  }
+
+  .selector-btn {
+    background: #212121;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .selector-btn:hover {
+    background: #3a3a3a;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0%;
+    background: #353535;
+    border-radius: 14px;
+    min-width: 290px;
+    padding: 6px;
+    z-index: 999;
+  }
+
+  .dropdown.show {
+    display: block;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .option:hover {
+    background: #2f2f2f;
+  }
+
+  .opt-text strong {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .opt-text p {
+    color: #aaa;
+    font-size: 12.5px;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .option .check {
+    color: #fff;
+    opacity: 0;
+    font-size: 14px;
+  }
+
+  .option.active .check {
+    opacity: 1;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ✅ Botón misma apariencia siempre */
+  .personality-selector {
+      position: absolute;
+      top: 12px;
+      z-index: 1000;
+  }
+
+/* 🔹 Invitado → esquina izquierda */
+  body.guest .personality-selector {
+      left: 12px !important;
+  }
+
+/* 🔹 Logueado → esquina derecha */
+  body:not(.guest) .personality-selector {
+        left: 42px !important;
+        top: 3px !important;
+        font-size: 20px;
+  }
+
+  /*body:not(.guest) .dropdown {
+        margin-right: 200px !important;
+  }*/
+
+/* ✅ Estilo profesional minimalista */
+  .selector-btn {
+      background: none;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background 0.2s;
+  }
+
+  .selector-btn:hover {
+      background: none;
+  }
+
+  /* 🧩 Input container en sesión iniciada */
+  body:not(.guest) .input-container {
+    border-radius: 40px !important;
+    padding: 7px 12px;
+  }
+
+  /* 🚫 Ocultar opciones extra cuando hay sesión */
+  body:not(.guest) .input-options {
+    display: none !important;
+  }
+
+   /* ✅ Colocar textarea arriba y botones abajo */
+  body.guest .input-container {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      height: auto !important;
+  }
+
+  /* ✅ Texto bien ubicado arriba */
+  body.guest .input-container textarea {
+      margin-top: 0 !important;
+      width: 100% !important;
+  }
+
+/* ✅ Botones justo debajo del textarea */
+  body.guest .input-options {
+      display: flex !important;
+      margin: 6px 0 0 !important;
+      gap: 8px !important;
+      justify-content: flex-start !important;
+  }
+
+  /* ✅ Botón enviar a la derecha sin bajar */
+  body.guest .send-group {
+      position: absolute !important;
+      right: 12px !important;
+      bottom: 12px !important;
+      display: flex !important;
+      gap: 6px !important;
+  }
+
+  /* Evitar que el contenido se empuje por el botón */
+  body.guest .input-container {
+      position: relative !important;
+      padding-bottom: 50px !important;
+  }
+
+  /* ✅ Textarea alineado bien a la izquierda */
+  body.guest .input-container textarea {
+      text-align: left !important;
+      width: calc(100% - 60px) !important; /* espacio para el botón enviar */
+  }
+
+/* ✅ Ocultar micrófono */
+  #micButton {
+      display: none !important;
+  }
+
+/* ✅ Enviar abajo a la derecha */
+  body.guest .send-group {
+      position: absolute !important;
+      bottom: 12px !important;
+      right: 12px !important;
+      gap: 0 !important;
+  }
+
+  /* oculta cualquier modal mientras mostramos el chooser de Google */
+  .auth-backdrop.suspended {
+    display: none !important;
+  }
+
+  .new-chat-btn {
+  position: absolute;
+  right: 20px;           /* pegado a la derecha */
+  top: 50%;              /* centrado verticalmente */
+  transform: translateY(-50%);
+  width: 28px;           /* tamaño del ícono */
+  height: 28px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.new-chat-btn:hover {
+  opacity: 0.8;
+}
+
+
+/* Selector de personalidad */
+.personality-selector {
+  position: absolute;
+  top: 65%;
+  z-index: 1000;
+}
+
+.mobile-header-left {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* 🔽 Flecha junto al selector de personalidad */
+.selector-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0px; /* Espacio entre texto y flecha */
+}
+
+.arrow-icon {
+  width: 8px;
+  height: 8px;
+  filter: invert(1); /* Blanco en modo oscuro */
+  opacity: 0.8;
+  transition: transform 0.2s ease;
+}
+
+.selector-wrapper:hover .arrow-icon {
+  transform: translateY(2px);
+}
+
+
+</style>
+
+</head>
+<body>
+
+
+  <!-- ====== Ventana de Bienvenida ====== -->
+<div id="welcome-overlay">
+  <div class="welcome-modal">
+    <div class="progress-bar">
+      <div class="progress" style="width: 33%;"></div>
+    </div>
+
+    <div id="step1" class="step active">
+      <h2>Bienvenido a Eslobar</h2>
+      <p>Antes de que puedas comenzar a usar Eslobar, hagamos algunos ajustes para personalizar su experiencia.</p>
+      <button id="continue1">Continuar</button>
+      <span class="step-count">1/5</span>
+    </div>
+
+      <div id="step2" class="step">
+      <h2 class="welcome-title">Personalicemos tu experiencia</h2>
+      <p class="welcome-subtitle">Dinos cómo quieres que te llame la IA:</p>
+
+      <div class="name-container fancy-input">
+        <input 
+          type="text" 
+          id="userName" 
+          placeholder="Escribe tu nombre aquí..." 
+          maxlength="20"
+        >
+        <span class="input-underline"></span>
+      </div>
+
+      <button id="continueBtn" class="continue-btn" disabled>Continuar</button>
+      <span class="step-indicator">2/5</span>
+    </div>
+
+
+    <div id="step3" class="step">
+      <h2>Elige el color de tus mensajes</h2>
+
+      <!-- Mensaje de ejemplo -->
+      <div id="colorPreview" class="message example-message">
+        Explícame la revolución francesa
+      </div>
+
+      <!-- Opciones de color -->
+      <div class="color-picker">
+        <div class="color-option gray" data-color="gris" title="Gris (por defecto)"></div>
+        <div class="color-option blue" data-color="azul" title="Azul"></div>
+        <div class="color-option pink" data-color="rosa" title="Rosa"></div>
+      </div>
+
+      <button id="finish">Continuar</button>
+      <span class="step-count">3/5</span>
+    </div>
+
+    <div id="step4" class="step">
+      <h2>Sube tu foto de perfil</h2>
+      <p>Elige una imagen para que te identifique en Eslobar.</p>
+
+      <label for="profileImage" class="upload-area">
+        <div class="upload-icon"> </div>
+        <p>Haz clic aquí para subir tu foto</p>
+        <input type="file" id="profileImage" accept="image/*" style="display: none;">
+      </label>
+
+      <div id="previewContainer" class="preview-container" style="display:none;">
+        <img id="previewImage" class="preview-image" alt="Vista previa">
+      </div>
+
+      <button id="finishSetup" class="continue-btn" disabled>Continuar</button>
+      <span class="step-indicator">4/5</span>
+    </div>
+
+    <div id="step5" class="step">
+      <h2> Todo listo, <span id="finalName"></span>!</h2>
+      <p>Has completado la configuración inicial de Eslobar.</p>
+      <button id="enterApp" class="continue-btn">Terminar</button>
+      <span class="step-indicator">5/5</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- 🔹 Modal de confirmación -->
+<div id="logoutModal" class="logout-modal">
+  <div class="logout-content">
+    <h2>¿Seguro que quieres cerrar sesión?</h2>
+    <div class="logout-buttons">
+      <button id="confirmLogout" class="logout-confirm">Sí</button>
+      <button id="cancelLogout" class="logout-cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+  
+<!-- 🔹 Barra lateral izquierda -->
+<div class="sidebar">
+
+  <!-- 🔹 Botones principales -->
+  <div class="sidebar-buttons">
+    <button id="newChatBtn" class="sidebar-btn">
+      <img src="/static/images/new-chat.png" alt="Nuevo"> Nuevo chat
+    </button>
+    <button id="searchChatsBtn" class="sidebar-btn">
+      <img src="/static/images/search.png" alt="Buscar"> Buscar chats
+    </button>
+    <button id="installButton" class="sidebar-btn">
+      <img src="/static/images/app.png" alt="Instalar"> Instalar app
+    </button>
+  </div>
+
+   <!-- 🔹 Línea divisora -->
+  <div class="sidebar-divider"></div>
+
+  <!-- 🔹 Texto "Chats" -->
+  <div class="sidebar-section-title">Chats</div>
+
+  <!-- 🔹 Lista de chats -->
+  <div class="chat-list">
+    <div class="chat-item">
+      <span class="chat-title">Hola</span>
+      <div class="chat-actions">
+        <button class="chat-menu-btn">⋯</button>
+        <div class="chat-dropdown">
+          <button class="rename-btn">Cambiar nombre</button>
+          <button class="delete-btn">Eliminar</button>
+        </div>
+      </div>
+    </div>
+    <div class="chat-item">
+      <span class="chat-title">Examen de Historia</span>
+      <div class="chat-actions">
+        <button class="chat-menu-btn">⋯</button>
+        <div class="chat-dropdown">
+          <button class="rename-btn">Cambiar nombre</button>
+          <button class="delete-btn">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Usuario -->
+  <div class="user-info">
+    <img id="userAvatarSidebar" src="/static/images/default-avatar.png" alt="Avatar" class="sidebar-avatar">
+    <div class="user-details">
+      <span id="sidebarUserName">benja</span>
+    </div>
+  </div>
+</div>
+
+
+<div id="mobileOverlay" class="mobile-overlay" onclick="closeMobileSidebar()"></div>
+
+<!-- 🔹 Contenido principal -->
+<div class="main-content">
+  
+
+  <!-- Barra superior -->
+  <div class="top-bar">
+    
+    <!-- Menú Eslobar -->
+    <div class="menu-container">
+      <div class="menu-header" onclick="toggleMenu()">
+        <span class="menu-title">Eslobar</span>
+        <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
+      </div>
+      <div class="menu-dropdown" id="dropdownMenu">
+        <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
+          <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar</div>
+            <div class="menu-description">Versión básica. Con límite de preguntas y pocas materias.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+        <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
+          <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar Plus (La más comprada)</div>
+            <div class="menu-description">Versión avanzada. Explicaciones detalladas, más materias y sin límite.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+        <div class="menu-item" data-plan="pro" onclick="selectVersion('pro')">
+          <img src="/static/images/pro.png" alt="Eslobar Pro" class="menu-icon">
+          <div class="menu-text">
+            <div class="menu-title-version">Eslobar Pro</div>
+            <div class="menu-description">Herramientas profesionales y acceso a todas las materias.</div>
+          </div>
+          <span class="checkmark">✔</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-header-left">
+  <button id="mobileMenuBtn" class="mobile-hamburger" aria-label="Abrir menú">
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+  <div class="menu-container mobile-visible">
+  <div class="menu-header" onclick="toggleMenu()">
+    <span class="menu-title">Eslobar</span>
+    <img src="/static/images/arrow.png" alt="arrow" class="menu-arrow">
+  </div>
+
+  <div class="menu-dropdown" id="dropdownMenuMobile">
+    <div class="menu-item" data-plan="basic" onclick="selectVersion('basic')">
+      <img src="/static/images/basic.png" alt="Eslobar Básico" class="menu-icon">
+      <div class="menu-text">
+        <div class="menu-title-version">Eslobar</div>
+        <div class="menu-description">Ideal para tareas sencillas.</div>
+      </div>
+      <span class="checkmark">✔</span>
+    </div>
+
+    <div class="menu-item" data-plan="plus" onclick="selectVersion('plus')">
+      <img src="/static/images/plus.png" alt="Eslobar Plus" class="menu-icon">
+      <div class="menu-text">
+        <div class="menu-title-version">Eslobar Plus</div>
+        <div class="menu-description">Para los pocos que quieren lucirse.</div>
+      </div>
+      <span class="checkmark">✔</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+    <div class="personality-selector">
+      <div class="selector-wrapper">
+        <button id="selectedPersonality" class="selector-btn">Genérico</button>
+        <img src="/static/images/arrow.png" class="arrow-icon" alt="Flecha">
+      </div>
+      <div id="personalityDropdown" class="dropdown">
+        <div class="option active" data-personality="generico">
+          <div class="opt-text">
+            <strong>Genérico</strong>
+            <p>Modo estándar con tono equilibrado.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+
+        <div class="option">
+          <div class="opt-text">
+            <strong> </strong>
+            <p>Ciclo basico</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+
+        <div class="option" data-personality="acuna">
+          <div class="opt-text">
+            <strong>Acuña</strong>
+            <p>Profesor de Ciencias sociales y Geografia</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+
+        <div class="option" data-personality="navarra">
+          <div class="opt-text">
+            <strong>Navarra</strong>
+            <p>Profesor de Herramientas Digitales y Fisica.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+
+        <div class="option" data-personality="galvan">
+          <div class="opt-text">
+            <strong>Galvan</strong>
+            <p>Profesor matematicas de ciclo basico</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+
+        <div class="option">
+          <div class="opt-text">
+            <strong> </strong>
+            <p>Ciclo superior</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+
+        <div class="option" data-personality="carro">
+          <div class="opt-text">
+            <strong>Carro</strong>
+            <p>Profesor de Historia.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+        
+
+        <div class="option" data-personality="gladys">
+          <div class="opt-text">
+            <strong>Gladys</strong>
+            <p>Profesora de contabilidad.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+
+        
+        <div class="option" data-personality="mika">
+          <div class="opt-text">
+            <strong>Micaela</strong>
+            <p>Profesora de Matemáticas.</p>
+          </div>
+          <span class="check">✔</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón Mejorar a Plus -->
+    <a href="static/plan.html" class="upgrade-btn">
+      <img src="/static/images/plus1.png" alt="Plus" class="upgrade-icon"> 
+      Obtener Eslobar
+    </a>
+
+        <!-- Botón de nuevo chat -->
+    <img 
+      id="newChatBtn" 
+      src="/static/images/new-chat.png" 
+      alt="Nuevo chat" 
+      class="new-chat-btn no-invert">
+
+  </div>
+ <div class="topbar-divider"></div>
+
+<!-- 🔐 BOTÓN de “Iniciar sesión” (se inserta por JS si sos invitado) -->
+
+<!-- 🔹 Modal principal: elegir método -->
+<div id="authModal" class="auth-backdrop">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <h2 id="authTitle">Iniciar sesión o registrarse</h2>
+    <p class="auth-subtitle">Obtendrás respuestas más inteligentes y podrás cargar archivos, imágenes y mucho más.</p>
+
+    <button class="auth-btn" id="btnGoogle">
+      <span class="ico"><img src="/static/google.png" alt="Google"></span>
+      <span class="txt">Continuar con Google</span>
+    </button>
+
+    <button class="auth-btn" id="btnMicrosoft">
+      <span class="ico"><img src="/static/microsoft.png" alt="Microsoft"></span>
+      <span class="txt">Continuar con Microsoft</span>
+    </button>
+
+    <button class="auth-btn" id="btnApple">
+      <span class="ico"><img src="/static/apple.png" alt="Apple"></span>
+      <span class="txt">Continuar con Apple</span>
+    </button>
+
+    <button class="auth-btn" id="btnTelefono">
+      <span class="ico"><img src="/static/telefono.png" alt="Teléfono"></span>
+      <span class="txt">Continuar con el teléfono</span>
+    </button>
+
+    <div class="divider"><span>o</span></div>
+
+    <div class="auth-input-row">
+      <input type="email" id="emailInputModal" placeholder="Dirección de correo electrónico" autocomplete="email">
+    </div>
+
+    <p id="emailErrorMsg" style="color:#ff4d4d; font-size:13px; margin-top:4px; display:none;">
+      Debes ingresar un correo válido que termine en @gmail.com
+    </p>
+
+
+    <button class="auth-cta main" id="btnContinueEmail">Continuar</button>
+
+    <button class="auth-cta cancel" id="authClose">Cancelar</button>
+  </div>
+</div>
+
+<div id="serviceModal" class="auth-backdrop">
+  <div class="auth-modal">
+    <h2>Servicio no disponible</h2>
+    <p>Este servicio actualmente no está disponible.</p>
+    <button class="auth-cta main" id="closeServiceModal">Entendido</button>
+  </div>
+</div>
+
+<div id="loginRequiredModal" class="auth-backdrop">
+  <div class="auth-modal">
+    <h2>Acceso restringido</h2>
+    <p>Para acceder a esta función es necesario que inicie sesión.</p>
+    <div class="auth-actions" style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
+      <button class="auth-cta cancel" id="laterBtn">Más tarde</button>
+      <button class="auth-cta main" id="goLoginBtn">Iniciar sesión</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 🔹 Modal: correo (input + envío de código) -->
+<div id="emailModal" class="auth-backdrop">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="emailTitle">
+    <h2 id="emailTitle">Iniciar con correo</h2>
+    <p>Introduce tu correo y te enviaremos un código de verificación.</p>
+    <div class="auth-input-row">
+      <input type="email" id="emailInput" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+      <button class="auth-cta" id="emailSend">Enviar</button>
+    </div>
+    <div class="auth-actions">
+      <button class="auth-cta" id="emailCancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 Modal: verificación (6 dígitos) -->
+<div id="verifyModal" class="auth-backdrop">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="verifyTitle">
+    <h2 id="verifyTitle">Verifica tu correo</h2>
+    <p>Revisá tu bandeja (y Spam). Ingresá el código de 6 dígitos.</p>
+    <div class="code6" id="codeRow">
+      <input type="text" maxlength="1"><input type="text" maxlength="1"><input type="text" maxlength="1">
+      <input type="text" maxlength="1"><input type="text" maxlength="1"><input type="text" maxlength="1">
+    </div>
+    <button id="verifyBtn" class="btn-full btn-disabled" disabled>Enviar</button>
+  </div>
+</div>
+
+<!-- 🔹 Modal: teléfono (Firebase) -->
+<div id="phoneModal" class="auth-backdrop">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="phoneTitle">
+    <h2 id="phoneTitle">Continuar con teléfono</h2>
+    <div id="phoneStep1">
+      <p>Ingresá tu número con código de país (ej: +5491123456789).</p>
+      <div class="auth-input-row">
+        <input type="tel" id="phoneInput" placeholder="+5491123456789">
+        <button class="auth-cta" id="phoneSend">Enviar SMS</button>
+      </div>
+    </div>
+    <div id="phoneStep2" style="display:none;">
+      <p>Ingresá el código que recibiste por SMS.</p>
+      <div class="auth-input-row">
+        <input type="text" id="phoneCode" placeholder="123456" maxlength="6">
+        <button class="auth-cta" id="phoneVerify">Verificar</button>
+      </div>
+    </div>
+    <div class="auth-actions">
+      <button class="auth-cta" id="phoneCancel">Cancelar</button>
+    </div>
+    <!-- reCAPTCHA invisible -->
+    <div id="recaptcha-container" style="height:0;width:0;overflow:hidden;"></div>
+  </div>
+</div>
+
+
+  
+
+<div class="chat-container">
+  <!-- Título -->
+  <div id="titulo"> </div>
+
+  <!-- Contenedor del chat -->
+  <div id="chat" class="chat-box"></div>
+
+  <!-- Entrada de texto -->
+  <div class="input-container" id="inputWrapper">
+    <textarea 
+      id="mensaje" 
+      rows="1" 
+      placeholder="Pregunta lo que quieras" 
+      onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();enviarMensaje()}"></textarea>
+
+    <!-- ✅ Nuevo contenedor para alinear mic + enviar juntos -->
+  <div class="send-group">
+    <!-- ✅ primero mic -->
+    <button id="micButton" class="mic-button">
+      <img src="/static/images/button6.png" class="mic-icon" alt="Mic">
+    </button>
+
+    <!-- ✅ luego el enviar que YA TENÉS -->
+    <div class="voice-btn" id="voiceBtn" aria-hidden="true">
+      <img src="/static/images/button1.png" id="btn1" class="initial-visible" alt="Micrófono">
+      <img src="/static/images/button2.png" id="btn2" class="initial-hidden" alt="Enviar">
+    </div>
+  </div>
+
+         <div class="plus-menu">
+          <button id="plusBtn" class="plus-btn">
+            <img src="/static/images/button5.png" alt="Abrir menú" class="plus-icon">
+          </button>
+          <div id="plusOptions" class="plus-options">
+            <button id="predictBtn">🧠 Predecir exámenes</button>
+          </div>
+        </div>
+
+         <!-- Botón + y menú -->
+        <div class="plus-container">
+          <button id="plus-btn" class="plus-btn">
+            <img src="/static/images/button5.png" alt="Abrir menú" class="plus-icon">
+        </button>
+
+  <!-- Menú principal -->
+        <!-- ✅ Menú principal mejorado -->
+        <div id="plus-menu" class="plus-menu">
+          <div class="plus-item">
+            <img src="/static/images/logo4.png" class="plus-icon-img" alt="">
+            <span>Agregar fotos</span>
+          </div>
+
+
+          <div class="plus-item">
+            <img src="/static/images/logo5.png" class="plus-icon-img" alt="">
+            <span>Tomar una fotografia</span>
+          </div>
+
+          <div class="plus-item" id="attach-files">
+            <img src="/static/images/logo1.png" class="plus-icon-img" alt="">
+            <span>Adjuntar archivos</span>
+          </div>
+
+          <div class="plus-divider"></div>
+
+          <div class="plus-item" id="predict-exam">
+            <img src="/static/images/logo3.png" class="plus-icon-img" alt="">
+            <span>Predecir examen</span>
+          </div>
+
+          <div class="plus-item" id="get-advice">
+            <img src="/static/images/logo2.png" class="plus-icon-img" alt="">
+            <span>Dame consejos para aprobar</span>
+        </div>
+
+           <div class="plus-item" id="get-advice">
+            <img src="/static/images/logo6.png" class="plus-icon-img" alt="">
+            <span>Generar imagen</span>
+        </div>
+
+          <div class="plus-item">
+            <img src="/static/images/logo7.png" class="plus-icon-img" alt="">
+            <span>Modo Matematico</span>
+          </div>
+
+
+  <!-- ✅ Submenú -->
+  <div id="submenu" class="submenu">
+    <div class="submenu-item" data-text="Historia">Historia</div>
+    <div class="submenu-item" data-text="Matemáticas">Matemáticas</div>
+    <div class="submenu-item" data-text="Geografía">Geografía</div>
+  </div>
+</div>
+
+      </div>
+
+      <div class="input-options">
+        <button id="btnAdjuntar">
+          <img src="/static/images/logo1.png" alt="Adjuntar" class="option-icon">
+          Adjuntar
+        </button>
+        <button id="btnBuscar">
+          <img src="/static/images/logo2.png" alt="Buscar" class="option-icon">
+          Dar consejos
+        </button>
+        <button id="btnEstudiar">
+          <img src="/static/images/logo3.png" alt="Estudiemos" class="option-icon">
+          Predeci examen
+        </button>
+      </div>
+
+
+
+
+
+   </div> <!-- Cierre de input-container -->
+
+  <div class="eslobar-warning">
+      Al enviar un mensaje a Eslobar, aceptas nuestras Condiciones y confirmas que has leido nuestra politica de privacidad
+    </div>
+
+  </div>
+
+  <!-- Info del plan -->
+  <div class="plan-info">
+    Actualmente estás utilizando el plan <strong>Básico</strong> de Eslobar. 
+    <a href="" class="plan-link">Obtener más información sobre los planes</a>
+  </div>
+</div>
+
+<div id="configModal" class="config-modal" aria-hidden="true">
+  <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <!-- Header -->
+    <div class="settings-header">
+      <h2 id="settingsTitle"><img src="/static/images/icon1.png" alt="" class="settings-brand"> Configuración</h2>
+      <button id="settingsCloseX" class="icon-btn" aria-label="Cerrar">✕</button>
+    </div>
+
+    <!-- Tabs (9 ítems) -->
+    <div class="settings-tabs" role="tablist">
+      <button class="settings-tab active" data-tab="general" role="tab">
+        <img src="/static/images/icon1.png" alt=""> General
+      </button>
+      <button class="settings-tab" data-tab="notificaciones" role="tab">
+        <img src="/static/images/icon2.png" alt=""> Notificaciones
+      </button>
+      <button class="settings-tab" data-tab="personalizacion" role="tab">
+        <img src="/static/images/icon3.png" alt=""> Personalización
+      </button>
+      <button class="settings-tab" data-tab="apps" role="tab">
+        <img src="/static/images/icon4.png" alt=""> Aplicaciones y conectores
+      </button>
+      <button class="settings-tab" data-tab="calendarios" role="tab">
+        <img src="/static/images/icon5.png" alt=""> Calendarios
+      </button>
+      <button class="settings-tab" data-tab="datos" role="tab">
+        <img src="/static/images/icon6.png" alt=""> Controles de datos
+      </button>
+      <button class="settings-tab" data-tab="seguridad" role="tab">
+        <img src="/static/images/icon7.png" alt=""> Seguridad
+      </button>
+      <button class="settings-tab" data-tab="parental" role="tab">
+        <img src="/static/images/icon8.png" alt=""> Controles parentales
+      </button>
+      <button class="settings-tab" data-tab="cuenta" role="tab">
+        <img src="/static/images/icon9.png" alt=""> Cuenta
+      </button>
+    </div>
+
+    <!-- Panels -->
+    <div class="settings-body">
+      <!-- GENERAL -->
+      <section class="settings-panel active" data-panel="general">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Tema</div>
+            <div class="setting-desc">Usar el tema del sistema o forzar claro/oscuro.</div>
+          </div>
+          <div class="setting-control">
+            <label class="radio"><input type="radio" name="theme" value="system" checked> Sistema</label>
+            <label class="radio"><input type="radio" name="theme" value="light"> Claro</label>
+            <label class="radio"><input type="radio" name="theme" value="dark"> Oscuro</label>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Color de acento</div>
+            <div class="setting-desc">Afecta algunos controles y resaltes.</div>
+          </div>
+          <div class="setting-control">
+            <select id="accentColor" class="select">
+              <option value="default">Predeterminado</option>
+              <option value="blue">Azul</option>
+              <option value="pink">Rosa</option>
+              <option value="purple">Violeta</option>
+              <option value="green">Verde</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Idioma</div>
+            <div class="setting-desc">Interfaz y respuestas.</div>
+          </div>
+          <div class="setting-control">
+            <select id="uiLanguage" class="select">
+              <option value="auto">Automático</option>
+              <option value="es">Español</option>
+              <option value="en">English</option>
+              <option value="pt">Português</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Mostrar modelos adicionales</div>
+            <div class="setting-desc">Muestra opciones avanzadas en la app.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="showAdvanced">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTIFICACIONES -->
+      <section class="settings-panel" data-panel="notificaciones">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Notificaciones push</div>
+            <div class="setting-desc">Recibir avisos cuando haya nuevas respuestas.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="pushEnabled"><span class="slider"></span></label>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Resúmenes por correo</div>
+            <div class="setting-desc">Un resumen semanal de tus chats.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="weeklyEmail"><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- PERSONALIZACIÓN -->
+      <section class="settings-panel" data-panel="personalizacion">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Color de tus mensajes</div>
+            <div class="setting-desc">Igual al onboarding.</div>
+          </div>
+          <div class="setting-control color-dots">
+            <button class="config-color-option gray"  data-color="gris"  aria-label="Gris"></button>
+            <button class="config-color-option blue"  data-color="azul"  aria-label="Azul"></button>
+            <button class="config-color-option pink"  data-color="rosa"  aria-label="Rosa"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPS / CONECTORES -->
+      <section class="settings-panel" data-panel="apps">
+        <div class="empty-state">
+          <img src="/static/images/icon4.png" alt="">
+          Próximamente podrás conectar Google Drive, OneDrive y más.
+        </div>
+      </section>
+
+      <!-- CALENDARIOS -->
+      <section class="settings-panel" data-panel="calendarios">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Conectar Google Calendar</div>
+            <div class="setting-desc">Usar eventos en respuestas y recordatorios.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn secondary" id="connectCalendarBtn">Conectar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTROLES DE DATOS -->
+      <section class="settings-panel" data-panel="datos">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Historial de chats</div>
+            <div class="setting-desc">Exportar o borrar permanentemente.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn" id="exportChatsBtn">Exportar</button>
+            <button class="btn danger" id="wipeChatsBtn">
+              <img src="/static/images/delete.png" alt="" class="btn-icon"> Borrar todo
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEGURIDAD -->
+      <section class="settings-panel" data-panel="seguridad">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Bloqueo con PIN</div>
+            <div class="setting-desc">Solicitar PIN al abrir la app.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="pinLock"><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARENTAL -->
+      <section class="settings-panel" data-panel="parental">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Filtro de contenido</div>
+            <div class="setting-desc">Restringe ciertos temas en las respuestas.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch"><input type="checkbox" id="contentFilter"><span class="slider"></span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- CUENTA -->
+      <section class="settings-panel" data-panel="cuenta">
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Correo</div>
+            <div class="setting-desc">Cuenta vinculada.</div>
+          </div>
+          <div class="setting-control">
+            <span id="settingsEmail" class="muted"></span>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Nombre para mostrar</div>
+          </div>
+          <div class="setting-control">
+            <input id="settingsName" type="text" class="input" placeholder="Tu nombre">
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-meta">
+            <div class="setting-title">Cerrar sesión</div>
+            <div class="setting-desc">Te desconecta de este dispositivo.</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn danger" id="logoutBtnFull">
+              <img src="/static/images/delete.png" alt="" class="btn-icon"> Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="settings-footer">
+      <button id="closeSettings" class="btn ghost">Cerrar</button>
+      <button id="saveSettings" class="btn primary">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+  document.querySelectorAll('.config-color-option').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.config-color-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    });
+  });
+  </script>
+
+
+
+  <script>
+  // Si no hay sesión, volver al login
+  if (localStorage.getItem("sesion_activa") !== "true") {
+    document.body.classList.add("guest");
+  }
+
+  // Si hay sesión, mostrar los datos del usuario
+  /*document.addEventListener("DOMContentLoaded", () => {
+  const correo = localStorage.getItem("correo_usuario");
+  const foto = localStorage.getItem("foto_usuario");
+
+  const userEmailEl = document.getElementById("userEmail");
+  const userAvatarEl = document.getElementById("userAvatar");
+
+  if (correo) userEmailEl.textContent = correo;
+  if (foto) userAvatarEl.src = foto;
+
+  console.log("Usuario activo:", correo);
+});*/
+</script>
+
+
+<!-- Archivo de configuración: cambiar URL backend según entorno -->
+<script src="/static/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+  if (!localStorage.getItem("sesion_activa")) {
+    document.body.classList.add("guest");
+  }
+</script>
+
+<!-- ÚNICO BLOQUE JS (unificado y seguro) -->
+<script>
+
+  /* ====== Mobile sidebar & hamburger control ====== */
+(function mobileSidebarSetup() {
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+
+  if (!mobileBtn || !sidebar || !overlay) return;
+
+  // Abrir/cerrar
+  function openMobileSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    mobileBtn.classList.add('open');
+    // bloquear scroll body
+    document.body.style.overflow = 'hidden';
+    // marcar items actuales
+    if (typeof updateSelectedPlanUI === 'function') updateSelectedPlanUI();
+  }
+  window.openMobileSidebar = openMobileSidebar;
+
+  function closeMobileSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    mobileBtn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  window.closeMobileSidebar = closeMobileSidebar;
+
+  mobileBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) closeMobileSidebar();
+    else openMobileSidebar();
+  });
+
+  // Cerrar al redimensionar (si se pasa a desktop)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeMobileSidebar();
+  });
+
+  // Touch swipe para cerrar (gesto simple)
+  let touchStartX = null;
+  let touchStartY = null;
+
+  sidebar.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, {passive: true});
+
+  sidebar.addEventListener('touchmove', (e) => {
+    if (touchStartX === null) return;
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    // ignorar verticales largas
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    // si el usuario desliza a la izquierda con suficiente fuerza cerramos
+    if (dx < -40) closeMobileSidebar();
+  }, {passive: true});
+
+  // También cerrar desde overlay click (ya pusiste onclick en overlay pero reforzamos)
+  overlay.addEventListener('click', closeMobileSidebar);
+
+  // Al seleccionar un plan en móvil, actualizar UI (si se usa "data-plan")
+  document.querySelectorAll('.mobile-plan-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const plan = item.dataset.plan;
+      if (plan && typeof selectVersion === 'function') selectVersion(plan);
+      // marcar active visual
+      document.querySelectorAll('.mobile-plan-item').forEach(i => i.classList.toggle('active', i === item));
+      // cerrar sidebar
+      closeMobileSidebar();
+    });
+  });
+
+})();
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  /* =========================================================
+     VARIABLES GLOBALES
+  ========================================================= */
+  const input = document.getElementById('mensaje');
+  const chat = document.getElementById("chat");
+  const titulo = document.getElementById("titulo");
+  const btn1 = document.getElementById('btn1'); // mic
+  const btn2 = document.getElementById('btn2'); // enviar
+  const inputWrapper = document.getElementById('inputWrapper');
+  const menuArrow = document.querySelector('.menu-arrow');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+
+  btn1.style.visibility = 'visible';
+  btn2.style.visibility = 'hidden';
+
+  if (!input || !chat || !titulo || !inputWrapper) {
+    console.warn('elementos principales faltan en DOM');
+    return;
+  }
+
+  let animBtn1 = null, animBtn2 = null;
+  let previousHasText = false;
+  const D = 250; // duración animaciones
+  const easing = 'cubic-bezier(.22,1,.36,1)';
+
+  // BACKEND: usa CONFIG.BACKEND_URL si existe, si no -> '/ask'
+  const BACKEND_URL = (typeof CONFIG !== 'undefined' && CONFIG.BACKEND_URL) ? CONFIG.BACKEND_URL : '/ask';
+
+  /* =========================================================
+     UTILIDADES
+  ========================================================= */
+  function parseBold(text) {
+    return text.replace(/\*(.*?)\*/g, '<b>$1</b>');
+  }
+
+  function addBotMessage() {
+    const botMsg = document.createElement("div");
+    botMsg.className = "message bot";
+    chat.appendChild(botMsg);
+    return botMsg;
+  }
+
+  function typeWriterEffect(container, text = '', maxDuration = 5000) {
+  return new Promise((resolve) => {
+    if (!text) return resolve();
+    const parsed = marked.parse(text);
+    let i = 0;
+
+    // Calculamos la velocidad para que nunca tarde más de maxDuration
+    const speed = Math.min(15, maxDuration / parsed.length);
+
+    const interval = setInterval(() => {
+      container.innerHTML = parsed.slice(0, i + 1);
+      if (container.parentElement) {
+        container.parentElement.scrollTop = container.parentElement.scrollHeight;
+      }
+      if (++i >= parsed.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+
+  /* =========================================================
+     PLAN SELECTION MENU
+  ========================================================= */
+  let selectedPlan = localStorage.getItem('selectedPlan') || 'basic';
+
+  function selectVersion(plan) {
+    selectedPlan = plan;
+    localStorage.setItem('selectedPlan', plan);
+    updateSelectedPlanUI();
+    // Cerrar menú al seleccionar
+    if (dropdownMenu) dropdownMenu.style.display = 'none';
+  }
+
+  function updateSelectedPlanUI() {
+    const items = document.querySelectorAll('.menu-item');
+    items.forEach(item => {
+      if (item.dataset.plan === selectedPlan) item.classList.add('active');
+      else item.classList.remove('active');
+    });
+  }
+  updateSelectedPlanUI();
+
+  /* =========================================================
+     ANIMACIONES BOTONES
+  ========================================================= */
+  function cancelAnimsAndFreeze() {
+    [btn1, btn2].forEach((btn, idx) => {
+      let anim = idx === 0 ? animBtn1 : animBtn2;
+      if (anim) {
+        anim.cancel();
+        if (idx === 0) animBtn1 = null; else animBtn2 = null;
+        const cs = getComputedStyle(btn);
+        btn.style.transform = cs.transform === 'none' ? 'scale(1)' : cs.transform;
+        btn.style.opacity = cs.opacity;
+      }
+    });
+  }
+
+  function transitionToBtn2() {
+    cancelAnimsAndFreeze();
+    btn1.style.visibility = 'visible';
+    animBtn1 = btn1.animate(
+      [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
+      { duration: D, easing, fill: 'forwards' }
+    );
+    animBtn1.onfinish = () => {
+      btn1.style.visibility = 'hidden';
+      btn2.style.visibility = 'visible';
+      animBtn2 = btn2.animate(
+        [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration: D, easing, fill: 'forwards' }
+      );
+    };
+  }
+
+  function transitionToBtn1() {
+    cancelAnimsAndFreeze();
+    btn2.style.visibility = 'visible';
+    animBtn2 = btn2.animate(
+      [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }],
+      { duration: D, easing, fill: 'forwards' }
+    );
+    animBtn2.onfinish = () => {
+      btn2.style.visibility = 'hidden';
+      btn1.style.visibility = 'visible';
+      animBtn1 = btn1.animate(
+        [{ transform: 'scale(0)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration: D, easing, fill: 'forwards' }
+      );
+    };
+  }
+
+  /* =========================================================
+     EVENTOS INPUT & BOTONES
+  ========================================================= */
+  input.addEventListener('input', () => {
+    const hasText = input.value.trim() !== '';
+    if (hasText && !previousHasText) transitionToBtn2();
+    else if (!hasText && previousHasText) transitionToBtn1();
+    previousHasText = hasText;
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+    document.querySelector(".input-container")
+      .classList.toggle("expanded", input.scrollHeight > input.clientHeight);
+  });
+
+  btn2.addEventListener("click", enviarMensaje);
+
+  /* =========================================================
+     MENSAJES (ENVIAR)
+  ========================================================= */
+  async function enviarMensaje() {
+    const userText = input.value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+    if (!userText) return;
+
+       // 🔗 ChatStore: asegura chat activo y guarda mensaje del usuario
+    if (window.ChatStore) ChatStore.addUserMessage(userText);
+
+    const chatContainer = document.querySelector(".chat-container");
+
+  // Cuando se manda el primer mensaje
+  if (!chatContainer.classList.contains("active")) {
+    chatContainer.classList.add("active");
+  }
+    // ocultar título si hay mensaje
+    titulo.style.opacity = 0;
+
+    // mensaje usuario
+    const userMsg = document.createElement("div");
+    userMsg.className = "message user";
+    userMsg.innerHTML = parseBold(userText);
+    chat.appendChild(userMsg);
+
+    // reset input
+    input.value = "";
+    input.style.height = "auto";
+    transitionToBtn1();
+    previousHasText = false;
+
+    // loading
+    const loadingMsg = document.createElement("div");
+    loadingMsg.className = "message bot loading";
+    loadingMsg.innerHTML = `<span></span>
+      <video src="/static/videos/anim1.mp4" autoplay loop muted playsinline width="40"></video>`;
+    chat.appendChild(loadingMsg);
+
+    // recalc móvil + scroll
+    if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) window.__mobileChatHelpers.recalc();
+    else chat.scrollTop = chat.scrollHeight;
+
+    // fetch al backend
+    // fetch al backend (con session_id)
+    try {
+      // 🔹 Generar o recuperar ID de sesión persistente
+      const session_id = localStorage.getItem("session_id") || crypto.randomUUID();
+      localStorage.setItem("session_id", session_id);
+
+      const resp = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userText,
+          plan: selectedPlan,
+          personality: localStorage.getItem("aiPersonality") || "generico",
+          session_id: session_id
+        })
+      });
+
+      const data = await resp.json();
+
+      if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) window.__mobileChatHelpers.recalc();
+
+      const botMsg = addBotMessage();
+      await typeWriterEffect(botMsg, data.reply || "⚠️ Error: sin respuesta.", 15);
+
+         // 🔗 ChatStore: guarda la respuesta del bot
+      if (window.ChatStore) ChatStore.addBotMessage(data.reply || "⚠️ Error: sin respuesta.");
+
+      // asegurar scroll y recalc
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
+
+    } catch (error) {
+      if (chat.contains(loadingMsg)) chat.removeChild(loadingMsg);
+      const botMsg = addBotMessage();
+      await typeWriterEffect(botMsg, "⚠️ Error al conectar con el servidor.", 15);
+      // 🔗 ChatStore: persistimos el error como respuesta bot (opcional)
+      if (window.ChatStore) ChatStore.addBotMessage("⚠️ Error al conectar con el servidor.");
+      if (window.__mobileChatHelpers && window.__mobileChatHelpers.scrollToBottom) window.__mobileChatHelpers.scrollToBottom();
+    }
+
+    // devolver foco y recalcular (útil en móviles)
+    input.focus();
+    if (window.__mobileChatHelpers && window.__mobileChatHelpers.recalc) {
+      setTimeout(() => window.__mobileChatHelpers.recalc(), 120);
+    }
+  }
+  
+// 👉 agregar esto:
+window.enviarMensaje = enviarMensaje;
+
+  /* =========================================================
+     MOBILE HELPER: visualViewport + bloqueo scroll body
+  ========================================================= */
+  /*
+  (function mobileHelper() {
+  const vv = window.visualViewport;
+  const MIN_CHAT_HEIGHT = 120; // px
+
+  function ajustarAlturaMovil() {
+    const viewportHeight = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    const inputH = inputWrapper.offsetHeight || 64;
+    const margin = 8;
+
+    // Establecemos la altura útil del chat para que nunca quede debajo del input
+    const usable = Math.max(MIN_CHAT_HEIGHT, Math.floor(viewportHeight - inputH - margin));
+    chat.style.height = usable + 'px';
+    chat.style.maxHeight = usable + 'px';
+    chat.style.overflowY = 'auto';
+
+    // Ajustar posición del chat respecto al input (en móviles)
+    // Ponemos bottom del chat en (input height + 18px) para mantener espacio
+    if (window.innerWidth <= 768) {
+      const bottomOffset = inputH + 18;
+      chat.style.bottom = bottomOffset + 'px';
+    } else {
+      chat.style.bottom = '';
+    }
+
+    // detectar teclado por cambio de visualViewport (si existe)
+    const fullWindowInner = window.innerHeight;
+    const keyboardProbablyOpen = vv ? (viewportHeight < fullWindowInner - 100) : false;
+
+    // sólo togglear la clase; NO forzar overflow:hidden en body (evita bugs con el teclado)
+    document.body.classList.toggle('keyboard-open', !!keyboardProbablyOpen);
+
+    // titulo visible solo si no hay mensajes
+    const hasMessages = !!chat.querySelector('.message');
+    titulo.style.opacity = hasMessages ? '0' : '1';
+
+    // mantener scroll abajo
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  // listeners
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', ajustarAlturaMovil, { passive: true });
+    window.visualViewport.addEventListener('scroll', ajustarAlturaMovil, { passive: true });
+  }
+  window.addEventListener('resize', ajustarAlturaMovil);
+
+  // auto-grow textarea
+  function autoGrow() {
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+    ajustarAlturaMovil();
+  }
+  input.addEventListener('input', autoGrow);
+
+  input.addEventListener('focus', () => {
+    // recalcula rápido al enfocar para dejar espacio al teclado
+    setTimeout(() => {
+      autoGrow();
+      ajustarAlturaMovil();
+      input.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }, 80);
+  });
+  input.addEventListener('blur', () => {
+    setTimeout(ajustarAlturaMovil, 80);
+  });
+
+  window.addEventListener('load', () => {
+    autoGrow();
+    ajustarAlturaMovil();
+  });
+
+  // helpers expuestos (mantener compatibilidad)
+  window.__mobileChatHelpers = {
+    recalc: ajustarAlturaMovil,
+    scrollToBottom: () => { chat.scrollTop = chat.scrollHeight; }
+  };
+})();
+*/
+  /* =========================================================
+     MENU TOGGLE (mantengo tu API)
+  ========================================================= */
+  window.toggleMenu = function() {
+  // detectamos si estamos en móvil o escritorio
+  const isMobile = window.innerWidth <= 768;
+
+  const menu = isMobile
+    ? document.getElementById('dropdownMenuMobile')
+    : document.getElementById('dropdownMenu');
+
+  const arrow = document.querySelector('.menu-arrow');
+
+  if (!menu) return;
+
+  const showing = menu.style.display === 'block';
+  menu.style.display = showing ? 'none' : 'block';
+  if (arrow) arrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(180deg)';
+};
+
+
+  document.addEventListener('click', function(e) {
+    const menuContainer = document.querySelector('.menu-container');
+    if (menuContainer && !menuContainer.contains(e.target)) {
+      dropdownMenu.style.display = 'none';
+      if (menuArrow) menuArrow.style.transform = 'rotate(0deg)';
+    }
+  });
+
+  // Exponer selectVersion para los onclick inline existentes
+  window.selectVersion = selectVersion;
+});
+
+ 
+</script>
+
+   <script>
+ document.addEventListener('DOMContentLoaded', () => {
+   const chatContainer = document.querySelector('.chat-container');
+   const inputContainer = document.querySelector('.input-container');
+
+   if (!chatContainer || !inputContainer) return;
+
+/* if (window.visualViewport) {
+     const ajustarLayout = () => {
+       const viewportHeight = window.visualViewport.height;
+       const totalHeight = window.innerHeight;
+       const tecladoHeight = totalHeight - viewportHeight;
+
+       if (tecladoHeight > 0) {
+         // El teclado está visible → movemos el input hacia arriba
+         inputContainer.style.transform = `translateY(-${tecladoHeight}px)`;
+       } else {
+         // El teclado se cerró → volvemos al lugar original
+         inputContainer.style.transform = 'translateY(0)';
+       }
+
+       // Mantenemos el scroll al fondo del chat
+       chatContainer.scrollTop = chatContainer.scrollHeight;
+     };
+
+     // Escuchamos el cambio del viewport visual (cuando aparece/desaparece teclado)
+     window.visualViewport.addEventListener('resize', ajustarLayout);
+   }
+*/
+  
+ });
+ </script>
+
+   <script>
+   // Lista de títulos posibles
+   const titulos = [
+     "¡Inicia tu progreso!",
+     "¿En que puedo ayudarte?",
+     "¡Pregúntame lo que quieras!",
+     "Tu aliado estrategico",
+     "¡Empecemos algo increíble!"
+   ];
+
+   // Selecciona el elemento del título
+   const tituloElement = document.getElementById("titulo");
+
+   // Función para elegir un título aleatorio
+   function cambiarTitulo() {
+     const indiceAleatorio = Math.floor(Math.random() * titulos.length);
+     tituloElement.textContent = titulos[indiceAleatorio];
+   }
+
+   // Ejecutar cada vez que se carga la página
+   window.addEventListener("load", cambiarTitulo);
+ </script>
+
+<script>
+  const logoutBtnSidebar = document.getElementById("logoutBtnSidebar");
+const logoutModal = document.getElementById("logoutModal");
+const confirmLogout = document.getElementById("confirmLogout");
+const cancelLogout = document.getElementById("cancelLogout");
+
+if (logoutBtnSidebar) {
+  logoutBtnSidebar.addEventListener("click", () => logoutModal.classList.add("show"));
+}
+
+confirmLogout.addEventListener("click", () => {
+  localStorage.removeItem("sesion_activa");
+  localStorage.removeItem("correo_usuario");
+  localStorage.removeItem("foto_usuario");
+  window.location.href = "/";
+});
+
+cancelLogout.addEventListener("click", () => logoutModal.classList.remove("show"));
+window.addEventListener("click", (e) => {
+  if (e.target === logoutModal) logoutModal.classList.remove("show");
+});
+  </script> <!-- ✅ acá cerrás el primer script -->
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const plusBtn = document.getElementById('plusBtn');
+  const plusOptions = document.getElementById('plusOptions');
+  const predictBtn = document.getElementById('predictBtn');
+
+  // Mostrar / ocultar menú
+  plusBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    plusOptions.style.display = plusOptions.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  // Cerrar al hacer clic fuera
+  document.addEventListener('click', () => plusOptions.style.display = 'none');
+
+  // Acción del botón "Predecir exámenes"
+  predictBtn.addEventListener('click', () => {
+    plusOptions.style.display = 'none';
+    alert('🔮 Función de predicción de exámenes próximamente disponible.');
+    // Aquí podrías llamar a tu función real, por ejemplo:
+    // predecirExamen();
+  });
+});
+</script>
+
+<script>
+/* =========================================================
+   🔧 FIX POSICIÓN INPUT EN MÓVIL (teclado abierto)
+   Mantiene el input-container fijo abajo sin moverse ni a la derecha
+========================================================= */
+(function fixMobileInputPosition() {
+  const inputWrapper = document.getElementById("inputWrapper");
+  const chat = document.getElementById("chat");
+  const vv = window.visualViewport;
+
+  if (!inputWrapper || !vv) return;
+
+  function ajustarPosicion() {
+    // Detecta si el teclado está abierto (viewport más chico que innerHeight)
+    const keyboardAbierto = vv.height < window.innerHeight - 100;
+
+    // Corrige el desplazamiento horizontal causado por zoom o teclado
+    function ajustarPosicion() {
+  const keyboardAbierto = vv.height < window.innerHeight - 100;
+
+  // Evitar corrimiento horizontal
+  inputWrapper.style.left = "0";
+  inputWrapper.style.width = "100vw";
+
+  if (keyboardAbierto) {
+    inputWrapper.style.position = "fixed";
+    const offset = window.innerHeight - vv.height - vv.offsetTop;
+    inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
+  } else {
+    inputWrapper.style.position = "fixed";
+    inputWrapper.style.bottom = "0";
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+    // Corrige posición vertical
+    if (keyboardAbierto) {
+      inputWrapper.style.position = "fixed";
+      const offset = window.innerHeight - vv.height - vv.offsetTop;
+inputWrapper.style.bottom = Math.max(offset - 10, 0) + "px";
+    } else {
+      inputWrapper.style.position = "fixed";
+      inputWrapper.style.bottom = "0";
+    }
+
+    // Mantiene scroll del chat estable
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  vv.addEventListener("resize", ajustarPosicion);
+  vv.addEventListener("scroll", ajustarPosicion);
+})();
+</script>
+
+
+  <button id="theme-toggle"> </button>
+
+<script>
+const darkLink = document.getElementById('theme-dark');
+const lightLink = document.getElementById('theme-light');
+const toggleBtn = document.getElementById('theme-toggle');
+
+toggleBtn.style.position = 'fixed';
+toggleBtn.style.top = '10px';
+toggleBtn.style.right = '10px';
+toggleBtn.style.zIndex = '2000';
+toggleBtn.style.background = 'transparent';
+toggleBtn.style.border = 'none';
+toggleBtn.style.fontSize = '22px';
+toggleBtn.style.cursor = 'pointer';
+toggleBtn.style.color = '#fff';
+
+let isDark = true;
+
+toggleBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  lightLink.disabled = isDark;
+  toggleBtn.textContent = isDark ? ' ' : ' ';
+  toggleBtn.style.color = isDark ? '#fff' : '#000';
+});
+</script>
+
+<!-- Modal minimalista -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <p>Esta función no está disponible actualmente,<br>estamos trabajando para implementarla.</p>
+    <button id="close-modal">Entendido</button>
+  </div>
+</div>
+
+  <script>
+  const plusBtn = document.getElementById('plus-btn');
+  const plusMenu = document.getElementById('plus-menu');
+  const submenu = document.getElementById('submenu');
+  const modal = document.getElementById('modal');
+  const closeModal = document.getElementById('close-modal');
+  const textarea = document.getElementById('mensaje');
+
+  // Mostrar/ocultar menú principal
+  plusBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    plusMenu.style.display = plusMenu.style.display === 'flex' ? 'none' : 'flex';
+    submenu.style.display = 'none';
+  });
+
+  // Submenú
+  const getAdvice = document.getElementById('get-advice');
+  getAdvice.addEventListener('mouseenter', () => submenu.style.display = 'flex');
+  getAdvice.addEventListener('mouseleave', () => {
+    setTimeout(() => submenu.style.display = 'none', 400);
+  });
+
+  // Modal de funciones no disponibles
+  document.getElementById('attach-files').addEventListener('click', () => modal.style.display = 'flex');
+  document.getElementById('predict-exam').addEventListener('click', () => modal.style.display = 'flex');
+  closeModal.addEventListener('click', () => modal.style.display = 'none');
+
+  // Submenú materias
+  document.querySelectorAll('.submenu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      textarea.value = `Dame consejos para aprobar ${item.dataset.text}`;
+      textarea.dispatchEvent(new Event('input'));
+      submenu.style.display = 'none';
+      plusMenu.style.display = 'none';
+    });
+  });
+
+  // Cerrar menú al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if (!plusMenu.contains(e.target) && !plusBtn.contains(e.target)) {
+      plusMenu.style.display = 'none';
+      submenu.style.display = 'none';
+    }
+  });
+</script>
+
+  <script>
+/* =========================================================
+   📲 INSTALACIÓN DE LA APLICACIÓN (PWA)
+   Muestra el botón solo si el navegador permite instalar la app
+   y ejecuta el evento de instalación al presionarlo.
+========================================================= */
+
+let deferredPrompt; // Guardamos el evento para usarlo más tarde
+const installButton = document.getElementById("installButton");
+
+// Espera al evento "beforeinstallprompt"
+window.addEventListener("beforeinstallprompt", (event) => {
+  // Evita que el navegador muestre el banner por defecto
+  event.preventDefault();
+
+  // Guarda el evento para usarlo más tarde
+  deferredPrompt = event;
+
+  // Muestra el botón de instalar
+  if (installButton) {
+    installButton.style.display = "block";
+  }
+});
+
+// Cuando el usuario hace clic en el botón "Instalar aplicación"
+if (installButton) {
+  installButton.addEventListener("click", async () => {
+    if (!deferredPrompt) return; // Si no hay evento guardado, no hacemos nada
+
+    // Muestra el prompt de instalación
+    deferredPrompt.prompt();
+
+    // Espera a que el usuario elija una opción
+    const { outcome } = await deferredPrompt.userChoice;
+
+    console.log("Resultado de instalación:", outcome);
+    // Si el usuario acepta, puedes ocultar el botón
+    if (outcome === "accepted") {
+      installButton.style.display = "none";
+    }
+
+    // Limpia el evento (solo puede usarse una vez)
+    deferredPrompt = null;
+  });
+}
+
+// Detectar si la app ya está instalada (para ocultar el botón)
+window.addEventListener("appinstalled", () => {
+  console.log("✅ Aplicación instalada correctamente");
+  if (installButton) installButton.style.display = "none";
+});
+
+    if (installButton) {
+  installButton.style.display = "block";
+  installButton.classList.add("glow"); // ✨ Activa el pulso animado
+}
+
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("welcome-overlay");
+  const steps = document.querySelectorAll(".step");
+  const continue1 = document.getElementById("continue1");
+  const continueBtn = document.getElementById("continueBtn"); // ✅ ID corregido
+  const finish = document.getElementById("finish");
+  const usernameInput = document.getElementById("userName"); // ✅ ID corregido
+  const colorOptions = document.querySelectorAll(".color-option");
+  const previewMsg = document.getElementById("colorPreview");
+
+  // ✅ Si ya completó el setup, ocultar cartel
+  if (localStorage.getItem("eslobarSetupDone") === "true") {
+    overlay.style.display = "none";
+    aplicarColorUsuario(); // aplicar color al cargar
+    return;
+  }
+
+  // ✅ Paso 1 → Paso 2
+  if (continue1) {
+    continue1.addEventListener("click", () => {
+      steps[0].classList.remove("active");
+      steps[1].classList.add("active");
+    });
+  }
+
+  // ✅ Activar botón "Continuar" al escribir nombre
+  if (usernameInput && continueBtn) {
+    usernameInput.addEventListener("input", () => {
+      const hasText = usernameInput.value.trim().length >= 2;
+      continueBtn.disabled = !hasText;
+      continueBtn.classList.toggle("active", hasText);
+    });
+  }
+
+  // ✅ Paso 2 → Paso 3
+  if (continueBtn) {
+    continueBtn.addEventListener("click", () => {
+      localStorage.setItem("eslobarUsername", usernameInput.value.trim());
+      steps[1].classList.remove("active");
+      steps[2].classList.add("active");
+    });
+  }
+
+  // ✅ Seleccionar color y vista previa
+  if (colorOptions.length > 0 && previewMsg) {
+    colorOptions.forEach(opt => {
+      opt.addEventListener("click", () => {
+        colorOptions.forEach(o => o.classList.remove("selected"));
+        opt.classList.add("selected");
+
+        const color = opt.getAttribute("data-color");
+        previewMsg.className = "message example-message " + color;
+        localStorage.setItem("eslobarColor", color);
+      });
+    });
+  }
+
+      // ✅ Seleccionar gris por defecto al cargar el paso 3
+    const defaultColor = "gris";
+    localStorage.setItem("eslobarColor", defaultColor);
+    previewMsg.classList.add(defaultColor);
+    document.querySelector('.color-option.gray').classList.add('selected');
+
+
+  // ✅ Terminar bienvenida
+  if (finish) {
+  finish.addEventListener("click", () => {
+    steps[2].classList.remove("active"); // paso 3 → 4
+    steps[3].classList.add("active");
+  });
+}
+
+
+   // ✅ DESPUÉS: las hacemos globales
+  window.obtenerColor = function(nombre) {
+    switch (nombre) {
+      case "azul": return "#007bff";
+      case "rosa": return "#ff4da6";
+      default: return "#3a3a3a";
+    }
+  };
+
+  window.aplicarColorUsuario = function() {
+    const color = localStorage.getItem("eslobarColor") || "gris";
+    document.documentElement.style.setProperty("--user-msg-bg", window.obtenerColor(color));
+  };
+
+  // ✅ Aplicar el color cuando se carga la página
+  window.aplicarColorUsuario();
+});
+</script>
+
+
+<script src="/static/chat-storage.js"></script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.ChatStore) ChatStore.init();
+  });
+</script>
+
+
+<script>
+  const profileInput = document.getElementById("profileImage");
+const previewImage = document.getElementById("previewImage");
+const previewContainer = document.getElementById("previewContainer");
+const finishSetup = document.getElementById("finishSetup");
+
+if (profileInput) {
+  profileInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        previewContainer.style.display = "block";
+        localStorage.setItem("eslobarAvatar", e.target.result);
+        finishSetup.disabled = false;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+</script>
+
+<script>
+
+  finishSetup.addEventListener("click", () => {
+    const steps = document.querySelectorAll(".step");
+    steps[3].classList.remove("active");
+    steps[4].classList.add("active");
+
+    const finalName = document.getElementById("finalName");
+    if (finalName) finalName.textContent = localStorage.getItem("eslobarUsername") || '';
+  });
+
+document.getElementById("enterApp").addEventListener("click", () => {
+  localStorage.setItem("eslobarSetupDone", "true");
+  const overlay = document.getElementById("welcome-overlay"); // ✅ redefinir aquí
+  overlay.remove();
+  aplicarColorUsuario();
+  actualizarSidebar();
+});
+
+</script>
+
+  <script>
+
+    function actualizarSidebar() {
+  const name = localStorage.getItem("eslobarUsername");
+  const avatar = localStorage.getItem("eslobarAvatar");
+  if (name) document.getElementById("sidebarUserName").textContent = name;
+  if (avatar) document.getElementById("userAvatarSidebar").src = avatar;
+}
+
+/*document.getElementById("profileButton").addEventListener("click", () => {
+  document.getElementById("profileMenu").classList.toggle("show");
+});*/
+
+  </script>
+
+  <script>
+
+  /*  document.getElementById("openConfig").addEventListener("click", () => {
+  document.getElementById("configModal").style.display = "flex";
+  document.getElementById("configName").value = localStorage.getItem("eslobarUsername");
+  document.getElementById("configEmail").textContent = localStorage.getItem("correo_usuario") || "No disponible";
+});
+
+document.getElementById("closeConfig").addEventListener("click", () => {
+  document.getElementById("configModal").style.display = "none";
+});
+
+document.getElementById("saveConfig").addEventListener("click", () => {
+  const newName = document.getElementById("configName").value.trim();
+  if (newName) localStorage.setItem("eslobarUsername", newName);
+
+  const selectedColor = document.querySelector(".config-color-option.selected")?.getAttribute("data-color");
+  if (selectedColor) localStorage.setItem("eslobarColor", selectedColor);
+
+  aplicarColorUsuario();
+  actualizarSidebar();
+  document.getElementById("configModal").style.display = "none";
+}); */
+
+  </script>
+
+  <!-- ✅ Script para desplegar los tres puntitos de cada chat -->
+<script>
+document.querySelectorAll('.chat-menu-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const dropdown = btn.nextElementSibling;
+    document.querySelectorAll('.chat-dropdown').forEach(d => d.style.display = 'none');
+    dropdown.style.display = 'flex';
+  });
+});
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.chat-dropdown').forEach(d => d.style.display = 'none');
+});
+</script>
+
+<script>
+(function settingsInit(){
+  const modal = document.getElementById('configModal');
+  if (!modal) return;
+
+  const tabs = modal.querySelectorAll('.settings-tab');
+  const panels = modal.querySelectorAll('.settings-panel');
+
+  // ==== abrir desde el bloque de usuario (ya lo hacías)
+  // Podés seguir usando tu listener existente. También expongo función:
+  window.openSettings = function(){
+    loadSettingsFromStorage();
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+  };
+
+  // ==== cerrar
+  const closeBtns = [document.getElementById('settingsCloseX'), document.getElementById('closeSettings')];
+  closeBtns.forEach(b=> b && b.addEventListener('click', closeModal));
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  function closeModal(){
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    // restauro valores (por si tocaste algo y cancelaste)
+    loadSettingsFromStorage();
+  }
+
+  // ==== tabs
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      const key = tab.dataset.tab;
+      modal.querySelector(`.settings-panel[data-panel="${key}"]`)?.classList.add('active');
+    });
+  });
+
+  // ==== color dots (personalización)
+  modal.querySelectorAll('.config-color-option').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      modal.querySelectorAll('.config-color-option').forEach(o=>o.classList.remove('selected'));
+      el.classList.add('selected');
+    });
+  });
+
+  // ==== guardar
+  document.getElementById('saveSettings')?.addEventListener('click', ()=>{
+    // tema
+    const theme = modal.querySelector('input[name="theme"]:checked')?.value || 'system';
+    localStorage.setItem('eslobarTheme', theme);
+    // acento
+    localStorage.setItem('eslobarAccent', document.getElementById('accentColor').value);
+    // idioma
+    localStorage.setItem('eslobarLang', document.getElementById('uiLanguage').value);
+    // switches
+    localStorage.setItem('eslobarShowAdvanced', document.getElementById('showAdvanced').checked ? '1' : '0');
+    localStorage.setItem('eslobarPush', document.getElementById('pushEnabled').checked ? '1' : '0');
+    localStorage.setItem('eslobarWeeklyEmail', document.getElementById('weeklyEmail').checked ? '1' : '0');
+    localStorage.setItem('eslobarPinLock', document.getElementById('pinLock').checked ? '1' : '0');
+    localStorage.setItem('eslobarFilter', document.getElementById('contentFilter').checked ? '1' : '0');
+    // nombre
+    const newName = document.getElementById('settingsName').value.trim();
+    if (newName) localStorage.setItem('eslobarUsername', newName);
+    // color mensajes
+    const selectedDot = modal.querySelector('.config-color-option.selected');
+    if (selectedDot) localStorage.setItem('eslobarColor', selectedDot.getAttribute('data-color'));
+
+    // aplica cambios visuales que ya tenías
+    if (typeof aplicarColorUsuario === 'function') aplicarColorUsuario();
+    if (typeof actualizarSidebar === 'function') actualizarSidebar();
+
+    // tema claro/oscuro real usando tus hojas linkeadas
+    applyThemeFromStorage();
+
+    closeModal();
+  });
+
+  // ==== acciones varias
+  document.getElementById('logoutBtnFull')?.addEventListener('click', ()=>{
+    localStorage.removeItem("sesion_activa");
+    localStorage.removeItem("correo_usuario");
+    localStorage.removeItem("foto_usuario");
+    window.location.href = "/";
+  });
+
+  document.getElementById('wipeChatsBtn')?.addEventListener('click', ()=>{
+    if (!confirm('¿Borrar TODOS los chats? Esta acción no se puede deshacer.')) return;
+    try { window.ChatStore?.wipeAll?.(); } catch(e){}
+    alert('Listo. Se borró el historial.');
+  });
+
+  document.getElementById('exportChatsBtn')?.addEventListener('click', ()=>{
+    try { window.ChatStore?.export?.(); } catch(e){ alert('Export no disponible.'); }
+  });
+
+  document.getElementById('connectCalendarBtn')?.addEventListener('click', ()=>{
+    alert('Conexión de calendario: próximamente.');
+  });
+
+  // ==== carga inicial
+  function loadSettingsFromStorage(){
+    // tema
+    const theme = localStorage.getItem('eslobarTheme') || 'system';
+    modal.querySelectorAll('input[name="theme"]').forEach(r => r.checked = (r.value === theme));
+    // acento
+    document.getElementById('accentColor').value = localStorage.getItem('eslobarAccent') || 'default';
+    // idioma
+    document.getElementById('uiLanguage').value = localStorage.getItem('eslobarLang') || 'auto';
+    // switches
+    document.getElementById('showAdvanced').checked   = localStorage.getItem('eslobarShowAdvanced') === '1';
+    document.getElementById('pushEnabled').checked    = localStorage.getItem('eslobarPush') === '1';
+    document.getElementById('weeklyEmail').checked    = localStorage.getItem('eslobarWeeklyEmail') === '1';
+    document.getElementById('pinLock').checked        = localStorage.getItem('eslobarPinLock') === '1';
+    document.getElementById('contentFilter').checked  = localStorage.getItem('eslobarFilter') === '1';
+    // cuenta
+    document.getElementById('settingsEmail').textContent = localStorage.getItem('correo_usuario') || 'No disponible';
+    document.getElementById('settingsName').value = localStorage.getItem('eslobarUsername') || '';
+    // color dots
+    const color = localStorage.getItem('eslobarColor') || 'gris';
+    modal.querySelectorAll('.config-color-option').forEach(o=>{
+      o.classList.toggle('selected', o.getAttribute('data-color') === color);
+    });
+  }
+
+  // helper: aplica links de tema que ya tenías (#theme-dark / #theme-light)
+  function applyThemeFromStorage(){
+    const pref = localStorage.getItem('eslobarTheme') || 'system';
+    const darkLink = document.getElementById('theme-dark');
+    const lightLink = document.getElementById('theme-light');
+    if (!darkLink || !lightLink) return;
+
+    if (pref === 'system'){
+      const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      lightLink.disabled = dark;
+    } else if (pref === 'light'){
+      lightLink.disabled = false;
+    } else {
+      lightLink.disabled = true;
+    }
+  }
+
+  // opcional: abrir con user-info (ya lo hacías)
+  const userBlock = document.querySelector('.user-info');
+  if (userBlock){
+    userBlock.style.cursor = 'pointer';
+    userBlock.addEventListener('click', ()=> window.openSettings());
+  }
+
+  // arranque
+  loadSettingsFromStorage();
+  applyThemeFromStorage();
+})();
+</script>
+
+
+<!-- === Lógica de autenticación embebida === -->
+<script type="module">
+  // —— EmailJS ——
+  try { emailjs.init("Ze_UcmuGqxNN8zCoU"); } catch(e){ console.warn("EmailJS init fallo", e); }
+
+  // —— Estado invitado/logueado: ocultar/mostrar UI ——
+  const sesionActiva = localStorage.getItem("sesion_activa") === "true";
+  if (!sesionActiva) {
+    document.body.classList.add("guest");
+    // Botón “Iniciar sesión” en la topbar
+    const topbar = document.querySelector(".top-bar");
+    if (topbar && !document.getElementById("loginEntry")) {
+      const btn = document.createElement("button");
+      btn.id = "loginEntry";
+      btn.className = "topbar-login-btn";
+      btn.textContent = "Iniciar sesión";
+      btn.addEventListener("click", ()=> show("authModal"));
+      topbar.style.position = "relative";
+      topbar.appendChild(btn);
+    }
+  } else {
+    document.body.classList.remove("guest");
+  }
+
+  // —— Helpers Modales ——
+  const $ = (id) => document.getElementById(id);
+  const show = (id) => { const el = $(id); if (el) el.style.display = "flex"; };
+  const hide = (id) => { const el = $(id); if (el) el.style.display = "none"; };
+
+  // Cierre por botón
+  $("authClose")?.addEventListener("click", ()=> hide("authModal"));
+  $("emailCancel")?.addEventListener("click", ()=> { hide("emailModal"); show("authModal"); });
+
+  // Esc para cerrar modales
+  document.addEventListener("keydown", (e)=>{
+    if (e.key === "Escape") ["authModal","emailModal","verifyModal"].forEach(hide);
+  });
+
+  // —— Abrir sub-flujos desde modal principal ——
+  $("btnCorreo")?.addEventListener("click", ()=> { hide("authModal"); show("emailModal"); });
+
+  // 🔹 Teléfono (desactivado)
+  $("btnTelefono")?.addEventListener("click", ()=> {
+    hide("authModal");
+    alert("📱 Servicio no disponible actualmente.");
+  });
+
+  $("btnGoogle")?.addEventListener("click", handleGoogleStart);
+
+// =========================
+//   FLUJO: CORREO + CÓDIGO
+// =========================
+$("emailSend")?.addEventListener("click", async () => {
+  const email = ($("emailInput").value || "").trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert("Ingresá un correo válido.");
+    return;
+  }
+
+  const codigo = Math.floor(100000 + Math.random() * 900000);
+  localStorage.setItem("codigo_verificacion", String(codigo));
+  localStorage.setItem("correo_usuario", email);
+
+  try {
+    await emailjs.send("service_nwp6u6j", "template_l73amke", {
+      email,
+      codigo: String(codigo),
+      time: new Date(Date.now() + 15 * 60000).toLocaleTimeString(),
+    });
+
+    hide("emailModal");
+    show("verifyModal");
+
+    // Esperar a que se muestre el modal
+    setTimeout(() => inicializarVerificacion(), 200);
+  } catch (err) {
+    console.error(err);
+    alert("No pudimos enviar el correo. Intentá nuevamente.");
+  }
+});
+
+// =========================
+//   CONFIGURAR VERIFICACIÓN
+// =========================
+function inicializarVerificacion() {
+  const codeRow = document.getElementById("codeRow");
+  const btn = document.getElementById("verifyBtn");
+  if (!codeRow || !btn) return;
+
+  const inputs = Array.from(codeRow.querySelectorAll("input"));
+  inputs.forEach((inp) => (inp.value = "")); // limpiar campos
+
+  // 🔹 mover entre inputs
+  inputs.forEach((inp, idx) => {
+    inp.addEventListener("input", () => {
+      if (inp.value.length === 1 && idx < inputs.length - 1) inputs[idx + 1].focus();
+      const completo = inputs.every((i) => i.value.trim() !== "");
+      btn.disabled = !completo;
+      btn.className = `btn-full ${completo ? "btn-active" : "btn-disabled"}`;
+    });
+
+    inp.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !inp.value && idx > 0) inputs[idx - 1].focus();
+    });
+  });
+
+  // 🔹 evento del botón “Enviar”
+  btn.onclick = () => {
+    const ingresado = inputs.map((i) => i.value).join("");
+    const real = localStorage.getItem("codigo_verificacion");
+    const correo = localStorage.getItem("correo_usuario");
+
+    if (!correo) {
+      alert("Falta correo, reiniciá el proceso.");
+      hide("verifyModal");
+      show("authModal");
+      return;
+    }
+
+    if (ingresado === real) {
+      const inicial = correo.charAt(0).toUpperCase();
+      const colores = ["#FF5733", "#33C1FF", "#28A745", "#FFC300", "#9B59B6", "#E67E22"];
+      const color = colores[Math.floor(Math.random() * colores.length)];
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="50" fill="${color}"/><text x="50%" y="55%" font-size="50" text-anchor="middle" fill="white" font-family="Arial" dy=".3em">${inicial}</text></svg>`;
+      const avatar = "data:image/svg+xml;base64," + btoa(svg);
+
+      localStorage.setItem("foto_usuario", avatar);
+      localStorage.setItem("sesion_activa", "true");
+      localStorage.removeItem("codigo_verificacion");
+      location.reload();
+    } else {
+      alert("Código incorrecto.");
+    }
+  };
+
+  // Foco inicial en el primer input
+  inputs[0].focus();
+}
+
+window.inicializarVerificacion = inicializarVerificacion;
+
+
+
+
+
+
+   // =========================
+  //   FLUJO: GOOGLE (GSI)
+  // =========================
+  const GOOGLE_CLIENT_ID = "681954592440-8435k741g9o7tcfluuvqhkkdr6fulgnv.apps.googleusercontent.com";
+
+  function parseJwt(token){
+    try{
+      const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+      return JSON.parse(decodeURIComponent(atob(base64).split('').map(c=>'%' + ('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')));
+    }catch{ return {}; }
+  }
+
+  function initGSI(){
+    if (!(window.google && google.accounts && google.accounts.id)) return false;
+
+    // Inicializamos con opciones modernas y sin selección automática
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleCredentialResponse,
+      auto_select: false,
+      use_fedcm_for_prompt: true,  // mejora consistencia del chooser
+    });
+
+    // Render oculto (mantiene el SDK listo)
+    const hidden = document.getElementById("gsi-hidden") || (() => {
+      const d = document.createElement('div');
+      d.id = "gsi-hidden"; d.style.display="none"; document.body.appendChild(d);
+      return d;
+    })();
+    google.accounts.id.renderButton(hidden, { theme:"outline", size:"large" });
+    google.accounts.id.disableAutoSelect();
+    return true;
+  }
+
+  // 🔑 Cuando Google devuelve la credencial → iniciamos sesión DIRECTO
+  async function handleCredentialResponse(resp){
+    try{
+      if (!resp || !resp.credential) throw new Error("Sin credential");
+      const info = parseJwt(resp.credential);
+
+      const correo = info.email || "";
+      const foto = info.picture || "";
+      if (correo) localStorage.setItem("correo_usuario", correo);
+      if (foto)   localStorage.setItem("foto_usuario", foto);
+
+      // ✅ Activamos sesión SIN verificación por código
+      localStorage.setItem("sesion_activa", "true");
+
+      // Cerrar cualquier modal que haya quedado
+      document.querySelectorAll(".auth-backdrop").forEach(el => el.style.display = "none");
+
+      // 🔄 Refrescamos para que se apliquen todos los estados UI de logueado
+      location.reload();
+
+    }catch(err){
+      console.error("Google error:", err);
+      // Si algo falla, reponemos el modal
+      document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.remove("suspended"));
+      show("authModal");
+      alert("No se pudo completar la autenticación con Google.");
+    }
+  }
+
+  // 👉 Llamado desde el botón "Continuar con Google"
+  window.handleGoogleStart = function(){
+    const authModal = document.getElementById("authModal");
+    // Ocultamos modales para que el chooser nunca quede por detrás
+    document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.add("suspended"));
+
+    // Si aún no está listo el SDK, lo reintentamos un poco
+    let tries = 0;
+    function go(){
+      if (!initGSI()){
+        tries++;
+        if (tries > 10) {
+          // Reponemos modales si no pudimos
+          document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.remove("suspended"));
+          alert("Google tardó en cargar. Intentá de nuevo.");
+          return;
+        }
+        return setTimeout(go, 200);
+      }
+      // Ya inicializado → mostramos el chooser
+      google.accounts.id.prompt((notification) => {
+        // Si el usuario cancela o no se puede mostrar, devolvemos el modal
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          document.querySelectorAll(".auth-backdrop").forEach(el => el.classList.remove("suspended"));
+          if (authModal) authModal.style.display = "flex";
+        }
+      });
+    }
+    go();
+  }
+
+  // Enlazamos el botón principal
+  $("btnGoogle")?.addEventListener("click", window.handleGoogleStart);
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Esperamos a que ChatStore esté disponible
+  if (window.ChatStore && typeof ChatStore.newChat === "function") {
+    // Simula que el usuario presionó el botón "Nuevo chat"
+    ChatStore.newChat();
+    console.log("🆕 Nuevo chat iniciado automáticamente al entrar");
+  } else {
+    // Si todavía no cargó ChatStore, intentamos un poco más tarde
+    const interval = setInterval(() => {
+      if (window.ChatStore && typeof ChatStore.newChat === "function") {
+        ChatStore.newChat();
+        clearInterval(interval);
+        console.log("🆕 Nuevo chat iniciado automáticamente (reintento)");
+      }
+    }, 300);
+  }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const unavailableButtons = ["btnMicrosoft", "btnApple", "btnTelefono"];
+  const serviceModal = document.getElementById("serviceModal");
+  const closeServiceModal = document.getElementById("closeServiceModal");
+
+  unavailableButtons.forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", () => {
+      serviceModal.style.display = "flex";
+    });
+  });
+
+  if (closeServiceModal) {
+    closeServiceModal.addEventListener("click", () => {
+      serviceModal.style.display = "none";
+    });
+  }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loginModal = document.getElementById("loginRequiredModal");
+  const laterBtn = document.getElementById("laterBtn");
+  const goLoginBtn = document.getElementById("goLoginBtn");
+
+  // Botones que disparan el modal
+  ["btnAdjuntar", "btnBuscar", "btnEstudiar"].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", () => {
+      loginModal.style.display = "flex";
+    });
+  });
+
+  // Cerrar modal
+  if (laterBtn) laterBtn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+  });
+
+  // Abrir modal de inicio de sesión
+  if (goLoginBtn) goLoginBtn.addEventListener("click", () => {
+    loginModal.style.display = "none";
+    const authModal = document.getElementById("authModal");
+    if (authModal) authModal.style.display = "flex";
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const continueBtn = document.getElementById("btnContinueEmail");
+  const emailInput = document.getElementById("emailInputModal");
+  const errorMsg = document.getElementById("emailErrorMsg");
+
+  if (!continueBtn || !emailInput) return;
+
+  continueBtn.addEventListener("click", async () => {  // ← async agregado
+    const email = emailInput.value.trim();
+
+    // 🔍 Validar formato y dominio
+    if (!email.endsWith("@gmail.com") || !/^[^\s@]+@gmail\.com$/.test(email)) {
+      errorMsg.style.display = "block";
+      return;
+    }
+
+    errorMsg.style.display = "none"; // ocultar mensaje si es válido
+
+    // ✅ Guardamos el correo
+    localStorage.setItem("correo_usuario", email);
+
+    // ✉️ Generar y enviar el código automáticamente
+    const codigo = Math.floor(100000 + Math.random() * 900000);
+    localStorage.setItem("codigo_verificacion", String(codigo));
+
+    try {
+      await emailjs.send("service_nwp6u6j", "template_l73amke", {
+        email,
+        codigo: String(codigo),
+        time: new Date(Date.now() + 15 * 60000).toLocaleTimeString(),
+      });
+    } catch (err) {
+      console.error("Error enviando correo:", err);
+      alert("No se pudo enviar el código, intentá de nuevo.");
+      return;
+    }
+
+    // 📬 Pasar al modal de verificación
+    document.getElementById("authModal").style.display = "none";
+    const verifyModal = document.getElementById("verifyModal");
+    if (verifyModal) verifyModal.style.display = "flex";
+
+    // Reiniciar los campos de verificación
+    const inputs = Array.from(document.querySelectorAll("#codeRow input"));
+    inputs.forEach(i => i.value = "");
+    inputs[0]?.focus();
+
+    // 🔧 Inicializar el comportamiento de los inputs (activar botón)
+    setTimeout(() => inicializarVerificacion(), 200);
+
+  });
+});
+</script>
+<script>
+  // ✅ Detecta si el link de tema claro está activo
+  function isLightThemeActive() {
+    const lightLink = document.getElementById('theme-light');
+    return !!lightLink && lightLink.disabled === false;
+  }
+
+  // ✅ Mapeo de imágenes por tema
+  const THEME_IMG_MAP = [
+    { match: /\/static\/images\/button1(\.png)?$/i,
+      dark:  '/static/images/button1.png',
+      light: '/static/images/button1_light.png'
+    },
+    { match: /\/static\/images\/button5(\.png)?$/i,
+      dark:  '/static/images/button5.png',
+      light: '/static/images/button5_light.png'
+    },
+    { match: /\/static\/images\/plus1(\.png)?$/i,
+      dark:  '/static/images/plus1.png',
+      light: '/static/images/plus1_light.png'
+    }, // 👈 nuevo caso añadido
+    { match: /\/static\/images\/new-chat(\.png)?$/i,
+      dark:  '/static/images/new-chat.png',
+      light: '/static/images/new-chat_light.png'
+    }
+  ];
+
+  // ✅ Cambia src según tema y evita inversión en light.css
+  function applyThemeImageSwapByName() {
+    const light = isLightThemeActive();
+    document.querySelectorAll('img').forEach(img => {
+      const rule = THEME_IMG_MAP.find(r => r.match.test(img.src));
+      if (!rule) return;
+      const desired = light ? rule.light : rule.dark;
+      if (!img.src.endsWith(desired)) {
+        img.src = desired;
+      }
+      // Asegurar que no se inviertan en modo claro
+      if (!img.classList.contains('no-invert')) img.classList.add('no-invert');
+    });
+  }
+
+  // ▶️ Inicial
+  document.addEventListener('DOMContentLoaded', applyThemeImageSwapByName);
+
+  // 🔁 Cuando toques el botón de tema, también swapear
+  (function hookThemeToggle() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      // tu listener ya cambia lightLink.disabled;
+      // ejecutamos el swap justo después
+      setTimeout(applyThemeImageSwapByName, 0);
+    });
+  })();
+
+  // 👂 Si cambia la preferencia del sistema
+  (function watchSystemPreference(){
+    if (!window.matchMedia) return;
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', () => setTimeout(applyThemeImageSwapByName, 0));
+  })();
+
+  // 👀 Si otro código cambia el atributo disabled de #theme-light
+  (function observeThemeLink(){
+    const lightLink = document.getElementById('theme-light');
+    if (!lightLink || !window.MutationObserver) return;
+    new MutationObserver(() => applyThemeImageSwapByName())
+      .observe(lightLink, { attributes: true, attributeFilter: ['disabled'] });
+  })();
+</script>
+
+<script>
+(() => {
+  // ——— util: ¿tema claro activo?
+  const isLightThemeActive = () => {
+    const lightLink = document.getElementById('theme-light');
+    return !!lightLink && lightLink.disabled === false;
+  };
+
+  // ——— regla de mapeo
+  const VIDEO_RULE = {
+    match: /\/static\/videos\/anim1(?:_light)?\.mp4$/i,
+    dark:  '/static/videos/anim1.mp4',
+    light: '/static/videos/anim1_light.mp4'
+  };
+
+  // ——— reemplaza src en <video> o en sus <source>
+  function swapVideo(el) {
+    const light = isLightThemeActive();
+
+    // Caso <video src="...">
+    if (el.tagName === 'VIDEO' && !el.querySelector('source')) {
+      const current = el.currentSrc || el.src || '';
+      if (!VIDEO_RULE.match.test(current)) return;
+      const desired = light ? VIDEO_RULE.light : VIDEO_RULE.dark;
+      if (!current.endsWith(desired)) {
+        el.classList.add('no-invert');
+        el.src = desired;
+        el.load();
+        el.play?.().catch(()=>{});
+      }
+      return;
+    }
+
+    // Caso <video><source src="..."></video>
+    if (el.tagName === 'SOURCE') {
+      const current = el.src || '';
+      if (!VIDEO_RULE.match.test(current)) return;
+      const desired = light ? VIDEO_RULE.light : VIDEO_RULE.dark;
+      if (!current.endsWith(desired)) {
+        el.src = desired;
+        const video = el.parentElement;
+        if (video && video.tagName === 'VIDEO') {
+          video.classList.add('no-invert');
+          video.load();
+          video.play?.().catch(()=>{});
+        }
+      }
+    }
+  }
+
+  // ——— aplica a todos los videos actuales (por si ya hay alguno)
+  function applyNow() {
+    document.querySelectorAll('video').forEach(v => swapVideo(v));
+    document.querySelectorAll('video source').forEach(s => swapVideo(s));
+  }
+
+  // ——— observar DOM: cuando se inserta el loader con <video>, hacemos swap
+  const observer = new MutationObserver(mutations => {
+    for (const m of mutations) {
+      m.addedNodes.forEach(node => {
+        if (!(node instanceof HTMLElement)) return;
+
+        // si insertan directamente el <video>…
+        if (node.tagName === 'VIDEO') swapVideo(node);
+
+        // si insertan un contenedor con <video> adentro…
+        node.querySelectorAll?.('video, video source').forEach(el => swapVideo(el));
+      });
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // ——— hooks de cambio de tema ya existentes
+  document.addEventListener('DOMContentLoaded', applyNow);
+
+  const themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn) themeBtn.addEventListener('click', () => setTimeout(applyNow, 0));
+
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', () => setTimeout(applyNow, 0));
+  }
+
+  const lightLink = document.getElementById('theme-light');
+  if (lightLink && window.MutationObserver) {
+    new MutationObserver(() => applyNow())
+      .observe(lightLink, { attributes: true, attributeFilter: ['disabled'] });
+  }
+})();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const newChatBtn = document.getElementById("newChatBtn");
+  if (!newChatBtn) return;
+
+  newChatBtn.addEventListener("click", () => {
+    if (window.ChatStore && typeof ChatStore.newChat === "function") {
+      ChatStore.newChat();
+      console.log("🆕 Nuevo chat creado desde el botón de la topbar");
+    } else {
+      alert("No se pudo iniciar un nuevo chat. Asegúrate de que ChatStore esté cargado.");
+    }
+  });
+});
+</script>
+
+<script>
+  const selectorBtn = document.getElementById("selectedPersonality");
+  const dropdown    = document.getElementById("personalityDropdown");
+  const options     = dropdown.querySelectorAll(".option");
+
+  // 🔹 Función para aplicar la personalidad guardada
+  function applyPersonality() {
+    const key = localStorage.getItem("aiPersonality") || "generico";
+    let name = "Genérico";
+
+    options.forEach(o => {
+      const isActive = (o.dataset.personality === key);
+      o.classList.toggle("active", isActive);
+      if (isActive) {
+        name = o.querySelector("strong").textContent.trim();
+      }
+    });
+
+    selectorBtn.textContent = name;
+  }
+
+  // 🔹 Abrir / cerrar menú
+  selectorBtn.addEventListener("click", () => {
+    dropdown.classList.toggle("show");
+  });
+
+  // 🔹 Seleccionar una opción
+  options.forEach(opt => {
+    opt.addEventListener("click", async () => {
+      const key  = opt.dataset.personality;
+      const name = opt.querySelector("strong").textContent.trim();
+
+      localStorage.setItem("aiPersonality", key);
+      options.forEach(o => o.classList.remove("active"));
+      opt.classList.add("active");
+
+      selectorBtn.textContent = name;
+      dropdown.classList.remove("show");
+
+      // 🔹 Reiniciar historial del chat en el servidor
+      const session_id = localStorage.getItem("session_id");
+      if (session_id) {
+        await fetch("/reset", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id })
+        });
+      }
+
+      // (Opcional) Aviso visual al usuario
+      alert(`🎭 Personalidad cambiada a ${name}. Se reinició el contexto del chat.`);
+    });
+  });
+
+  // 🔹 Cerrar al hacer clic fuera
+  document.addEventListener("click", (e) => {
+    if (!selectorBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove("show");
+    }
+  });
+
+  // 🔹 Inicializar al cargar
+  applyPersonality();
+</script>
+
+</body>
+</html>
